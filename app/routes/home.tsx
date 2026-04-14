@@ -15,11 +15,12 @@ const FAQ = lazy(() => import("~/components/homepage/faq"));
 const Footer = lazy(() => import("~/components/homepage/footer"));
 
 export function meta({}: Route.MetaArgs) {
-  const title = "Kaizen - Launch Your SAAS Quickly";
+  const title = "Flight Guardian - Autonomous Flight Price Surveillance";
   const description =
-    "This powerful starter kit is designed to help you launch your SAAS application quickly and efficiently.";
-  const keywords = "Kaizen, SAAS, Launch, Quickly, Efficiently";
-  const siteUrl = "https://www.kaizen.codeandcreed.tech/";
+    "Set a target price and Flight Guardian alerts you the moment fares drop below radar. Autonomous price tracking for savvy travelers.";
+  const keywords =
+    "flight tracker, cheap flights, price alert, fare drop, flight deals, discount flights";
+  const siteUrl = "https://flightguardian.app/";
   const imageUrl = "/kaizen.svg";
 
   return [
@@ -37,21 +38,15 @@ export function meta({}: Route.MetaArgs) {
     { property: "og:image:width", content: "1200" },
     { property: "og:image:height", content: "630" },
     { property: "og:url", content: siteUrl },
-    { property: "og:site_name", content: "Kaizen" },
+    { property: "og:site_name", content: "Flight Guardian" },
 
     // Twitter Card
     { name: "twitter:card", content: "summary_large_image" },
     { name: "twitter:title", content: title },
-    {
-      name: "twitter:description",
-      content: description,
-    },
+    { name: "twitter:description", content: description },
     { name: "twitter:image", content: imageUrl },
-    {
-      name: "keywords",
-      content: keywords,
-    },
-    { name: "author", content: "Kaizen" },
+    { name: "keywords", content: keywords },
+    { name: "author", content: "Flight Guardian" },
     { name: "favicon", content: imageUrl },
   ];
 }
