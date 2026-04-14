@@ -34,7 +34,7 @@ export default function Pricing() {
       <div className="mx-auto max-w-6xl px-6">
         <div className="mx-auto max-w-2xl space-y-2 text-center">
           <h1 className="text-center text-4xl font-semibold lg:text-5xl">
-            Lifetime access
+            Flight Guardian Pro
           </h1>
           <p className="text-muted-foreground">for one developer</p>
         </div>
@@ -45,7 +45,9 @@ export default function Pricing() {
               <PricingCard.Plan>
                 <PricingCard.PlanName>
                   <Users aria-hidden="true" />
-                  <span className="text-muted-foreground">Individual license</span>
+                  <span className="text-muted-foreground">
+                    Individual license
+                  </span>
                 </PricingCard.PlanName>
                 <PricingCard.Badge>One‑time purchase</PricingCard.Badge>
               </PricingCard.Plan>
@@ -65,7 +67,8 @@ export default function Pricing() {
                     <span>Redirecting…</span>
                   </>
                 ) : (
-                  <span>Buy Subscription</span>                )}
+                  <span>Buy Subscription</span>
+                )}
               </Button>
             </PricingCard.Header>
 
@@ -74,7 +77,10 @@ export default function Pricing() {
                 {features.map((item, idx) => (
                   <PricingCard.ListItem key={idx}>
                     <span className="mt-0.5">
-                      <CheckCircle2 className="h-4 w-4 text-green-500" aria-hidden="true" />
+                      <CheckCircle2
+                        className="h-4 w-4 text-green-500"
+                        aria-hidden="true"
+                      />
                     </span>
                     <span>{item}</span>
                   </PricingCard.ListItem>

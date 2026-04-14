@@ -35,12 +35,13 @@ export default function Pricing({ loaderData }: { loaderData: any }) {
       <div className="mx-auto max-w-6xl px-6">
         <div className="mx-auto max-w-3xl mb-8">
           <div className="rounded-xl border bg-amber-50 text-amber-900 dark:bg-amber-950/40 dark:text-amber-200 px-4 py-3 text-center text-sm">
-            <span className="font-medium">Early-bird pricing:</span> Price increases after the first 10 purchases.
+            <span className="font-medium">Early-bird pricing:</span> Price
+            increases after the first 10 purchases.
           </div>
         </div>
         <div className="mx-auto max-w-2xl space-y-2 text-center">
           <h1 className="text-center text-4xl font-semibold lg:text-5xl">
-            Lifetime access
+            Flight Guardian Pro
           </h1>
           <p className="text-muted-foreground">for one developer</p>
         </div>
@@ -51,7 +52,9 @@ export default function Pricing({ loaderData }: { loaderData: any }) {
               <PricingCard.Plan>
                 <PricingCard.PlanName>
                   <Users aria-hidden="true" />
-                  <span className="text-muted-foreground">Individual license</span>
+                  <span className="text-muted-foreground">
+                    Individual license
+                  </span>
                 </PricingCard.PlanName>
                 <PricingCard.Badge>One‑time purchase</PricingCard.Badge>
               </PricingCard.Plan>
@@ -81,7 +84,10 @@ export default function Pricing({ loaderData }: { loaderData: any }) {
                 {features.map((item, idx) => (
                   <PricingCard.ListItem key={idx}>
                     <span className="mt-0.5">
-                      <CheckCircle2 className="h-4 w-4 text-green-500" aria-hidden="true" />
+                      <CheckCircle2
+                        className="h-4 w-4 text-green-500"
+                        aria-hidden="true"
+                      />
                     </span>
                     <span>{item}</span>
                   </PricingCard.ListItem>

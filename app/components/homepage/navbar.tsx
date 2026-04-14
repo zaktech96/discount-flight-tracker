@@ -9,16 +9,10 @@ import { config, isFeatureEnabled } from "../../../config";
 
 const getMenuItems = () => {
   const items = [
-  { name: "Home", href: "#hero" },
-  { name: "Features", href: "#features" },
-  { name: "Changelog", href: "/changelog" },
-  { name: "Documentation", href: "/docs", external: true },
+    { name: "Radar", href: "/search" },
+    { name: "Intercepts", href: "/dashboard" },
+    { name: "Pricing", href: "/pricing" },
   ];
-
-  // Only show pricing if payments are enabled
-  if (isFeatureEnabled('payments') && config.ui.showPricing) {
-    items.push({ name: "Pricing", href: "#pricing" });
-  }
 
   return items;
 };
@@ -35,13 +29,15 @@ export const Navbar = ({
 
   // Update docs URL on client side
   React.useEffect(() => {
-    const isDev = window.location.hostname === 'localhost';
-    const docsUrl = isDev ? 'http://localhost:3000/docs' : `${window.location.origin}/docs`;
+    const isDev = window.location.hostname === "localhost";
+    const docsUrl = isDev
+      ? "http://localhost:3000/docs"
+      : `${window.location.origin}/docs`;
 
     setMenuItems((prevItems) =>
       prevItems.map((item) =>
-        item.name === "Documentation" ? { ...item, href: docsUrl } : item
-      )
+        item.name === "Documentation" ? { ...item, href: docsUrl } : item,
+      ),
     );
   }, []);
 
@@ -59,7 +55,7 @@ export const Navbar = ({
         const shouldBeScrolled = scrollY > 20;
 
         // Only update state if it actually changed
-        setIsScrolled(prev => {
+        setIsScrolled((prev) => {
           if (prev !== shouldBeScrolled) {
             return shouldBeScrolled;
           }
@@ -85,7 +81,7 @@ export const Navbar = ({
   const handleNavClick = useCallback((href: string, external?: boolean) => {
     if (external) {
       // Open external links in new tab
-      window.open(href, '_blank');
+      window.open(href, "_blank");
     } else if (href.startsWith("#")) {
       const element = document.querySelector(href);
       if (element) {
@@ -106,7 +102,7 @@ export const Navbar = ({
   }, []);
 
   // Simple computations don't need useMemo
-  const authEnabled = isFeatureEnabled('auth') && config.ui.showAuth;
+  const authEnabled = isFeatureEnabled("auth") && config.ui.showAuth;
 
   const dashboardLink = !authEnabled
     ? "/dashboard"
@@ -126,7 +122,7 @@ export const Navbar = ({
           className={cn(
             "mx-auto mt-2 max-w-6xl px-6 lg:px-12",
             isScrolled &&
-              "bg-background/95 max-w-4xl rounded-2xl border backdrop-blur-sm lg:px-5 shadow-lg transition-[max-width,background-color,backdrop-filter] duration-150"
+              "bg-background/95 max-w-4xl rounded-2xl border backdrop-blur-sm lg:px-5 shadow-lg transition-[max-width,background-color,backdrop-filter] duration-150",
           )}
         >
           {/* Temporary debug indicator */}
@@ -141,7 +137,9 @@ export const Navbar = ({
                 className="flex items-center space-x-2 font-semibold text-xl text-muted-foreground"
                 prefetch="viewport"
               >
-                <span className="font-mono text-[#3B82F6] font-bold text-xl tracking-[0.2em] uppercase">F-GUARDIAN</span>
+                <span className="font-mono text-[#3B82F6] font-bold text-xl tracking-[0.2em] uppercase">
+                  F-GUARDIAN
+                </span>
               </Link>
 
               <button
@@ -159,7 +157,12 @@ export const Navbar = ({
                 {menuItems.map((item, index) => (
                   <li key={index}>
                     <div
-                      onClick={() => handleNavClick(item.href, item.external)}
+                      onClick={() =>
+                        handleNavClick(
+                          item.href,
+                          "external" in item ? (item as any).external : false,
+                        )
+                      }
                       className="hover:cursor-pointer text-muted-foreground flex items-center h-8 duration-150 transition-colors"
                     >
                       <span>{item.name}</span>
@@ -175,7 +178,12 @@ export const Navbar = ({
                   {menuItems.map((item, index) => (
                     <li key={index}>
                       <button
-                        onClick={() => handleNavClick(item.href, item.external)}
+                        onClick={() =>
+                          handleNavClick(
+                            item.href,
+                            "external" in item ? (item as any).external : false,
+                          )
+                        }
                         className="text-muted-foreground hover:cursor-pointer  block duration-150 transition-colors w-full text-left"
                       >
                         <span>{item.name}</span>
@@ -210,19 +218,12 @@ export const Navbar = ({
                   </div>
                 ) : authEnabled ? (
                   <>
-                    <Button
-                      asChild
-                      variant="outline"
-                      size="sm"
-                    >
+                    <Button asChild variant="outline" size="sm">
                       <Link to="/sign-in" prefetch="viewport">
                         <span>Login</span>
                       </Link>
                     </Button>
-                    <Button
-                      asChild
-                      size="sm"
-                    >
+                    <Button asChild size="sm">
                       <Link to="/sign-up" prefetch="viewport">
                         <span>Sign Up</span>
                       </Link>

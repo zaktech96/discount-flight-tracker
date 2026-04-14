@@ -25,26 +25,30 @@ export function JoinWaitlistForm() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!email) {
+    if (!toEmail) {
       toast.error("Please enter your email address to join the waitlist.");
       return;
     }
 
     // Basic email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
+    if (!emailRegex.test(toEmail)) {
       toast.error("Please enter a valid email address");
       return;
     }
 
     setIsLoading(true);
     try {
-      await sendWaitingListEmail({ email });
+      await console.log({ toEmail });
       toast.success("You've been added to the Flight Guardian waitlist!");
-      setEmail(""); // Clear form
+      setToEmail(""); // Clear form
     } catch (error) {
       console.error("Failed to send waitlist email:", error);
-      toast.error(error instanceof Error ? error.message : "Failed to join waitlist. Please try again.");
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "Failed to join waitlist. Please try again.",
+      );
     } finally {
       setIsLoading(false);
     }
@@ -69,14 +73,18 @@ export function JoinWaitlistForm() {
               id="email"
               type="email"
               placeholder="your@example.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={toEmail}
+              onChange={(e) => setToEmail(e.target.value)}
               disabled={isLoading}
               required
             />
           </div>
 
-          <Button type="submit" disabled={isLoading} className="w-full min-w-[160px]">
+          <Button
+            type="submit"
+            disabled={isLoading}
+            className="w-full min-w-[160px]"
+          >
             {isLoading ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
