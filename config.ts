@@ -165,10 +165,10 @@ export const config: AppConfig = {
     },
   },
   ui: {
-    showAuth: false, // Show sign-in/sign-up routes
-    showPricing: true, // Show pricing page and components
+    showAuth: true, // Show sign-in/sign-up routes
+    showPricing: false, // Show pricing page and components
     showDashboard: true, // Show dashboard routes
-    showChat: true, // Show AI chat functionality
+    showChat: false, // Show AI chat functionality
   },
 };
 
