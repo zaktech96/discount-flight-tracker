@@ -2,26 +2,27 @@
 
 ## 📝 Change Log [2026-04-14]
 - **Feature**: Implemented Navigation Bar with dynamic Auth states (Clerk).
-- **Architecture**: Migrated to React Router 7 (RR7) with Full-Stack SSR.
+- **Feature**: Integrated Clerk `<SignInButton />` and `<SignUpButton />` with modal triggers.
+- **Architecture**: Migrated to React Router 7 (RR7) with Full-Stack SSR and Middleware.
 - **Fix**: Resolved "Oops!" 500 errors by implementing `rootAuthLoader` and `clerkMiddleware`.
+- **Fix**: Resolved "Signal Lost" 404s by explicitly mapping `index` and `search` routes in `app/routes.ts`.
 - **Infrastructure**: Connected Convex (Database) and Clerk (Auth) via Vercel Environment Variables.
-- **Routing**: Fixed 404s by explicitly mapping routes in `app/routes.ts`.
 
 ## 🎓 Lessons Learned (The Hard Way)
 
-### 1. The RR7 "Handshake"
-In React Router 7, you cannot just wrap the app in a Provider. Because it renders on the server first, you **must** use a `loader` (like `rootAuthLoader`) to fetch the auth state before the page reaches the browser.
+### 1. The RR7 "Handshake" & Middleware
+In React Router 7, the `clerkMiddleware` must be enabled in `react-router.config.ts` via the `future.v7_middleware: true` flag. Without this, the `rootAuthLoader` cannot intercept the request to provide auth state to the frontend.
 
-### 2. Environment Variable Prefixes
-- `VITE_` prefix: Required for any variable you want to access in the **browser** (Frontend).
-- No prefix: Only accessible on the **server** (Backend/Middleware).
-- *Mistake:* Using `VITE_CLERK_SECRET_KEY` is a security risk; keeping it just `CLERK_SECRET_KEY` is the correct way.
+### 2. SSR Auth Flow
 
-### 3. Route Mapping
-RR7 overrides file-based routing if `app/routes.ts` exists. Always ensure new pages (like `/search`) are added to the export array in that file.
+Because RR7 is full-stack, auth state is a server-to-server handshake. The `loaderData` must be passed into `<ClerkProvider loaderData={loaderData}>` to prevent hydration mismatches and "missing clerkState" errors.
 
-### 4. Vercel Deployment Sync
-Changing environment variables in Vercel **requires a Redeploy**. Simply saving the keys doesn't update the live server; it needs a fresh build to "bake" them in.
+### 3. Environment Variable Prefixes
+- `VITE_` prefix: Required for the **Frontend** to see the variable (e.g., Publishable Key).
+- No prefix: Required for the **Backend** (e.g., Secret Key). Vercel requires both to be defined to satisfy both the build-time and run-time environments.
+
+### 4. Explicit Route Mapping
+When using `app/routes.ts`, file-based routing is ignored. Every new view (Search, Dashboard) must be manually registered to avoid the catch-all `$.tsx` (Signal Lost) page.
 
 ---
 *Next Task: Implement Resend email notifications for the lock screen prompt.*
