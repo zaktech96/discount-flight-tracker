@@ -8,7 +8,7 @@ export default function IntegrationsSection({
 }) {
   return (
     <section id="hero">
-      <Navbar loaderData={loaderData} />
+      <Navbar />
       <FlightHero isSignedIn={loaderData?.isSignedIn} />
     </section>
   );
