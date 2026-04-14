@@ -9,18 +9,21 @@ import {
 const routes: RouteConfig = [
   // Home route is always available
   index("routes/home.tsx"),
-  
+
+  // Tracking route
+  route("track/:id", "routes/track.$id.tsx"),
+
   // Changelog is always available
   route("changelog", "routes/changelog.tsx"),
-  
+
   // Authentication routes (always included, conditionally rendered)
   route("sign-in/*", "routes/sign-in.tsx"),
   route("sign-up/*", "routes/sign-up.tsx"),
-  
+
   // Pricing routes (always included, conditionally rendered)
   route("pricing", "routes/pricing.tsx"),
   route("success", "routes/success.tsx"),
-  
+
   // Dashboard routes (always included)
   layout("routes/dashboard/layout.tsx", [
     route("dashboard", "routes/dashboard/index.tsx"),

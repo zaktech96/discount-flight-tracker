@@ -2,14 +2,14 @@ import { FaqSection } from "~/components/ui/faq-section";
 
 const FAQ_ITEMS = [
   {
-    question: "How long does it take to get a SaaS MVP live?",
+    question: "How long does it take to get a Flight Guardian alert live?",
     answer:
-      "With Kaizen's TypeScript-first stack and pre-built auth, payments and dashboard, most people can ship a fully-functional MVP within a weekend.",
+      "With our Flight Guardian stack, you can ship a fully-functional flight alert system within a weekend.",
   },
   {
     question: "Is everything type-safe end-to-end?",
     answer:
-      "Yes — from React components to Convex backend functions, every value is strongly typed and inferred across the network boundary.",
+      "Yes - from React components to Convex backend functions, every value is strongly typed and inferred across the network boundary.",
   },
   {
     question: "Do I need separate services for my backend?",
@@ -35,4 +35,4 @@ export default function FAQ() {
       items={FAQ_ITEMS}
     />
   );
-} 
+}

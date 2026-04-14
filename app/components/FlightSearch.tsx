@@ -1,6 +1,6 @@
 "use client";
 import { useState, useCallback } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 type RecentRoute = {
   origin: string;
@@ -19,26 +19,26 @@ export function FlightSearch({ isSignedIn }: { isSignedIn?: boolean }) {
   const [origin, setOrigin] = useState("");
   const [dest, setDest] = useState("");
   const [price, setPrice] = useState("");
-  const [hasSearched, setHasSearched] = useState(false);
+  const navigate = useNavigate();
 
   const handleSearch = useCallback(() => {
     if (origin.length === 3 && dest.length === 3) {
-      setHasSearched(true);
+      navigate(`/track/${origin}-${dest}`);
     }
-  }, [origin, dest]);
+  }, [origin, dest, navigate]);
 
   const routeLabel =
     origin.length === 3 && dest.length === 3
-      ? `ROUTE: ${origin} \u2192 ${dest}`
+      ? `ROUTE: ${origin} - ${dest}`
       : "AWAITING COORDINATES_";
 
   return (
-    <section id="search" className="bg-[#1A1A1A] py-20 px-6">
+    <section id="search" className="bg-[#0F172A] py-20 px-6">
       <div className="max-w-2xl mx-auto">
         {/* Section header */}
         <div className="mb-10 text-center">
-          <h2 className="text-3xl md:text-4xl font-black tracking-[-0.03em] text-white uppercase mb-3">
-            Route <span className="text-[#0F7A73]">Scanner</span>
+          <h2 className="text-3xl md:text-4xl font-black tracking-[-0.03em] text-white uppercase mb-3 font-mono">
+            Route <span className="text-[#3B82F6]">Scanner</span>
           </h2>
           <p className="font-mono text-sm text-white/35 tracking-[0.1em]">
             ENTER COORDINATES TO INITIATE PRICE SURVEILLANCE
@@ -51,7 +51,7 @@ export function FlightSearch({ isSignedIn }: { isSignedIn?: boolean }) {
           <div className="flex items-center gap-2 px-5 py-3 border-b border-white/10 bg-white/[0.02]">
             <span className="w-2.5 h-2.5 rounded-full bg-red-500/70" />
             <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/70" />
-            <span className="w-2.5 h-2.5 rounded-full bg-[#00FF41]/70" />
+            <span className="w-2.5 h-2.5 rounded-full bg-[#10B981]/70" />
             <span className="ml-3 font-mono text-xs text-white/25 tracking-[0.15em] uppercase">
               guardian://new-alert
             </span>
@@ -71,7 +71,7 @@ export function FlightSearch({ isSignedIn }: { isSignedIn?: boolean }) {
                 }
                 placeholder="LHR"
                 maxLength={3}
-                className="w-full bg-transparent font-mono text-xl text-white placeholder-white/15 outline-none focus:text-[#00FF41] transition-colors duration-200 tracking-[0.2em] uppercase"
+                className="w-full bg-transparent font-mono text-xl text-white placeholder-white/15 outline-none focus:text-[#10B981] transition-colors duration-200 tracking-[0.2em] uppercase"
               />
             </div>
             <div className="px-5 py-4 backdrop-blur-md">
@@ -86,7 +86,7 @@ export function FlightSearch({ isSignedIn }: { isSignedIn?: boolean }) {
                 }
                 placeholder="JFK"
                 maxLength={3}
-                className="w-full bg-transparent font-mono text-xl text-white placeholder-white/15 outline-none focus:text-[#00FF41] transition-colors duration-200 tracking-[0.2em] uppercase"
+                className="w-full bg-transparent font-mono text-xl text-white placeholder-white/15 outline-none focus:text-[#10B981] transition-colors duration-200 tracking-[0.2em] uppercase"
               />
             </div>
             <div className="px-5 py-4 backdrop-blur-md">
@@ -99,7 +99,7 @@ export function FlightSearch({ isSignedIn }: { isSignedIn?: boolean }) {
                 onChange={(e) => setPrice(e.target.value)}
                 placeholder="299"
                 min={0}
-                className="w-full bg-transparent font-mono text-xl text-white placeholder-white/15 outline-none focus:text-[#00FF41] transition-colors duration-200"
+                className="w-full bg-transparent font-mono text-xl text-white placeholder-white/15 outline-none focus:text-[#10B981] transition-colors duration-200"
               />
             </div>
           </div>
@@ -113,43 +113,20 @@ export function FlightSearch({ isSignedIn }: { isSignedIn?: boolean }) {
               <button
                 type="button"
                 onClick={handleSearch}
-                className="font-mono text-sm font-bold px-6 py-2 rounded-lg bg-black text-white border border-[#0F7A73]/60 hover:bg-white hover:text-black hover:shadow-[0_0_15px_rgba(15,122,115,0.3)] transition-all duration-300 tracking-wider uppercase"
+                className="font-mono text-sm font-bold px-6 py-2 rounded-lg bg-black text-white border border-[#3B82F6]/60 hover:bg-white hover:text-black hover:shadow-[0_0_15px_rgba(15,122,115,0.3)] transition-all duration-300 tracking-wider uppercase"
               >
                 Scan
               </button>
               <Link
                 to={isSignedIn ? "/dashboard" : "/sign-up"}
                 prefetch="viewport"
-                className="font-mono text-sm font-bold px-6 py-2 rounded-lg bg-[#0F7A73] text-black border border-[#0F7A73] hover:bg-white hover:text-black hover:shadow-[0_0_15px_rgba(15,122,115,0.3)] transition-all duration-300 tracking-wider uppercase"
+                className="font-mono text-sm font-bold px-6 py-2 rounded-lg bg-[#3B82F6] text-black border border-[#3B82F6] hover:bg-white hover:text-black hover:shadow-[0_0_15px_rgba(15,122,115,0.3)] transition-all duration-300 tracking-wider uppercase"
               >
                 Set Alert
               </Link>
             </div>
           </div>
         </div>
-
-        {/* Results / Empty state */}
-        {hasSearched && (
-          <div className="mt-6 rounded-xl border border-[#0F7A73]/20 bg-white/[0.01] animate-radar-sweep overflow-hidden">
-            <div className="px-5 py-10 text-center">
-              <div className="inline-flex items-center gap-2 mb-3">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#0F7A73] opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-[#0F7A73]" />
-                </span>
-                <span className="font-mono text-xs text-[#0F7A73] tracking-[0.2em] uppercase">
-                  Guardian Active
-                </span>
-              </div>
-              <p className="font-mono text-sm text-white/35 tracking-[0.12em] mb-1">
-                SCAN COMPLETE - NO RESULTS
-              </p>
-              <p className="font-mono text-xs text-white/20 tracking-[0.1em]">
-                Set an alert to be notified when fares appear for [{origin}] - [{dest}]
-              </p>
-            </div>
-          </div>
-        )}
 
         {/* Recent routes */}
         <div className="mt-10">
@@ -166,13 +143,13 @@ export function FlightSearch({ isSignedIn }: { isSignedIn?: boolean }) {
                   <span className="font-mono text-sm text-white/80 tracking-[0.2em]">
                     [{route.origin}]
                   </span>
-                  <span className="text-[#0F7A73]/50 text-xs font-mono">-</span>
+                  <span className="text-[#3B82F6]/50 text-xs font-mono">-</span>
                   <span className="font-mono text-sm text-white/80 tracking-[0.2em]">
                     [{route.dest}]
                   </span>
                 </div>
                 <div className="flex items-center gap-4">
-                  <span className="font-mono text-sm text-[#00FF41] font-semibold">
+                  <span className="font-mono text-sm text-[#10B981] font-semibold">
                     ${route.lowestSeen}
                   </span>
                   <span className="font-mono text-xs text-white/20 hidden sm:block">

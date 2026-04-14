@@ -71,7 +71,7 @@ export default function Pricing({ loaderData }: { loaderData: any }) {
                     <span>Redirecting…</span>
                   </>
                 ) : (
-                  <span>Buy Kaizen</span>
+                  <span>Buy Subscription</span>
                 )}
               </Button>
             </PricingCard.Header>

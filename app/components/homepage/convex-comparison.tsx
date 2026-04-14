@@ -7,13 +7,13 @@ export function ConvexComparison() {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
-            Convex vs Supabase?
+            Convex vs. Legacy Polling
           </h2>
           <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-            See the difference in developer experience, type safety, and real-time capabilities
+            See the difference in real-time updates for flight tracking
           </p>
         </div>
-        
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-7xl mx-auto">
           {/* Comparison 1: Type Safety & Developer Experience */}
           <div className="bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-lg">
@@ -54,7 +54,7 @@ export function ConvexComparison() {
             </div>
             <div className="mt-6 text-center">
               <p className="text-gray-600 dark:text-gray-300">
-                Convex provides automatic real-time updates with zero subscription setup, unlike Supabase's complex manual subscriptions
+                Convex provides automatic real-time updates for flight prices, unlike old-school API polling for prices
               </p>
             </div>
           </div>
@@ -76,7 +76,7 @@ export function ConvexComparison() {
             </div>
             <div className="mt-6 text-center">
               <p className="text-gray-600 dark:text-gray-300">
-                Convex keeps business logic in TypeScript, while Supabase forces you to write complex SQL policies
+                Convex keeps business logic in TypeScript, while traditional polling requires complex external services
               </p>
             </div>
           </div>
@@ -98,7 +98,7 @@ export function ConvexComparison() {
             </div>
             <div className="mt-6 text-center">
               <p className="text-gray-600 dark:text-gray-300">
-                Convex offers TypeScript functions with built-in transactions, while Supabase uses Deno with no transaction support
+                Convex offers TypeScript functions with built-in transactions, unlike traditional API polling with no built-in transaction support
               </p>
             </div>
           </div>
@@ -106,4 +106,4 @@ export function ConvexComparison() {
       </div>
     </section>
   );
-} 
+}

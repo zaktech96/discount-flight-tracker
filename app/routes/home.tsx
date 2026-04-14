@@ -22,7 +22,7 @@ export function meta({}: Route.MetaArgs) {
   const keywords =
     "flight tracker, cheap flights, price alert, fare drop, flight deals, discount flights";
   const siteUrl = "https://flightguardian.app/";
-  const imageUrl = "/kaizen.svg";
+  const imageUrl = "/site-logo.svg";
 
   return [
     { title },
@@ -103,7 +103,7 @@ export default function Home({ loaderData }: Route.ComponentProps) {
   return (
     <>
       <Integrations loaderData={loaderData} />
-      <Suspense fallback={<div className="bg-[#1A1A1A] py-20 px-6"><ContentSkeleton /></div>}>
+      <Suspense fallback={<div className="bg-[#0F172A] py-20 px-6"><ContentSkeleton /></div>}>
         <FlightSearch isSignedIn={loaderData.isSignedIn} />
       </Suspense>
       <Suspense fallback={<ContentSkeleton />}>

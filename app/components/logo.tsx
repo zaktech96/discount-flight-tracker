@@ -47,10 +47,7 @@ export const LogoIcon = ({
   uniColor?: boolean;
 }) => {
   return (
-    <img
-      src="/kaizen-no-bg.svg"
-      className={cn("!w-16 !h-16", className)}
-    />
+    <span className={cn("font-mono text-[#3B82F6] font-bold text-xl tracking-[0.2em] uppercase", className)}>F</span>
   );
 };
 

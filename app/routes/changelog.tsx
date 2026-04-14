@@ -5,8 +5,8 @@ import type { Route } from "./+types/changelog";
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "Changelog - Kaizen" },
-    { name: "description", content: "Stay updated with the latest changes and improvements to Kaizen." },
+    { title: "Changelog" },
+    { name: "description", content: "Stay updated with the latest changes and improvements to Flight Tracker." },
   ];
 }
 
@@ -22,13 +22,13 @@ export default function Changelog() {
       ]
     },
     {
-      version: "v1.0.0", 
+      version: "v1.0.0",
       date: "July 7, 2025",
       title: "Initial Launch",
       changes: [
-        "🎉 Initial launch of Kaizen - Modern full-stack SaaS starter template",
+        "🎉 Initial launch of Flight Guardian - Modern flight tracking service",
         "React Router v7 with SSR support",
-        "Convex real-time database integration", 
+        "Convex real-time database integration",
         "Clerk authentication system",
         "Polar.sh payment processing",
         "Configurable feature flag system",
@@ -61,12 +61,12 @@ export default function Changelog() {
               {index !== changes.length - 1 && (
                 <div className="absolute left-4 top-16 bottom-0 w-px bg-border" />
               )}
-              
+
               <div className="flex items-start space-x-6">
                 <div className="flex-shrink-0 w-8 h-8 bg-primary rounded-full flex items-center justify-center">
                   <div className="w-3 h-3 bg-primary-foreground rounded-full" />
                 </div>
-                
+
                 <div className="flex-1 min-w-0">
                   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4">
                     <div>
@@ -81,7 +81,7 @@ export default function Changelog() {
                       </div>
                     </div>
                   </div>
-                  
+
                   <div className="bg-card border rounded-lg p-6">
                     <ul className="space-y-3">
                       {release.changes.map((change, changeIndex) => (

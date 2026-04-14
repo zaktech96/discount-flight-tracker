@@ -14,7 +14,7 @@ export function SiteHeader() {
         <div className="ml-auto flex items-center gap-2">
           <Button variant="ghost" asChild size="sm" className="hidden sm:flex">
             <a
-              href="https://github.com/ObaidUr-Rahmaan/kaizen"
+              href="https://github.com/flight-guardian/flight-guardian"
               rel="noopener noreferrer"
               target="_blank"
               className="dark:text-foreground"

@@ -49,7 +49,7 @@ export const links: Route.LinksFunction = () => [
   { rel: "dns-prefetch", href: "https://fonts.gstatic.com" },
   { rel: "dns-prefetch", href: "https://api.convex.dev" },
   { rel: "dns-prefetch", href: "https://clerk.dev" },
-  
+
   // Preconnect to font services
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
   {
@@ -57,7 +57,7 @@ export const links: Route.LinksFunction = () => [
     href: "https://fonts.gstatic.com",
     crossOrigin: "anonymous",
   },
-  
+
   // Optimized font loading - only load commonly used weights
   {
     rel: "preload",
@@ -70,27 +70,27 @@ export const links: Route.LinksFunction = () => [
     media: "print",
     onLoad: "this.media='all'",
   },
-  
+
   // Preload critical images with proper types
   {
     rel: "preload",
-    href: "/kaizen-no-bg.png",
+    href: "/site-logo.png",
     as: "image",
     type: "image/png",
     fetchPriority: "high",
   },
   {
     rel: "preload",
-    href: "/kaizen-favicon.png", 
+    href: "/site-favicon.png",
     as: "image",
     type: "image/png",
   },
-  
+
   // Icon
   {
     rel: "icon",
     type: "image/png",
-    href: "/kaizen-favicon.png",
+    href: "/site-favicon.png",
   },
 ];
 

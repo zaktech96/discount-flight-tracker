@@ -47,8 +47,7 @@ export function AppSidebar({
         <SidebarMenu>
           <SidebarMenuItem>
             <Link to="/" prefetch="viewport">
-              <span className="text-base font-semibold">Kaizen Inc.</span>
-            </Link>
+              <span className="text-base font-semibold">Flight Guardian</span>            </Link>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>

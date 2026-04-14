@@ -37,9 +37,9 @@ export const Navbar = ({
   React.useEffect(() => {
     const isDev = window.location.hostname === 'localhost';
     const docsUrl = isDev ? 'http://localhost:3000/docs' : `${window.location.origin}/docs`;
-    
-    setMenuItems((prevItems) => 
-      prevItems.map((item) => 
+
+    setMenuItems((prevItems) =>
+      prevItems.map((item) =>
         item.name === "Documentation" ? { ...item, href: docsUrl } : item
       )
     );
@@ -48,16 +48,16 @@ export const Navbar = ({
   React.useEffect(() => {
     // Use RAF for smooth scroll updates
     let rafId: number | null = null;
-    
+
     const handleScroll = () => {
       if (rafId !== null) {
         cancelAnimationFrame(rafId);
       }
-      
+
       rafId = requestAnimationFrame(() => {
         const scrollY = window.scrollY;
         const shouldBeScrolled = scrollY > 20;
-        
+
         // Only update state if it actually changed
         setIsScrolled(prev => {
           if (prev !== shouldBeScrolled) {
@@ -67,13 +67,13 @@ export const Navbar = ({
         });
       });
     };
-    
+
     // Set initial scroll state
     handleScroll();
-    
+
     // Add single event listener with passive flag
     window.addEventListener("scroll", handleScroll, { passive: true });
-    
+
     return () => {
       window.removeEventListener("scroll", handleScroll);
       if (rafId !== null) {
@@ -107,7 +107,7 @@ export const Navbar = ({
 
   // Simple computations don't need useMemo
   const authEnabled = isFeatureEnabled('auth') && config.ui.showAuth;
-  
+
   const dashboardLink = !authEnabled
     ? "/dashboard"
     : !loaderData?.isSignedIn
@@ -141,7 +141,7 @@ export const Navbar = ({
                 className="flex items-center space-x-2 font-semibold text-xl text-muted-foreground"
                 prefetch="viewport"
               >
-                <img src="/kaizen-no-bg.svg" alt="Kaizen Logo" className="w-18 h-18" />
+                <span className="font-mono text-[#3B82F6] font-bold text-xl tracking-[0.2em] uppercase">F-GUARDIAN</span>
               </Link>
 
               <button
@@ -191,9 +191,9 @@ export const Navbar = ({
                 </div>
                 {authEnabled && loaderData?.isSignedIn ? (
                   <div className="flex items-center gap-3 self-center">
-                    <Button 
-                      asChild 
-                      size="sm" 
+                    <Button
+                      asChild
+                      size="sm"
                       disabled={isDashboardLoading}
                       onClick={handleDashboardClick}
                       className="min-w-[90px]"

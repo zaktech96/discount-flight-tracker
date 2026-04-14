@@ -1,7 +1,7 @@
 "use client";
 import { ChartAreaInteractive } from "~/components/dashboard/chart-area-interactive";
 import { SectionCards } from "~/components/dashboard/section-cards";
-import { TestEmailForm } from "~/components/dashboard/test-email-form";
+import { JoinWaitlistForm } from "~/components/dashboard/test-email-form";
 import { isFeatureEnabled, isServiceEnabled } from "../../../config";
 
 export default function Page() {
@@ -17,7 +17,7 @@ export default function Page() {
           </div>
           {emailEnabled && (
             <div className="px-4 lg:px-6">
-              <TestEmailForm />
+              <JoinWaitlistForm />
             </div>
           )}
         </div>

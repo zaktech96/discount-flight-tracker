@@ -65,8 +65,7 @@ export default function Pricing() {
                     <span>Redirecting…</span>
                   </>
                 ) : (
-                  <span>Buy Kaizen</span>
-                )}
+                  <span>Buy Subscription</span>                )}
               </Button>
             </PricingCard.Header>
 

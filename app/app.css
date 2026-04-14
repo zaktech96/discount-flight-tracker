@@ -49,50 +49,49 @@
 
 :root {
     /* Apple Light Theme Colors */
-    --background: #ffffff;
-    --foreground: #000000;
-    --card: #ffffff;
-    --card-foreground: #000000;
-    --popover: #ffffff;
-    --popover-foreground: #000000;
-    --primary: #0f7a73;
+    --background: #0f172a;
+    --foreground: #ffffff;
+    --card: #0a0a0a;
+    --card-foreground: #ffffff;
+    --popover: #0a0a0a;
+    --popover-foreground: #ffffff;
+    --primary: #3b82f6;
     --primary-foreground: #ffffff;
-    --secondary: #f5f5f7;
-    --secondary-foreground: #1d1d1f;
-    --muted: #f5f5f7;
-    --muted-foreground: #86868b;
-    --accent: #0f7a73;
+    --secondary: #0f172a;
+    --secondary-foreground: #e5e5e7;
+    --muted: #0f172a;
+    --muted-foreground: #6e6e73;
+    --accent: #3b82f6;
     --accent-foreground: #ffffff;
     --destructive: #ff3b30;
     --destructive-foreground: #ffffff;
-    --border: #e2e2e7;
-    --input: #f5f5f7;
-    --ring: #0f7a73;
-    --chart-1: #0f7a73;
+    --border: #2a2a2a;
+    --input: #0f172a;
+    --ring: #3b82f6;
+    --chart-1: #3b82f6;
     --chart-2: #34c759;
     --chart-3: #ff9500;
     --chart-4: #ffcc00;
-    --chart-5: #1a1a1a;
-    --sidebar: #f5f5f7;
-    --sidebar-foreground: #1d1d1f;
-    --sidebar-primary: #0f7a73;
+    --chart-5: #0f172a;
+    --sidebar: #0a0a0a;
+    --sidebar-foreground: #e5e5e7;
+    --sidebar-primary: #3b82f6;
     --sidebar-primary-foreground: #ffffff;
-    --sidebar-accent: #e8e8ed;
-    --sidebar-accent-foreground: #1d1d1f;
-    --sidebar-border: #e2e2e7;
-    --sidebar-ring: #0f7a73;
+    --sidebar-accent: #0f172a;
+    --sidebar-accent-foreground: #e5e5e7;
+    --sidebar-border: #2a2a2a;
+    --sidebar-ring: #3b82f6;
     /* Apple Fonts */
     --font-apple-system:
-        -apple-system, BlinkMacSystemFont, "San Francisco", "Helvetica Neue",
-        Helvetica, sans-serif;
+        "Inter", sans-serif;
     --font-sf-mono: "SF Mono", Menlo, monospace;
     --font-sans: var(--font-apple-system);
     --font-serif: "New York", Georgia, serif;
     --font-mono: "JetBrains Mono", var(--font-sf-mono);
     /* Terminal / Command-Center Palette */
-    --terminal-bg: #1a1a1a;
-    --terminal-teal: #0f7a73;
-    --neon-signal: #00ff41;
+    --terminal-bg: #0f172a;
+    --terminal-teal: #3b82f6;
+    --neon-signal: #10b981;
     /* Apple uses more rounded corners */
     --radius: 10px;
     /* Apple-style shadows */
@@ -142,34 +141,34 @@
     --card-foreground: #ffffff;
     --popover: #0a0a0a;
     --popover-foreground: #ffffff;
-    --primary: #0f7a73;
+    --primary: #3b82f6;
     --primary-foreground: #ffffff;
-    --secondary: #1a1a1a;
+    --secondary: #0f172a;
     --secondary-foreground: #e5e5e7;
-    --muted: #1a1a1a;
+    --muted: #0f172a;
     --muted-foreground: #6e6e73;
-    --accent: #0f7a73;
+    --accent: #3b82f6;
     --accent-foreground: #ffffff;
     --destructive: #ff3b30;
     --destructive-foreground: #ffffff;
     --border: #2a2a2a;
-    --input: #1a1a1a;
-    --ring: #0f7a73;
-    --chart-1: #0f7a73;
+    --input: #0f172a;
+    --ring: #3b82f6;
+    --chart-1: #3b82f6;
     --chart-2: #34c759;
     --chart-3: #ff9500;
     --chart-4: #ffcc00;
-    --chart-5: #1a1a1a;
+    --chart-5: #0f172a;
 
     /* Sidebar colors */
     --sidebar: #0a0a0a;
     --sidebar-foreground: #e5e5e7;
-    --sidebar-primary: #0f7a73;
+    --sidebar-primary: #3b82f6;
     --sidebar-primary-foreground: #ffffff;
-    --sidebar-accent: #1a1a1a;
+    --sidebar-accent: #0f172a;
     --sidebar-accent-foreground: #e5e5e7;
     --sidebar-border: #2a2a2a;
-    --sidebar-ring: #0f7a73;
+    --sidebar-ring: #3b82f6;
 }
 
 @layer base {
@@ -289,11 +288,11 @@ nav > div {
   .animate-pulse {
     animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   }
-  
+
   .animate-ping {
     animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
   }
-  
+
   /* Use transform instead of changing properties */
   .transition-all {
     transition: transform 0.15s ease-out, opacity 0.15s ease-out;

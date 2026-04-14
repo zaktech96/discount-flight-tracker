@@ -28,7 +28,7 @@ const FlightRow = memo(function FlightRow({ route }: { route: DemoRoute }) {
         <span className="font-mono text-sm text-white/90 tracking-[0.2em]">
           [{route.origin}]
         </span>
-        <span className="text-[#0F7A73]/60 text-xs font-mono">-</span>
+        <span className="text-[#3B82F6]/60 text-xs font-mono">-</span>
         <span className="font-mono text-sm text-white/90 tracking-[0.2em]">
           [{route.dest}]
         </span>
@@ -40,13 +40,13 @@ const FlightRow = memo(function FlightRow({ route }: { route: DemoRoute }) {
         <span
           className={cn(
             "font-mono text-sm font-semibold",
-            isDrop ? "text-[#00FF41]" : "text-orange-400"
+            isDrop ? "text-[#10B981]" : "text-orange-400"
           )}
         >
           ${route.price}
         </span>
         {isDrop ? (
-          <span className="hidden sm:inline font-mono text-xs bg-[#00FF41]/10 text-[#00FF41] px-2 py-0.5 rounded border border-[#00FF41]/20">
+          <span className="hidden sm:inline font-mono text-xs bg-[#10B981]/10 text-[#10B981] px-2 py-0.5 rounded border border-[#10B981]/20">
             -{pct}%
           </span>
         ) : (
@@ -61,7 +61,7 @@ const FlightRow = memo(function FlightRow({ route }: { route: DemoRoute }) {
 
 export function FlightHero({ isSignedIn }: { isSignedIn?: boolean }) {
   return (
-    <div className="relative min-h-screen bg-[#1A1A1A] flex flex-col overflow-hidden">
+    <div className="relative min-h-screen bg-[#0F172A] flex flex-col overflow-hidden">
       {/* 20px square grid at white/5 opacity */}
       <div
         aria-hidden
@@ -88,12 +88,12 @@ export function FlightHero({ isSignedIn }: { isSignedIn?: boolean }) {
       {/* Hero content */}
       <div className="relative z-10 flex flex-col items-center justify-center flex-1 px-6 pt-32 pb-12 text-center">
         {/* Live-scan badge */}
-        <div className="inline-flex items-center gap-2 mb-8 px-4 py-1.5 rounded-full border border-[#0F7A73]/40 bg-[#0F7A73]/10">
+        <div className="inline-flex items-center gap-2 mb-8 px-4 py-1.5 rounded-full border border-[#3B82F6]/40 bg-[#3B82F6]/10">
           <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00FF41] opacity-75" />
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-[#00FF41]" />
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#10B981] opacity-75" />
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-[#10B981]" />
           </span>
-          <span className="font-mono text-xs text-[#00FF41] tracking-[0.2em] uppercase">
+          <span className="font-mono text-xs text-[#10B981] tracking-[0.2em] uppercase">
             Live Scan Active
           </span>
         </div>
@@ -101,12 +101,11 @@ export function FlightHero({ isSignedIn }: { isSignedIn?: boolean }) {
         {/* Headline - tight kerning sans-serif */}
         <h1 className="text-5xl md:text-7xl font-black tracking-[-0.03em] text-white uppercase leading-none mb-4">
           Flight{" "}
-          <span className="text-[#0F7A73]">Guardian</span>
+          <span className="text-[#3B82F6]">Guardian</span>
         </h1>
 
         <p className="text-white/45 text-lg md:text-xl max-w-lg mb-14 font-light leading-relaxed tracking-tight">
-          Autonomous price surveillance - set a target and we alert you when
-          fares drop below radar.
+          Precision Tracking, Real-time Intelligence.
         </p>
 
         {/* CTA buttons - black bg, teal border, white hover with glow */}
@@ -114,7 +113,7 @@ export function FlightHero({ isSignedIn }: { isSignedIn?: boolean }) {
           <Link
             to={isSignedIn ? "/dashboard" : "/sign-up"}
             prefetch="viewport"
-            className="font-mono text-sm font-bold px-8 py-3 rounded-lg bg-black text-white border border-[#0F7A73]/60 hover:bg-white hover:text-black hover:shadow-[0_0_15px_rgba(15,122,115,0.3)] transition-all duration-300 tracking-wider uppercase text-center"
+            className="font-mono text-sm font-bold px-8 py-3 rounded-lg bg-black text-white border border-[#3B82F6]/60 hover:bg-white hover:text-black hover:shadow-[0_0_15px_rgba(15,122,115,0.3)] transition-all duration-300 tracking-wider uppercase text-center"
           >
             Activate Guardian
           </Link>
@@ -134,10 +133,10 @@ export function FlightHero({ isSignedIn }: { isSignedIn?: boolean }) {
             <span className="font-mono text-xs text-white/35 tracking-[0.15em] uppercase">
               Live Feed - Price Anomalies
             </span>
-            <span className="font-mono text-xs text-[#00FF41] flex items-center gap-1.5">
+            <span className="font-mono text-xs text-[#10B981] flex items-center gap-1.5">
               <span className="relative flex h-1.5 w-1.5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00FF41] opacity-75" />
-                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#00FF41]" />
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#10B981] opacity-75" />
+                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#10B981]" />
               </span>
               SCANNING
             </span>
@@ -153,7 +152,7 @@ export function FlightHero({ isSignedIn }: { isSignedIn?: boolean }) {
           ) : (
             <div className="px-5 py-10 text-center animate-radar-sweep border border-transparent rounded-b-xl">
               <p className="font-mono text-sm text-white/35 tracking-[0.15em]">
-                <span className="text-[#00FF41]">&#9632;</span>&nbsp;SCAN
+                <span className="text-[#10B981]">&#9632;</span>&nbsp;SCAN
                 COMPLETE - NO RESULTS
               </p>
             </div>
