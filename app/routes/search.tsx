@@ -2,7 +2,7 @@ import { Link } from "react-router";
 
 export default function FlightSearch() {
   return (
-    <div className="min-h-screen bg-[#0F172A] text-white p-8 font-sans">
+    <div className="min-h-screen bg-[#0F172A] text-white p-8 font-sans pt-24">
       <div className="max-w-4xl mx-auto space-y-12">
         <header className="border-b border-white/10 pb-6 mt-12">
           <h1 className="text-3xl font-bold tracking-tighter uppercase">Guardian Radar</h1>
