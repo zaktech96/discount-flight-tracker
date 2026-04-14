@@ -12,8 +12,14 @@ import { ConvexReactClient, ConvexProvider } from "convex/react";
 import { ConvexProviderWithClerk } from "convex/react-clerk";
 import type { Route } from "./+types/root";
 import "./app.css";
-import { config, initializeConfig, isFeatureEnabled, isServiceEnabled } from "../config";
+import {
+  config,
+  initializeConfig,
+  isFeatureEnabled,
+  isServiceEnabled,
+} from "../config";
 import { Toaster } from "sonner";
+import { Navbar } from "./components/navigation/navbar";
 
 // Defer configuration initialization
 let configInitialized = false;
@@ -28,7 +34,7 @@ const ensureConfigInitialized = () => {
 let convex: ConvexReactClient | null = null;
 const getConvexClient = () => {
   ensureConfigInitialized();
-  if (!convex && isFeatureEnabled('convex') && config.services.convex?.url) {
+  if (!convex && isFeatureEnabled("convex") && config.services.convex?.url) {
     convex = new ConvexReactClient(config.services.convex.url);
   }
   return convex;
@@ -36,7 +42,7 @@ const getConvexClient = () => {
 
 export async function loader(args: Route.LoaderArgs) {
   ensureConfigInitialized();
-  if (isFeatureEnabled('auth') && isServiceEnabled('clerk')) {
+  if (isFeatureEnabled("auth") && isServiceEnabled("clerk")) {
     const { rootAuthLoader } = await import("@clerk/react-router/ssr.server");
     return rootAuthLoader(args);
   }
@@ -104,6 +110,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
+        <Navbar />
         {children}
         <Toaster />
         <ScrollRestoration />
@@ -115,23 +122,23 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
 export default function App({ loaderData }: Route.ComponentProps) {
   ensureConfigInitialized();
-  const authEnabled = isFeatureEnabled('auth') && isServiceEnabled('clerk');
+  const authEnabled = isFeatureEnabled("auth") && isServiceEnabled("clerk");
   const convexClient = getConvexClient();
-  const convexEnabled = isFeatureEnabled('convex') && convexClient;
+  const convexEnabled = isFeatureEnabled("convex") && convexClient;
 
   // Case 1: Both auth and convex enabled
   if (authEnabled && convexEnabled && convexClient) {
-  return (
-    <ClerkProvider
-      loaderData={loaderData}
-      signUpFallbackRedirectUrl="/"
-      signInFallbackRedirectUrl="/"
-    >
-      <ConvexProviderWithClerk client={convexClient} useAuth={useAuth}>
-        <Outlet />
-      </ConvexProviderWithClerk>
-    </ClerkProvider>
-  );
+    return (
+      <ClerkProvider
+        loaderData={loaderData}
+        signUpFallbackRedirectUrl="/"
+        signInFallbackRedirectUrl="/"
+      >
+        <ConvexProviderWithClerk client={convexClient} useAuth={useAuth}>
+          <Outlet />
+        </ConvexProviderWithClerk>
+      </ClerkProvider>
+    );
   }
 
   // Case 2: Only auth enabled
