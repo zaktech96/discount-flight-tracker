@@ -1,6 +1,6 @@
 import { Migrations } from "@convex-dev/migrations";
 import { components, internal } from "./_generated/api";
-import { DataModel } from "./_generated/dataModel";
+import type { DataModel } from "./_generated/dataModel";
 
 // Initialize migrations helper with typed DataModel
 // Cast to any to avoid typegen timing issues before `bunx convex dev` updates types
@@ -53,5 +53,3 @@ export const ensureWebhookProcessedFlag = migrations.define({
     }
   },
 });
-
-

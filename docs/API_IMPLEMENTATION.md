@@ -199,7 +199,7 @@ export const sendGuardianIntercept = internalAction({
     await resend.emails.send({
       from: "Flight Guardian <alerts@flightguardian.app>",
       to: args.email,
-      subject: `Guardian Intercept - [${args.origin}] to [${args.dest}] at $${args.price}`,
+      subject: `Guardian Intercept - [${args.origin}] - [${args.dest}] at $${args.price}`,
       html: `
         <div style="font-family: monospace; background: #1A1A1A; color: #fff; padding: 32px;">
           <h1 style="color: #0F7A73;">GUARDIAN INTERCEPT</h1>

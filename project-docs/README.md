@@ -63,6 +63,7 @@ For Vercel deployment:
 
 ## Features
 
+- **Gemini AI Architecture**: See [Gemini Integration](../docs/GEMINI_INTEGRATION.md) and [Architect Guide](../docs/ARCHITECT_GUIDE.md)
 - **Authentication**: Clerk handles user sign-in/sign-up
 - **Payment Gating**: Only users with active Polar.sh subscriptions can access `/docs`
 - **Subscription Management**: API routes for checking and creating subscriptions

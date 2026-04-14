@@ -166,7 +166,7 @@ export function FlightSearch({ isSignedIn }: { isSignedIn?: boolean }) {
                   <span className="font-mono text-sm text-white/80 tracking-[0.2em]">
                     [{route.origin}]
                   </span>
-                  <span className="text-[#0F7A73]/50 text-xs font-mono">&#8594;</span>
+                  <span className="text-[#0F7A73]/50 text-xs font-mono">-</span>
                   <span className="font-mono text-sm text-white/80 tracking-[0.2em]">
                     [{route.dest}]
                   </span>
