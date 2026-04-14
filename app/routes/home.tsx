@@ -6,6 +6,7 @@ import { Suspense, lazy } from 'react';
 import { ContentSkeleton, FeatureSkeleton, PricingSkeleton } from '~/components/ui/skeleton';
 
 // Lazy load components below the fold
+const FlightSearch = lazy(() => import("~/components/FlightSearch").then(m => ({ default: m.FlightSearch })));
 const ContentSection = lazy(() => import("~/components/homepage/content"));
 const CoreFeaturesSection = lazy(() => import("~/components/homepage/core-features"));
 const ConvexComparison = lazy(() => import("~/components/homepage/convex-comparison").then(m => ({ default: m.ConvexComparison })));
@@ -102,6 +103,9 @@ export default function Home({ loaderData }: Route.ComponentProps) {
   return (
     <>
       <Integrations loaderData={loaderData} />
+      <Suspense fallback={<div className="bg-[#1A1A1A] py-20 px-6"><ContentSkeleton /></div>}>
+        <FlightSearch isSignedIn={loaderData.isSignedIn} />
+      </Suspense>
       <Suspense fallback={<ContentSkeleton />}>
         <ContentSection />
       </Suspense>
