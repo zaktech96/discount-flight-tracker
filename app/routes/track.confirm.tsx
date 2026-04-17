@@ -1,26 +1,39 @@
-import { useEffect } from "react";
 import { Link } from "react-router";
+import { Check, Mail, ArrowRight } from "lucide-react";
 
 export default function TrackConfirm() {
-  useEffect(() => {
-    console.log("GUARDIAN_INTERCEPT_INITIALIZED: Triggering Resend via backend...");
-  }, []);
-
   return (
-    <div className="min-h-screen bg-[#0F172A] flex items-center justify-center text-white">
-      <div className="text-center space-y-6 max-w-md">
-        <div className="w-24 h-24 bg-emerald-500/20 rounded-full flex items-center justify-center mx-auto border border-emerald-500 animate-pulse">
-          <svg className="w-10 h-10 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
+    <div className="min-h-screen bg-gradient-to-b from-sky-50 to-white flex items-center justify-center text-slate-900 px-6 py-20">
+      <div className="text-center max-w-md">
+        <div className="mx-auto mb-6 h-20 w-20 rounded-full bg-emerald-500 flex items-center justify-center text-white shadow-lg shadow-emerald-200">
+          <Check className="h-10 w-10" strokeWidth={3} />
         </div>
-        <h1 className="text-4xl font-black italic tracking-tighter">PROTECTION ACTIVE</h1>
-        <p className="text-slate-400 font-mono text-sm leading-relaxed">
-          The Flight Guardian has intercepted your request. We are now monitoring this price point 24/7. A confirmation has been sent to your primary email.
+
+        <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-3">
+          You're all set!
+        </h1>
+        <p className="text-slate-600 text-lg leading-relaxed mb-8">
+          We're now watching this flight for you. The moment the price drops,
+          we'll send you an email so you can book.
         </p>
-        <div className="pt-6">
-          <Link to="/dashboard" className="border border-white/20 px-8 py-3 text-xs uppercase tracking-widest hover:bg-white hover:text-black transition-all">
-            View Live Intercepts
-          </Link>
+
+        <div className="rounded-2xl bg-white border border-slate-100 p-5 shadow-sm flex items-center gap-3 text-left mb-8">
+          <div className="h-10 w-10 rounded-full bg-sky-50 flex items-center justify-center text-sky-600 shrink-0">
+            <Mail className="h-5 w-5" />
+          </div>
+          <p className="text-sm text-slate-600">
+            Confirmation sent to your inbox. Please check your spam folder if
+            you don't see it.
+          </p>
         </div>
+
+        <Link
+          to="/dashboard"
+          className="inline-flex items-center gap-2 rounded-full bg-sky-600 text-white px-6 py-3 font-semibold shadow-sm hover:bg-sky-700 transition"
+        >
+          See my tracked flights
+          <ArrowRight className="h-4 w-4" />
+        </Link>
       </div>
     </div>
   );

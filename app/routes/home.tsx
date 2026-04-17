@@ -1,395 +1,235 @@
 import { Link } from "react-router";
+import { Plane, Bell, PiggyBank, Search, Heart, Check } from "lucide-react";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-[#0F172A] text-white font-sans overflow-x-hidden selection:bg-blue-500/30">
-      <main className="max-w-6xl mx-auto px-6 py-24 space-y-32">
-        {/* HERO SECTION */}
-        <section className="text-center space-y-8 relative z-10 pt-10">
-          <div className="inline-block border border-blue-500/30 bg-blue-500/10 px-4 py-1.5 text-blue-400 text-xs font-mono uppercase mb-4 animate-pulse shadow-[0_0_15px_rgba(59,130,246,0.2)]">
-            System Online: Guardian Radar Active
-          </div>
-          <h1 className="text-5xl md:text-7xl font-bold tracking-tighter">
-            Never miss a{" "}
-            <span className="text-blue-500 drop-shadow-[0_0_20px_rgba(59,130,246,0.4)]">
-              price drop.
+    <div className="min-h-screen bg-gradient-to-b from-sky-50 via-white to-white text-slate-900">
+      <main>
+        {/* HERO */}
+        <section className="relative overflow-hidden pt-28 pb-20 px-6">
+          <div
+            aria-hidden
+            className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,rgba(14,165,233,0.15),transparent_60%)]"
+          />
+          <div className="max-w-5xl mx-auto text-center space-y-8">
+            <span className="inline-flex items-center gap-2 rounded-full bg-sky-100 text-sky-700 px-4 py-1.5 text-sm font-medium">
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75 animate-ping" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+              </span>
+              We're watching prices right now
             </span>
-          </h1>
-          <p className="text-slate-400 text-lg md:text-xl max-w-2xl mx-auto font-mono">
-            Flight Guardian monitors airline pricing databases 24/7. Set your
-            route, define your target price, and let the system intercept the
-            best deals automatically.
-          </p>
 
-          <div className="flex justify-center gap-6 pt-8">
+            <h1 className="text-4xl md:text-6xl font-bold tracking-tight leading-tight">
+              Never miss a{" "}
+              <span className="text-sky-600">cheap flight</span> again.
+            </h1>
+
+            <p className="text-slate-600 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
+              Tell us where you want to go and your budget. We'll watch flights
+              24/7 and email you the moment prices drop — so you can book with
+              confidence.
+            </p>
+
+            <div className="flex flex-col sm:flex-row justify-center gap-3 pt-4">
+              <Link
+                to="/search"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-sky-600 text-white px-8 py-4 font-semibold shadow-lg shadow-sky-200 hover:bg-sky-700 transition"
+              >
+                <Search className="h-5 w-5" />
+                Find cheap flights
+              </Link>
+              <Link
+                to="/dashboard"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-white text-slate-900 border border-slate-200 px-8 py-4 font-semibold hover:bg-slate-50 transition"
+              >
+                My tracked flights
+              </Link>
+            </div>
+
+            <p className="text-slate-500 text-sm pt-2">
+              Free to get started · No credit card needed
+            </p>
+
+            {/* Price-drop preview card */}
+            <div className="pt-14 max-w-md mx-auto">
+              <div className="rounded-2xl bg-white shadow-xl shadow-sky-100 border border-slate-100 p-5 text-left flex items-center gap-4">
+                <div className="h-12 w-12 rounded-full bg-emerald-50 flex items-center justify-center text-emerald-600 shrink-0">
+                  <Bell className="h-6 w-6" />
+                </div>
+                <div className="flex-1">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-emerald-600">
+                    Price dropped!
+                  </p>
+                  <p className="text-slate-900 font-semibold mt-0.5">
+                    London → New York
+                  </p>
+                  <div className="flex items-baseline gap-2 mt-1">
+                    <span className="text-2xl font-bold text-slate-900">
+                      £340
+                    </span>
+                    <span className="text-sm text-slate-400 line-through">
+                      £520
+                    </span>
+                    <span className="text-xs font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">
+                      Save 35%
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* HOW IT WORKS */}
+        <section className="py-20 px-6 bg-white">
+          <div className="max-w-5xl mx-auto">
+            <div className="text-center mb-14">
+              <h2 className="text-3xl md:text-4xl font-bold tracking-tight">
+                How it works
+              </h2>
+              <p className="text-slate-600 mt-3 text-lg">
+                Three simple steps. Zero stress.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-6">
+              {[
+                {
+                  icon: Search,
+                  step: "1",
+                  title: "Tell us your trip",
+                  body: "Enter where you're flying from, where you're going, and when. Takes about 30 seconds.",
+                },
+                {
+                  icon: Heart,
+                  step: "2",
+                  title: "Set your dream price",
+                  body: "Let us know what you're happy to pay. No pressure to book right away — we'll keep watching.",
+                },
+                {
+                  icon: Bell,
+                  step: "3",
+                  title: "Get a friendly heads-up",
+                  body: "The moment a flight drops to your price, we'll send you an email with a direct booking link.",
+                },
+              ].map(({ icon: Icon, step, title, body }) => (
+                <div
+                  key={step}
+                  className="rounded-2xl bg-gradient-to-b from-sky-50 to-white border border-slate-100 p-8 hover:shadow-lg hover:shadow-sky-100 transition"
+                >
+                  <div className="flex items-center gap-3 mb-4">
+                    <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-sky-600 text-white font-bold">
+                      {step}
+                    </span>
+                    <Icon className="h-5 w-5 text-sky-600" />
+                  </div>
+                  <h3 className="text-xl font-semibold mb-2">{title}</h3>
+                  <p className="text-slate-600 leading-relaxed">{body}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* WHY YOU'LL LOVE IT */}
+        <section className="py-20 px-6">
+          <div className="max-w-5xl mx-auto">
+            <div className="text-center mb-14">
+              <h2 className="text-3xl md:text-4xl font-bold tracking-tight">
+                Why travelers love us
+              </h2>
+              <p className="text-slate-600 mt-3 text-lg">
+                Built to save you money — and time.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-6">
+              {[
+                {
+                  icon: PiggyBank,
+                  title: "Save hundreds per trip",
+                  body: "Our members typically save 30–50% by catching flights at the perfect moment, not when it's convenient to check.",
+                },
+                {
+                  icon: Bell,
+                  title: "Instant email alerts",
+                  body: "The second your flight drops, your inbox pings. Book in minutes — before the deal disappears.",
+                },
+                {
+                  icon: Plane,
+                  title: "Works for any route",
+                  body: "Weekend getaways, dream honeymoons, back-home visits — track as many trips as you like.",
+                },
+                {
+                  icon: Heart,
+                  title: "No spam, ever",
+                  body: "We only email you about deals that hit your price. No newsletters, no sales pitches, no noise.",
+                },
+              ].map(({ icon: Icon, title, body }) => (
+                <div
+                  key={title}
+                  className="rounded-2xl bg-white border border-slate-100 p-8 shadow-sm hover:shadow-md transition"
+                >
+                  <div className="h-12 w-12 rounded-xl bg-sky-50 flex items-center justify-center text-sky-600 mb-5">
+                    <Icon className="h-6 w-6" />
+                  </div>
+                  <h3 className="text-xl font-semibold mb-2">{title}</h3>
+                  <p className="text-slate-600 leading-relaxed">{body}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* TRUST / TESTIMONIAL */}
+        <section className="py-16 px-6 bg-sky-50">
+          <div className="max-w-3xl mx-auto text-center">
+            <div className="flex justify-center gap-1 text-amber-500 mb-4">
+              {[...Array(5)].map((_, i) => (
+                <svg key={i} className="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                </svg>
+              ))}
+            </div>
+            <p className="text-xl md:text-2xl text-slate-800 leading-relaxed font-medium">
+              "Saved us £400 on our family trip to Lisbon. I set up an alert,
+              went about my week, and got an email on Tuesday morning. Booked
+              in 5 minutes."
+            </p>
+            <p className="mt-4 text-slate-600">— Sarah M., traveler from Manchester</p>
+          </div>
+        </section>
+
+        {/* FINAL CTA */}
+        <section className="py-24 px-6">
+          <div className="max-w-3xl mx-auto text-center rounded-3xl bg-gradient-to-br from-sky-600 to-sky-500 p-12 md:p-16 text-white shadow-xl shadow-sky-200">
+            <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">
+              Ready for your next trip?
+            </h2>
+            <p className="text-sky-100 text-lg mb-8 max-w-xl mx-auto">
+              Start watching a flight now. It's free, and you can cancel the
+              alert any time.
+            </p>
             <Link
               to="/search"
-              className="bg-blue-600 hover:bg-blue-500 text-white px-8 py-4 font-bold uppercase text-sm tracking-widest transition-all duration-300 hover:scale-105 hover:shadow-[0_0_25px_rgba(59,130,246,0.5)] border border-transparent hover:border-blue-400"
+              className="inline-flex items-center gap-2 rounded-full bg-white text-sky-700 px-8 py-4 font-semibold shadow-lg hover:bg-slate-50 transition"
             >
-              Initialize Radar
+              <Plane className="h-5 w-5" />
+              Start tracking a flight
             </Link>
-            <Link
-              to="/dashboard"
-              className="bg-transparent border border-white/20 hover:border-white/60 text-white px-8 py-4 font-bold uppercase text-sm tracking-widest transition-all duration-300 hover:bg-white/5"
-            >
-              View Intercepts
-            </Link>
-          </div>
-
-          {/* ANIMATED HERO MOCKUP */}
-          <div className="relative mt-24 max-w-lg mx-auto pt-12 group cursor-default">
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-emerald-600 rounded-lg blur-xl opacity-20 group-hover:opacity-40 transition-opacity duration-700 animate-pulse mt-12"></div>
-            <div className="relative bg-[#1A1A1A] border border-white/10 p-6 rounded-lg flex items-center gap-6 shadow-2xl transition-transform duration-700 group-hover:-translate-y-2">
-              <div className="h-14 w-14 bg-emerald-500/20 rounded-full flex items-center justify-center text-emerald-500 shrink-0 border border-emerald-500/30">
-                <svg
-                  className="w-7 h-7 animate-ping absolute opacity-30"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <circle cx="12" cy="12" r="10" strokeWidth="2"></circle>
-                </svg>
-                <svg
-                  className="w-7 h-7 relative"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
-                  ></path>
-                </svg>
-              </div>
-              <div className="text-left w-full">
-                <div className="flex justify-between items-center w-full">
-                  <p className="text-emerald-400 font-bold text-xs tracking-widest uppercase">
-                    Target Intercepted
-                  </p>
-                  <span className="text-[10px] font-mono text-slate-500">
-                    Just now
-                  </span>
-                </div>
-                <p className="text-white font-mono mt-2 text-base">
-                  LHR ➔ JFK <span className="text-emerald-400 ml-2">£340</span>
-                </p>
-                <div className="w-full bg-white/5 h-1 mt-3 rounded-full overflow-hidden">
-                  <div className="bg-gradient-to-r from-emerald-600 to-emerald-400 h-full w-full animate-[pulse_2s_ease-in-out_infinite]"></div>
-                </div>
-              </div>
+            <div className="mt-6 flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-sky-100">
+              <span className="inline-flex items-center gap-1.5">
+                <Check className="h-4 w-4" /> Free to start
+              </span>
+              <span className="inline-flex items-center gap-1.5">
+                <Check className="h-4 w-4" /> No credit card
+              </span>
+              <span className="inline-flex items-center gap-1.5">
+                <Check className="h-4 w-4" /> Cancel anytime
+              </span>
             </div>
           </div>
-        </section>
-
-        {/* INTERCEPT FLOW ANIMATION SECTION */}
-        <section className="py-12 border-t border-white/5">
-          <div className="text-center mb-16 space-y-4">
-            <h2 className="text-3xl font-bold uppercase tracking-tighter drop-shadow-md">
-              The Intercept Flow
-            </h2>
-            <p className="text-slate-400 font-mono text-sm uppercase tracking-widest">
-              Automated end-to-end price tracking
-            </p>
-          </div>
-
-          <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-4 lg:gap-8 px-2">
-            {/* Step 1: Search */}
-            <div className="w-full md:w-1/3 bg-[#131B2C] border border-white/5 p-6 rounded relative group hover:border-blue-500/40 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_10px_30px_-10px_rgba(59,130,246,0.15)] hover:bg-[#162032]">
-              <div className="absolute -top-3 -left-3 w-8 h-8 bg-[#0F172A] border border-white/10 rounded-full flex items-center justify-center font-mono text-blue-500 text-xs transition-colors group-hover:border-blue-500/50 group-hover:bg-blue-500/10">
-                1
-              </div>
-              <h3 className="text-blue-400 font-mono text-xs uppercase tracking-widest mb-6">
-                Set Parameters
-              </h3>
-              <div className="space-y-3 opacity-60 group-hover:opacity-100 transition-opacity duration-500">
-                <div className="h-10 bg-black/40 border border-white/5 rounded px-3 flex items-center justify-between">
-                  <span className="text-xs font-mono text-slate-500 uppercase tracking-widest">
-                    Origin
-                  </span>
-                  <span className="text-sm font-bold text-white font-mono">
-                    LHR
-                  </span>
-                </div>
-                <div className="h-10 bg-black/40 border border-white/5 rounded px-3 flex items-center justify-between">
-                  <span className="text-xs font-mono text-slate-500 uppercase tracking-widest">
-                    Dest
-                  </span>
-                  <span className="text-sm font-bold text-white font-mono">
-                    DXB
-                  </span>
-                </div>
-                <div className="h-10 bg-black/40 border border-white/5 rounded px-3 flex items-center justify-between">
-                  <span className="text-xs font-mono text-slate-500 uppercase tracking-widest">
-                    Target
-                  </span>
-                  <span className="text-sm font-bold text-blue-400 font-mono">
-                    &lt; £400
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            {/* Animated Connector 1 */}
-            <div className="hidden md:flex flex-col items-center justify-center text-blue-500/30">
-              <svg
-                className="w-6 h-6 animate-[pulse_1.5s_ease-in-out_infinite]"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M14 5l7 7m0 0l-7 7m7-7H3"
-                ></path>
-              </svg>
-            </div>
-
-            {/* Step 2: Engine */}
-            <div className="w-full md:w-1/3 bg-[#131B2C] border border-white/5 p-6 rounded relative group hover:border-blue-500/40 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_10px_30px_-10px_rgba(59,130,246,0.15)] overflow-hidden hover:bg-[#162032]">
-              <div className="absolute -top-3 -left-3 w-8 h-8 bg-[#0F172A] border border-white/10 rounded-full flex items-center justify-center font-mono text-blue-500 text-xs transition-colors group-hover:border-blue-500/50 group-hover:bg-blue-500/10">
-                2
-              </div>
-              <h3 className="text-blue-400 font-mono text-xs uppercase tracking-widest mb-6">
-                Convex Engine
-              </h3>
-              <div className="h-[144px] flex items-center justify-center relative bg-black/20 rounded border border-white/5 group-hover:border-blue-500/20 transition-colors">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-24 h-24 border border-blue-500/10 rounded-full animate-ping [animation-duration:3s]"></div>
-                  <div className="w-16 h-16 border border-blue-500/20 rounded-full absolute"></div>
-                  <div className="w-2 h-2 bg-blue-500 rounded-full absolute shadow-[0_0_10px_#3B82F6]"></div>
-                </div>
-                <span className="relative z-10 text-[10px] uppercase tracking-widest font-mono text-blue-300/70 bg-[#131B2C] px-3 py-1 border border-white/5 rounded">
-                  Polling API...
-                </span>
-              </div>
-            </div>
-
-            {/* Animated Connector 2 */}
-            <div className="hidden md:flex flex-col items-center justify-center text-emerald-500/30">
-              <svg
-                className="w-6 h-6 animate-[pulse_1.5s_ease-in-out_infinite_0.5s]"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M14 5l7 7m0 0l-7 7m7-7H3"
-                ></path>
-              </svg>
-            </div>
-
-            {/* Step 3: Notification */}
-            <div className="w-full md:w-1/3 bg-emerald-950/10 border border-emerald-500/20 p-6 rounded relative group hover:border-emerald-500/50 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_10px_30px_-10px_rgba(16,185,129,0.15)] hover:bg-emerald-950/20">
-              <div className="absolute -top-3 -left-3 w-8 h-8 bg-[#0F172A] border border-emerald-500/40 rounded-full flex items-center justify-center font-mono text-emerald-500 text-xs shadow-[0_0_10px_rgba(16,185,129,0.2)] transition-shadow group-hover:shadow-[0_0_15px_rgba(16,185,129,0.5)]">
-                3
-              </div>
-              <h3 className="text-emerald-400 font-mono text-xs uppercase tracking-widest mb-6 flex items-center gap-2">
-                <span className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_5px_#10B981]"></span>
-                Drop Detected
-              </h3>
-              <div className="bg-black/40 border border-emerald-500/10 rounded p-5 h-[144px] flex flex-col justify-between group-hover:border-emerald-500/30 transition-colors">
-                <p className="text-white font-mono text-sm tracking-widest">
-                  LHR ➔ DXB
-                </p>
-                <div>
-                  <div className="flex items-end gap-3 mt-1">
-                    <p className="text-4xl font-black text-emerald-400">£315</p>
-                    <p className="text-sm font-mono text-slate-500 line-through mb-1">
-                      £450
-                    </p>
-                  </div>
-                  <p className="text-[9px] uppercase tracking-widest text-emerald-500/60 mt-4 pt-3 border-t border-emerald-500/10 flex items-center gap-1.5">
-                    <svg
-                      className="w-3 h-3"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                      ></path>
-                    </svg>
-                    Resend Email Dispatched
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* SYSTEM CAPABILITIES SECTION */}
-        <section className="space-y-12 border-t border-white/5 pt-24">
-          <h2 className="text-3xl font-bold text-center uppercase tracking-tighter drop-shadow-md">
-            System Architecture
-          </h2>
-          <div className="grid md:grid-cols-2 gap-6">
-            <div className="bg-gradient-to-br from-[#131B2C] to-[#0F172A] border border-white/5 p-10 hover:border-blue-500/30 transition-all duration-300 group hover:-translate-y-1 hover:shadow-lg rounded-sm">
-              <div className="w-10 h-10 bg-blue-500/10 flex items-center justify-center text-blue-500 mb-6 group-hover:scale-110 transition-transform duration-300 border border-blue-500/20">
-                <svg
-                  className="w-5 h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M13 10V3L4 14h7v7l9-11h-7z"
-                  ></path>
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold mb-3 uppercase text-white tracking-tight">
-                Live Data Synchronization
-              </h3>
-              <p className="text-slate-400 text-sm font-mono leading-relaxed group-hover:text-slate-300 transition-colors">
-                Powered by Convex, our backend doesn't rely on slow, legacy API
-                polling. Flight prices are synchronized natively in real-time,
-                meaning you see drops the second they are published by the
-                airlines.
-              </p>
-            </div>
-
-            <div className="bg-gradient-to-br from-[#131B2C] to-[#0F172A] border border-white/5 p-10 hover:border-blue-500/30 transition-all duration-300 group hover:-translate-y-1 hover:shadow-lg rounded-sm">
-              <div className="w-10 h-10 bg-blue-500/10 flex items-center justify-center text-blue-500 mb-6 group-hover:scale-110 transition-transform duration-300 border border-blue-500/20">
-                <svg
-                  className="w-5 h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
-                  ></path>
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold mb-3 uppercase text-white tracking-tight">
-                Sub-Second Notifications
-              </h3>
-              <p className="text-slate-400 text-sm font-mono leading-relaxed group-hover:text-slate-300 transition-colors">
-                Integrated directly with Resend infrastructure. When your target
-                price is breached, an intercept email is compiled and dispatched
-                to your inbox in under 400 milliseconds, giving you the edge.
-              </p>
-            </div>
-
-            <div className="bg-gradient-to-br from-[#131B2C] to-[#0F172A] border border-white/5 p-10 hover:border-blue-500/30 transition-all duration-300 group hover:-translate-y-1 hover:shadow-lg rounded-sm">
-              <div className="w-10 h-10 bg-blue-500/10 flex items-center justify-center text-blue-500 mb-6 group-hover:scale-110 transition-transform duration-300 border border-blue-500/20">
-                <svg
-                  className="w-5 h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04a11.735 11.735 0 00-1.29 11.88c.175.47.408.915.69 1.32a11.952 11.952 0 0011.08 6.458 11.952 11.952 0 0011.08-6.458c.282-.405.515-.85.69-1.32a11.735 11.735 0 00-1.29-11.88z"
-                  ></path>
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold mb-3 uppercase text-white tracking-tight">
-                End-to-End Type Safety
-              </h3>
-              <p className="text-slate-400 text-sm font-mono leading-relaxed group-hover:text-slate-300 transition-colors">
-                Built on a rigid TypeScript foundation. From the frontend radar
-                interface to the database schema, data is validated strictly,
-                ensuring zero missed intercepts due to malformed requests.
-              </p>
-            </div>
-
-            <div className="bg-gradient-to-br from-[#131B2C] to-[#0F172A] border border-white/5 p-10 hover:border-blue-500/30 transition-all duration-300 group hover:-translate-y-1 hover:shadow-lg rounded-sm">
-              <div className="w-10 h-10 bg-blue-500/10 flex items-center justify-center text-blue-500 mb-6 group-hover:scale-110 transition-transform duration-300 border border-blue-500/20">
-                <svg
-                  className="w-5 h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"
-                  ></path>
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold mb-3 uppercase text-white tracking-tight">
-                Aero-Minimalist Design
-              </h3>
-              <p className="text-slate-400 text-sm font-mono leading-relaxed group-hover:text-slate-300 transition-colors">
-                Information density without the clutter. Flight Guardian's
-                interface strips away travel agency bloat, focusing entirely on
-                raw data, fast filtering, and immediate confirmation.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* PROTOCOLS SECTION */}
-        <section className="space-y-12 border-t border-white/5 pt-24 pb-12">
-          <h2 className="text-3xl font-bold text-center uppercase tracking-tighter drop-shadow-md">
-            Guardian Protocols
-          </h2>
-          <div className="grid md:grid-cols-3 gap-6">
-            <div className="bg-[#131B2C] border border-white/5 p-8 group hover:border-blue-500/20 transition-all duration-300">
-              <h3 className="text-xl font-bold mb-4 uppercase text-blue-500 flex items-center gap-3">
-                <span className="font-mono text-sm opacity-50">01</span> Scan
-                Routes
-              </h3>
-              <p className="text-slate-400 text-sm font-mono group-hover:text-slate-300 transition-colors">
-                Search global airline databases for your exact origin,
-                destination, and dates.
-              </p>
-            </div>
-            <div className="bg-[#131B2C] border border-white/5 p-8 group hover:border-blue-500/20 transition-all duration-300">
-              <h3 className="text-xl font-bold mb-4 uppercase text-blue-500 flex items-center gap-3">
-                <span className="font-mono text-sm opacity-50">02</span> Lock
-                Target
-              </h3>
-              <p className="text-slate-400 text-sm font-mono group-hover:text-slate-300 transition-colors">
-                Set the maximum price you are willing to pay. The Guardian takes
-                over from here.
-              </p>
-            </div>
-            <div className="bg-[#131B2C] border border-white/5 p-8 group hover:border-blue-500/20 transition-all duration-300">
-              <h3 className="text-xl font-bold mb-4 uppercase text-blue-500 flex items-center gap-3">
-                <span className="font-mono text-sm opacity-50">03</span>{" "}
-                Intercept Alert
-              </h3>
-              <p className="text-slate-400 text-sm font-mono group-hover:text-slate-300 transition-colors">
-                Receive an instant secure alert the millisecond the price drops
-                below your threshold.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* BOTTOM CTA */}
-        <section className="border-t border-white/5 pt-24 pb-24 text-center">
-          <h2 className="text-4xl font-black italic tracking-tighter mb-8 uppercase">
-            Ready to secure your flight?
-          </h2>
-          <Link
-            to="/search"
-            className="inline-block bg-blue-600 hover:bg-blue-500 text-white px-12 py-5 font-bold uppercase text-sm tracking-widest transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(59,130,246,0.4)]"
-          >
-            Activate Guardian Radar
-          </Link>
         </section>
       </main>
     </div>

@@ -1,4 +1,5 @@
 import { Link } from "react-router";
+import { Plane } from "lucide-react";
 import {
   SignedIn,
   SignedOut,
@@ -9,42 +10,45 @@ import {
 
 export function Navbar() {
   return (
-    <nav className="w-full border-b border-white/10 bg-[#0F172A]/90 backdrop-blur-md p-4 px-8 flex justify-between items-center text-white font-sans fixed top-0 z-50">
-      <Link
-        to="/"
-        className="font-bold text-xl tracking-tighter flex items-center gap-2 hover:opacity-80 transition-opacity"
-      >
-        <span className="text-blue-500 drop-shadow-[0_0_8px_rgba(59,130,246,0.5)]">
-          🛡️
-        </span>{" "}
-        FLIGHT-GUARDIAN
-      </Link>
-
-      <div className="flex items-center gap-8 text-xs uppercase tracking-widest font-bold">
-        <Link to="/search" className="hover:text-blue-400 transition-colors">
-          Radar
+    <nav className="w-full border-b border-slate-100 bg-white/90 backdrop-blur-md fixed top-0 z-50">
+      <div className="max-w-6xl mx-auto flex justify-between items-center px-6 py-4 text-slate-900">
+        <Link
+          to="/"
+          className="flex items-center gap-2 font-bold text-lg hover:opacity-80 transition-opacity"
+        >
+          <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-sky-600 text-white">
+            <Plane className="h-4 w-4" />
+          </span>
+          Flight Guardian
         </Link>
 
-        <div className="flex items-center gap-6 border-l border-white/10 pl-8">
+        <div className="flex items-center gap-2 sm:gap-6 text-sm font-medium">
+          <Link
+            to="/search"
+            className="text-slate-600 hover:text-slate-900 transition-colors px-2"
+          >
+            Search flights
+          </Link>
+
           <SignedIn>
             <Link
               to="/dashboard"
-              className="text-blue-400 hover:text-blue-300 transition-colors"
+              className="text-slate-600 hover:text-slate-900 transition-colors px-2"
             >
-              Dashboard
+              My flights
             </Link>
             <UserButton afterSignOutUrl="/" />
           </SignedIn>
 
           <SignedOut>
             <SignInButton mode="modal">
-              <button className="text-slate-300 hover:text-white transition-colors">
-                Log In
+              <button className="text-slate-600 hover:text-slate-900 transition-colors px-2">
+                Log in
               </button>
             </SignInButton>
             <SignUpButton mode="modal">
-              <button className="bg-blue-600 hover:bg-blue-500 text-white px-6 py-2.5 transition-all hover:scale-105">
-                Sign Up
+              <button className="rounded-full bg-sky-600 text-white px-5 py-2 font-semibold shadow-sm hover:bg-sky-700 transition">
+                Get started
               </button>
             </SignUpButton>
           </SignedOut>

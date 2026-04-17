@@ -1,49 +1,59 @@
 import type { Route } from "./+types/track.$id";
 import { PriceDisplay } from "~/components/PriceDisplay";
+import { Plane, Bell } from "lucide-react";
 
 export function meta({ params }: Route.MetaArgs) {
-  return [
-    { title: `Track Flight ${params.id} | Flight Guardian` },
-  ];
+  return [{ title: `Track flight ${params.id} | Flight Guardian` }];
 }
 
 export default function TrackFlight({ params }: Route.ComponentProps) {
   return (
-    <div className="min-h-screen bg-[#1A1A1A] flex items-center justify-center p-6 font-mono">
-      <div className="w-full max-w-lg bg-white rounded-2xl shadow-2xl overflow-hidden">
-        {/* Radar Header */}
-        <div className="bg-[#1A1A1A] p-6 border-b border-[#0F7A73]/30 text-center">
-          <div className="flex justify-center items-center gap-4 text-[#0F7A73] mb-2 font-mono">
-            <span className="text-xl tracking-widest">[LHR]</span>
-            <span className="text-xl font-light">-</span>
-            <span className="text-xl tracking-widest">[JFK]</span>
+    <div className="min-h-screen bg-gradient-to-b from-sky-50 to-white flex items-center justify-center p-6 pt-24">
+      <div className="w-full max-w-lg rounded-3xl bg-white shadow-xl shadow-sky-100 border border-slate-100 overflow-hidden">
+        {/* Route header */}
+        <div className="bg-gradient-to-br from-sky-600 to-sky-500 text-white p-6 text-center">
+          <div className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-white/20 mb-3">
+            <Plane className="h-6 w-6" />
           </div>
-          <p className="text-[#0F7A73]/60 text-xs tracking-[0.2em] uppercase font-mono">
-            Active Radar Surveillance
+          <div className="flex items-center justify-center gap-3 text-xl font-semibold">
+            <span>London</span>
+            <span className="text-sky-200">→</span>
+            <span>New York</span>
+          </div>
+          <p className="text-sky-100 text-sm mt-1">
+            Current lowest price we've seen
           </p>
         </div>
 
         {/* Content */}
-        <div className="p-10 text-center font-mono">
+        <div className="p-8 md:p-10 text-center">
           <PriceDisplay price={450} />
 
-          <div className="mt-8 mb-10">
-            <label className="block text-xs text-[#1A1A1A]/60 tracking-[0.2em] uppercase mb-3">
-              Target Alert Price
+          <div className="mt-8 mb-8 text-left">
+            <label className="block text-sm font-medium text-slate-700 mb-2">
+              What price would make you happy?
             </label>
-            <div className="relative max-w-xs mx-auto border-b border-[#1A1A1A]/20 focus-within:border-[#0F7A73] transition-colors pb-2 flex items-center justify-center gap-2">
-              <span className="text-[#0F7A73] text-xl font-mono">£</span>
+            <div className="flex items-center gap-1 rounded-xl border border-slate-200 bg-white px-4 py-3 focus-within:ring-2 focus-within:ring-sky-500 focus-within:border-transparent">
+              <span className="text-xl text-slate-400">£</span>
               <input
                 type="number"
                 placeholder="300"
-                className="bg-transparent text-center text-3xl outline-none text-[#1A1A1A] font-mono w-32 placeholder:text-[#1A1A1A]/20"
+                className="w-full bg-transparent text-xl text-slate-900 font-semibold outline-none placeholder:text-slate-300"
               />
             </div>
+            <p className="text-xs text-slate-500 mt-2">
+              We'll email you the moment prices drop to this or below.
+            </p>
           </div>
 
-          <button className="w-full bg-[#1A1A1A] text-white font-mono text-sm tracking-[0.2em] uppercase py-4 px-6 rounded-lg hover:bg-white hover:text-[#1A1A1A] hover:shadow-[0_0_20px_rgba(15,122,115,0.4)] border border-transparent hover:border-[#1A1A1A] transition-all duration-300">
-            Activate Guardian
+          <button className="w-full rounded-full bg-sky-600 text-white py-3.5 font-semibold shadow-sm hover:bg-sky-700 transition inline-flex items-center justify-center gap-2">
+            <Bell className="h-4 w-4" />
+            Start tracking
           </button>
+
+          <p className="text-xs text-slate-500 mt-4">
+            Free · Cancel anytime · No spam
+          </p>
         </div>
       </div>
     </div>

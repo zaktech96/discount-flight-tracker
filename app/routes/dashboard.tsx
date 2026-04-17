@@ -1,23 +1,47 @@
 import { Link } from "react-router";
+import { Plane, Plus, Search } from "lucide-react";
 
 export default function Dashboard() {
   return (
-    <div className="min-h-screen bg-[#0F172A] text-white p-8 font-sans pt-24">
-      <div className="max-w-4xl mx-auto space-y-12">
-        <header className="border-b border-white/10 pb-6 mt-12 flex justify-between items-end">
+    <div className="min-h-screen bg-gradient-to-b from-sky-50 to-white text-slate-900 pt-24 pb-16 px-6">
+      <div className="max-w-4xl mx-auto">
+        <header className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10">
           <div>
-            <h1 className="text-3xl font-bold tracking-tighter uppercase">Active Intercepts</h1>
-            <p className="text-slate-400 font-mono text-sm">MONITORING_YOUR_TARGETS...</p>
+            <h1 className="text-3xl md:text-4xl font-bold tracking-tight">
+              Your tracked flights
+            </h1>
+            <p className="text-slate-600 mt-2 text-lg">
+              Here's what we're watching for you. We'll email you the moment a
+              price drops.
+            </p>
           </div>
-          <Link to="/search" className="border border-blue-500 text-blue-400 px-4 py-2 text-xs font-bold uppercase tracking-widest hover:bg-blue-500/10">
-            + New Target
+          <Link
+            to="/search"
+            className="inline-flex items-center gap-2 rounded-full bg-sky-600 text-white px-5 py-2.5 font-semibold shadow-sm hover:bg-sky-700 transition whitespace-nowrap"
+          >
+            <Plus className="h-4 w-4" />
+            Track a new flight
           </Link>
         </header>
 
-        <div className="bg-[#1A1A1A] border border-white/5 p-8 text-center space-y-4">
-          <p className="text-slate-400 font-mono">No active intercepts found.</p>
-          <Link to="/search" className="inline-block bg-blue-600 text-white px-6 py-2 text-xs font-bold uppercase tracking-widest hover:bg-blue-500">
-            Initialize a Search
+        {/* Empty state */}
+        <div className="rounded-2xl bg-white border border-slate-100 p-10 md:p-14 text-center shadow-sm">
+          <div className="mx-auto h-16 w-16 rounded-full bg-sky-50 flex items-center justify-center text-sky-600 mb-5">
+            <Plane className="h-7 w-7" />
+          </div>
+          <h2 className="text-xl font-semibold mb-2">
+            No flights tracked yet
+          </h2>
+          <p className="text-slate-600 max-w-md mx-auto mb-6">
+            Start by searching for a route you'd like to fly. We'll keep an eye
+            on the price so you don't have to.
+          </p>
+          <Link
+            to="/search"
+            className="inline-flex items-center gap-2 rounded-full bg-sky-600 text-white px-6 py-3 font-semibold shadow-sm hover:bg-sky-700 transition"
+          >
+            <Search className="h-4 w-4" />
+            Search flights
           </Link>
         </div>
       </div>

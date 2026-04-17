@@ -25,14 +25,14 @@ export default function App({ loaderData }: Route.ComponentProps) {
         <Meta />
         <Links />
       </head>
-      <body className="bg-[#0F172A] text-white">
+      <body className="bg-white text-slate-900">
         <ClerkProvider
           loaderData={loaderData}
           publishableKey={import.meta.env.VITE_CLERK_PUBLISHABLE_KEY}
         >
           <ConvexProviderWithClerk client={convex} useAuth={useAuth}>
             <Navbar />
-            <div className="pt-20">
+            <div>
               <Outlet />
             </div>
             <ScrollRestoration />
@@ -52,16 +52,18 @@ export function ErrorBoundary({ error }: { error: Error }) {
         <Meta />
         <Links />
       </head>
-      <body className="bg-[#0F172A] text-white p-10 font-mono">
-        <h1 className="text-red-500 text-2xl font-bold">
-          AUTH_HANDSHAKE_FAILED
-        </h1>
-        <p className="mt-4 text-slate-400">
-          Ensure Clerk API keys are set in Vercel.
-        </p>
-        <pre className="mt-6 bg-black/50 p-4 border border-white/10 overflow-auto text-xs">
-          {error?.message || "Check server logs for details."}
-        </pre>
+      <body className="bg-gradient-to-b from-sky-50 to-white text-slate-900 min-h-screen flex items-center justify-center p-6">
+        <div className="max-w-md w-full rounded-2xl bg-white border border-slate-100 shadow-sm p-8 text-center">
+          <h1 className="text-2xl font-bold text-slate-900 mb-2">
+            Something went wrong
+          </h1>
+          <p className="text-slate-600 mb-4">
+            We hit a snag loading this page. Please try again in a moment.
+          </p>
+          <pre className="mt-4 bg-slate-50 text-slate-600 p-4 rounded-xl overflow-auto text-xs text-left">
+            {error?.message || "Please refresh or contact support."}
+          </pre>
+        </div>
         <Scripts />
       </body>
     </html>

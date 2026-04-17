@@ -1,8 +1,10 @@
 export function PriceDisplay({ price }: { price: number }) {
   return (
-    <div className="text-6xl md:text-8xl font-bold tracking-tighter text-[#1A1A1A] my-8 flex justify-center items-center font-mono">
-      <span className="text-3xl md:text-5xl mr-2 text-[#0F7A73]">£</span>
-      {price}
+    <div className="flex items-baseline justify-center gap-1 my-6">
+      <span className="text-3xl text-slate-500 font-medium">£</span>
+      <span className="text-6xl md:text-7xl font-bold tracking-tight text-slate-900">
+        {price}
+      </span>
     </div>
   );
 }
