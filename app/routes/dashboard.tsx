@@ -1,7 +1,26 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router";
-import { Plane, Plus, Search } from "lucide-react";
+import { Plane, Plus, Search, Bell, Trash2, TrendingDown } from "lucide-react";
+import {
+  getTrackedFlights,
+  removeTrackedFlight,
+  type TrackedFlight,
+} from "~/lib/tracked-flights";
 
 export default function Dashboard() {
+  const [flights, setFlights] = useState<TrackedFlight[] | null>(null);
+
+  useEffect(() => {
+    setFlights(getTrackedFlights());
+  }, []);
+
+  const handleRemove = (id: string) => {
+    removeTrackedFlight(id);
+    setFlights(getTrackedFlights());
+  };
+
+  const hasFlights = flights && flights.length > 0;
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-sky-50 to-white text-slate-900 pt-24 pb-16 px-6">
       <div className="max-w-4xl mx-auto">
@@ -11,8 +30,9 @@ export default function Dashboard() {
               Your tracked flights
             </h1>
             <p className="text-slate-600 mt-2 text-lg">
-              Here's what we're watching for you. We'll email you the moment a
-              price drops.
+              {hasFlights
+                ? "We'll email you the moment any of these drops to your target price."
+                : "Here's what we're watching for you. Add a flight to get started."}
             </p>
           </div>
           <Link
@@ -24,26 +44,100 @@ export default function Dashboard() {
           </Link>
         </header>
 
-        {/* Empty state */}
-        <div className="rounded-2xl bg-white border border-slate-100 p-10 md:p-14 text-center shadow-sm">
-          <div className="mx-auto h-16 w-16 rounded-full bg-sky-50 flex items-center justify-center text-sky-600 mb-5">
-            <Plane className="h-7 w-7" />
+        {flights === null ? (
+          <div className="rounded-2xl bg-white border border-slate-100 p-10 text-center shadow-sm">
+            <p className="text-slate-500">Loading your flights…</p>
           </div>
-          <h2 className="text-xl font-semibold mb-2">
-            No flights tracked yet
-          </h2>
-          <p className="text-slate-600 max-w-md mx-auto mb-6">
-            Start by searching for a route you'd like to fly. We'll keep an eye
-            on the price so you don't have to.
-          </p>
-          <Link
-            to="/search"
-            className="inline-flex items-center gap-2 rounded-full bg-sky-600 text-white px-6 py-3 font-semibold shadow-sm hover:bg-sky-700 transition"
-          >
-            <Search className="h-4 w-4" />
-            Search flights
-          </Link>
-        </div>
+        ) : hasFlights ? (
+          <div className="space-y-3">
+            {flights.map((flight) => {
+              const diff = flight.currentPrice - flight.targetPrice;
+              const hitTarget = diff <= 0;
+              return (
+                <div
+                  key={flight.id}
+                  className="rounded-2xl bg-white border border-slate-100 shadow-sm p-5 md:p-6 hover:shadow-md transition"
+                >
+                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div className="flex items-center gap-4 flex-1 min-w-0">
+                      <div className="h-12 w-12 rounded-full bg-sky-50 flex items-center justify-center text-sky-600 shrink-0">
+                        <Plane className="h-5 w-5" />
+                      </div>
+                      <div className="min-w-0">
+                        <p className="font-semibold text-slate-900 truncate">
+                          {flight.origin} → {flight.destination}
+                        </p>
+                        <p className="text-sm text-slate-500 truncate">
+                          {flight.airline} · Departs {flight.departureDate}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-4 md:gap-6">
+                      <div className="text-right">
+                        <p className="text-xs text-slate-500">Current</p>
+                        <p className="text-lg font-bold text-slate-900">
+                          £{flight.currentPrice}
+                        </p>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-xs text-slate-500 flex items-center gap-1 justify-end">
+                          <Bell className="h-3 w-3" />
+                          Target
+                        </p>
+                        <p className="text-lg font-bold text-sky-600">
+                          £{flight.targetPrice}
+                        </p>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => handleRemove(flight.id)}
+                        aria-label="Stop tracking"
+                        className="h-10 w-10 rounded-full flex items-center justify-center text-slate-400 hover:text-red-600 hover:bg-red-50 transition"
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Status bar */}
+                  <div className="mt-4 pt-4 border-t border-slate-100 flex items-center gap-2 text-sm">
+                    {hitTarget ? (
+                      <span className="inline-flex items-center gap-1.5 text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full font-medium">
+                        <TrendingDown className="h-3.5 w-3.5" />
+                        Price hit your target — book now!
+                      </span>
+                    ) : (
+                      <span className="text-slate-600">
+                        £{diff} to go to hit your target price
+                      </span>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        ) : (
+          <div className="rounded-2xl bg-white border border-slate-100 p-10 md:p-14 text-center shadow-sm">
+            <div className="mx-auto h-16 w-16 rounded-full bg-sky-50 flex items-center justify-center text-sky-600 mb-5">
+              <Plane className="h-7 w-7" />
+            </div>
+            <h2 className="text-xl font-semibold mb-2">
+              No flights tracked yet
+            </h2>
+            <p className="text-slate-600 max-w-md mx-auto mb-6">
+              Start by searching for a route you'd like to fly. We'll keep an
+              eye on the price so you don't have to.
+            </p>
+            <Link
+              to="/search"
+              className="inline-flex items-center gap-2 rounded-full bg-sky-600 text-white px-6 py-3 font-semibold shadow-sm hover:bg-sky-700 transition"
+            >
+              <Search className="h-4 w-4" />
+              Search flights
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );

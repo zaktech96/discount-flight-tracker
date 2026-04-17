@@ -338,3 +338,63 @@ img[loading="lazy"] {
 .animate-radar-sweep {
   animation: radar-sweep 3s ease-in-out infinite;
 }
+
+/* Friendly marketing-page animations */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-up {
+  animation: fade-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.animate-fade-in {
+  animation: fade-in 0.6s ease-out both;
+}
+
+@keyframes float-gentle {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-8px); }
+}
+.animate-float-gentle {
+  animation: float-gentle 5s ease-in-out infinite;
+}
+
+@keyframes fly-across {
+  0%   { transform: translate(-15vw, 22vh) rotate(-12deg); opacity: 0; }
+  12%  { opacity: 0.35; }
+  88%  { opacity: 0.35; }
+  100% { transform: translate(115vw, -5vh)  rotate(-12deg); opacity: 0; }
+}
+.animate-fly-across {
+  animation: fly-across 30s linear infinite;
+}
+
+@keyframes blob-drift {
+  0%,   100% { transform: translate(0, 0) scale(1); }
+  33%        { transform: translate(24px, -18px) scale(1.08); }
+  66%        { transform: translate(-20px, 22px) scale(0.95); }
+}
+.animate-blob-drift {
+  animation: blob-drift 22s ease-in-out infinite;
+}
+
+@keyframes subtle-gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50%      { background-position: 100% 50%; }
+}
+.animate-gradient-shift {
+  background-size: 200% 200%;
+  animation: subtle-gradient-shift 12s ease-in-out infinite;
+}
+
+/* Utility to stagger on-load animations by delay steps (100ms) */
+.delay-75  { animation-delay: 75ms; }
+.delay-150 { animation-delay: 150ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-450 { animation-delay: 450ms; }
+.delay-600 { animation-delay: 600ms; }

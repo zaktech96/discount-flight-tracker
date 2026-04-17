@@ -1,26 +1,8 @@
 import { Link } from "react-router";
-import { Plane, ArrowRight, Calendar, MapPin } from "lucide-react";
+import { Plane, ArrowRight, Calendar, MapPin, Sparkles } from "lucide-react";
+import { FLIGHTS, formatRoute } from "~/lib/flights";
 
 export default function FlightSearch() {
-  const sampleFlights = [
-    {
-      id: "ba-101",
-      airline: "British Airways",
-      route: "London → New York",
-      price: 420,
-      was: 500,
-      time: "8h 20m · Direct",
-    },
-    {
-      id: "va-202",
-      airline: "Virgin Atlantic",
-      route: "London → New York",
-      price: 380,
-      was: 490,
-      time: "8h 35m · Direct",
-    },
-  ];
-
   return (
     <div className="min-h-screen bg-gradient-to-b from-sky-50 to-white text-slate-900 pt-24 pb-16 px-6">
       <div className="max-w-4xl mx-auto">
@@ -29,7 +11,8 @@ export default function FlightSearch() {
             Find your flight
           </h1>
           <p className="text-slate-600 mt-2 text-lg">
-            Enter a route and we'll show you the best prices we're seeing.
+            Pick a flight below to start tracking — we'll watch the price and
+            email you the moment it drops.
           </p>
         </header>
 
@@ -43,7 +26,6 @@ export default function FlightSearch() {
               <input
                 className="rounded-xl border border-slate-200 bg-white px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent placeholder:text-slate-400"
                 placeholder="e.g. London (LHR)"
-                defaultValue="London (LHR)"
               />
             </label>
             <label className="flex flex-col">
@@ -53,7 +35,6 @@ export default function FlightSearch() {
               <input
                 className="rounded-xl border border-slate-200 bg-white px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent placeholder:text-slate-400"
                 placeholder="e.g. New York (JFK)"
-                defaultValue="New York (JFK)"
               />
             </label>
             <label className="flex flex-col">
@@ -73,58 +54,66 @@ export default function FlightSearch() {
         </section>
 
         {/* Results */}
-        <h2 className="text-xl font-semibold mb-4">Flights we're watching</h2>
-        <div className="space-y-3">
-          {sampleFlights.map((flight) => {
-            const saved = flight.was - flight.price;
-            return (
-              <div
-                key={flight.id}
-                className="rounded-2xl bg-white border border-slate-100 p-5 md:p-6 hover:shadow-md transition flex flex-col md:flex-row md:items-center justify-between gap-4"
-              >
-                <div className="flex items-center gap-4">
-                  <div className="h-12 w-12 rounded-full bg-sky-50 flex items-center justify-center text-sky-600 shrink-0">
-                    <Plane className="h-5 w-5" />
-                  </div>
-                  <div>
-                    <p className="font-semibold text-slate-900">
-                      {flight.route}
-                    </p>
-                    <p className="text-sm text-slate-500">
-                      {flight.airline} · {flight.time}
-                    </p>
-                  </div>
-                </div>
+        <div className="flex items-center gap-2 mb-4">
+          <Sparkles className="h-5 w-5 text-amber-500" />
+          <h2 className="text-xl font-semibold">Today's best deals</h2>
+        </div>
 
-                <div className="flex items-center gap-6">
-                  <div className="text-right">
-                    <div className="flex items-baseline gap-2">
-                      <span className="text-2xl font-bold text-slate-900">
-                        £{flight.price}
-                      </span>
-                      <span className="text-sm text-slate-400 line-through">
-                        £{flight.was}
-                      </span>
+        <div className="space-y-3">
+          {FLIGHTS.map((flight) => {
+            const saved = flight.originalPrice - flight.currentPrice;
+            const pct = Math.round((saved / flight.originalPrice) * 100);
+            return (
+              <Link
+                key={flight.id}
+                to={`/track/${flight.id}`}
+                className="block rounded-2xl bg-white border border-slate-100 p-5 md:p-6 hover:shadow-md hover:border-sky-200 transition"
+              >
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                  <div className="flex items-center gap-4">
+                    <div className="h-12 w-12 rounded-full bg-sky-50 flex items-center justify-center text-sky-600 shrink-0">
+                      <Plane className="h-5 w-5" />
                     </div>
-                    <p className="text-xs font-semibold text-emerald-600 mt-0.5">
-                      Save £{saved}
-                    </p>
+                    <div>
+                      <p className="font-semibold text-slate-900">
+                        {formatRoute(flight)}
+                      </p>
+                      <p className="text-sm text-slate-500">
+                        {flight.airline} · {flight.duration} · {flight.stops}
+                      </p>
+                      <p className="text-xs text-slate-400 mt-0.5">
+                        Departs {flight.departureDate}
+                      </p>
+                    </div>
                   </div>
-                  <Link
-                    to={`/track/confirm?id=${flight.id}`}
-                    className="rounded-full bg-sky-600 text-white px-5 py-2.5 text-sm font-semibold shadow-sm hover:bg-sky-700 transition whitespace-nowrap"
-                  >
-                    Track this flight
-                  </Link>
+
+                  <div className="flex items-center gap-4 md:gap-6">
+                    <div className="text-right">
+                      <div className="flex items-baseline gap-2 justify-end">
+                        <span className="text-2xl font-bold text-slate-900">
+                          £{flight.currentPrice}
+                        </span>
+                        <span className="text-sm text-slate-400 line-through">
+                          £{flight.originalPrice}
+                        </span>
+                      </div>
+                      <p className="text-xs font-semibold text-emerald-600 mt-0.5">
+                        Save £{saved} ({pct}% off)
+                      </p>
+                    </div>
+                    <span className="rounded-full bg-sky-600 text-white px-5 py-2.5 text-sm font-semibold shadow-sm hover:bg-sky-700 transition whitespace-nowrap">
+                      Track this flight
+                    </span>
+                  </div>
                 </div>
-              </div>
+              </Link>
             );
           })}
         </div>
 
         <p className="text-center text-sm text-slate-500 mt-10">
-          Don't see what you want? Tracking a flight means we'll keep watching
-          and email you the moment the price drops.
+          Tracking a flight is free. You can stop watching any time from your
+          dashboard.
         </p>
       </div>
     </div>
