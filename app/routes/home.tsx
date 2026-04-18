@@ -9,16 +9,54 @@ import {
   ChevronDown,
   Sparkles,
   Globe,
-  Zap,
+  Clock,
+  TrendingDown,
+  Coffee,
 } from "lucide-react";
 
 const DESTINATIONS = [
-  { city: "Paris", code: "CDG", from: 189, gradient: "from-rose-400 via-pink-500 to-fuchsia-500" },
-  { city: "Tokyo", code: "NRT", from: 438, gradient: "from-fuchsia-500 via-purple-500 to-indigo-600" },
-  { city: "New York", code: "JFK", from: 298, gradient: "from-sky-500 via-blue-500 to-indigo-600" },
-  { city: "Dubai", code: "DXB", from: 315, gradient: "from-amber-400 via-orange-500 to-rose-500" },
-  { city: "Lisbon", code: "LIS", from: 149, gradient: "from-teal-400 via-cyan-500 to-sky-500" },
-  { city: "Bali", code: "DPS", from: 489, gradient: "from-emerald-400 via-teal-500 to-cyan-600" },
+  {
+    city: "Paris",
+    code: "CDG",
+    from: 189,
+    image:
+      "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    city: "Tokyo",
+    code: "NRT",
+    from: 438,
+    image:
+      "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    city: "New York",
+    code: "JFK",
+    from: 298,
+    image:
+      "https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    city: "Dubai",
+    code: "DXB",
+    from: 315,
+    image:
+      "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    city: "Lisbon",
+    code: "LIS",
+    from: 149,
+    image:
+      "https://images.unsplash.com/photo-1585208798174-6cedd86e019a?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    city: "Bali",
+    code: "DPS",
+    from: 489,
+    image:
+      "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=800&q=80",
+  },
 ];
 
 const FAQS = [
@@ -222,42 +260,193 @@ export default function Home() {
         </div>
       </section>
 
-      {/* WHY TRAVELERS LOVE US */}
-      <section className="py-24 px-6 bg-gradient-to-b from-white to-sky-50">
-        <div className="max-w-5xl mx-auto">
+      {/* WHY TRAVELERS LOVE US — Bento layout */}
+      <section className="relative py-24 px-6 bg-gradient-to-b from-white to-sky-50 overflow-hidden">
+        {/* Soft background glow */}
+        <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
+          <div className="absolute top-20 -left-20 w-80 h-80 rounded-full bg-sky-200/30 blur-3xl animate-blob-drift" />
+          <div
+            className="absolute bottom-10 -right-20 w-96 h-96 rounded-full bg-amber-100/40 blur-3xl animate-blob-drift"
+            style={{ animationDelay: "4s" }}
+          />
+        </div>
+
+        <div className="max-w-6xl mx-auto">
           <div className="text-center mb-14">
-            <span className="inline-block text-xs font-semibold uppercase tracking-wider text-sky-600 mb-3">
-              Why you'll love it
+            <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-sky-600 mb-3">
+              <Sparkles className="h-3.5 w-3.5" />
+              What makes it magic
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight">
-              Built to save you money. And time.
+            <h2 className="text-3xl md:text-5xl font-bold tracking-tight leading-[1.1]">
+              We do the hunting.{" "}
+              <span className="relative inline-block">
+                <span className="relative z-10">You do the holidaying.</span>
+                <span
+                  aria-hidden
+                  className="absolute left-0 bottom-1 h-3 w-full rounded-full bg-amber-200/70 -z-0"
+                />
+              </span>
             </h2>
+            <p className="text-slate-600 mt-5 text-lg max-w-xl mx-auto">
+              Here's what happens behind the scenes while you're busy living
+              your life.
+            </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-6">
-            {[
-              { icon: PiggyBank, title: "Save hundreds per trip", body: "Our members typically save 30–50% by catching flights at the perfect moment." },
-              { icon: Zap, title: "Instant email alerts", body: "The second your flight drops, your inbox pings. Book before the deal disappears." },
-              { icon: Globe, title: "Works for any route", body: "Weekend getaways, dream honeymoons, back-home visits — track as many trips as you like." },
-              { icon: Heart, title: "No spam, ever", body: "We only email you about deals that hit your price. No newsletters, no sales pitches." },
-            ].map(({ icon: Icon, title, body }) => (
-              <div
-                key={title}
-                className="group relative overflow-hidden rounded-2xl bg-white border border-slate-100 p-8 hover:-translate-y-1 hover:shadow-lg hover:shadow-sky-100 hover:border-sky-200 transition-all duration-300"
-              >
-                <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-sky-50 to-sky-100 flex items-center justify-center text-sky-600 mb-5 group-hover:scale-110 group-hover:rotate-3 transition-transform">
-                  <Icon className="h-6 w-6" />
-                </div>
-                <h3 className="text-xl font-semibold mb-2">{title}</h3>
-                <p className="text-slate-600 leading-relaxed">{body}</p>
+          {/* Bento grid */}
+          <div className="grid grid-cols-1 md:grid-cols-6 gap-4 md:gap-5">
+            {/* BIG card — live price-watching demo */}
+            <div className="md:col-span-4 md:row-span-2 group relative rounded-3xl bg-gradient-to-br from-slate-900 via-slate-800 to-sky-900 p-8 md:p-10 text-white overflow-hidden shadow-xl shadow-slate-200 hover:shadow-2xl hover:shadow-sky-200 transition-all duration-500">
+              {/* Decorative plane */}
+              <Plane className="absolute -top-2 -right-2 h-32 w-32 text-white/5 -rotate-12 group-hover:rotate-0 group-hover:scale-110 transition-transform duration-700" />
 
-                {/* Decorative hover corner */}
-                <div
-                  aria-hidden
-                  className="absolute -top-10 -right-10 h-32 w-32 rounded-full bg-sky-100/0 group-hover:bg-sky-100/50 transition-colors duration-500"
-                />
+              <div className="relative z-10">
+                <div className="inline-flex items-center gap-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 px-3 py-1.5 text-xs font-medium">
+                  <span className="relative flex h-2 w-2">
+                    <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75 animate-ping" />
+                    <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
+                  </span>
+                  Live · last checked 2 min ago
+                </div>
+
+                <h3 className="mt-5 text-2xl md:text-3xl font-bold leading-tight">
+                  We check the price every hour.
+                  <br />
+                  <span className="text-sky-300">
+                    You get a ping the moment it drops.
+                  </span>
+                </h3>
+
+                <p className="mt-3 text-slate-300 leading-relaxed max-w-md">
+                  No refreshing travel sites at 2am. No "did I miss it?"
+                  regret. Just a friendly email when it's time to book.
+                </p>
+
+                {/* Mini price chart */}
+                <div className="mt-8 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 p-5">
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="text-xs uppercase tracking-wider text-slate-400">
+                      London → New York · last 7 days
+                    </span>
+                    <span className="inline-flex items-center gap-1 text-emerald-400 font-semibold text-sm">
+                      <TrendingDown className="h-4 w-4" /> -34%
+                    </span>
+                  </div>
+                  <div className="flex items-end gap-1.5 h-24">
+                    {[72, 78, 75, 82, 70, 58, 48].map((h, i) => (
+                      <div
+                        key={i}
+                        className={`flex-1 rounded-t-md animate-fade-up ${
+                          i === 6
+                            ? "bg-gradient-to-t from-emerald-400 to-emerald-300 shadow-lg shadow-emerald-500/30"
+                            : "bg-white/20"
+                        }`}
+                        style={{
+                          height: `${h}%`,
+                          animationDelay: `${i * 90}ms`,
+                        }}
+                      />
+                    ))}
+                  </div>
+                  <div className="flex items-center justify-between mt-2">
+                    <span className="text-xs text-slate-500">Mon</span>
+                    <span className="text-xs text-emerald-400 font-semibold">
+                      Today
+                    </span>
+                  </div>
+                  <div className="mt-4 pt-4 border-t border-white/10 flex items-baseline justify-between">
+                    <span className="text-sm text-slate-300">
+                      Today's price
+                    </span>
+                    <span className="flex items-baseline gap-2">
+                      <span className="text-2xl font-bold text-white">
+                        £340
+                      </span>
+                      <span className="text-sm text-slate-500 line-through">
+                        £520
+                      </span>
+                    </span>
+                  </div>
+                </div>
               </div>
-            ))}
+            </div>
+
+            {/* Small — savings stat */}
+            <div className="md:col-span-2 group relative overflow-hidden rounded-3xl bg-white border border-slate-100 p-7 hover:-translate-y-1 hover:shadow-xl hover:shadow-emerald-100 hover:border-emerald-200 transition-all duration-300">
+              <div className="h-12 w-12 rounded-2xl bg-emerald-50 flex items-center justify-center text-emerald-600 mb-4 group-hover:scale-110 group-hover:rotate-6 transition-transform">
+                <PiggyBank className="h-6 w-6" />
+              </div>
+              <div className="flex items-baseline gap-1.5">
+                <span className="text-4xl font-bold text-slate-900">£220</span>
+                <span className="text-sm font-semibold text-slate-500">
+                  avg saved
+                </span>
+              </div>
+              <p className="text-slate-600 mt-2 leading-relaxed">
+                per booking, according to our members. Some save way more.
+              </p>
+              <div
+                aria-hidden
+                className="absolute -bottom-10 -right-10 h-32 w-32 rounded-full bg-emerald-100/0 group-hover:bg-emerald-100/60 transition-colors duration-500"
+              />
+            </div>
+
+            {/* Small — setup time */}
+            <div className="md:col-span-2 group relative overflow-hidden rounded-3xl bg-white border border-slate-100 p-7 hover:-translate-y-1 hover:shadow-xl hover:shadow-amber-100 hover:border-amber-200 transition-all duration-300">
+              <div className="h-12 w-12 rounded-2xl bg-amber-50 flex items-center justify-center text-amber-600 mb-4 group-hover:scale-110 group-hover:-rotate-6 transition-transform">
+                <Clock className="h-6 w-6" />
+              </div>
+              <div className="flex items-baseline gap-1.5">
+                <span className="text-4xl font-bold text-slate-900">30s</span>
+                <span className="text-sm font-semibold text-slate-500">
+                  to set up
+                </span>
+              </div>
+              <p className="text-slate-600 mt-2 leading-relaxed">
+                Pick your route, set a target price, go make a cup of tea.
+              </p>
+              <Coffee
+                aria-hidden
+                className="absolute bottom-4 right-4 h-16 w-16 text-amber-100 group-hover:text-amber-200 group-hover:rotate-12 transition-all duration-500"
+              />
+            </div>
+
+            {/* Medium — no spam */}
+            <div className="md:col-span-3 group relative overflow-hidden rounded-3xl bg-gradient-to-br from-rose-50 via-white to-white border border-slate-100 p-7 hover:-translate-y-1 hover:shadow-xl hover:shadow-rose-100 hover:border-rose-200 transition-all duration-300">
+              <div className="flex items-start gap-4">
+                <div className="h-12 w-12 shrink-0 rounded-2xl bg-white shadow-sm flex items-center justify-center text-rose-500 group-hover:scale-110 group-hover:rotate-6 transition-transform">
+                  <Heart className="h-6 w-6 fill-current" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold">Zero spam. Promise.</h3>
+                  <p className="text-slate-600 mt-1.5 leading-relaxed">
+                    The only email we'll send you is{" "}
+                    <span className="font-semibold text-slate-800">
+                      "Your flight just dropped £180."
+                    </span>{" "}
+                    That's the whole business.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Medium — any route */}
+            <div className="md:col-span-3 group relative overflow-hidden rounded-3xl bg-gradient-to-br from-indigo-50 via-white to-sky-50 border border-slate-100 p-7 hover:-translate-y-1 hover:shadow-xl hover:shadow-indigo-100 hover:border-indigo-200 transition-all duration-300">
+              <div className="flex items-start gap-4">
+                <div className="h-12 w-12 shrink-0 rounded-2xl bg-white shadow-sm flex items-center justify-center text-indigo-600 group-hover:scale-110 group-hover:rotate-12 transition-transform">
+                  <Globe className="h-6 w-6" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold">
+                    Every route. Every airline.
+                  </h3>
+                  <p className="text-slate-600 mt-1.5 leading-relaxed">
+                    London to Lagos. Boston to Bali. Tokyo to Toronto. If it's
+                    flying, we're watching.
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -285,23 +474,32 @@ export default function Home() {
                 to="/search"
                 className="group relative aspect-[4/5] rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-1"
               >
-                <div
-                  className={`absolute inset-0 bg-gradient-to-br ${dest.gradient} group-hover:scale-110 transition-transform duration-700 ease-out animate-gradient-shift`}
+                <img
+                  src={dest.image}
+                  alt={`${dest.city} cityscape`}
+                  loading="lazy"
+                  className="absolute inset-0 h-full w-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/25 to-black/10 group-hover:from-black/80 transition-colors duration-500" />
 
                 {/* Plane flies on hover */}
-                <Plane className="absolute top-6 right-6 h-6 w-6 text-white/70 group-hover:translate-x-2 group-hover:-translate-y-2 transition-transform duration-500" />
+                <Plane className="absolute top-6 right-6 h-6 w-6 text-white drop-shadow-md group-hover:translate-x-2 group-hover:-translate-y-2 transition-transform duration-500" />
 
                 <div className="absolute bottom-5 left-5 right-5 text-white">
-                  <div className="text-2xl font-bold">{dest.city}</div>
-                  <div className="text-white/70 text-sm">{dest.code}</div>
-                  <div className="mt-2 flex items-center justify-between">
+                  <div className="text-2xl font-bold drop-shadow">
+                    {dest.city}
+                  </div>
+                  <div className="text-white/80 text-sm tracking-wide">
+                    {dest.code}
+                  </div>
+                  <div className="mt-3 flex items-end justify-between">
                     <div>
-                      <div className="text-white/60 text-xs">from</div>
-                      <div className="text-lg font-semibold">£{dest.from}</div>
+                      <div className="text-white/70 text-xs">from</div>
+                      <div className="text-xl font-semibold drop-shadow">
+                        £{dest.from}
+                      </div>
                     </div>
-                    <span className="rounded-full bg-white/20 backdrop-blur-sm px-3 py-1 text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity">
+                    <span className="rounded-full bg-white/25 backdrop-blur-md border border-white/30 px-3 py-1 text-xs font-semibold opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0 transition-all">
                       Track it →
                     </span>
                   </div>
