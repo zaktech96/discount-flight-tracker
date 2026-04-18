@@ -1,8 +1,36 @@
+import { useMemo, useState } from "react";
 import { Link } from "react-router";
-import { Plane, ArrowRight, Calendar, MapPin, Sparkles } from "lucide-react";
-import { FLIGHTS, formatRoute } from "~/lib/flights";
+import { Plane, ArrowRight, Calendar, MapPin, Sparkles, X } from "lucide-react";
+import { FLIGHTS, searchFlights, formatRoute } from "~/lib/flights";
 
 export default function FlightSearch() {
+  const [from, setFrom] = useState("");
+  const [to, setTo] = useState("");
+  const [date, setDate] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+
+  const results = useMemo(() => {
+    if (!submitted) return FLIGHTS;
+    return searchFlights({ from, to });
+  }, [from, to, submitted]);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmitted(true);
+  };
+
+  const handleClear = () => {
+    setFrom("");
+    setTo("");
+    setDate("");
+    setSubmitted(false);
+  };
+
+  const isFiltered = submitted && (from || to);
+  const heading = isFiltered
+    ? `${results.length} ${results.length === 1 ? "flight" : "flights"} found`
+    : "Today's best deals";
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-sky-50 to-white text-slate-900 pt-24 pb-16 px-6">
       <div className="max-w-4xl mx-auto">
@@ -11,21 +39,26 @@ export default function FlightSearch() {
             Find your flight
           </h1>
           <p className="text-slate-600 mt-2 text-lg">
-            Pick a flight below to start tracking — we'll watch the price and
+            Pick a deal below to start tracking — we'll watch the price and
             email you the moment it drops.
           </p>
         </header>
 
         {/* Search form */}
-        <section className="rounded-2xl bg-white border border-slate-100 shadow-sm p-6 md:p-8 mb-10">
+        <form
+          onSubmit={handleSubmit}
+          className="rounded-2xl bg-white border border-slate-100 shadow-sm p-6 md:p-8 mb-10"
+        >
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <label className="flex flex-col">
               <span className="text-sm font-medium text-slate-700 mb-1.5 flex items-center gap-1.5">
                 <MapPin className="h-4 w-4 text-sky-600" /> Flying from
               </span>
               <input
+                value={from}
+                onChange={(e) => setFrom(e.target.value)}
                 className="rounded-xl border border-slate-200 bg-white px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent placeholder:text-slate-400"
-                placeholder="e.g. London (LHR)"
+                placeholder="City or airport (e.g. London)"
               />
             </label>
             <label className="flex flex-col">
@@ -33,8 +66,10 @@ export default function FlightSearch() {
                 <Plane className="h-4 w-4 text-sky-600" /> Flying to
               </span>
               <input
+                value={to}
+                onChange={(e) => setTo(e.target.value)}
                 className="rounded-xl border border-slate-200 bg-white px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent placeholder:text-slate-400"
-                placeholder="e.g. New York (JFK)"
+                placeholder="City or airport (e.g. Paris)"
               />
             </label>
             <label className="flex flex-col">
@@ -43,73 +78,115 @@ export default function FlightSearch() {
               </span>
               <input
                 type="date"
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
                 className="rounded-xl border border-slate-200 bg-white px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent text-slate-700"
               />
             </label>
           </div>
-          <button className="mt-6 w-full md:w-auto rounded-full bg-sky-600 text-white px-8 py-3 font-semibold shadow-sm hover:bg-sky-700 transition inline-flex items-center justify-center gap-2">
-            Search flights
-            <ArrowRight className="h-4 w-4" />
-          </button>
-        </section>
 
-        {/* Results */}
-        <div className="flex items-center gap-2 mb-4">
-          <Sparkles className="h-5 w-5 text-amber-500" />
-          <h2 className="text-xl font-semibold">Today's best deals</h2>
-        </div>
-
-        <div className="space-y-3">
-          {FLIGHTS.map((flight) => {
-            const saved = flight.originalPrice - flight.currentPrice;
-            const pct = Math.round((saved / flight.originalPrice) * 100);
-            return (
-              <Link
-                key={flight.id}
-                to={`/track/${flight.id}`}
-                className="block rounded-2xl bg-white border border-slate-100 p-5 md:p-6 hover:shadow-md hover:border-sky-200 transition"
+          <div className="mt-6 flex flex-col sm:flex-row gap-3 items-start sm:items-center">
+            <button
+              type="submit"
+              className="rounded-full bg-sky-600 text-white px-8 py-3 font-semibold shadow-sm hover:bg-sky-700 hover:-translate-y-0.5 transition-all inline-flex items-center justify-center gap-2"
+            >
+              Search flights
+              <ArrowRight className="h-4 w-4" />
+            </button>
+            {isFiltered ? (
+              <button
+                type="button"
+                onClick={handleClear}
+                className="inline-flex items-center gap-1.5 text-sm font-medium text-slate-500 hover:text-slate-900 transition"
               >
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                  <div className="flex items-center gap-4">
-                    <div className="h-12 w-12 rounded-full bg-sky-50 flex items-center justify-center text-sky-600 shrink-0">
-                      <Plane className="h-5 w-5" />
-                    </div>
-                    <div>
-                      <p className="font-semibold text-slate-900">
-                        {formatRoute(flight)}
-                      </p>
-                      <p className="text-sm text-slate-500">
-                        {flight.airline} · {flight.duration} · {flight.stops}
-                      </p>
-                      <p className="text-xs text-slate-400 mt-0.5">
-                        Departs {flight.departureDate}
-                      </p>
-                    </div>
-                  </div>
+                <X className="h-4 w-4" />
+                Clear search
+              </button>
+            ) : null}
+          </div>
+        </form>
 
-                  <div className="flex items-center gap-4 md:gap-6">
-                    <div className="text-right">
-                      <div className="flex items-baseline gap-2 justify-end">
-                        <span className="text-2xl font-bold text-slate-900">
-                          £{flight.currentPrice}
-                        </span>
-                        <span className="text-sm text-slate-400 line-through">
-                          £{flight.originalPrice}
-                        </span>
-                      </div>
-                      <p className="text-xs font-semibold text-emerald-600 mt-0.5">
-                        Save £{saved} ({pct}% off)
-                      </p>
-                    </div>
-                    <span className="rounded-full bg-sky-600 text-white px-5 py-2.5 text-sm font-semibold shadow-sm hover:bg-sky-700 transition whitespace-nowrap">
-                      Track this flight
-                    </span>
-                  </div>
-                </div>
-              </Link>
-            );
-          })}
+        {/* Results header */}
+        <div className="flex items-center gap-2 mb-4">
+          {isFiltered ? (
+            <MapPin className="h-5 w-5 text-sky-600" />
+          ) : (
+            <Sparkles className="h-5 w-5 text-amber-500" />
+          )}
+          <h2 className="text-xl font-semibold">{heading}</h2>
         </div>
+
+        {results.length === 0 ? (
+          <div className="rounded-2xl bg-white border border-slate-100 p-10 text-center shadow-sm">
+            <div className="mx-auto h-14 w-14 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 mb-4">
+              <Plane className="h-6 w-6" />
+            </div>
+            <h3 className="text-lg font-semibold mb-1">No flights for that route yet</h3>
+            <p className="text-slate-600 max-w-md mx-auto mb-5">
+              We don't have live prices for this route in the sample data. Try
+              a different city, or clear your search to browse today's best
+              deals.
+            </p>
+            <button
+              onClick={handleClear}
+              className="inline-flex items-center gap-2 rounded-full bg-sky-600 text-white px-5 py-2.5 text-sm font-semibold hover:bg-sky-700 transition"
+            >
+              Show all deals
+            </button>
+          </div>
+        ) : (
+          <div className="space-y-3">
+            {results.map((flight) => {
+              const saved = flight.originalPrice - flight.currentPrice;
+              const pct = Math.round((saved / flight.originalPrice) * 100);
+              return (
+                <Link
+                  key={flight.id}
+                  to={`/track/${flight.id}`}
+                  className="block rounded-2xl bg-white border border-slate-100 p-5 md:p-6 hover:shadow-md hover:border-sky-200 hover:-translate-y-0.5 transition-all"
+                >
+                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div className="flex items-center gap-4">
+                      <div className="h-12 w-12 rounded-full bg-sky-50 flex items-center justify-center text-sky-600 shrink-0">
+                        <Plane className="h-5 w-5" />
+                      </div>
+                      <div>
+                        <p className="font-semibold text-slate-900">
+                          {formatRoute(flight)}
+                        </p>
+                        <p className="text-sm text-slate-500">
+                          {flight.airline} · {flight.duration} · {flight.stops}
+                        </p>
+                        <p className="text-xs text-slate-400 mt-0.5">
+                          Departs {flight.departureDate}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-4 md:gap-6">
+                      <div className="text-right">
+                        <div className="flex items-baseline gap-2 justify-end">
+                          <span className="text-2xl font-bold text-slate-900">
+                            £{flight.currentPrice}
+                          </span>
+                          <span className="text-sm text-slate-400 line-through">
+                            £{flight.originalPrice}
+                          </span>
+                        </div>
+                        <p className="text-xs font-semibold text-emerald-600 mt-0.5">
+                          Save £{saved} ({pct}% off)
+                        </p>
+                      </div>
+                      <span className="rounded-full bg-sky-600 text-white px-5 py-2.5 text-sm font-semibold shadow-sm hover:bg-sky-700 transition whitespace-nowrap">
+                        Track this flight
+                      </span>
+                    </div>
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+        )}
 
         <p className="text-center text-sm text-slate-500 mt-10">
           Tracking a flight is free. You can stop watching any time from your
