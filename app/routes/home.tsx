@@ -28,6 +28,8 @@ import {
   ArrowRight,
   Mail,
   Lock,
+  Frown,
+  X,
 } from "lucide-react";
 
 const DEMO_CAPTIONS = [
@@ -873,57 +875,128 @@ export default function Home() {
         </div>
       </section>
 
-      {/* TESTIMONIALS */}
+      {/* THE DIFFERENCE — before / after comparison */}
       <section className="py-24 px-6 bg-sky-50">
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-5xl mx-auto">
           <div className="text-center mb-14">
-            <span className="inline-block text-xs font-semibold uppercase tracking-wider text-sky-600 mb-3">
-              Stories from travelers
+            <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-sky-600 mb-3">
+              <Sparkles className="h-3.5 w-3.5" />
+              The difference
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight">
-              Real people. Real savings.
+            <h2 className="text-3xl md:text-5xl font-bold tracking-tight leading-[1.1]">
+              Flight hunting,{" "}
+              <span className="relative inline-block">
+                <span className="relative z-10">reinvented</span>
+                <span
+                  aria-hidden
+                  className="absolute left-0 bottom-1 h-3 w-full rounded-full bg-amber-200/70 -z-0"
+                />
+              </span>
+              .
             </h2>
+            <p className="text-slate-600 mt-4 text-lg max-w-xl mx-auto">
+              Here's what changes when you stop doing this yourself.
+            </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6">
-            {[
-              {
-                stars: 5,
-                quote: "Saved us £400 on our family trip to Lisbon. I set the alert, went about my week, and got a ping on Tuesday morning. Booked in 5 minutes.",
-                name: "Sarah M.",
-                role: "Traveler from Manchester",
-              },
-              {
-                stars: 5,
-                quote: "I'd been eyeing a trip to Tokyo for months and couldn't justify the price. Woke up to an email saying it dropped £180. Booked that same day.",
-                name: "Jordan K.",
-                role: "Flew to Tokyo",
-              },
-              {
-                stars: 5,
-                quote: "Honestly the lowest-effort, highest-reward app I use. Set it once, forget about it, and save money.",
-                name: "Priya S.",
-                role: "Frequent flyer",
-              },
-            ].map((t, i) => (
-              <div
-                key={i}
-                className="rounded-2xl bg-white border border-slate-100 p-7 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
-              >
-                <div className="flex gap-1 text-amber-500 mb-3">
-                  {[...Array(t.stars)].map((_, j) => (
-                    <svg key={j} className="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                    </svg>
-                  ))}
+          <div className="relative grid md:grid-cols-2 gap-5">
+            {/* BEFORE card */}
+            <div className="group rounded-3xl bg-white border border-slate-200 p-7 md:p-8 transition-all duration-300 hover:-translate-y-0.5">
+              <div className="flex items-center gap-3 mb-6 pb-5 border-b border-slate-100">
+                <div className="h-11 w-11 rounded-2xl bg-slate-100 flex items-center justify-center text-slate-500 group-hover:scale-110 transition-transform">
+                  <Frown className="h-5 w-5" />
                 </div>
-                <p className="text-slate-700 leading-relaxed mb-4">"{t.quote}"</p>
-                <div className="text-sm">
-                  <div className="font-semibold text-slate-900">{t.name}</div>
-                  <div className="text-slate-500">{t.role}</div>
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">
+                    Before
+                  </p>
+                  <h3 className="text-xl font-bold text-slate-700">
+                    Hunting flights alone
+                  </h3>
                 </div>
               </div>
-            ))}
+              <ul className="space-y-3.5">
+                {[
+                  "17 Chrome tabs. Across three devices.",
+                  "Prices change every hour and you always miss the drop.",
+                  '"Is this a good deal?" — asked 40 times a day.',
+                  "Book now, watch it drop £100 tomorrow, cry a little.",
+                  "Skyscanner rabbit hole at 2am. Every week.",
+                ].map((item, i) => (
+                  <li
+                    key={i}
+                    className="flex items-start gap-3 animate-fade-up"
+                    style={{
+                      animationDelay: `${i * 90}ms`,
+                      animationFillMode: "backwards",
+                    }}
+                  >
+                    <span className="shrink-0 mt-0.5 h-5 w-5 rounded-full bg-rose-50 flex items-center justify-center text-rose-500">
+                      <X className="h-3 w-3" strokeWidth={3} />
+                    </span>
+                    <span className="text-slate-500 leading-relaxed">
+                      {item}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* AFTER card */}
+            <div className="group relative rounded-3xl bg-gradient-to-br from-white via-white to-sky-50 border-2 border-sky-200 p-7 md:p-8 shadow-xl shadow-sky-100 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-sky-200">
+              <div
+                aria-hidden
+                className="absolute -inset-px rounded-3xl bg-gradient-to-br from-sky-300/40 via-transparent to-emerald-200/40 blur-xl -z-10"
+              />
+              <div className="flex items-center gap-3 mb-6 pb-5 border-b border-sky-100">
+                <div className="h-11 w-11 rounded-2xl bg-gradient-to-br from-sky-500 to-indigo-500 flex items-center justify-center text-white shadow-md shadow-sky-200 group-hover:scale-110 group-hover:rotate-6 transition-transform">
+                  <Plane className="h-5 w-5" />
+                </div>
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-wider text-sky-600">
+                    With Flight Guardian
+                  </p>
+                  <h3 className="text-xl font-bold text-slate-900">
+                    Hunting handled.
+                  </h3>
+                </div>
+              </div>
+              <ul className="space-y-3.5">
+                {[
+                  "One saved search. One email when it drops. Done.",
+                  "We check every hour, so you don't have to.",
+                  "Know with confidence you got the best price.",
+                  "Set once, forget, save hundreds — without lifting a finger.",
+                  "Sleep well at 2am. Travel happy at 2pm.",
+                ].map((item, i) => (
+                  <li
+                    key={i}
+                    className="flex items-start gap-3 animate-fade-up"
+                    style={{
+                      animationDelay: `${i * 90 + 200}ms`,
+                      animationFillMode: "backwards",
+                    }}
+                  >
+                    <span className="shrink-0 mt-0.5 h-5 w-5 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600">
+                      <Check className="h-3 w-3" strokeWidth={3} />
+                    </span>
+                    <span className="text-slate-800 leading-relaxed font-medium">
+                      {item}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Arrow pivot between cards — desktop only */}
+            <div
+              aria-hidden
+              className="hidden md:flex absolute inset-y-0 left-1/2 -translate-x-1/2 items-center pointer-events-none"
+            >
+              <div className="h-12 w-12 rounded-full bg-white border border-slate-200 shadow-lg flex items-center justify-center text-sky-600 animate-float-gentle">
+                <ArrowRight className="h-5 w-5" />
+              </div>
+            </div>
           </div>
         </div>
       </section>
