@@ -12,89 +12,22 @@ import {
   Globe,
   Clock,
   TrendingDown,
-  TrendingUp,
   Coffee,
-  Users,
-  Star,
-  Zap,
+  Calendar,
+  MapPin,
+  ArrowRight,
+  Mail,
+  Lock,
 } from "lucide-react";
 
-const LIVE_ACTIVITY = [
-  { name: "Sarah", saved: 180, route: "London → New York", time: "2 min ago" },
-  { name: "Jordan", saved: 412, route: "London → Tokyo", time: "6 min ago" },
-  { name: "Priya", saved: 91, route: "London → Lisbon", time: "11 min ago" },
-  { name: "Marcus", saved: 230, route: "Boston → Bali", time: "18 min ago" },
-  { name: "Emma", saved: 145, route: "London → Paris", time: "24 min ago" },
+const DEMO_CAPTIONS = [
+  "Search",
+  "Pick a deal",
+  "Set your price",
+  "Get the ping",
 ];
 
-const STATS = [
-  {
-    icon: PiggyBank,
-    value: "£2.3M+",
-    label: "Saved together",
-    trend: "+£42k this month",
-    accent: "emerald",
-    spark: [20, 28, 24, 36, 32, 44, 58],
-  },
-  {
-    icon: Users,
-    value: "12,847",
-    label: "Happy flyers",
-    trend: "+240 this week",
-    accent: "sky",
-    spark: [22, 26, 30, 35, 38, 45, 52],
-  },
-  {
-    icon: Plane,
-    value: "£220",
-    label: "Average saved",
-    trend: "per booking",
-    accent: "indigo",
-    spark: [40, 30, 45, 38, 52, 46, 58],
-  },
-  {
-    icon: Star,
-    value: "4.9",
-    label: "User rating",
-    trend: "2,412 reviews",
-    accent: "amber",
-    spark: [48, 50, 48, 52, 50, 54, 55],
-  },
-] as const;
-
-const ACCENT_CLASSES: Record<
-  (typeof STATS)[number]["accent"],
-  { bg: string; text: string; bar: string; shadow: string; border: string }
-> = {
-  emerald: {
-    bg: "bg-emerald-50",
-    text: "text-emerald-600",
-    bar: "bg-emerald-400",
-    shadow: "hover:shadow-emerald-100",
-    border: "hover:border-emerald-200",
-  },
-  sky: {
-    bg: "bg-sky-50",
-    text: "text-sky-600",
-    bar: "bg-sky-400",
-    shadow: "hover:shadow-sky-100",
-    border: "hover:border-sky-200",
-  },
-  indigo: {
-    bg: "bg-indigo-50",
-    text: "text-indigo-600",
-    bar: "bg-indigo-400",
-    shadow: "hover:shadow-indigo-100",
-    border: "hover:border-indigo-200",
-  },
-  amber: {
-    bg: "bg-amber-50",
-    text: "text-amber-600",
-    bar: "bg-amber-400",
-    shadow: "hover:shadow-amber-100",
-    border: "hover:border-amber-200",
-  },
-};
+const DEMO_DURATIONS = [4200, 3600, 3200, 4500];
 
 const DESTINATIONS = [
   {
@@ -164,18 +97,417 @@ const FAQS = [
   },
 ];
 
-export default function Home() {
-  const [tickerIndex, setTickerIndex] = useState(0);
+function ProductDemo() {
+  const [stage, setStage] = useState(0);
 
   useEffect(() => {
-    const id = setInterval(() => {
-      setTickerIndex((i) => (i + 1) % LIVE_ACTIVITY.length);
-    }, 3500);
-    return () => clearInterval(id);
-  }, []);
+    const id = setTimeout(
+      () => setStage((s) => (s + 1) % DEMO_CAPTIONS.length),
+      DEMO_DURATIONS[stage],
+    );
+    return () => clearTimeout(id);
+  }, [stage]);
 
-  const activity = LIVE_ACTIVITY[tickerIndex];
+  return (
+    <section className="relative py-24 px-6 overflow-hidden">
+      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
+        <div className="absolute top-20 -left-20 w-80 h-80 rounded-full bg-sky-200/30 blur-3xl animate-blob-drift" />
+        <div
+          className="absolute bottom-20 -right-20 w-96 h-96 rounded-full bg-amber-100/40 blur-3xl animate-blob-drift"
+          style={{ animationDelay: "4s" }}
+        />
+      </div>
 
+      <div className="max-w-4xl mx-auto">
+        <div className="text-center mb-10">
+          <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-sky-600 mb-3">
+            <Sparkles className="h-3.5 w-3.5" />
+            Watch it work
+          </span>
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tight leading-[1.1]">
+            The whole journey, in{" "}
+            <span className="relative inline-block">
+              <span className="relative z-10">one minute</span>
+              <span
+                aria-hidden
+                className="absolute left-0 bottom-1 h-3 w-full rounded-full bg-amber-200/70 -z-0"
+              />
+            </span>
+            .
+          </h2>
+          <p className="text-slate-600 mt-4 text-lg max-w-xl mx-auto">
+            No reading. No sign-up. Just watch Flight Guardian go from search
+            to savings.
+          </p>
+        </div>
+
+        {/* Faux browser */}
+        <div className="relative rounded-3xl bg-white shadow-2xl shadow-sky-200/60 border border-slate-100 overflow-hidden">
+          {/* Browser chrome */}
+          <div className="flex items-center gap-3 px-4 py-3 border-b border-slate-100 bg-slate-50">
+            <div className="flex gap-1.5">
+              <div className="h-3 w-3 rounded-full bg-red-400" />
+              <div className="h-3 w-3 rounded-full bg-amber-400" />
+              <div className="h-3 w-3 rounded-full bg-emerald-400" />
+            </div>
+            <div className="flex-1 h-7 max-w-xs mx-auto rounded-md bg-white border border-slate-200 px-3 text-xs text-slate-500 flex items-center justify-center gap-2">
+              <Lock className="h-3 w-3" />
+              flightguardian.app
+            </div>
+            <div className="w-14" />
+          </div>
+
+          {/* Stage content — keyed so it remounts and replays animations */}
+          <div
+            key={stage}
+            className="p-6 md:p-10 min-h-[420px] bg-gradient-to-b from-white to-sky-50/30 animate-fade-in"
+          >
+            {stage === 0 && <DemoSceneSearch />}
+            {stage === 1 && <DemoSceneResults />}
+            {stage === 2 && <DemoSceneTracking />}
+            {stage === 3 && <DemoSceneAlert />}
+          </div>
+
+          {/* Progress bar */}
+          <div className="h-1 bg-slate-100 relative overflow-hidden">
+            <div
+              key={`bar-${stage}`}
+              className="absolute inset-y-0 left-0 bg-gradient-to-r from-sky-500 to-indigo-500"
+              style={{
+                animation: `progress ${DEMO_DURATIONS[stage]}ms linear forwards`,
+              }}
+            />
+          </div>
+        </div>
+
+        {/* Stage dots */}
+        <div className="mt-8 flex flex-wrap items-center justify-center gap-x-5 gap-y-3">
+          {DEMO_CAPTIONS.map((cap, i) => (
+            <button
+              key={i}
+              type="button"
+              onClick={() => setStage(i)}
+              className={`group flex items-center gap-2 transition-colors ${
+                stage === i
+                  ? "text-sky-600"
+                  : "text-slate-400 hover:text-slate-600"
+              }`}
+            >
+              <span
+                className={`inline-flex h-7 w-7 items-center justify-center rounded-full text-xs font-bold transition-all ${
+                  stage === i
+                    ? "bg-sky-600 text-white shadow-md shadow-sky-200 scale-110"
+                    : "bg-slate-100 text-slate-500 group-hover:bg-slate-200"
+                }`}
+              >
+                {i + 1}
+              </span>
+              <span className="text-sm font-medium">{cap}</span>
+            </button>
+          ))}
+        </div>
+
+        <style>{`@keyframes progress { from { width: 0% } to { width: 100% } }`}</style>
+      </div>
+    </section>
+  );
+}
+
+function DemoField({
+  label,
+  value,
+  icon: Icon,
+  delay,
+  active,
+}: {
+  label: string;
+  value: string;
+  icon: typeof MapPin;
+  delay: number;
+  active?: boolean;
+}) {
+  return (
+    <div
+      className="animate-fade-up"
+      style={{ animationDelay: `${delay}ms`, animationFillMode: "backwards" }}
+    >
+      <span className="text-xs font-medium text-slate-700 mb-1.5 flex items-center gap-1.5">
+        <Icon className="h-3.5 w-3.5 text-sky-600" /> {label}
+      </span>
+      <div
+        className={`rounded-xl border-2 bg-white px-3.5 py-3 text-sm font-medium text-slate-800 flex items-center min-h-[46px] ${
+          active ? "border-sky-400 shadow-sm shadow-sky-100" : "border-slate-200"
+        }`}
+      >
+        {value}
+        {active && (
+          <span className="inline-block w-0.5 h-4 bg-sky-600 ml-1 animate-pulse" />
+        )}
+      </div>
+    </div>
+  );
+}
+
+function DemoSceneSearch() {
+  return (
+    <div className="space-y-6">
+      <div className="flex items-center gap-2 text-sm text-slate-500">
+        <Search className="h-4 w-4 text-sky-600" />
+        <span>Tell us where you want to fly</span>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+        <DemoField
+          label="Flying from"
+          value="London (LHR)"
+          icon={MapPin}
+          delay={100}
+          active
+        />
+        <DemoField
+          label="Flying to"
+          value="New York (JFK)"
+          icon={Plane}
+          delay={900}
+          active
+        />
+        <DemoField
+          label="When"
+          value="May 14, 2026"
+          icon={Calendar}
+          delay={1700}
+          active
+        />
+      </div>
+      <div
+        className="flex items-center gap-3 animate-fade-up"
+        style={{ animationDelay: "2600ms", animationFillMode: "backwards" }}
+      >
+        <button
+          type="button"
+          className="inline-flex items-center gap-2 rounded-full bg-sky-600 text-white px-6 py-3 font-semibold shadow-lg shadow-sky-200 animate-pulse"
+        >
+          Search flights
+          <ArrowRight className="h-4 w-4" />
+        </button>
+        <span className="text-xs text-slate-400 italic">tap!</span>
+      </div>
+    </div>
+  );
+}
+
+function DemoSceneResults() {
+  const deals = [
+    {
+      airline: "Virgin Atlantic",
+      price: 380,
+      original: 490,
+      duration: "8h 35m",
+      highlight: true,
+    },
+    {
+      airline: "British Airways",
+      price: 420,
+      original: 560,
+      duration: "8h 20m",
+    },
+    { airline: "United", price: 485, original: 640, duration: "11h 20m" },
+  ];
+  return (
+    <div>
+      <div className="flex items-center gap-2 flex-wrap mb-4">
+        <span className="inline-flex items-center gap-1.5 rounded-full bg-sky-50 text-sky-700 px-2.5 py-1 text-xs font-semibold">
+          <MapPin className="h-3 w-3" /> London → New York
+        </span>
+        <span className="inline-flex items-center gap-1.5 rounded-full bg-slate-100 text-slate-700 px-2.5 py-1 text-xs font-semibold">
+          <Calendar className="h-3 w-3" /> May 14, 2026
+        </span>
+        <span className="text-xs text-slate-400 ml-auto">3 great deals</span>
+      </div>
+      <div className="space-y-2.5">
+        {deals.map((f, i) => (
+          <div
+            key={i}
+            className={`animate-fade-up rounded-xl bg-white p-4 flex items-center justify-between gap-3 transition-all ${
+              f.highlight
+                ? "border-2 border-sky-300 shadow-lg shadow-sky-100"
+                : "border border-slate-100"
+            }`}
+            style={{
+              animationDelay: `${i * 220}ms`,
+              animationFillMode: "backwards",
+            }}
+          >
+            <div className="flex items-center gap-3 min-w-0">
+              <div className="h-9 w-9 rounded-full bg-sky-50 flex items-center justify-center text-sky-600 shrink-0">
+                <Plane className="h-4 w-4" />
+              </div>
+              <div className="min-w-0">
+                <p className="font-semibold text-slate-900 text-sm truncate">
+                  {f.airline}
+                </p>
+                <p className="text-xs text-slate-500">
+                  Direct · {f.duration}
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center gap-3">
+              <div className="text-right">
+                <p className="text-lg font-bold text-slate-900 leading-none">
+                  £{f.price}
+                </p>
+                <p className="text-xs text-slate-400 line-through">
+                  £{f.original}
+                </p>
+              </div>
+              {f.highlight && (
+                <span className="rounded-full bg-sky-600 text-white px-3 py-1.5 text-xs font-semibold whitespace-nowrap animate-pulse">
+                  Track →
+                </span>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function DemoSceneTracking() {
+  return (
+    <div className="space-y-5">
+      <div className="animate-fade-up rounded-xl bg-gradient-to-r from-sky-50 to-indigo-50 border border-sky-100 p-4 flex items-center gap-3">
+        <div className="h-10 w-10 rounded-full bg-white flex items-center justify-center text-sky-600 shrink-0 shadow-sm">
+          <Plane className="h-5 w-5" />
+        </div>
+        <div className="min-w-0">
+          <p className="font-semibold text-slate-900 text-sm">
+            London → New York
+          </p>
+          <p className="text-xs text-slate-500">
+            Virgin Atlantic · May 14 · currently £380
+          </p>
+        </div>
+        <span className="ml-auto hidden sm:inline-flex items-center gap-1 rounded-full bg-white border border-slate-200 px-2.5 py-1 text-xs font-semibold text-slate-700 shrink-0">
+          <Check className="h-3 w-3 text-emerald-500" /> Selected
+        </span>
+      </div>
+      <div
+        className="animate-fade-up"
+        style={{ animationDelay: "400ms", animationFillMode: "backwards" }}
+      >
+        <label className="text-sm font-medium text-slate-700 mb-2 block flex items-center gap-1.5">
+          <Bell className="h-3.5 w-3.5 text-sky-600" /> Ping me when it drops
+          below
+        </label>
+        <div className="rounded-xl border-2 border-sky-400 bg-white px-4 py-4 flex items-center justify-between shadow-sm shadow-sky-100">
+          <div className="flex items-baseline">
+            <span className="text-3xl font-bold text-slate-900">£340</span>
+            <span className="inline-block w-0.5 h-7 bg-sky-600 ml-1 animate-pulse" />
+          </div>
+          <span className="text-xs text-emerald-700 bg-emerald-50 rounded-full px-2.5 py-1 font-semibold">
+            £40 under current
+          </span>
+        </div>
+      </div>
+      <div
+        className="animate-fade-up flex items-center gap-3"
+        style={{ animationDelay: "1300ms", animationFillMode: "backwards" }}
+      >
+        <button
+          type="button"
+          className="inline-flex items-center gap-2 rounded-full bg-sky-600 text-white px-6 py-3 font-semibold shadow-lg shadow-sky-200 animate-pulse"
+        >
+          <Bell className="h-4 w-4" />
+          Start watching
+        </button>
+        <span className="text-xs text-slate-400 italic">
+          then go live your life
+        </span>
+      </div>
+    </div>
+  );
+}
+
+function DemoSceneAlert() {
+  return (
+    <div className="relative min-h-[360px]">
+      {/* Dimmed dashboard in background */}
+      <div className="opacity-40 pointer-events-none select-none">
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-lg font-bold text-slate-900">
+            My tracked flights
+          </h3>
+          <span className="text-xs text-slate-500">1 watching</span>
+        </div>
+        <div className="rounded-xl bg-white border border-slate-100 p-4 flex items-center gap-3">
+          <div className="h-10 w-10 rounded-full bg-sky-50 flex items-center justify-center">
+            <Plane className="h-5 w-5 text-sky-600" />
+          </div>
+          <div className="flex-1 min-w-0">
+            <p className="font-semibold text-sm">London → New York</p>
+            <p className="text-xs text-slate-500">Alert set at £340</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Email notification sliding in */}
+      <div
+        className="absolute top-0 right-0 left-0 sm:left-auto sm:max-w-sm animate-fade-up"
+        style={{ animationDelay: "200ms", animationFillMode: "backwards" }}
+      >
+        <div className="rounded-2xl bg-white shadow-2xl shadow-emerald-200/50 border border-emerald-100 p-5">
+          <div className="flex items-center gap-2 mb-3 pb-3 border-b border-slate-100">
+            <div className="h-7 w-7 rounded-full bg-emerald-100 flex items-center justify-center">
+              <Mail className="h-3.5 w-3.5 text-emerald-600" />
+            </div>
+            <div className="min-w-0">
+              <p className="text-xs font-semibold text-slate-800 leading-tight">
+                Flight Guardian
+              </p>
+              <p className="text-[10px] text-slate-400 leading-tight">
+                to you · just now
+              </p>
+            </div>
+            <span className="ml-auto inline-flex items-center gap-1 rounded-full bg-emerald-50 text-emerald-700 px-2 py-0.5 text-[10px] font-semibold">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              New
+            </span>
+          </div>
+          <p className="font-bold text-slate-900 mb-1.5 flex items-center gap-1.5">
+            <TrendingDown className="h-4 w-4 text-emerald-600" />
+            Price just dropped!
+          </p>
+          <p className="text-sm text-slate-600 leading-snug mb-4">
+            Your <span className="font-semibold">London → New York</span>{" "}
+            flight hit{" "}
+            <span className="font-bold text-emerald-600">£340</span> — down{" "}
+            <span className="font-semibold">£40</span> from when you started
+            watching.
+          </p>
+          <button
+            type="button"
+            className="inline-flex items-center gap-1.5 rounded-full bg-sky-600 text-white px-4 py-2 text-sm font-semibold hover:bg-sky-700 transition"
+          >
+            Book now <ArrowRight className="h-3.5 w-3.5" />
+          </button>
+        </div>
+      </div>
+
+      {/* Floating sparkles */}
+      <Sparkles className="absolute top-4 left-6 h-5 w-5 text-amber-400 animate-float-gentle" />
+      <Sparkles
+        className="absolute top-24 left-1/3 h-4 w-4 text-sky-400 animate-float-gentle"
+        style={{ animationDelay: "0.8s" }}
+      />
+      <Sparkles
+        className="absolute bottom-12 left-12 h-3 w-3 text-emerald-400 animate-float-gentle"
+        style={{ animationDelay: "1.4s" }}
+      />
+    </div>
+  );
+}
+
+export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-sky-50 via-white to-white text-slate-900 overflow-x-hidden">
       {/* HERO */}
@@ -279,141 +611,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* STATS STRIP */}
-      <section className="relative py-14 px-6 bg-gradient-to-b from-white via-sky-50/40 to-white">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-5">
-            {STATS.map(({ icon: Icon, value, label, trend, accent, spark }) => {
-              const c = ACCENT_CLASSES[accent];
-              const max = Math.max(...spark);
-              return (
-                <div
-                  key={label}
-                  className={`group relative overflow-hidden rounded-2xl bg-white border border-slate-100 p-5 md:p-6 hover:-translate-y-1 hover:shadow-lg ${c.shadow} ${c.border} transition-all duration-300`}
-                >
-                  <div className="flex items-start justify-between mb-3">
-                    <div
-                      className={`h-10 w-10 rounded-xl ${c.bg} flex items-center justify-center ${c.text} group-hover:scale-110 group-hover:rotate-6 transition-transform`}
-                    >
-                      <Icon className="h-5 w-5" />
-                    </div>
-                    {/* Mini sparkline */}
-                    <div className="flex items-end gap-0.5 h-8">
-                      {spark.map((h, i) => (
-                        <div
-                          key={i}
-                          className={`w-1 rounded-full ${c.bar} opacity-40 group-hover:opacity-100 transition-opacity`}
-                          style={{
-                            height: `${(h / max) * 100}%`,
-                            transitionDelay: `${i * 40}ms`,
-                          }}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                  <div className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight">
-                    {value}
-                  </div>
-                  <div className="text-sm text-slate-600 mt-1 font-medium">
-                    {label}
-                  </div>
-                  <div
-                    className={`text-xs ${c.text} mt-2 font-semibold inline-flex items-center gap-1`}
-                  >
-                    <TrendingUp className="h-3 w-3" />
-                    {trend}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-
-          {/* Live activity ticker */}
-          <div className="mt-6 flex justify-center">
-            <div className="inline-flex items-center gap-3 rounded-full bg-white border border-slate-100 shadow-sm pl-2 pr-5 py-2 max-w-full">
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 text-emerald-700 px-2.5 py-1 text-xs font-semibold">
-                <span className="relative flex h-1.5 w-1.5">
-                  <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75 animate-ping" />
-                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                </span>
-                Live
-              </span>
-              <div
-                key={tickerIndex}
-                className="flex items-center gap-2 text-sm text-slate-700 animate-fade-up truncate"
-              >
-                <Zap className="h-3.5 w-3.5 text-amber-500 shrink-0" />
-                <span className="truncate">
-                  <span className="font-semibold">{activity.name}</span> just
-                  saved{" "}
-                  <span className="font-semibold text-emerald-600">
-                    £{activity.saved}
-                  </span>{" "}
-                  on {activity.route}
-                </span>
-                <span className="hidden sm:inline text-slate-400 text-xs whitespace-nowrap">
-                  · {activity.time}
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* HOW IT WORKS */}
-      <section className="py-24 px-6">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-14">
-            <span className="inline-block text-xs font-semibold uppercase tracking-wider text-sky-600 mb-3">
-              How it works
-            </span>
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight">
-              Three steps. Zero stress.
-            </h2>
-            <p className="text-slate-600 mt-3 text-lg">
-              Set it up in a minute, save hundreds for years.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-6">
-            {[
-              {
-                icon: Search,
-                step: "1",
-                title: "Tell us your trip",
-                body: "Pick your route and dates. Takes about 30 seconds — promise.",
-              },
-              {
-                icon: Heart,
-                step: "2",
-                title: "Set your happy price",
-                body: "Let us know what feels good to pay. No pressure to book now — we'll wait.",
-              },
-              {
-                icon: Bell,
-                step: "3",
-                title: "Get a friendly ping",
-                body: "When it drops, you get an email with a direct booking link. Book in minutes.",
-              },
-            ].map(({ icon: Icon, step, title, body }, i) => (
-              <div
-                key={step}
-                className="group relative rounded-2xl bg-white border border-slate-100 p-8 hover:-translate-y-2 hover:shadow-xl hover:shadow-sky-100 hover:border-sky-200 transition-all duration-300"
-                style={{ animationDelay: `${i * 80}ms` }}
-              >
-                <div className="flex items-center gap-3 mb-5">
-                  <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-sky-500 to-sky-600 text-white font-bold shadow-md shadow-sky-200 group-hover:scale-110 transition-transform">
-                    {step}
-                  </span>
-                  <Icon className="h-5 w-5 text-sky-600 transition-transform group-hover:rotate-12" />
-                </div>
-                <h3 className="text-xl font-semibold mb-2">{title}</h3>
-                <p className="text-slate-600 leading-relaxed">{body}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <ProductDemo />
 
       {/* WHY TRAVELERS LOVE US — Bento layout */}
       <section className="relative py-24 px-6 bg-gradient-to-b from-white to-sky-50 overflow-hidden">
