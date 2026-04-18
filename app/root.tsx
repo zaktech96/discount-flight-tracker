@@ -7,6 +7,31 @@ import { ConvexReactClient } from "convex/react";
 import { Navbar } from "./components/navigation/navbar";
 import "./app.css";
 
+export const links: Route.LinksFunction = () => [
+  { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
+  { rel: "apple-touch-icon", href: "/favicon.svg" },
+];
+
+export const meta: Route.MetaFunction = () => [
+  { title: "Flight Guardian — Never overpay for flights again" },
+  {
+    name: "description",
+    content:
+      "Free flight-price tracker. Tell us your route, set a target price, and we'll email you the moment it drops.",
+  },
+  { name: "theme-color", content: "#0284c7" },
+  {
+    property: "og:title",
+    content: "Flight Guardian — Never overpay for flights again",
+  },
+  {
+    property: "og:description",
+    content:
+      "Free flight-price tracker. Tell us your route, set a target price, and we'll email you the moment it drops.",
+  },
+  { property: "og:type", content: "website" },
+];
+
 // 1. The Loader: This fetches the auth state on the server
 export async function loader(args: Route.LoaderArgs) {
   return rootAuthLoader(args);

@@ -1,5 +1,15 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
+import type { Route } from "./+types/home";
+
+export const meta: Route.MetaFunction = () => [
+  { title: "Flight Guardian — Never overpay for flights again" },
+  {
+    name: "description",
+    content:
+      "Pick a route, set a target price, and we'll email you the moment it drops. Free to use, no credit card.",
+  },
+];
 import {
   Plane,
   Bell,
