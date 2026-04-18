@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import {
   Plane,
@@ -11,8 +12,89 @@ import {
   Globe,
   Clock,
   TrendingDown,
+  TrendingUp,
   Coffee,
+  Users,
+  Star,
+  Zap,
 } from "lucide-react";
+
+const LIVE_ACTIVITY = [
+  { name: "Sarah", saved: 180, route: "London → New York", time: "2 min ago" },
+  { name: "Jordan", saved: 412, route: "London → Tokyo", time: "6 min ago" },
+  { name: "Priya", saved: 91, route: "London → Lisbon", time: "11 min ago" },
+  { name: "Marcus", saved: 230, route: "Boston → Bali", time: "18 min ago" },
+  { name: "Emma", saved: 145, route: "London → Paris", time: "24 min ago" },
+];
+
+const STATS = [
+  {
+    icon: PiggyBank,
+    value: "£2.3M+",
+    label: "Saved together",
+    trend: "+£42k this month",
+    accent: "emerald",
+    spark: [20, 28, 24, 36, 32, 44, 58],
+  },
+  {
+    icon: Users,
+    value: "12,847",
+    label: "Happy flyers",
+    trend: "+240 this week",
+    accent: "sky",
+    spark: [22, 26, 30, 35, 38, 45, 52],
+  },
+  {
+    icon: Plane,
+    value: "£220",
+    label: "Average saved",
+    trend: "per booking",
+    accent: "indigo",
+    spark: [40, 30, 45, 38, 52, 46, 58],
+  },
+  {
+    icon: Star,
+    value: "4.9",
+    label: "User rating",
+    trend: "2,412 reviews",
+    accent: "amber",
+    spark: [48, 50, 48, 52, 50, 54, 55],
+  },
+] as const;
+
+const ACCENT_CLASSES: Record<
+  (typeof STATS)[number]["accent"],
+  { bg: string; text: string; bar: string; shadow: string; border: string }
+> = {
+  emerald: {
+    bg: "bg-emerald-50",
+    text: "text-emerald-600",
+    bar: "bg-emerald-400",
+    shadow: "hover:shadow-emerald-100",
+    border: "hover:border-emerald-200",
+  },
+  sky: {
+    bg: "bg-sky-50",
+    text: "text-sky-600",
+    bar: "bg-sky-400",
+    shadow: "hover:shadow-sky-100",
+    border: "hover:border-sky-200",
+  },
+  indigo: {
+    bg: "bg-indigo-50",
+    text: "text-indigo-600",
+    bar: "bg-indigo-400",
+    shadow: "hover:shadow-indigo-100",
+    border: "hover:border-indigo-200",
+  },
+  amber: {
+    bg: "bg-amber-50",
+    text: "text-amber-600",
+    bar: "bg-amber-400",
+    shadow: "hover:shadow-amber-100",
+    border: "hover:border-amber-200",
+  },
+};
 
 const DESTINATIONS = [
   {
@@ -83,6 +165,17 @@ const FAQS = [
 ];
 
 export default function Home() {
+  const [tickerIndex, setTickerIndex] = useState(0);
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setTickerIndex((i) => (i + 1) % LIVE_ACTIVITY.length);
+    }, 3500);
+    return () => clearInterval(id);
+  }, []);
+
+  const activity = LIVE_ACTIVITY[tickerIndex];
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-sky-50 via-white to-white text-slate-900 overflow-x-hidden">
       {/* HERO */}
@@ -187,21 +280,83 @@ export default function Home() {
       </section>
 
       {/* STATS STRIP */}
-      <section className="py-10 px-6 border-y border-slate-100 bg-white">
-        <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-          {[
-            { value: "£2.3M+", label: "Saved by travelers" },
-            { value: "12,000+", label: "Happy flyers" },
-            { value: "£220", label: "Average savings per trip" },
-            { value: "4.9★", label: "User rating" },
-          ].map(({ value, label }) => (
-            <div key={label} className="group">
-              <div className="text-2xl md:text-3xl font-bold text-slate-900 group-hover:text-sky-600 transition-colors">
-                {value}
+      <section className="relative py-14 px-6 bg-gradient-to-b from-white via-sky-50/40 to-white">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-5">
+            {STATS.map(({ icon: Icon, value, label, trend, accent, spark }) => {
+              const c = ACCENT_CLASSES[accent];
+              const max = Math.max(...spark);
+              return (
+                <div
+                  key={label}
+                  className={`group relative overflow-hidden rounded-2xl bg-white border border-slate-100 p-5 md:p-6 hover:-translate-y-1 hover:shadow-lg ${c.shadow} ${c.border} transition-all duration-300`}
+                >
+                  <div className="flex items-start justify-between mb-3">
+                    <div
+                      className={`h-10 w-10 rounded-xl ${c.bg} flex items-center justify-center ${c.text} group-hover:scale-110 group-hover:rotate-6 transition-transform`}
+                    >
+                      <Icon className="h-5 w-5" />
+                    </div>
+                    {/* Mini sparkline */}
+                    <div className="flex items-end gap-0.5 h-8">
+                      {spark.map((h, i) => (
+                        <div
+                          key={i}
+                          className={`w-1 rounded-full ${c.bar} opacity-40 group-hover:opacity-100 transition-opacity`}
+                          style={{
+                            height: `${(h / max) * 100}%`,
+                            transitionDelay: `${i * 40}ms`,
+                          }}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                  <div className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight">
+                    {value}
+                  </div>
+                  <div className="text-sm text-slate-600 mt-1 font-medium">
+                    {label}
+                  </div>
+                  <div
+                    className={`text-xs ${c.text} mt-2 font-semibold inline-flex items-center gap-1`}
+                  >
+                    <TrendingUp className="h-3 w-3" />
+                    {trend}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Live activity ticker */}
+          <div className="mt-6 flex justify-center">
+            <div className="inline-flex items-center gap-3 rounded-full bg-white border border-slate-100 shadow-sm pl-2 pr-5 py-2 max-w-full">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 text-emerald-700 px-2.5 py-1 text-xs font-semibold">
+                <span className="relative flex h-1.5 w-1.5">
+                  <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75 animate-ping" />
+                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                </span>
+                Live
+              </span>
+              <div
+                key={tickerIndex}
+                className="flex items-center gap-2 text-sm text-slate-700 animate-fade-up truncate"
+              >
+                <Zap className="h-3.5 w-3.5 text-amber-500 shrink-0" />
+                <span className="truncate">
+                  <span className="font-semibold">{activity.name}</span> just
+                  saved{" "}
+                  <span className="font-semibold text-emerald-600">
+                    £{activity.saved}
+                  </span>{" "}
+                  on {activity.route}
+                </span>
+                <span className="hidden sm:inline text-slate-400 text-xs whitespace-nowrap">
+                  · {activity.time}
+                </span>
               </div>
-              <div className="text-sm text-slate-500 mt-1">{label}</div>
             </div>
-          ))}
+          </div>
         </div>
       </section>
 
