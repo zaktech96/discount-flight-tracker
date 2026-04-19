@@ -443,13 +443,13 @@ function ProductDemo() {
         />
       </div>
 
-      <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-10">
+      <div className="max-w-5xl mx-auto">
+        <div className="text-center mb-12">
           <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-sky-600 mb-3">
             <Sparkles className="h-3.5 w-3.5" />
             Watch it work
           </span>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tight leading-[1.1]">
+          <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.1]">
             See it in{" "}
             <span className="relative inline-block">
               <span className="relative z-10">action</span>
@@ -460,7 +460,7 @@ function ProductDemo() {
             </span>
             .
           </h2>
-          <p className="text-slate-600 mt-4 text-lg max-w-xl mx-auto">
+          <p className="text-slate-600 mt-4 text-lg md:text-xl max-w-2xl mx-auto">
             Search, track, and save. It really is that simple.
           </p>
         </div>
@@ -894,7 +894,7 @@ function DestinationsSection() {
         />
       </div>
 
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-7xl mx-auto">
         <div className="text-center mb-10 relative group cursor-default">
           <Plane className="absolute -top-4 md:-top-6 left-[15%] md:left-1/4 h-6 w-6 md:h-8 md:w-8 text-sky-400 opacity-0 group-hover:opacity-100 transition-opacity duration-700 animate-fly-across" />
           <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-sky-600 mb-3">
@@ -1104,8 +1104,8 @@ export default function Home() {
           </svg>
         </div>
 
-        <div className="max-w-5xl mx-auto text-center">
-          <span className="glass-card-soft inline-flex items-center gap-2 rounded-full text-slate-700 px-4 py-1.5 text-sm font-medium animate-fade-up">
+        <div className="max-w-7xl mx-auto text-center">
+          <span className="glass-card-soft inline-flex items-center gap-2 rounded-full text-slate-700 px-5 py-2 text-sm font-medium animate-fade-up">
             <span className="relative flex h-2 w-2">
               <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75 animate-ping" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
@@ -1114,43 +1114,43 @@ export default function Home() {
             flights right now
           </span>
 
-          <h1 className="mt-8 text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1] animate-fade-up delay-75">
+          <h1 className="mt-10 text-5xl md:text-7xl lg:text-[5.5rem] font-bold tracking-tight leading-[1.05] animate-fade-up delay-75">
             Book flights at the{" "}
             <span className="relative inline-block">
               <span className="relative z-10 text-sky-600">perfect moment</span>
               <span
                 aria-hidden
-                className="absolute left-0 bottom-1 h-3 w-full rounded-full bg-amber-200/70 -z-0"
+                className="absolute left-0 bottom-2 h-4 w-full rounded-full bg-amber-200/70 -z-0"
               />
             </span>
             .
           </h1>
 
-          <p className="mt-6 text-slate-600 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed animate-fade-up delay-150">
+          <p className="mt-8 text-slate-600 text-lg md:text-2xl max-w-3xl mx-auto leading-relaxed animate-fade-up delay-150">
             Tell us where you want to go. We'll watch prices 24/7 and email you
             when it's time to book — so you never overpay again.
           </p>
 
-          <div className="mt-10 flex flex-col sm:flex-row justify-center gap-3 animate-fade-up delay-300 relative z-10">
+          <div className="mt-12 flex flex-col sm:flex-row justify-center gap-4 animate-fade-up delay-300 relative z-10">
             <div className="relative group">
               <div className="absolute -inset-1 bg-gradient-to-r from-sky-400 to-indigo-400 rounded-full blur opacity-25 group-hover:opacity-75 transition duration-500 group-hover:duration-200" />
               <Link
                 to="/search"
-                className="relative glass-button inline-flex items-center justify-center gap-2 rounded-full bg-sky-600 text-white px-8 py-4 font-semibold shadow-lg shadow-sky-200/50 hover:bg-sky-500 hover:shadow-xl hover:shadow-sky-400/60 hover:-translate-y-0.5 transition-all w-full"
+                className="relative glass-button inline-flex items-center justify-center gap-2 rounded-full bg-sky-600 text-white px-10 py-5 text-lg font-semibold shadow-lg shadow-sky-200/50 hover:bg-sky-500 hover:shadow-xl hover:shadow-sky-400/60 hover:-translate-y-0.5 transition-all w-full"
               >
-                <Search className="h-5 w-5 transition-transform group-hover:rotate-6" />
+                <Search className="h-6 w-6 transition-transform group-hover:rotate-6" />
                 Find cheap flights
               </Link>
             </div>
             <Link
               to="/dashboard"
-              className="glass-button-light inline-flex items-center justify-center gap-2 rounded-full bg-white/80 text-slate-900 border border-slate-200/60 px-8 py-4 font-semibold hover:bg-white hover:border-slate-300 hover:shadow-md hover:-translate-y-0.5 transition-all"
+              className="glass-button-light inline-flex items-center justify-center gap-2 rounded-full bg-white/80 text-slate-900 border border-slate-200/60 px-10 py-5 text-lg font-semibold hover:bg-white hover:border-slate-300 hover:shadow-md hover:-translate-y-0.5 transition-all"
             >
               My tracked flights
             </Link>
           </div>
 
-          <p className="mt-4 text-slate-500 text-sm animate-fade-up delay-450">
+          <p className="mt-6 text-slate-500 text-base animate-fade-up delay-450">
             Free to get started · No credit card needed
           </p>
 
@@ -1197,7 +1197,7 @@ export default function Home() {
           />
         </div>
 
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-7xl mx-auto">
           <div className="text-center mb-14">
             <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-sky-600 mb-3">
               <Sparkles className="h-3.5 w-3.5" />
@@ -1381,7 +1381,7 @@ export default function Home() {
 
       {/* THE DIFFERENCE — before / after comparison */}
       <section className="py-24 px-6 bg-sky-50">
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-6xl mx-auto">
           <div className="text-center mb-14">
             <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-sky-600 mb-3">
               <Sparkles className="h-3.5 w-3.5" />
@@ -1507,7 +1507,7 @@ export default function Home() {
 
       {/* FAQ */}
       <section className="py-24 px-6">
-        <div className="max-w-3xl mx-auto">
+        <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
             <span className="inline-block text-xs font-semibold uppercase tracking-wider text-sky-600 mb-3">
               Good questions
@@ -1536,7 +1536,7 @@ export default function Home() {
 
       {/* FINAL CTA */}
       <section className="py-24 px-6">
-        <div className="max-w-3xl mx-auto text-center">
+        <div className="max-w-5xl mx-auto text-center">
           <div className="relative rounded-3xl bg-gradient-to-br from-sky-600 via-sky-500 to-indigo-600 p-12 md:p-16 text-white shadow-xl shadow-sky-200 overflow-hidden animate-gradient-shift">
             {/* Decorative circles */}
             <div

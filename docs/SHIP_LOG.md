@@ -22,6 +22,17 @@ verified before merge - no exceptions.
 
 ## Log
 
+### SL-009 - Scaled Up Layout & Responsiveness
+
+**Scope:** `app/routes/home.tsx`
+
+**Summary:** 
+- Increased the `max-w` constraint across all landing page sections (Hero, Product Demo, Destinations, Bento Grid, Comparison, FAQ, Final CTA) to better utilize screen real estate on larger displays (e.g. upscaling `max-w-5xl` to `max-w-7xl` in Hero, and `max-w-4xl` to `max-w-5xl` in the Demo).
+- Upgraded the Hero heading size on large screens to `lg:text-[5.5rem]` to create a more impactful, immersive first impression.
+- Tweaked inner paddings and button scaling to maintain breathing room and visual hierarchy on larger viewports.
+
+**Verification:** Build passes successfully.
+
 ### SL-008 - Immersive Destination Cards
 
 **Scope:** `app/routes/home.tsx`
