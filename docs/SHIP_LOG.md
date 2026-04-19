@@ -22,6 +22,21 @@ verified before merge - no exceptions.
 
 ## Log
 
+### SL-039 - European & North American Destination Expansion
+
+**Scope:** `app/routes/home.tsx`
+
+**Summary:** 
+- Significantly expanded the European destination catalog to include highly requested locations:
+    - **Portugal:** Added Lisbon and Porto with high-fidelity cultural and city imagery.
+    - **Greece:** Added Athens (Culture) and Santorini (Beach) to enrich the Mediterranean selection.
+    - **Iceland:** Added Reykjavik to the catalog, featuring stunning northern landscape imagery.
+- Expanded the North American selection by adding **Toronto (Canada)** to the Americas region.
+- Verified that all 40+ destination cards now feature correct IATA codes, pricing placeholders, and visually accurate Unsplash imagery.
+- Ensured all new additions are seamlessly integrated into the infinite conveyor belt and responsive regional filters.
+
+**Verification:** Build passes successfully; regional filtering verified manually.
+
 ### SL-038 - Demo Interactivity & Global Image Fixes
 
 **Scope:** `app/routes/home.tsx`
