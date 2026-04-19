@@ -824,56 +824,97 @@ function BentoPriceWatching() {
 }
 
 function LiveDealStream() {
+  const [dealOffset, setDealOffset] = useState(0);
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setDealOffset((prev) => (prev + 1) % RECENT_DROPS.length);
+    }, 4500);
+    return () => clearInterval(id);
+  }, []);
+
+  // Get a sliding window of 4 deals
+  const currentDeals = [
+    RECENT_DROPS[dealOffset % RECENT_DROPS.length],
+    RECENT_DROPS[(dealOffset + 1) % RECENT_DROPS.length],
+    RECENT_DROPS[(dealOffset + 2) % RECENT_DROPS.length],
+    RECENT_DROPS[(dealOffset + 3) % RECENT_DROPS.length],
+  ];
+
   return (
-    <div className="glass-card md:col-span-3 group relative rounded-3xl p-7 hover:-translate-y-1 hover:shadow-xl hover:shadow-indigo-100 transition-all duration-300 bg-gradient-to-br from-indigo-50/80 via-white/85 to-sky-50/80 overflow-hidden">
-      <div className="flex items-center justify-between mb-4">
+    <div className="glass-card md:col-span-3 group relative rounded-3xl p-7 hover:-translate-y-1 hover:shadow-xl hover:shadow-indigo-100 transition-all duration-500 bg-gradient-to-br from-indigo-50/80 via-white/85 to-sky-50/80 overflow-hidden flex flex-col">
+      <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-2">
-          <div className="h-10 w-10 rounded-2xl bg-white shadow-sm flex items-center justify-center text-indigo-600">
+          <div className="h-10 w-10 rounded-2xl bg-white shadow-sm flex items-center justify-center text-indigo-600 border border-indigo-50">
             <Globe className="h-5 w-5" />
           </div>
-          <h3 className="text-lg font-semibold">Live Price Drops</h3>
+          <h3 className="text-lg font-bold text-slate-800 tracking-tight">
+            Live Tracker
+          </h3>
         </div>
-        <span className="flex items-center gap-1 text-[10px] font-bold text-emerald-600 uppercase tracking-wider bg-emerald-50 px-2 py-1 rounded-full">
-          <span className="h-1 w-1 rounded-full bg-emerald-500 animate-ping" />
-          Live
-        </span>
+        <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20">
+          <span className="relative flex h-2 w-2">
+            <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75 animate-ping" />
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+          </span>
+          <span className="text-[10px] font-black text-emerald-600 uppercase tracking-widest">
+            Active
+          </span>
+        </div>
       </div>
 
-      <div className="space-y-3 relative">
-        {RECENT_DROPS.map((drop, i) => (
-          <div
-            key={i}
-            className="flex items-center justify-between p-3 rounded-xl bg-white/50 border border-white/60 hover:bg-white/80 transition-colors group/item"
-          >
-            <div className="flex items-center gap-3">
-              <div className="h-8 w-8 rounded-full bg-sky-50 flex items-center justify-center text-sky-600 group-hover/item:scale-110 transition-transform">
-                <Plane className="h-3.5 w-3.5" />
-              </div>
-              <div>
-                <p className="text-xs font-bold text-slate-900 leading-none">
-                  {drop.from} → {drop.to}
-                </p>
-                <p className="text-[10px] text-slate-400 mt-1">{drop.time}</p>
-              </div>
-            </div>
-            <div className="text-right">
-              <p className="text-sm font-bold text-emerald-600 leading-none">
-                -£{drop.drop}
-              </p>
-              <p className="text-[10px] font-bold text-slate-900 mt-1">
-                £{drop.price}
-              </p>
-            </div>
-          </div>
-        ))}
+      <div className="flex-1 relative min-h-[280px]">
+        <div className="space-y-3">
+          <AnimatePresence mode="popLayout" initial={false}>
+            {currentDeals.map((drop, i) => (
+              <motion.div
+                key={`${drop.from}-${drop.to}-${dealOffset + i}`}
+                initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                animate={{ opacity: 1 - i * 0.2, y: 0, scale: 1 - i * 0.02 }}
+                exit={{ opacity: 0, y: -20, scale: 0.95 }}
+                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                className="flex items-center justify-between p-4 rounded-2xl bg-white/60 border border-white/80 shadow-sm hover:bg-white/90 transition-colors glass-gloss"
+              >
+                <div className="flex items-center gap-4">
+                  <div className="h-10 w-10 rounded-xl bg-sky-500/10 flex items-center justify-center text-sky-600 group-hover:scale-110 transition-transform">
+                    <Plane className="h-4 w-4" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-black text-slate-900 leading-none flex items-center gap-1.5">
+                      {drop.from}
+                      <ArrowRight className="h-3 w-3 text-slate-400" />
+                      {drop.to}
+                    </p>
+                    <p className="text-[10px] font-bold text-slate-400 mt-1.5 uppercase tracking-tighter">
+                      Detected {drop.time}
+                    </p>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <div className="flex items-center justify-end gap-1 text-emerald-600">
+                    <TrendingDown className="h-3 w-3" />
+                    <p className="text-sm font-black leading-none">
+                      -£{drop.drop}
+                    </p>
+                  </div>
+                  <p className="text-base font-black text-slate-900 mt-1">
+                    £{drop.price}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </div>
 
-        {/* Fade overlay at bottom */}
-        <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-white/80 to-transparent pointer-events-none" />
+        {/* Fade overlay at bottom to emphasize the stack */}
+        <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-sky-50 to-transparent pointer-events-none z-10" />
       </div>
 
-      <p className="text-[10px] text-slate-400 mt-4 text-center">
-        Monitoring 12,000+ routes every 60 minutes
-      </p>
+      <div className="mt-6 pt-4 border-t border-slate-100/50">
+        <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest text-center">
+          Monitoring 12,843 routes 24/7
+        </p>
+      </div>
     </div>
   );
 }

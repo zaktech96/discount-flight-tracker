@@ -22,6 +22,20 @@ verified before merge - no exceptions.
 
 ## Log
 
+### SL-023 - Dynamic Live Feed & High-End Visuals
+
+**Scope:** `app/routes/home.tsx`, `app/app.css`
+
+**Summary:** 
+- Transformed the static "Live Price Drops" list into a premium, auto-cycling "Live Tracker" feed.
+- The new feed uses a sliding window to display 4 deals at a time, cycling every 4.5 seconds with smooth `popLayout` transitions.
+- Integrated `AnimatePresence` for fluid entry/exit of deal cards, creating a high-tech dashboard aesthetic.
+- Enhanced the "Active" status indicator with a double-ring pulsing animation and high-contrast typography.
+- Refined global glass and gloss utilities in `app/app.css` for more intense depth and shimmering hover states.
+- Cleaned up unused state variables to maintain strict TypeScript and build standards.
+
+**Verification:** Build passes successfully.
+
 ### SL-022 - Premium Touch & Jitter Fix Refinement
 
 **Scope:** `app/routes/home.tsx`, `app/app.css`
