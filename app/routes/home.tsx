@@ -813,12 +813,12 @@ function BentoPriceWatching() {
           </div>
           <div className="flex items-end gap-1.5 h-24">
             {deal.history.map((h, i) => (
-              <div
+              <motion.div
                 key={i}
-                className={`flex-1 rounded-t-md animate-fade-up relative group ${
+                className={`flex-1 rounded-t-md animate-fade-up relative group/bar ${
                   i === 6
                     ? "bg-gradient-to-t from-emerald-400 to-emerald-300 shadow-lg shadow-emerald-500/30"
-                    : "bg-white/20 hover:bg-white/30 transition-colors"
+                    : "bg-white/20 hover:bg-sky-400 hover:shadow-[0_0_15px_rgba(56,189,248,0.5)] transition-all duration-300"
                 }`}
                 style={{
                   height: `${h}%`,
@@ -829,10 +829,10 @@ function BentoPriceWatching() {
                   <span className="absolute -top-1.5 left-1/2 -translate-x-1/2 h-3 w-3 rounded-full bg-emerald-400 shadow-lg animate-ping" />
                 )}
                 {/* Tooltip on hover */}
-                <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-white text-slate-900 text-[10px] font-bold px-1.5 py-0.5 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
+                <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-white text-slate-900 text-[10px] font-bold px-2 py-1 rounded shadow-xl opacity-0 group-hover/bar:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-30">
                   £{Math.floor(deal.original * (h / 100))}
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
           <div className="flex items-center justify-between mt-2">
@@ -1880,42 +1880,92 @@ export default function Home() {
             <BentoPriceWatching />
 
             {/* Small — savings stat */}
-            <div className="glass-card md:col-span-2 group relative rounded-3xl p-7 hover:-translate-y-1 hover:shadow-xl hover:shadow-emerald-100 transition-all duration-300">
-              <div className="h-12 w-12 rounded-2xl bg-emerald-50 flex items-center justify-center text-emerald-600 mb-4 group-hover:scale-110 group-hover:rotate-6 transition-transform">
-                <PiggyBank className="h-6 w-6" />
+            <div className="glass-card glass-gloss md:col-span-2 group relative rounded-3xl p-8 hover:-translate-y-1 hover:shadow-xl hover:shadow-emerald-100 transition-all duration-300 flex flex-col justify-between overflow-hidden">
+              <div className="relative z-10">
+                <div className="h-14 w-14 rounded-2xl bg-emerald-50 flex items-center justify-center text-emerald-600 mb-6 group-hover:scale-110 group-hover:rotate-6 transition-transform">
+                  <PiggyBank className="h-7 w-7" />
+                </div>
+                <div className="flex items-baseline gap-2">
+                  <span className="text-5xl font-black text-slate-900">
+                    £220
+                  </span>
+                  <span className="text-sm font-bold text-slate-400 uppercase tracking-wider">
+                    avg saved
+                  </span>
+                </div>
+                <p className="text-slate-600 mt-4 leading-relaxed font-medium">
+                  Per booking, according to our members. Some save way more.
+                </p>
               </div>
-              <div className="flex items-baseline gap-1.5">
-                <span className="text-4xl font-bold text-slate-900">£220</span>
-                <span className="text-sm font-semibold text-slate-500">
-                  avg saved
-                </span>
+
+              {/* Interactive community stat reveal */}
+              <div className="mt-8 pt-6 border-t border-slate-100 relative z-10">
+                <div className="flex items-center justify-between group/stat">
+                  <div className="space-y-0.5">
+                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                      Community Total
+                    </p>
+                    <p className="text-lg font-bold text-emerald-600">£1.4M+</p>
+                  </div>
+                  <div className="h-8 w-8 rounded-full bg-emerald-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all group-hover:translate-x-1">
+                    <ArrowRight className="h-4 w-4 text-emerald-600" />
+                  </div>
+                </div>
               </div>
-              <p className="text-slate-600 mt-2 leading-relaxed">
-                per booking, according to our members. Some save way more.
-              </p>
+
               <div
                 aria-hidden
-                className="absolute -bottom-10 -right-10 h-32 w-32 rounded-full bg-emerald-100/0 group-hover:bg-emerald-100/60 transition-colors duration-500"
+                className="absolute -bottom-10 -right-10 h-40 w-40 rounded-full bg-emerald-100/20 blur-3xl group-hover:bg-emerald-100/40 transition-colors duration-500"
               />
             </div>
 
             {/* Small — setup time */}
-            <div className="glass-card md:col-span-2 group relative rounded-3xl p-7 hover:-translate-y-1 hover:shadow-xl hover:shadow-amber-100 transition-all duration-300">
-              <div className="h-12 w-12 rounded-2xl bg-amber-50 flex items-center justify-center text-amber-600 mb-4 group-hover:scale-110 group-hover:-rotate-6 transition-transform">
-                <Clock className="h-6 w-6" />
+            <div className="glass-card glass-gloss md:col-span-2 group relative rounded-3xl p-8 hover:-translate-y-1 hover:shadow-xl hover:shadow-amber-100 transition-all duration-300 flex flex-col justify-between overflow-hidden">
+              <div className="relative z-10">
+                <div className="h-14 w-14 rounded-2xl bg-amber-50 flex items-center justify-center text-amber-600 mb-6 group-hover:scale-110 group-hover:-rotate-6 transition-transform">
+                  <Clock className="h-7 w-7" />
+                </div>
+                <div className="flex items-baseline gap-2">
+                  <span className="text-5xl font-black text-slate-900">
+                    30s
+                  </span>
+                  <span className="text-sm font-bold text-slate-400 uppercase tracking-wider">
+                    to set up
+                  </span>
+                </div>
+                <p className="text-slate-600 mt-4 leading-relaxed font-medium">
+                  Pick your route, set a target price, go make a cup of tea.
+                </p>
               </div>
-              <div className="flex items-baseline gap-1.5">
-                <span className="text-4xl font-bold text-slate-900">30s</span>
-                <span className="text-sm font-semibold text-slate-500">
-                  to set up
-                </span>
+
+              {/* Interactive setup steps */}
+              <div className="mt-8 pt-6 border-t border-slate-100 relative z-10">
+                <div className="flex gap-2">
+                  {[1, 2, 3].map((step) => (
+                    <div
+                      key={step}
+                      className="flex-1 h-1.5 rounded-full bg-slate-100 overflow-hidden relative"
+                    >
+                      <motion.div
+                        className="absolute inset-0 bg-amber-400"
+                        initial={{ x: "-100%" }}
+                        whileInView={{ x: "0%" }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.5 + step * 0.2, duration: 0.8 }}
+                      />
+                    </div>
+                  ))}
+                </div>
+                <div className="flex justify-between mt-2 text-[10px] font-black text-slate-400 uppercase tracking-tighter">
+                  <span>Search</span>
+                  <span>Track</span>
+                  <span>Done</span>
+                </div>
               </div>
-              <p className="text-slate-600 mt-2 leading-relaxed">
-                Pick your route, set a target price, go make a cup of tea.
-              </p>
+
               <Coffee
                 aria-hidden
-                className="absolute bottom-4 right-4 h-16 w-16 text-amber-100 group-hover:text-amber-200 group-hover:rotate-12 transition-all duration-500"
+                className="absolute -bottom-6 -right-6 h-24 w-24 text-amber-100/40 group-hover:text-amber-200/60 group-hover:rotate-12 transition-all duration-700"
               />
             </div>
 
