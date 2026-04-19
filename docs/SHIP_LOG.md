@@ -22,6 +22,20 @@ verified before merge - no exceptions.
 
 ## Log
 
+### SL-040 - Cinematic Hero Animation & Image Quality Audit
+
+**Scope:** `app/routes/home.tsx`
+
+**Summary:** 
+- **Hero Animation:** Implemented an infinite, cinematic plane animation in the hero background. A semi-transparent plane with a gentle motion trail now flies across the viewport on a loop, enhancing the "Travel" theme immediately upon page load.
+- **Image Quality Audit:**
+    - Fixed the broken **Lisbon (Portugal)** image with a high-fidelity Unsplash alternative.
+    - Audited all 40+ global destinations to ensure high-resolution imagery and correct regional matching.
+    - Verified all South American and African cards for visual accuracy.
+- **Visual Polish:** Adjusted hero container layering to ensure the animation remains non-intrusive while providing a premium, "living" feel to the landing page.
+
+**Verification:** Build passes successfully; animation performance verified on mobile and desktop.
+
 ### SL-039 - European & North American Destination Expansion
 
 **Scope:** `app/routes/home.tsx`

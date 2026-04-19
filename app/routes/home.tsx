@@ -224,7 +224,7 @@ const DESTINATIONS: Destination[] = [
     wasFrom: 180,
     trackers: 242,
     image:
-      "https://images.unsplash.com/photo-1585208798174-6cedd862099b?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1548705085-101177834f47?auto=format&fit=crop&w=800&q=80",
   },
   {
     city: "Porto",
@@ -1480,6 +1480,27 @@ export default function Home() {
             </Link>
           </motion.div>
         </div>
+
+        {/* Cinematic Plane Animation */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden -z-0">
+          <motion.div
+            initial={{ x: "-100%", y: "40%", rotate: 15, opacity: 0 }}
+            animate={{ x: "200%", y: "0%", opacity: [0, 0.4, 0.4, 0] }}
+            transition={{
+              duration: 8,
+              repeat: Infinity,
+              repeatDelay: 2,
+              ease: "linear",
+            }}
+            className="absolute top-1/2 left-0 text-sky-400/20"
+          >
+            <div className="relative">
+              <Plane className="h-16 w-16 fill-current" />
+              <div className="absolute right-full top-1/2 -translate-y-1/2 w-48 h-[2px] bg-gradient-to-l from-current to-transparent opacity-50 blur-[1px]" />
+            </div>
+          </motion.div>
+        </div>
+
         <div
           aria-hidden
           className="absolute top-0 left-0 w-full h-full -z-0 opacity-50"
