@@ -22,6 +22,17 @@ verified before merge - no exceptions.
 
 ## Log
 
+### SL-031 - Build Hotfix & Backend Deployment
+
+**Scope:** `app/routes/home.tsx`, `convex/`
+
+**Summary:** 
+- Resolved a critical syntax error in `app/routes/home.tsx` that was causing Vercel deployment failures. Corrected the `meta` function's closing brackets and removed duplicate import statements.
+- Successfully performed a full Convex deployment (`npx convex deploy`) to push the latest price-alert logic, schema updates, and email trigger actions to the production environment.
+- Verified that the local build (`npm run build`) now passes with 100% success.
+
+**Verification:** Build passes and Convex functions are live.
+
 ### SL-030 - Bento Fix & Aesthetic Finalization
 
 **Scope:** `app/routes/home.tsx`, `app/app.css`
