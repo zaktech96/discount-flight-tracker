@@ -350,7 +350,7 @@ img[loading="lazy"] {
   }
 }
 .animate-conveyor-belt {
-  animation: conveyor-belt 35s linear infinite;
+  animation: conveyor-belt 60s linear infinite;
 }
 
 /* Friendly marketing-page animations */

@@ -22,6 +22,15 @@ verified before merge - no exceptions.
 
 ## Log
 
+### SL-016 - Conveyor Belt Speed Adjustment
+
+**Scope:** `app/app.css`
+
+**Summary:** 
+- Adjusted the animation duration of the "Trending Deals" conveyor belt from `35s` to `60s`. This change applies consistently across "All deals" and all filtered categories, ensuring a more relaxed and uniform scrolling experience as per user feedback that the previous speed was too fast.
+
+**Verification:** Build passes successfully.
+
 ### SL-015 - Hotfix: Convex Deployment after UI changes
 
 **Scope:** `convex/`
