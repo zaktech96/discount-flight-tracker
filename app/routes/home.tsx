@@ -725,7 +725,7 @@ function DemoSceneAlert({ route }: { route: DemoRoute }) {
 
       {/* Email notification sliding in */}
       <div
-        className="absolute top-0 right-0 left-0 sm:left-auto sm:max-w-sm animate-fade-up"
+        className="absolute top-0 right-0 left-0 sm:left-auto sm:max-w-sm animate-fade-up z-20"
         style={{ animationDelay: "200ms", animationFillMode: "backwards" }}
       >
         <div className="glass-card-soft rounded-2xl shadow-2xl shadow-emerald-200/50 p-5">
@@ -770,13 +770,13 @@ function DemoSceneAlert({ route }: { route: DemoRoute }) {
       </div>
 
       {/* Floating sparkles */}
-      <Sparkles className="absolute top-4 left-6 h-5 w-5 text-amber-400 animate-float-gentle" />
+      <Sparkles className="absolute top-4 left-6 h-5 w-5 text-amber-400 animate-float-gentle z-30 opacity-70" />
       <Sparkles
-        className="absolute top-24 left-1/3 h-4 w-4 text-sky-400 animate-float-gentle"
+        className="absolute top-24 left-1/3 h-4 w-4 text-sky-400 animate-float-gentle z-30 opacity-80"
         style={{ animationDelay: "0.8s" }}
       />
       <Sparkles
-        className="absolute bottom-12 left-12 h-3 w-3 text-emerald-400 animate-float-gentle"
+        className="absolute bottom-12 left-12 h-3 w-3 text-emerald-400 animate-float-gentle z-30 opacity-90"
         style={{ animationDelay: "1.4s" }}
       />
     </div>
@@ -893,14 +893,17 @@ function DestinationsSection() {
                   </div>
 
                   {/* Top-right: dropped badge if applicable, else plane */}
-                  {dest.wasFrom ? (
-                    <div className="absolute top-4 right-4 inline-flex items-center gap-1 rounded-full bg-emerald-500 text-white px-2.5 py-1 text-[11px] font-bold shadow-lg animate-float-gentle z-10">
-                      <TrendingDown className="h-3 w-3" />
-                      -£{savings}
-                    </div>
-                  ) : (
-                    <Plane className="absolute top-4 right-4 h-5 w-5 text-white/90 drop-shadow-md transition-all duration-700 group-hover:translate-x-12 group-hover:-translate-y-12 group-hover:opacity-0 group-hover:rotate-45 z-10" />
-                  )}
+                  <div className="absolute top-4 right-4 flex flex-col items-end gap-2 z-10">
+                    {dest.wasFrom ? (
+                      <div className="inline-flex items-center gap-1 rounded-full bg-emerald-500 text-white px-2.5 py-1 text-[11px] font-bold shadow-lg animate-float-gentle">
+                        <TrendingDown className="h-3 w-3" />
+                        -£{savings}
+                      </div>
+                    ) : null}
+                    <Plane
+                      className={`h-5 w-5 text-white/90 drop-shadow-md transition-all duration-700 group-hover:translate-x-12 group-hover:-translate-y-12 group-hover:opacity-0 group-hover:rotate-45 ${dest.wasFrom ? "mt-1" : ""}`}
+                    />
+                  </div>
 
                   {/* Animated takeoff plane on hover */}
                   <Plane className="absolute bottom-24 right-8 h-8 w-8 text-sky-400 drop-shadow-2xl opacity-0 -translate-x-16 translate-y-16 -rotate-45 transition-all duration-700 ease-out group-hover:translate-x-0 group-hover:translate-y-0 group-hover:opacity-100 z-10 pointer-events-none" />

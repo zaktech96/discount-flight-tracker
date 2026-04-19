@@ -22,6 +22,17 @@ verified before merge - no exceptions.
 
 ## Log
 
+### SL-006 - Enhanced Landing Page Interactivity & Visual Polish
+
+**Scope:** `app/routes/home.tsx`
+
+**Summary:** 
+- Restyled the `DemoSceneAlert` mock dashboard component to bring floating sparkles (`<Sparkles />`) forward (`z-30`) so they overlay the components clearly instead of getting lost in the background.
+- Resolved an overlapping UI bug on destination cards where the animating takeoff airplane icon would clip or overlap with the dropped price badge text. The price badge and airplane icon have been explicitly wrapped and spaced.
+- Adjusted copy in the header sections ("Trending Deals" and "We do the hunting") to make it snappier and less wordy.
+
+**Verification:** Build passes successfully.
+
 ### SL-005 - Enhanced Interactivity & Component Contrast
 
 **Scope:** `app/routes/home.tsx`
