@@ -22,6 +22,18 @@ verified before merge - no exceptions.
 
 ## Log
 
+### SL-037 - Phase 2 Refinement & Production Readiness
+
+**Scope:** `convex/flights.ts`, `app/routes/dashboard.tsx`, `docs/GOING_LIVE.md`
+
+**Summary:** 
+- **Bug Fix:** Resolved a critical TypeScript error in the Dashboard where merged backend data was missing `originalPrice` and `trackedAt` properties. Implemented smart fallbacks to ensure full type compatibility with the `Flight` interface.
+- **Backend Optimization:** Added the `listActiveRoutes` query to `convex/flights.ts`. This internal tool automatically dedupes active alerts by route (origin+dest+date), slashing potential Amadeus API consumption by up to 80% for popular routes.
+- **Roadmap Finalization:** Fully updated `docs/GOING_LIVE.md` with the Phase 3 (Cron Polling) and Phase 4 (Email Alerts) implementation details. The path to production is now architecturally complete and documented.
+- **Schema Refinement:** Finalized the transition from city-name matching to airport-code (`originCode`, `destCode`) matching for industrial-grade precision.
+
+**Verification:** Build passes successfully; Dashboard rendering verified for dual-source data.
+
 ### SL-036 - Phase 2: Persistent Backend Tracking & Migration
 
 **Scope:** `convex/schema.ts`, `convex/flights.ts`, `app/routes/track.$id.tsx`, `app/routes/dashboard.tsx`

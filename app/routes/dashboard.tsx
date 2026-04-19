@@ -53,9 +53,11 @@ export default function Dashboard() {
           airline: "Live Tracking",
           departureDate: a.departureDate || "Multiple Dates",
           currentPrice: a.targetPrice + 10, // Mock current price for now
+          originalPrice: a.targetPrice + 50, // Mock original price
           targetPrice: a.targetPrice,
           stops: "Direct/1 Stop",
           duration: "Varies",
+          trackedAt: new Date(a.createdAt).toISOString(),
           isBackend: true,
         });
       });

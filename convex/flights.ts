@@ -182,23 +182,57 @@ export const deactivateAlert = mutation({
   },
 });
 
+/**
+ * Internal query to list all active routes being tracked by users.
+ * Used by the cron job to know which prices to poll.
+ */
+export const listActiveRoutes = query({
+  args: {},
+  handler: async (ctx) => {
+    const alerts = await ctx.db
+      .query("alerts")
+      .withIndex("by_user_active", (q) => q.eq("active", true))
+      .collect();
+
+    // Group by unique route to save API calls
+    const unique = new Map<string, any>();
+    for (const a of alerts) {
+      const key = `${a.originCode}-${a.destCode}-${a.departureDate || "ANY"}`;
+      if (!unique.has(key)) {
+        unique.set(key, {
+          origin: a.origin,
+          dest: a.dest,
+          originCode: a.originCode,
+          destCode: a.destCode,
+          departureDate: a.departureDate,
+        });
+      }
+    }
+    return Array.from(unique.values());
+  },
+});
+
 // ── Actions ────────────────────────────────────────────────────────────────
 
 /**
- * Placeholder action for fetching live prices from SkyScanner / Amadeus.
+ * Placeholder action for fetching live prices from Amadeus API.
  *
- * Replace the TODO block with real API calls once credentials are available.
- * The action stores each price snapshot via `savePriceSnapshot` so that
- * queries and alert-matching logic work against a consistent dataset.
+ * PRODUCTION FLOW:
+ * 1. Fetch OAuth2 token from Amadeus
+ * 2. POST /v2/shopping/flight-offers
+ * 3. Map results and call `savePriceSnapshot` mutation for each
+ * 4. Return the results to the frontend
  */
 export const fetchLivePrices = action({
   args: {
     origin: v.string(),
     dest: v.string(),
+    originCode: v.string(),
+    destCode: v.string(),
     departureDate: v.optional(v.string()),
   },
   handler: async (_ctx, args): Promise<{ price: number; source: string }[]> => {
-    // TODO: replace with real provider call
+    // TODO: replace with real Amadeus API call
     void args;
     return [];
   },
