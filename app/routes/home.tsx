@@ -39,7 +39,110 @@ const DEMO_CAPTIONS = [
   "Get the ping",
 ];
 
-const DEMO_DURATIONS = [4200, 3600, 3200, 4500];
+// Slower + more breathable — roughly 1.7× the previous timings.
+// Stage 0 (search) is longest because the typing effect plays out there.
+const DEMO_DURATIONS = [7200, 5400, 4800, 6200];
+
+type DemoRoute = {
+  fromCity: string;
+  fromCode: string;
+  toCity: string;
+  toCode: string;
+  date: string;
+  airline: string;
+  duration: string;
+  current: number;
+  original: number;
+  target: number;
+  drop: number;
+  deals: {
+    airline: string;
+    price: number;
+    original: number;
+    duration: string;
+    highlight?: boolean;
+  }[];
+};
+
+const DEMO_ROUTES: DemoRoute[] = [
+  {
+    fromCity: "London",
+    fromCode: "LHR",
+    toCity: "New York",
+    toCode: "JFK",
+    date: "May 14, 2026",
+    airline: "Virgin Atlantic",
+    duration: "8h 35m",
+    current: 380,
+    original: 490,
+    target: 340,
+    drop: 40,
+    deals: [
+      { airline: "Virgin Atlantic", price: 380, original: 490, duration: "8h 35m", highlight: true },
+      { airline: "British Airways", price: 420, original: 560, duration: "8h 20m" },
+      { airline: "United", price: 485, original: 640, duration: "11h 20m" },
+    ],
+  },
+  {
+    fromCity: "Manchester",
+    fromCode: "MAN",
+    toCity: "Dubai",
+    toCode: "DXB",
+    date: "Jun 02, 2026",
+    airline: "Emirates",
+    duration: "6h 45m",
+    current: 395,
+    original: 530,
+    target: 350,
+    drop: 45,
+    deals: [
+      { airline: "Emirates", price: 395, original: 530, duration: "6h 45m", highlight: true },
+      { airline: "Qatar Airways", price: 440, original: 580, duration: "7h 10m" },
+      { airline: "Turkish Airlines", price: 475, original: 610, duration: "9h 50m" },
+    ],
+  },
+  {
+    fromCity: "Edinburgh",
+    fromCode: "EDI",
+    toCity: "Tokyo",
+    toCode: "NRT",
+    date: "Sep 18, 2026",
+    airline: "ANA",
+    duration: "12h 10m",
+    current: 612,
+    original: 820,
+    target: 550,
+    drop: 62,
+    deals: [
+      { airline: "ANA", price: 612, original: 820, duration: "12h 10m", highlight: true },
+      { airline: "JAL", price: 655, original: 840, duration: "12h 25m" },
+      { airline: "Lufthansa", price: 720, original: 910, duration: "14h 30m" },
+    ],
+  },
+];
+
+function useTypewriter(text: string, speed = 70, startDelay = 0) {
+  const [display, setDisplay] = useState("");
+  const [done, setDone] = useState(false);
+  useEffect(() => {
+    setDisplay("");
+    setDone(false);
+    let i = 0;
+    const start = setTimeout(() => {
+      const id = setInterval(() => {
+        i++;
+        setDisplay(text.slice(0, i));
+        if (i >= text.length) {
+          clearInterval(id);
+          setDone(true);
+        }
+      }, speed);
+      return () => clearInterval(id);
+    }, startDelay);
+    return () => clearTimeout(start);
+  }, [text, speed, startDelay]);
+  return { display, done };
+}
 
 const DESTINATIONS = [
   {
@@ -111,12 +214,20 @@ const FAQS = [
 
 function ProductDemo() {
   const [stage, setStage] = useState(0);
+  const [routeIndex, setRouteIndex] = useState(0);
+  const route = DEMO_ROUTES[routeIndex];
 
   useEffect(() => {
-    const id = setTimeout(
-      () => setStage((s) => (s + 1) % DEMO_CAPTIONS.length),
-      DEMO_DURATIONS[stage],
-    );
+    const id = setTimeout(() => {
+      setStage((s) => {
+        const next = (s + 1) % DEMO_CAPTIONS.length;
+        // Each time we wrap back to stage 0, rotate to the next route
+        if (next === 0) {
+          setRouteIndex((r) => (r + 1) % DEMO_ROUTES.length);
+        }
+        return next;
+      });
+    }, DEMO_DURATIONS[stage]);
     return () => clearTimeout(id);
   }, [stage]);
 
@@ -154,30 +265,30 @@ function ProductDemo() {
         </div>
 
         {/* Faux browser */}
-        <div className="relative rounded-3xl bg-white shadow-2xl shadow-sky-200/60 border border-slate-100 overflow-hidden">
+        <div className="relative glass-card rounded-3xl shadow-2xl shadow-sky-200/60">
           {/* Browser chrome */}
-          <div className="flex items-center gap-3 px-4 py-3 border-b border-slate-100 bg-slate-50">
+          <div className="flex items-center gap-3 px-4 py-3 border-b border-white/60 bg-white/40">
             <div className="flex gap-1.5">
               <div className="h-3 w-3 rounded-full bg-red-400" />
               <div className="h-3 w-3 rounded-full bg-amber-400" />
               <div className="h-3 w-3 rounded-full bg-emerald-400" />
             </div>
-            <div className="flex-1 h-7 max-w-xs mx-auto rounded-md bg-white border border-slate-200 px-3 text-xs text-slate-500 flex items-center justify-center gap-2">
+            <div className="flex-1 h-7 max-w-xs mx-auto rounded-md glass-input border border-white/60 px-3 text-xs text-slate-500 flex items-center justify-center gap-2">
               <Lock className="h-3 w-3" />
               flightguardian.app
             </div>
             <div className="w-14" />
           </div>
 
-          {/* Stage content — keyed so it remounts and replays animations */}
+          {/* Stage content — keyed by stage+route so it remounts and replays animations on each change */}
           <div
-            key={stage}
-            className="p-6 md:p-10 min-h-[420px] bg-gradient-to-b from-white to-sky-50/30 animate-fade-in"
+            key={`${routeIndex}-${stage}`}
+            className="p-6 md:p-10 min-h-[420px] bg-gradient-to-b from-white/60 to-sky-50/40 animate-fade-in"
           >
-            {stage === 0 && <DemoSceneSearch />}
-            {stage === 1 && <DemoSceneResults />}
-            {stage === 2 && <DemoSceneTracking />}
-            {stage === 3 && <DemoSceneAlert />}
+            {stage === 0 && <DemoSceneSearch route={route} duration={DEMO_DURATIONS[0]} />}
+            {stage === 1 && <DemoSceneResults route={route} />}
+            {stage === 2 && <DemoSceneTracking route={route} />}
+            {stage === 3 && <DemoSceneAlert route={route} />}
           </div>
 
           {/* Progress bar */}
@@ -225,42 +336,82 @@ function ProductDemo() {
   );
 }
 
-function DemoField({
+function DemoTypingField({
   label,
-  value,
   icon: Icon,
-  delay,
-  active,
+  text,
+  startDelay,
+  speed = 65,
+  activeNow,
 }: {
   label: string;
-  value: string;
   icon: typeof MapPin;
-  delay: number;
-  active?: boolean;
+  text: string;
+  startDelay: number;
+  speed?: number;
+  activeNow: boolean;
 }) {
+  const { display, done } = useTypewriter(text, speed, startDelay);
+  const borderClass = activeNow
+    ? "border-sky-400 shadow-sm shadow-sky-100"
+    : done
+    ? "border-emerald-300"
+    : "border-slate-200";
   return (
-    <div
-      className="animate-fade-up"
-      style={{ animationDelay: `${delay}ms`, animationFillMode: "backwards" }}
-    >
+    <div>
       <span className="text-xs font-medium text-slate-700 mb-1.5 flex items-center gap-1.5">
         <Icon className="h-3.5 w-3.5 text-sky-600" /> {label}
       </span>
       <div
-        className={`rounded-xl border-2 bg-white px-3.5 py-3 text-sm font-medium text-slate-800 flex items-center min-h-[46px] ${
-          active ? "border-sky-400 shadow-sm shadow-sky-100" : "border-slate-200"
-        }`}
+        className={`rounded-xl border-2 glass-input px-3.5 py-3 text-sm font-medium text-slate-800 flex items-center min-h-[46px] transition-colors ${borderClass}`}
       >
-        {value}
-        {active && (
-          <span className="inline-block w-0.5 h-4 bg-sky-600 ml-1 animate-pulse" />
+        <span className="truncate">{display}</span>
+        {activeNow && !done && (
+          <span className="inline-block w-0.5 h-4 bg-sky-600 ml-0.5 animate-pulse" />
+        )}
+        {done && (
+          <Check className="h-3.5 w-3.5 text-emerald-500 ml-auto shrink-0" />
         )}
       </div>
     </div>
   );
 }
 
-function DemoSceneSearch() {
+function DemoSceneSearch({
+  route,
+  duration,
+}: {
+  route: DemoRoute;
+  duration: number;
+}) {
+  // Sequence the typing so fields fill one after another.
+  // Each field starts after the previous one would have finished.
+  const fromText = `${route.fromCity} (${route.fromCode})`;
+  const toText = `${route.toCity} (${route.toCode})`;
+  const dateText = route.date;
+
+  const fromStart = 300;
+  const fromEnd = fromStart + fromText.length * 65;
+  const toStart = fromEnd + 200;
+  const toEnd = toStart + toText.length * 65;
+  const dateStart = toEnd + 200;
+  const dateEnd = dateStart + dateText.length * 65;
+
+  // Track elapsed time locally so we can highlight the field currently typing
+  const [elapsed, setElapsed] = useState(0);
+  useEffect(() => {
+    const start = Date.now();
+    const id = setInterval(() => setElapsed(Date.now() - start), 100);
+    const stopAt = setTimeout(() => clearInterval(id), duration);
+    return () => {
+      clearInterval(id);
+      clearTimeout(stopAt);
+    };
+  }, [duration]);
+
+  const activeField =
+    elapsed < fromEnd ? 0 : elapsed < toEnd ? 1 : elapsed < dateEnd ? 2 : 3;
+
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-2 text-sm text-slate-500">
@@ -268,35 +419,38 @@ function DemoSceneSearch() {
         <span>Tell us where you want to fly</span>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-        <DemoField
+        <DemoTypingField
           label="Flying from"
-          value="London (LHR)"
           icon={MapPin}
-          delay={100}
-          active
+          text={fromText}
+          startDelay={fromStart}
+          activeNow={activeField === 0}
         />
-        <DemoField
+        <DemoTypingField
           label="Flying to"
-          value="New York (JFK)"
           icon={Plane}
-          delay={900}
-          active
+          text={toText}
+          startDelay={toStart}
+          activeNow={activeField === 1}
         />
-        <DemoField
+        <DemoTypingField
           label="When"
-          value="May 14, 2026"
           icon={Calendar}
-          delay={1700}
-          active
+          text={dateText}
+          startDelay={dateStart}
+          activeNow={activeField === 2}
         />
       </div>
       <div
         className="flex items-center gap-3 animate-fade-up"
-        style={{ animationDelay: "2600ms", animationFillMode: "backwards" }}
+        style={{
+          animationDelay: `${dateEnd + 200}ms`,
+          animationFillMode: "backwards",
+        }}
       >
         <button
           type="button"
-          className="inline-flex items-center gap-2 rounded-full bg-sky-600 text-white px-6 py-3 font-semibold shadow-lg shadow-sky-200 animate-pulse"
+          className="glass-button inline-flex items-center gap-2 rounded-full bg-sky-600 text-white px-6 py-3 font-semibold shadow-lg shadow-sky-200 animate-pulse"
         >
           Search flights
           <ArrowRight className="h-4 w-4" />
@@ -307,45 +461,31 @@ function DemoSceneSearch() {
   );
 }
 
-function DemoSceneResults() {
-  const deals = [
-    {
-      airline: "Virgin Atlantic",
-      price: 380,
-      original: 490,
-      duration: "8h 35m",
-      highlight: true,
-    },
-    {
-      airline: "British Airways",
-      price: 420,
-      original: 560,
-      duration: "8h 20m",
-    },
-    { airline: "United", price: 485, original: 640, duration: "11h 20m" },
-  ];
+function DemoSceneResults({ route }: { route: DemoRoute }) {
   return (
     <div>
       <div className="flex items-center gap-2 flex-wrap mb-4">
         <span className="inline-flex items-center gap-1.5 rounded-full bg-sky-50 text-sky-700 px-2.5 py-1 text-xs font-semibold">
-          <MapPin className="h-3 w-3" /> London → New York
+          <MapPin className="h-3 w-3" /> {route.fromCity} → {route.toCity}
         </span>
         <span className="inline-flex items-center gap-1.5 rounded-full bg-slate-100 text-slate-700 px-2.5 py-1 text-xs font-semibold">
-          <Calendar className="h-3 w-3" /> May 14, 2026
+          <Calendar className="h-3 w-3" /> {route.date}
         </span>
-        <span className="text-xs text-slate-400 ml-auto">3 great deals</span>
+        <span className="text-xs text-slate-400 ml-auto">
+          {route.deals.length} great deals
+        </span>
       </div>
       <div className="space-y-2.5">
-        {deals.map((f, i) => (
+        {route.deals.map((f, i) => (
           <div
             key={i}
-            className={`animate-fade-up rounded-xl bg-white p-4 flex items-center justify-between gap-3 transition-all ${
+            className={`animate-fade-up rounded-xl glass-card-soft p-4 flex items-center justify-between gap-3 transition-all ${
               f.highlight
-                ? "border-2 border-sky-300 shadow-lg shadow-sky-100"
-                : "border border-slate-100"
+                ? "ring-2 ring-sky-300 shadow-lg shadow-sky-100"
+                : ""
             }`}
             style={{
-              animationDelay: `${i * 220}ms`,
+              animationDelay: `${i * 260}ms`,
               animationFillMode: "backwards",
             }}
           >
@@ -384,7 +524,8 @@ function DemoSceneResults() {
   );
 }
 
-function DemoSceneTracking() {
+function DemoSceneTracking({ route }: { route: DemoRoute }) {
+  const shortDate = route.date.split(",")[0];
   return (
     <div className="space-y-5">
       <div className="animate-fade-up rounded-xl bg-gradient-to-r from-sky-50 to-indigo-50 border border-sky-100 p-4 flex items-center gap-3">
@@ -393,10 +534,10 @@ function DemoSceneTracking() {
         </div>
         <div className="min-w-0">
           <p className="font-semibold text-slate-900 text-sm">
-            London → New York
+            {route.fromCity} → {route.toCity}
           </p>
           <p className="text-xs text-slate-500">
-            Virgin Atlantic · May 14 · currently £380
+            {route.airline} · {shortDate} · currently £{route.current}
           </p>
         </div>
         <span className="ml-auto hidden sm:inline-flex items-center gap-1 rounded-full bg-white border border-slate-200 px-2.5 py-1 text-xs font-semibold text-slate-700 shrink-0">
@@ -405,29 +546,31 @@ function DemoSceneTracking() {
       </div>
       <div
         className="animate-fade-up"
-        style={{ animationDelay: "400ms", animationFillMode: "backwards" }}
+        style={{ animationDelay: "500ms", animationFillMode: "backwards" }}
       >
         <label className="text-sm font-medium text-slate-700 mb-2 block flex items-center gap-1.5">
           <Bell className="h-3.5 w-3.5 text-sky-600" /> Ping me when it drops
           below
         </label>
-        <div className="rounded-xl border-2 border-sky-400 bg-white px-4 py-4 flex items-center justify-between shadow-sm shadow-sky-100">
+        <div className="rounded-xl border-2 border-sky-400 glass-input px-4 py-4 flex items-center justify-between shadow-sm shadow-sky-100">
           <div className="flex items-baseline">
-            <span className="text-3xl font-bold text-slate-900">£340</span>
+            <span className="text-3xl font-bold text-slate-900">
+              £{route.target}
+            </span>
             <span className="inline-block w-0.5 h-7 bg-sky-600 ml-1 animate-pulse" />
           </div>
           <span className="text-xs text-emerald-700 bg-emerald-50 rounded-full px-2.5 py-1 font-semibold">
-            £40 under current
+            £{route.drop} under current
           </span>
         </div>
       </div>
       <div
         className="animate-fade-up flex items-center gap-3"
-        style={{ animationDelay: "1300ms", animationFillMode: "backwards" }}
+        style={{ animationDelay: "1600ms", animationFillMode: "backwards" }}
       >
         <button
           type="button"
-          className="inline-flex items-center gap-2 rounded-full bg-sky-600 text-white px-6 py-3 font-semibold shadow-lg shadow-sky-200 animate-pulse"
+          className="glass-button inline-flex items-center gap-2 rounded-full bg-sky-600 text-white px-6 py-3 font-semibold shadow-lg shadow-sky-200 animate-pulse"
         >
           <Bell className="h-4 w-4" />
           Start watching
@@ -440,7 +583,7 @@ function DemoSceneTracking() {
   );
 }
 
-function DemoSceneAlert() {
+function DemoSceneAlert({ route }: { route: DemoRoute }) {
   return (
     <div className="relative min-h-[360px]">
       {/* Dimmed dashboard in background */}
@@ -451,13 +594,17 @@ function DemoSceneAlert() {
           </h3>
           <span className="text-xs text-slate-500">1 watching</span>
         </div>
-        <div className="rounded-xl bg-white border border-slate-100 p-4 flex items-center gap-3">
+        <div className="rounded-xl glass-card-soft p-4 flex items-center gap-3">
           <div className="h-10 w-10 rounded-full bg-sky-50 flex items-center justify-center">
             <Plane className="h-5 w-5 text-sky-600" />
           </div>
           <div className="flex-1 min-w-0">
-            <p className="font-semibold text-sm">London → New York</p>
-            <p className="text-xs text-slate-500">Alert set at £340</p>
+            <p className="font-semibold text-sm">
+              {route.fromCity} → {route.toCity}
+            </p>
+            <p className="text-xs text-slate-500">
+              Alert set at £{route.target}
+            </p>
           </div>
         </div>
       </div>
@@ -467,7 +614,7 @@ function DemoSceneAlert() {
         className="absolute top-0 right-0 left-0 sm:left-auto sm:max-w-sm animate-fade-up"
         style={{ animationDelay: "200ms", animationFillMode: "backwards" }}
       >
-        <div className="rounded-2xl bg-white shadow-2xl shadow-emerald-200/50 border border-emerald-100 p-5">
+        <div className="glass-card-soft rounded-2xl shadow-2xl shadow-emerald-200/50 p-5">
           <div className="flex items-center gap-2 mb-3 pb-3 border-b border-slate-100">
             <div className="h-7 w-7 rounded-full bg-emerald-100 flex items-center justify-center">
               <Mail className="h-3.5 w-3.5 text-emerald-600" />
@@ -490,15 +637,18 @@ function DemoSceneAlert() {
             Price just dropped!
           </p>
           <p className="text-sm text-slate-600 leading-snug mb-4">
-            Your <span className="font-semibold">London → New York</span>{" "}
+            Your{" "}
+            <span className="font-semibold">
+              {route.fromCity} → {route.toCity}
+            </span>{" "}
             flight hit{" "}
-            <span className="font-bold text-emerald-600">£340</span> — down{" "}
-            <span className="font-semibold">£40</span> from when you started
-            watching.
+            <span className="font-bold text-emerald-600">£{route.target}</span>{" "}
+            — down <span className="font-semibold">£{route.drop}</span> from
+            when you started watching.
           </p>
           <button
             type="button"
-            className="inline-flex items-center gap-1.5 rounded-full bg-sky-600 text-white px-4 py-2 text-sm font-semibold hover:bg-sky-700 transition"
+            className="glass-button inline-flex items-center gap-1.5 rounded-full bg-sky-600 text-white px-4 py-2 text-sm font-semibold hover:bg-sky-700 transition"
           >
             Book now <ArrowRight className="h-3.5 w-3.5" />
           </button>
@@ -551,7 +701,7 @@ export default function Home() {
 
         <div className="max-w-5xl mx-auto text-center">
           <span
-            className="inline-flex items-center gap-2 rounded-full bg-white shadow-sm border border-slate-100 text-slate-700 px-4 py-1.5 text-sm font-medium animate-fade-up"
+            className="glass-card-soft inline-flex items-center gap-2 rounded-full text-slate-700 px-4 py-1.5 text-sm font-medium animate-fade-up"
           >
             <span className="relative flex h-2 w-2">
               <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75 animate-ping" />
@@ -580,14 +730,14 @@ export default function Home() {
           <div className="mt-10 flex flex-col sm:flex-row justify-center gap-3 animate-fade-up delay-300">
             <Link
               to="/search"
-              className="group inline-flex items-center justify-center gap-2 rounded-full bg-sky-600 text-white px-8 py-4 font-semibold shadow-lg shadow-sky-200 hover:bg-sky-700 hover:shadow-xl hover:shadow-sky-300 hover:-translate-y-0.5 transition-all"
+              className="glass-button group inline-flex items-center justify-center gap-2 rounded-full bg-sky-600 text-white px-8 py-4 font-semibold shadow-lg shadow-sky-200 hover:bg-sky-700 hover:shadow-xl hover:shadow-sky-300 hover:-translate-y-0.5 transition-all"
             >
               <Search className="h-5 w-5 transition-transform group-hover:rotate-6" />
               Find cheap flights
             </Link>
             <Link
               to="/dashboard"
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-white text-slate-900 border border-slate-200 px-8 py-4 font-semibold hover:bg-slate-50 hover:border-slate-300 hover:-translate-y-0.5 transition-all"
+              className="glass-button-light inline-flex items-center justify-center gap-2 rounded-full bg-white/80 text-slate-900 border border-white/70 px-8 py-4 font-semibold hover:bg-white hover:-translate-y-0.5 transition-all"
             >
               My tracked flights
             </Link>
@@ -599,7 +749,7 @@ export default function Home() {
 
           {/* Price-drop preview card */}
           <div className="mt-16 max-w-md mx-auto animate-fade-up delay-600">
-            <div className="rounded-2xl bg-white shadow-xl shadow-sky-100 border border-slate-100 p-5 text-left flex items-center gap-4 animate-float-gentle hover:shadow-2xl hover:shadow-sky-200 transition-shadow">
+            <div className="glass-card rounded-2xl shadow-xl shadow-sky-100 p-5 text-left flex items-center gap-4 animate-float-gentle hover:shadow-2xl hover:shadow-sky-200 transition-shadow">
               <div className="h-12 w-12 rounded-full bg-emerald-50 flex items-center justify-center text-emerald-600 shrink-0">
                 <Bell className="h-6 w-6" />
               </div>
@@ -661,7 +811,7 @@ export default function Home() {
           {/* Bento grid */}
           <div className="grid grid-cols-1 md:grid-cols-6 gap-4 md:gap-5">
             {/* BIG card — live price-watching demo */}
-            <div className="md:col-span-4 md:row-span-2 group relative rounded-3xl bg-gradient-to-br from-slate-900 via-slate-800 to-sky-900 p-8 md:p-10 text-white overflow-hidden shadow-xl shadow-slate-200 hover:shadow-2xl hover:shadow-sky-200 transition-all duration-500">
+            <div className="glass-card-dark md:col-span-4 md:row-span-2 group relative rounded-3xl p-8 md:p-10 text-white shadow-xl shadow-slate-200 hover:shadow-2xl hover:shadow-sky-200 transition-all duration-500">
               {/* Decorative plane */}
               <Plane className="absolute -top-2 -right-2 h-32 w-32 text-white/5 -rotate-12 group-hover:rotate-0 group-hover:scale-110 transition-transform duration-700" />
 
@@ -737,7 +887,7 @@ export default function Home() {
             </div>
 
             {/* Small — savings stat */}
-            <div className="md:col-span-2 group relative overflow-hidden rounded-3xl bg-white border border-slate-100 p-7 hover:-translate-y-1 hover:shadow-xl hover:shadow-emerald-100 hover:border-emerald-200 transition-all duration-300">
+            <div className="glass-card md:col-span-2 group relative rounded-3xl p-7 hover:-translate-y-1 hover:shadow-xl hover:shadow-emerald-100 transition-all duration-300">
               <div className="h-12 w-12 rounded-2xl bg-emerald-50 flex items-center justify-center text-emerald-600 mb-4 group-hover:scale-110 group-hover:rotate-6 transition-transform">
                 <PiggyBank className="h-6 w-6" />
               </div>
@@ -757,7 +907,7 @@ export default function Home() {
             </div>
 
             {/* Small — setup time */}
-            <div className="md:col-span-2 group relative overflow-hidden rounded-3xl bg-white border border-slate-100 p-7 hover:-translate-y-1 hover:shadow-xl hover:shadow-amber-100 hover:border-amber-200 transition-all duration-300">
+            <div className="glass-card md:col-span-2 group relative rounded-3xl p-7 hover:-translate-y-1 hover:shadow-xl hover:shadow-amber-100 transition-all duration-300">
               <div className="h-12 w-12 rounded-2xl bg-amber-50 flex items-center justify-center text-amber-600 mb-4 group-hover:scale-110 group-hover:-rotate-6 transition-transform">
                 <Clock className="h-6 w-6" />
               </div>
@@ -777,7 +927,7 @@ export default function Home() {
             </div>
 
             {/* Medium — no spam */}
-            <div className="md:col-span-3 group relative overflow-hidden rounded-3xl bg-gradient-to-br from-rose-50 via-white to-white border border-slate-100 p-7 hover:-translate-y-1 hover:shadow-xl hover:shadow-rose-100 hover:border-rose-200 transition-all duration-300">
+            <div className="glass-card md:col-span-3 group relative rounded-3xl p-7 hover:-translate-y-1 hover:shadow-xl hover:shadow-rose-100 transition-all duration-300 bg-gradient-to-br from-rose-50/80 via-white/85 to-white/80">
               <div className="flex items-start gap-4">
                 <div className="h-12 w-12 shrink-0 rounded-2xl bg-white shadow-sm flex items-center justify-center text-rose-500 group-hover:scale-110 group-hover:rotate-6 transition-transform">
                   <Heart className="h-6 w-6 fill-current" />
@@ -796,7 +946,7 @@ export default function Home() {
             </div>
 
             {/* Medium — any route */}
-            <div className="md:col-span-3 group relative overflow-hidden rounded-3xl bg-gradient-to-br from-indigo-50 via-white to-sky-50 border border-slate-100 p-7 hover:-translate-y-1 hover:shadow-xl hover:shadow-indigo-100 hover:border-indigo-200 transition-all duration-300">
+            <div className="glass-card md:col-span-3 group relative rounded-3xl p-7 hover:-translate-y-1 hover:shadow-xl hover:shadow-indigo-100 transition-all duration-300 bg-gradient-to-br from-indigo-50/80 via-white/85 to-sky-50/80">
               <div className="flex items-start gap-4">
                 <div className="h-12 w-12 shrink-0 rounded-2xl bg-white shadow-sm flex items-center justify-center text-indigo-600 group-hover:scale-110 group-hover:rotate-12 transition-transform">
                   <Globe className="h-6 w-6" />
@@ -901,7 +1051,7 @@ export default function Home() {
 
           <div className="relative grid md:grid-cols-2 gap-5">
             {/* BEFORE card */}
-            <div className="group rounded-3xl bg-white border border-slate-200 p-7 md:p-8 transition-all duration-300 hover:-translate-y-0.5">
+            <div className="glass-card group rounded-3xl p-7 md:p-8 transition-all duration-300 hover:-translate-y-0.5">
               <div className="flex items-center gap-3 mb-6 pb-5 border-b border-slate-100">
                 <div className="h-11 w-11 rounded-2xl bg-slate-100 flex items-center justify-center text-slate-500 group-hover:scale-110 transition-transform">
                   <Frown className="h-5 w-5" />
@@ -943,7 +1093,7 @@ export default function Home() {
             </div>
 
             {/* AFTER card */}
-            <div className="group relative rounded-3xl bg-gradient-to-br from-white via-white to-sky-50 border-2 border-sky-200 p-7 md:p-8 shadow-xl shadow-sky-100 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-sky-200">
+            <div className="glass-card group relative rounded-3xl p-7 md:p-8 shadow-xl shadow-sky-100 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-sky-200 bg-gradient-to-br from-white/95 via-white/90 to-sky-50/80 ring-2 ring-sky-200/70">
               <div
                 aria-hidden
                 className="absolute -inset-px rounded-3xl bg-gradient-to-br from-sky-300/40 via-transparent to-emerald-200/40 blur-xl -z-10"
@@ -993,7 +1143,7 @@ export default function Home() {
               aria-hidden
               className="hidden md:flex absolute inset-y-0 left-1/2 -translate-x-1/2 items-center pointer-events-none"
             >
-              <div className="h-12 w-12 rounded-full bg-white border border-slate-200 shadow-lg flex items-center justify-center text-sky-600 animate-float-gentle">
+              <div className="glass-card h-12 w-12 rounded-full flex items-center justify-center text-sky-600 animate-float-gentle shadow-lg">
                 <ArrowRight className="h-5 w-5" />
               </div>
             </div>
@@ -1017,7 +1167,7 @@ export default function Home() {
             {FAQS.map(({ q, a }, i) => (
               <details
                 key={i}
-                className="group rounded-2xl bg-white border border-slate-100 p-5 hover:border-sky-200 transition-colors open:shadow-md open:border-sky-200"
+                className="glass-card group rounded-2xl p-5 hover:shadow-md transition-shadow open:shadow-md"
               >
                 <summary className="flex items-center justify-between gap-4 font-semibold text-slate-900 cursor-pointer list-none">
                   {q}
@@ -1055,7 +1205,7 @@ export default function Home() {
               </p>
               <Link
                 to="/search"
-                className="group inline-flex items-center gap-2 rounded-full bg-white text-sky-700 px-8 py-4 font-semibold shadow-lg hover:bg-slate-50 hover:scale-[1.02] transition-all"
+                className="glass-button-light group inline-flex items-center gap-2 rounded-full bg-white text-sky-700 px-8 py-4 font-semibold shadow-lg hover:scale-[1.02] transition-all"
               >
                 <Plane className="h-5 w-5 transition-transform group-hover:translate-x-1 group-hover:-translate-y-0.5 group-hover:rotate-12" />
                 Start tracking a flight

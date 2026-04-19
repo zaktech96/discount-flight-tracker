@@ -47,7 +47,7 @@ export default function FlightSearch() {
         {/* Search form */}
         <form
           onSubmit={handleSubmit}
-          className="rounded-2xl bg-white border border-slate-100 shadow-sm p-6 md:p-8 mb-10"
+          className="glass-card rounded-2xl p-6 md:p-8 mb-10"
         >
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <label className="flex flex-col">
@@ -57,7 +57,7 @@ export default function FlightSearch() {
               <input
                 value={from}
                 onChange={(e) => setFrom(e.target.value)}
-                className="rounded-xl border border-slate-200 bg-white px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent placeholder:text-slate-400"
+                className="glass-input rounded-xl border border-white/70 px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent placeholder:text-slate-400"
                 placeholder="City or airport (e.g. London)"
               />
             </label>
@@ -68,7 +68,7 @@ export default function FlightSearch() {
               <input
                 value={to}
                 onChange={(e) => setTo(e.target.value)}
-                className="rounded-xl border border-slate-200 bg-white px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent placeholder:text-slate-400"
+                className="glass-input rounded-xl border border-white/70 px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent placeholder:text-slate-400"
                 placeholder="City or airport (e.g. Paris)"
               />
             </label>
@@ -88,7 +88,7 @@ export default function FlightSearch() {
           <div className="mt-6 flex flex-col sm:flex-row gap-3 items-start sm:items-center">
             <button
               type="submit"
-              className="rounded-full bg-sky-600 text-white px-8 py-3 font-semibold shadow-sm hover:bg-sky-700 hover:-translate-y-0.5 transition-all inline-flex items-center justify-center gap-2"
+              className="glass-button rounded-full bg-sky-600 text-white px-8 py-3 font-semibold shadow-lg shadow-sky-200 hover:bg-sky-700 hover:-translate-y-0.5 transition-all inline-flex items-center justify-center gap-2"
             >
               Search flights
               <ArrowRight className="h-4 w-4" />
@@ -117,7 +117,7 @@ export default function FlightSearch() {
         </div>
 
         {results.length === 0 ? (
-          <div className="rounded-2xl bg-white border border-slate-100 p-10 text-center shadow-sm">
+          <div className="glass-card rounded-2xl p-10 text-center">
             <div className="mx-auto h-14 w-14 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 mb-4">
               <Plane className="h-6 w-6" />
             </div>
@@ -143,7 +143,7 @@ export default function FlightSearch() {
                 <Link
                   key={flight.id}
                   to={`/track/${flight.id}`}
-                  className="block rounded-2xl bg-white border border-slate-100 p-5 md:p-6 hover:shadow-md hover:border-sky-200 hover:-translate-y-0.5 transition-all"
+                  className="glass-card block rounded-2xl p-5 md:p-6 hover:shadow-xl hover:shadow-sky-100 hover:-translate-y-0.5 transition-all"
                 >
                   <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div className="flex items-center gap-4">
@@ -177,7 +177,7 @@ export default function FlightSearch() {
                           Save £{saved} ({pct}% off)
                         </p>
                       </div>
-                      <span className="rounded-full bg-sky-600 text-white px-5 py-2.5 text-sm font-semibold shadow-sm hover:bg-sky-700 transition whitespace-nowrap">
+                      <span className="glass-button rounded-full bg-sky-600 text-white px-5 py-2.5 text-sm font-semibold shadow-md shadow-sky-200 whitespace-nowrap">
                         Track this flight
                       </span>
                     </div>

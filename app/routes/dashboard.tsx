@@ -37,7 +37,7 @@ export default function Dashboard() {
           </div>
           <Link
             to="/search"
-            className="inline-flex items-center gap-2 rounded-full bg-sky-600 text-white px-5 py-2.5 font-semibold shadow-sm hover:bg-sky-700 transition whitespace-nowrap"
+            className="glass-button inline-flex items-center gap-2 rounded-full bg-sky-600 text-white px-5 py-2.5 font-semibold shadow-md shadow-sky-200 hover:bg-sky-700 transition whitespace-nowrap"
           >
             <Plus className="h-4 w-4" />
             Track a new flight
@@ -45,7 +45,7 @@ export default function Dashboard() {
         </header>
 
         {flights === null ? (
-          <div className="rounded-2xl bg-white border border-slate-100 p-10 text-center shadow-sm">
+          <div className="glass-card rounded-2xl p-10 text-center">
             <p className="text-slate-500">Loading your flights…</p>
           </div>
         ) : hasFlights ? (
@@ -56,7 +56,7 @@ export default function Dashboard() {
               return (
                 <div
                   key={flight.id}
-                  className="rounded-2xl bg-white border border-slate-100 shadow-sm p-5 md:p-6 hover:shadow-md transition"
+                  className="glass-card rounded-2xl p-5 md:p-6 hover:shadow-xl hover:shadow-sky-100 hover:-translate-y-0.5 transition-all"
                 >
                   <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div className="flex items-center gap-4 flex-1 min-w-0">
@@ -118,7 +118,7 @@ export default function Dashboard() {
             })}
           </div>
         ) : (
-          <div className="rounded-2xl bg-white border border-slate-100 p-10 md:p-14 text-center shadow-sm">
+          <div className="glass-card rounded-2xl p-10 md:p-14 text-center">
             <div className="mx-auto h-16 w-16 rounded-full bg-sky-50 flex items-center justify-center text-sky-600 mb-5">
               <Plane className="h-7 w-7" />
             </div>
@@ -131,7 +131,7 @@ export default function Dashboard() {
             </p>
             <Link
               to="/search"
-              className="inline-flex items-center gap-2 rounded-full bg-sky-600 text-white px-6 py-3 font-semibold shadow-sm hover:bg-sky-700 transition"
+              className="glass-button inline-flex items-center gap-2 rounded-full bg-sky-600 text-white px-6 py-3 font-semibold shadow-lg shadow-sky-200 hover:bg-sky-700 transition"
             >
               <Search className="h-4 w-4" />
               Search flights

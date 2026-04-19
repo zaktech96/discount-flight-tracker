@@ -29,7 +29,7 @@ export default function TrackConfirm() {
         </p>
 
         {flight ? (
-          <div className="rounded-2xl bg-white border border-slate-100 shadow-sm p-6 text-left mb-6">
+          <div className="glass-card rounded-2xl p-6 text-left mb-6">
             <div className="flex items-center gap-3 mb-4 pb-4 border-b border-slate-100">
               <div className="h-10 w-10 rounded-full bg-sky-50 flex items-center justify-center text-sky-600 shrink-0">
                 <Plane className="h-5 w-5" />
@@ -63,7 +63,7 @@ export default function TrackConfirm() {
           </div>
         ) : null}
 
-        <div className="rounded-2xl bg-white border border-slate-100 p-5 shadow-sm flex items-center gap-3 text-left mb-8">
+        <div className="glass-card rounded-2xl p-5 flex items-center gap-3 text-left mb-8">
           <div className="h-10 w-10 rounded-full bg-sky-50 flex items-center justify-center text-sky-600 shrink-0">
             <Mail className="h-5 w-5" />
           </div>
@@ -76,14 +76,14 @@ export default function TrackConfirm() {
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <Link
             to="/dashboard"
-            className="inline-flex items-center justify-center gap-2 rounded-full bg-sky-600 text-white px-6 py-3 font-semibold shadow-sm hover:bg-sky-700 transition"
+            className="glass-button inline-flex items-center justify-center gap-2 rounded-full bg-sky-600 text-white px-6 py-3 font-semibold shadow-lg shadow-sky-200 hover:bg-sky-700 transition"
           >
             See my tracked flights
             <ArrowRight className="h-4 w-4" />
           </Link>
           <Link
             to="/search"
-            className="inline-flex items-center justify-center gap-2 rounded-full bg-white text-slate-900 border border-slate-200 px-6 py-3 font-semibold hover:bg-slate-50 transition"
+            className="glass-button-light inline-flex items-center justify-center gap-2 rounded-full bg-white/80 text-slate-900 border border-white/70 px-6 py-3 font-semibold hover:bg-white transition"
           >
             Track another flight
           </Link>

@@ -24,7 +24,7 @@ export default function TrackFlight({ params }: Route.ComponentProps) {
   if (!flight) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-sky-50 to-white flex items-center justify-center px-6 pt-24">
-        <div className="max-w-md text-center rounded-2xl bg-white border border-slate-100 shadow-sm p-10">
+        <div className="glass-card max-w-md text-center rounded-2xl p-10">
           <h1 className="text-2xl font-bold mb-2">We can't find that flight</h1>
           <p className="text-slate-600 mb-6">
             The link might be out of date. Try picking another deal from the
@@ -32,7 +32,7 @@ export default function TrackFlight({ params }: Route.ComponentProps) {
           </p>
           <Link
             to="/search"
-            className="inline-flex items-center gap-2 rounded-full bg-sky-600 text-white px-6 py-3 font-semibold shadow-sm hover:bg-sky-700 transition"
+            className="glass-button inline-flex items-center gap-2 rounded-full bg-sky-600 text-white px-6 py-3 font-semibold shadow-lg shadow-sky-200 hover:bg-sky-700 transition"
           >
             <ArrowLeft className="h-4 w-4" />
             Back to search
@@ -65,7 +65,7 @@ export default function TrackFlight({ params }: Route.ComponentProps) {
           Back to results
         </Link>
 
-        <div className="rounded-3xl bg-white shadow-xl shadow-sky-100 border border-slate-100 overflow-hidden">
+        <div className="glass-card rounded-3xl shadow-xl shadow-sky-100">
           {/* Route header */}
           <div className="bg-gradient-to-br from-sky-600 to-sky-500 text-white p-6 text-center">
             <div className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-white/20 mb-3">
@@ -125,7 +125,7 @@ export default function TrackFlight({ params }: Route.ComponentProps) {
               <label className="block text-sm font-medium text-slate-700 mb-2">
                 What price would make you book?
               </label>
-              <div className="flex items-center gap-1 rounded-xl border border-slate-200 bg-white px-4 py-3 focus-within:ring-2 focus-within:ring-sky-500 focus-within:border-transparent mb-2">
+              <div className="glass-input flex items-center gap-1 rounded-xl border border-white/70 px-4 py-3 focus-within:ring-2 focus-within:ring-sky-500 focus-within:border-transparent mb-2">
                 <span className="text-xl text-slate-400">£</span>
                 <input
                   type="number"
@@ -144,7 +144,7 @@ export default function TrackFlight({ params }: Route.ComponentProps) {
               <button
                 type="submit"
                 disabled={saving}
-                className="w-full rounded-full bg-sky-600 text-white py-3.5 font-semibold shadow-sm hover:bg-sky-700 transition inline-flex items-center justify-center gap-2 disabled:opacity-60"
+                className="glass-button w-full rounded-full bg-sky-600 text-white py-3.5 font-semibold shadow-lg shadow-sky-200 hover:bg-sky-700 transition inline-flex items-center justify-center gap-2 disabled:opacity-60"
               >
                 <Bell className="h-4 w-4" />
                 {saving ? "Setting up alert…" : "Start tracking"}

@@ -10,7 +10,7 @@ import {
 
 export function Navbar() {
   return (
-    <nav className="w-full border-b border-slate-100 bg-white/90 backdrop-blur-md fixed top-0 z-50">
+    <nav className="w-full border-b border-white/60 bg-white/70 backdrop-blur-xl backdrop-saturate-150 fixed top-0 z-50 shadow-[0_1px_0_rgba(255,255,255,0.9)_inset,0_2px_12px_-6px_rgba(14,165,233,0.15)]">
       <div className="max-w-6xl mx-auto flex justify-between items-center px-6 py-4 text-slate-900">
         <Link
           to="/"
@@ -47,7 +47,7 @@ export function Navbar() {
               </button>
             </SignInButton>
             <SignUpButton mode="modal">
-              <button className="rounded-full bg-sky-600 text-white px-5 py-2 font-semibold shadow-sm hover:bg-sky-700 transition">
+              <button className="glass-button rounded-full bg-sky-600 text-white px-5 py-2 font-semibold shadow-md shadow-sky-200 hover:bg-sky-700 transition">
                 Get started
               </button>
             </SignUpButton>
