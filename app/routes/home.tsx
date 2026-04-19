@@ -1220,21 +1220,42 @@ function DestinationsSection() {
   );
 }
 
+const containerVariants = {
+  initial: { opacity: 0 },
+  animate: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+      delayChildren: 0.1,
+    },
+  },
+};
+
+const itemVariants = {
+  initial: { opacity: 0, y: 20 },
+  animate: {
+    opacity: 1,
+    y: 0,
+  },
+};
+
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-sky-50 via-white to-white dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 text-slate-900 dark:text-slate-100 overflow-x-hidden">
+    <motion.div
+      variants={containerVariants}
+      initial="initial"
+      animate="animate"
+      className="min-h-screen bg-gradient-to-b from-sky-50 via-white to-white dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 text-slate-900 dark:text-slate-100 overflow-x-hidden"
+    >
       <motion.section
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8 }}
+        variants={itemVariants}
+        transition={{ duration: 0.8, ease: "easeOut" }}
         className="relative pt-32 pb-24 px-6 overflow-hidden"
       >
         <div className="max-w-7xl mx-auto text-center relative z-10">
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1 }}
+            variants={itemVariants}
+            transition={{ duration: 0.8, ease: "easeOut" }}
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-sky-500/10 border border-sky-500/20 mb-8"
           >
             <span className="relative flex h-2 w-2">
@@ -1246,9 +1267,8 @@ export default function Home() {
             </span>
           </motion.div>
           <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 1 }}
+            variants={itemVariants}
+            transition={{ duration: 0.8, ease: "easeOut" }}
             className="text-6xl md:text-8xl font-black tracking-tighter leading-[0.9] mb-8"
           >
             BOOK FLIGHTS AT THE <br />
@@ -1257,24 +1277,22 @@ export default function Home() {
               <motion.span
                 initial={{ width: 0 }}
                 animate={{ width: "100%" }}
-                transition={{ delay: 1, duration: 1 }}
+                transition={{ delay: 1.2, duration: 1 }}
                 className="absolute bottom-2 left-0 h-4 bg-amber-400/30 -z-10"
               />
             </span>
           </motion.h1>
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4, duration: 0.8 }}
+            variants={itemVariants}
+            transition={{ duration: 0.8, ease: "easeOut" }}
             className="text-xl md:text-2xl opacity-60 max-w-2xl mx-auto leading-relaxed mb-12"
           >
             Set your price. We watch 24/7. Get a ping the moment it drops. Never
             overpay again.
           </motion.p>
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6, duration: 0.8 }}
+            variants={itemVariants}
+            transition={{ duration: 0.8, ease: "easeOut" }}
             className="flex flex-col sm:flex-row justify-center gap-6"
           >
             <Link
@@ -1306,7 +1324,7 @@ export default function Home() {
       <ProductDemo />
 
       <motion.section
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 0.8 }}
@@ -1483,6 +1501,6 @@ export default function Home() {
           </div>
         </div>
       </motion.section>
-    </div>
+    </motion.div>
   );
 }

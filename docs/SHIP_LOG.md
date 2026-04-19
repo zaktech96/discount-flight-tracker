@@ -22,6 +22,19 @@ verified before merge - no exceptions.
 
 ## Log
 
+### SL-035 - Premium Entrance Animations & Loading Transitions
+
+**Scope:** `app/routes/home.tsx`, `app/routes/search.tsx`
+
+**Summary:** 
+- Implemented a coordinated entrance animation system using Framer Motion to ensure a high-end, "app-like" loading feel across the main application entry points.
+- **Home Page:** Added a `containerVariants` wrapper to orchestrate staggered entrance transitions for the Hero, Demo, and Bento sections. Updated all section components with standardized `initial` and `whileInView` properties for smooth scrolling reveals.
+- **Search Page:** Introduced a new motion-driven layout with staggered result card animations. Wrapped search results in `AnimatePresence` to provide seamless transitions between "Searching" and "Results" states.
+- **TypeScript Fix:** Resolved complex type mismatches between Framer Motion's `Variants` interface and custom `transition` objects by moving animation parameters directly into the component props, ensuring 100% type safety.
+- **Aesthetic Continuity:** Standardized easing to `easeOut` across all entrance transitions to maintain the brand's snappy, minimalist identity.
+
+**Verification:** Local build passes; animation fluidity verified manually.
+
 ### SL-034 - Global Dark Mode Compatibility & Aesthetic Continuity
 
 **Scope:** `app/routes/search.tsx`, `app/routes/dashboard.tsx`, `app/routes/track.$id.tsx`, `app/routes/track.confirm.tsx`, `app/root.tsx`
