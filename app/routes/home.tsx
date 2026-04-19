@@ -1455,6 +1455,91 @@ export default function Home() {
         </div>
       </section>
 
+      {/* HOW IT WORKS */}
+      <section className="py-24 px-6 relative">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 -z-10 opacity-30"
+        >
+          <div className="absolute top-1/4 left-1/4 w-72 h-72 rounded-full bg-sky-100/40 blur-3xl animate-blob-drift" />
+          <div
+            className="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full bg-amber-100/40 blur-3xl animate-blob-drift"
+            style={{ animationDelay: "4s" }}
+          />
+        </div>
+
+        <div className="max-w-6xl mx-auto text-center">
+          <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-sky-600 mb-3">
+            <Sparkles className="h-3.5 w-3.5" />
+            Simple steps
+          </span>
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tight leading-[1.1]">
+            How Flight Guardian{" "}
+            <span className="relative inline-block">
+              <span className="relative z-10 text-sky-600">works</span>
+              <span
+                aria-hidden
+                className="absolute left-0 bottom-1 h-3 w-full rounded-full bg-amber-200/70 -z-0"
+              />
+            </span>
+            .
+          </h2>
+          <p className="text-slate-600 mt-5 text-lg max-w-xl mx-auto">
+            It's easier than you think to save big on your next flight.
+          </p>
+
+          <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Step 1: Search & Set */}
+            <div className="group relative glass-card p-8 rounded-3xl shadow-xl hover:shadow-2xl hover:shadow-sky-200/50 transition-all duration-500 hover:-translate-y-2">
+              <div className="flex items-center justify-center h-16 w-16 mx-auto rounded-full bg-sky-50 mb-6 group-hover:scale-110 transition-transform duration-500">
+                <Search className="h-8 w-8 text-sky-600" />
+              </div>
+              <h3 className="text-xl font-bold mb-2">Search & Set</h3>
+              <p className="text-slate-600 leading-relaxed">
+                Tell us your desired route and the price you'd pay. We'll do the
+                rest.
+              </p>
+              <div
+                aria-hidden
+                className="absolute inset-0 rounded-3xl ring-4 ring-transparent group-hover:ring-sky-200/50 transition-all duration-500"
+              />
+            </div>
+
+            {/* Step 2: We Watch */}
+            <div className="group relative glass-card p-8 rounded-3xl shadow-xl hover:shadow-2xl hover:shadow-emerald-200/50 transition-all duration-500 delay-100 hover:-translate-y-2">
+              <div className="flex items-center justify-center h-16 w-16 mx-auto rounded-full bg-emerald-50 mb-6 group-hover:scale-110 transition-transform duration-500">
+                <Clock className="h-8 w-8 text-emerald-600" />
+              </div>
+              <h3 className="text-xl font-bold mb-2">We Watch 24/7</h3>
+              <p className="text-slate-600 leading-relaxed">
+                Our smart system constantly monitors thousands of flights for
+                price drops.
+              </p>
+              <div
+                aria-hidden
+                className="absolute inset-0 rounded-3xl ring-4 ring-transparent group-hover:ring-emerald-200/50 transition-all duration-500"
+              />
+            </div>
+
+            {/* Step 3: Get Alert */}
+            <div className="group relative glass-card p-8 rounded-3xl shadow-xl hover:shadow-2xl hover:shadow-amber-200/50 transition-all duration-500 delay-200 hover:-translate-y-2">
+              <div className="flex items-center justify-center h-16 w-16 mx-auto rounded-full bg-amber-50 mb-6 group-hover:scale-110 transition-transform duration-500">
+                <Bell className="h-8 w-8 text-amber-600" />
+              </div>
+              <h3 className="text-xl font-bold mb-2">Get Your Alert</h3>
+              <p className="text-slate-600 leading-relaxed">
+                We'll send you an email the instant your flight hits your target
+                price.
+              </p>
+              <div
+                aria-hidden
+                className="absolute inset-0 rounded-3xl ring-4 ring-transparent group-hover:ring-amber-200/50 transition-all duration-500"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* POPULAR DESTINATIONS */}
       <DestinationsSection />
 

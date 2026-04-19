@@ -22,6 +22,17 @@ verified before merge - no exceptions.
 
 ## Log
 
+### SL-017 - New Interactive 'How It Works' Section
+
+**Scope:** `app/routes/home.tsx`
+
+**Summary:** 
+- Added a brand new, interactive "How It Works" section to the landing page, strategically placed after the Bento Grid and before the comparison section.
+- This section uses a three-step card layout (`Search & Set`, `We Watch 24/7`, `Get Your Alert`), each with a distinct icon and a subtle hover animation (scale-up, shadow glow, and colored ring effect).
+- The section is designed to be visually engaging and explain the product's core value proposition without relying on excessive text.
+
+**Verification:** Build passes successfully.
+
 ### SL-016 - Conveyor Belt Speed Adjustment
 
 **Scope:** `app/app.css`
