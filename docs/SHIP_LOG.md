@@ -22,6 +22,18 @@ verified before merge - no exceptions.
 
 ## Log
 
+### SL-005 - Enhanced Interactivity & Component Contrast
+
+**Scope:** `app/routes/home.tsx`
+
+**Summary:** 
+- Improved contrast and visibility in `DemoSceneAlert` ("My tracked flights" component) by reducing opacity, lightening the text, and adding an animated pulsing active dot.
+- Reduced wordiness in the "Popular right now" and "What makes it magic" sections for a punchier copy.
+- Transformed the destination cards grid into a horizontally scrollable snap-carousel on mobile.
+- Added a subtle, animated swooping plane effect (`animate-fly-across`) to the section header and a dynamic takeoff plane animation on the destination cards when hovered.
+
+**Verification:** Build passes successfully.
+
 ### SL-004 - Enhanced UI Interactions & Contrast
 
 **Scope:** `app/routes/home.tsx`

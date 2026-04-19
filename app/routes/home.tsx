@@ -700,25 +700,26 @@ function DemoSceneAlert({ route }: { route: DemoRoute }) {
   return (
     <div className="relative min-h-[360px]">
       {/* Dimmed dashboard in background */}
-      <div className="opacity-40 pointer-events-none select-none">
+      <div className="opacity-[0.85] pointer-events-none select-none">
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg font-bold text-slate-900">
+          <h3 className="text-lg font-bold text-slate-700">
             My tracked flights
           </h3>
-          <span className="text-xs text-slate-500">1 watching</span>
+          <span className="text-xs font-medium text-slate-400">1 watching</span>
         </div>
-        <div className="rounded-xl glass-card-soft p-4 flex items-center gap-3">
+        <div className="rounded-2xl bg-white/60 border border-slate-200/60 shadow-sm p-4 flex items-center gap-4">
           <div className="h-10 w-10 rounded-full bg-sky-50 flex items-center justify-center">
-            <Plane className="h-5 w-5 text-sky-600" />
+            <Plane className="h-5 w-5 text-sky-500" />
           </div>
           <div className="flex-1 min-w-0">
-            <p className="font-semibold text-sm">
+            <p className="font-bold text-slate-800 text-sm">
               {route.fromCity} → {route.toCity}
             </p>
-            <p className="text-xs text-slate-500">
+            <p className="text-xs font-medium text-slate-500 mt-0.5">
               Alert set at £{route.target}
             </p>
           </div>
+          <div className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
         </div>
       </div>
 
@@ -808,16 +809,17 @@ function DestinationsSection() {
       </div>
 
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-10">
+        <div className="text-center mb-10 relative group cursor-default">
+          <Plane className="absolute -top-4 md:-top-6 left-[15%] md:left-1/4 h-6 w-6 md:h-8 md:w-8 text-sky-400 opacity-0 group-hover:opacity-100 transition-opacity duration-700 animate-fly-across" />
           <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-sky-600 mb-3">
             <Sparkles className="h-3.5 w-3.5" />
-            Popular right now
+            Trending Deals
           </span>
           <h2 className="text-3xl md:text-4xl font-bold tracking-tight">
-            Where are you dreaming of?
+            Pick your next getaway.
           </h2>
           <p className="text-slate-600 mt-3 text-lg">
-            Tap a destination to start tracking — we'll ping you when it drops.
+            Tap to start tracking. We'll handle the rest.
           </p>
         </div>
 
@@ -853,7 +855,10 @@ function DestinationsSection() {
             No matches yet — try another filter.
           </div>
         ) : (
-          <div key={filter} className="grid grid-cols-2 md:grid-cols-3 gap-5">
+          <div
+            key={filter}
+            className="flex overflow-x-auto snap-x snap-mandatory pb-8 pt-4 -mx-6 px-6 gap-5 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden md:-mx-0 md:px-0 md:grid md:grid-cols-3 md:overflow-visible md:pb-0"
+          >
             {visible.map((dest, i) => {
               const hovered = hoveredCode === dest.code;
               const savings = dest.wasFrom ? dest.wasFrom - dest.from : 0;
@@ -866,7 +871,7 @@ function DestinationsSection() {
                   onMouseLeave={() =>
                     setHoveredCode((c) => (c === dest.code ? null : c))
                   }
-                  className="group relative aspect-[4/5] rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl hover:shadow-sky-400/30 transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] animate-fade-up focus:outline-none focus-visible:ring-4 focus-visible:ring-sky-300"
+                  className="group relative aspect-[4/5] min-w-[280px] md:min-w-0 snap-center rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl hover:shadow-sky-400/30 transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] animate-fade-up focus:outline-none focus-visible:ring-4 focus-visible:ring-sky-300"
                   style={{ animationDelay: `${i * 70}ms` }}
                   aria-label={`Track flights to ${dest.city}, ${dest.country}, from £${dest.from}`}
                 >
@@ -879,7 +884,7 @@ function DestinationsSection() {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent group-hover:from-black/90 group-hover:via-black/40 transition-colors duration-500" />
 
                   {/* Top-left: live tracker count */}
-                  <div className="absolute top-4 left-4 flex items-center gap-1.5 rounded-full bg-black/35 backdrop-blur-md border border-white/20 px-2.5 py-1 text-[11px] font-semibold text-white">
+                  <div className="absolute top-4 left-4 flex items-center gap-1.5 rounded-full bg-black/35 backdrop-blur-md border border-white/20 px-2.5 py-1 text-[11px] font-semibold text-white z-10">
                     <span className="relative flex h-1.5 w-1.5">
                       <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75 animate-ping" />
                       <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
@@ -889,16 +894,19 @@ function DestinationsSection() {
 
                   {/* Top-right: dropped badge if applicable, else plane */}
                   {dest.wasFrom ? (
-                    <div className="absolute top-4 right-4 inline-flex items-center gap-1 rounded-full bg-emerald-500 text-white px-2.5 py-1 text-[11px] font-bold shadow-lg animate-float-gentle">
+                    <div className="absolute top-4 right-4 inline-flex items-center gap-1 rounded-full bg-emerald-500 text-white px-2.5 py-1 text-[11px] font-bold shadow-lg animate-float-gentle z-10">
                       <TrendingDown className="h-3 w-3" />
                       -£{savings}
                     </div>
                   ) : (
-                    <Plane className="absolute top-4 right-4 h-5 w-5 text-white/90 drop-shadow-md transition-all duration-500 group-hover:translate-x-3 group-hover:-translate-y-3 group-hover:rotate-12" />
+                    <Plane className="absolute top-4 right-4 h-5 w-5 text-white/90 drop-shadow-md transition-all duration-700 group-hover:translate-x-12 group-hover:-translate-y-12 group-hover:opacity-0 group-hover:rotate-45 z-10" />
                   )}
 
+                  {/* Animated takeoff plane on hover */}
+                  <Plane className="absolute bottom-24 right-8 h-8 w-8 text-sky-400 drop-shadow-2xl opacity-0 -translate-x-16 translate-y-16 -rotate-45 transition-all duration-700 ease-out group-hover:translate-x-0 group-hover:translate-y-0 group-hover:opacity-100 z-10 pointer-events-none" />
+
                   {/* Bottom content */}
-                  <div className="absolute bottom-5 left-5 right-5 text-white">
+                  <div className="absolute bottom-5 left-5 right-5 text-white z-10">
                     <div className="flex items-baseline gap-2">
                       <span className="text-2xl md:text-3xl font-bold drop-shadow">
                         {dest.city}
@@ -1097,8 +1105,7 @@ export default function Home() {
               </span>
             </h2>
             <p className="text-slate-600 mt-5 text-lg max-w-xl mx-auto">
-              Here's what happens behind the scenes while you're busy living
-              your life.
+              We monitor prices 24/7 in the background, so you don't have to.
             </p>
           </div>
 
