@@ -22,6 +22,17 @@ verified before merge - no exceptions.
 
 ## Log
 
+### SL-011 - Horizontal Carousel Fix & New Destinations
+
+**Scope:** `app/routes/home.tsx`
+
+**Summary:** 
+- Resolved a UI flickering issue caused by React unmounting and remounting the destination list by removing `key={filter}`.
+- Converted the "Trending Deals" grid into a horizontal, native CSS scroll-snap carousel on all screen sizes, solving layout constraints on large desktop screens by explicitly sizing cards instead of forcing a CSS grid.
+- Expanded the `DESTINATIONS` list with brand new global locations, adding Cape Town (Africa), Marrakech (Africa), Rio de Janeiro (South America), and Buenos Aires (South America). Updated filters to match.
+
+**Verification:** Build passes successfully.
+
 ### SL-010 - Immersive Destination Cards
 
 **Scope:** `app/routes/home.tsx`

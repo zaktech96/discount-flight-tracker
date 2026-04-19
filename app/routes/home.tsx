@@ -268,7 +268,7 @@ type Destination = {
   city: string;
   code: string;
   country: string;
-  region: "Europe" | "Asia" | "Americas";
+  region: "Europe" | "Asia" | "Americas" | "South America" | "Africa";
   vibe: "City" | "Beach" | "Culture";
   from: number;
   wasFrom?: number; // if present, the price recently dropped
@@ -380,6 +380,52 @@ const DESTINATIONS: Destination[] = [
     image:
       "https://images.unsplash.com/photo-1508009603885-50cf7c579365?auto=format&fit=crop&w=800&q=80",
   },
+  {
+    city: "Cape Town",
+    code: "CPT",
+    country: "South Africa",
+    region: "Africa",
+    vibe: "Culture",
+    from: 580,
+    wasFrom: 750,
+    trackers: 134,
+    image:
+      "https://images.unsplash.com/photo-1580060839134-75a5edca2e99?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    city: "Rio de Janeiro",
+    code: "GIG",
+    country: "Brazil",
+    region: "South America",
+    vibe: "Beach",
+    from: 495,
+    trackers: 215,
+    image:
+      "https://images.unsplash.com/photo-1483729558449-99ef09a8c325?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    city: "Marrakech",
+    code: "RAK",
+    country: "Morocco",
+    region: "Africa",
+    vibe: "Culture",
+    from: 120,
+    wasFrom: 180,
+    trackers: 95,
+    image:
+      "https://images.unsplash.com/photo-1539020140153-e479b8c22e70?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    city: "Buenos Aires",
+    code: "EZE",
+    country: "Argentina",
+    region: "South America",
+    vibe: "City",
+    from: 540,
+    trackers: 82,
+    image:
+      "https://images.unsplash.com/photo-1589909202802-8f4aadce1849?auto=format&fit=crop&w=800&q=80",
+  },
 ];
 
 const DESTINATION_FILTERS = [
@@ -387,6 +433,8 @@ const DESTINATION_FILTERS = [
   "Europe",
   "Asia",
   "Americas",
+  "South America",
+  "Africa",
   "Beach",
 ] as const;
 type DestinationFilter = (typeof DESTINATION_FILTERS)[number];
@@ -941,10 +989,7 @@ function DestinationsSection() {
             No matches yet — try another filter.
           </div>
         ) : (
-          <div
-            key={filter}
-            className="flex overflow-x-auto snap-x snap-mandatory pb-8 pt-4 -mx-6 px-6 gap-5 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden md:-mx-0 md:px-0 md:grid md:grid-cols-3 md:overflow-visible md:pb-0"
-          >
+          <div className="flex overflow-x-auto snap-x snap-mandatory pb-12 pt-4 -mx-6 px-6 gap-5 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
             {visible.map((dest, i) => {
               const hovered = hoveredCode === dest.code;
               const savings = dest.wasFrom ? dest.wasFrom - dest.from : 0;
@@ -957,8 +1002,8 @@ function DestinationsSection() {
                   onMouseLeave={() =>
                     setHoveredCode((c) => (c === dest.code ? null : c))
                   }
-                  className="group relative aspect-[4/5] min-w-[280px] md:min-w-0 snap-center rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl hover:shadow-sky-400/30 transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] animate-fade-up focus:outline-none focus-visible:ring-4 focus-visible:ring-sky-300"
-                  style={{ animationDelay: `${i * 70}ms` }}
+                  className="group relative aspect-[4/5] w-[280px] sm:w-[320px] md:w-[calc(33.333%-14px)] shrink-0 snap-center rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl hover:shadow-sky-400/30 transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] animate-fade-up focus:outline-none focus-visible:ring-4 focus-visible:ring-sky-300"
+                  style={{ animationDelay: `${(i % 3) * 70}ms` }}
                   aria-label={`Track flights to ${dest.city}, ${dest.country}, from £${dest.from}`}
                 >
                   <img
