@@ -179,6 +179,54 @@ const DESTINATIONS: Destination[] = [
       "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=800&q=80",
   },
   {
+    city: "Rome",
+    code: "FCO",
+    country: "Italy",
+    region: "Europe",
+    vibe: "Culture",
+    from: 145,
+    wasFrom: 195,
+    trackers: 284,
+    image:
+      "https://images.unsplash.com/photo-1552832230-c0197dd311b5?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    city: "London",
+    code: "LHR",
+    country: "UK",
+    region: "Europe",
+    vibe: "City",
+    from: 0,
+    wasFrom: 0,
+    trackers: 542,
+    image:
+      "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    city: "Barcelona",
+    code: "BCN",
+    country: "Spain",
+    region: "Europe",
+    vibe: "Beach",
+    from: 112,
+    wasFrom: 168,
+    trackers: 195,
+    image:
+      "https://images.unsplash.com/photo-1583422409516-2895a77efded?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    city: "Amsterdam",
+    code: "AMS",
+    country: "Netherlands",
+    region: "Europe",
+    vibe: "City",
+    from: 138,
+    wasFrom: 175,
+    trackers: 167,
+    image:
+      "https://images.unsplash.com/photo-1534351590666-13e3e96b5017?auto=format&fit=crop&w=800&q=80",
+  },
+  {
     city: "Tokyo",
     code: "NRT",
     country: "Japan",
@@ -188,6 +236,42 @@ const DESTINATIONS: Destination[] = [
     trackers: 89,
     image:
       "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    city: "Bangkok",
+    code: "BKK",
+    country: "Thailand",
+    region: "Asia",
+    vibe: "Beach",
+    from: 395,
+    wasFrom: 480,
+    trackers: 312,
+    image:
+      "https://images.unsplash.com/photo-1504609770332-e224483f76f5?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    city: "Seoul",
+    code: "ICN",
+    country: "South Korea",
+    region: "Asia",
+    vibe: "City",
+    from: 412,
+    wasFrom: 520,
+    trackers: 156,
+    image:
+      "https://images.unsplash.com/photo-1517154421773-0529f29ea451?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    city: "Bali",
+    code: "DPS",
+    country: "Indonesia",
+    region: "Asia",
+    vibe: "Beach",
+    from: 465,
+    wasFrom: 590,
+    trackers: 428,
+    image:
+      "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=800&q=80",
   },
   {
     city: "New York",
@@ -200,6 +284,30 @@ const DESTINATIONS: Destination[] = [
     trackers: 203,
     image:
       "https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    city: "Miami",
+    code: "MIA",
+    country: "USA",
+    region: "Americas",
+    vibe: "Beach",
+    from: 312,
+    wasFrom: 395,
+    trackers: 245,
+    image:
+      "https://images.unsplash.com/photo-1514214246283-d427a95c5d2f?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    city: "Los Angeles",
+    code: "LAX",
+    country: "USA",
+    region: "Americas",
+    vibe: "City",
+    from: 345,
+    wasFrom: 420,
+    trackers: 187,
+    image:
+      "https://images.unsplash.com/photo-1534430480872-3498386e7a56?auto=format&fit=crop&w=800&q=80",
   },
   {
     city: "Istanbul",
@@ -226,6 +334,18 @@ const DESTINATIONS: Destination[] = [
       "https://images.unsplash.com/photo-1483729558449-99ef09a8c325?auto=format&fit=crop&w=800&q=80",
   },
   {
+    city: "Buenos Aires",
+    code: "EZE",
+    country: "Argentina",
+    region: "South America",
+    vibe: "Culture",
+    from: 512,
+    wasFrom: 620,
+    trackers: 134,
+    image:
+      "https://images.unsplash.com/photo-1589909202802-8f4aadce1849?auto=format&fit=crop&w=800&q=80",
+  },
+  {
     city: "Marrakech",
     code: "RAK",
     country: "Morocco",
@@ -236,6 +356,18 @@ const DESTINATIONS: Destination[] = [
     trackers: 95,
     image:
       "https://images.unsplash.com/photo-1539020140153-e479b8c22e70?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    city: "Cape Town",
+    code: "CPT",
+    country: "South Africa",
+    region: "Africa",
+    vibe: "Beach",
+    from: 445,
+    wasFrom: 580,
+    trackers: 167,
+    image:
+      "https://images.unsplash.com/photo-1580619305218-85e4783c164b?auto=format&fit=crop&w=800&q=80",
   },
 ];
 
@@ -944,40 +1076,47 @@ function DestinationsSection() {
         <div className="relative w-full overflow-hidden pb-12 pt-4 group rounded-3xl">
           <div className="absolute top-0 bottom-0 left-0 w-32 bg-gradient-to-r from-sky-50 dark:from-slate-950 to-transparent z-20 pointer-events-none" />
           <div className="absolute top-0 bottom-0 right-0 w-32 bg-gradient-to-l from-sky-50 dark:from-slate-950 to-transparent z-20 pointer-events-none" />
-          <div className="flex w-max animate-conveyor-belt group-hover:[animation-play-state:paused] gap-6 px-6">
-            {[...visible, ...visible, ...visible].map((dest, i) => (
-              <Link
-                key={i}
-                to="/search"
-                className="group relative aspect-[4/5] w-[350px] shrink-0 rounded-[2rem] overflow-hidden shadow-2xl glass-gloss transition-transform hover:-translate-y-2 duration-500"
-              >
-                <img
-                  src={dest.image}
-                  alt={dest.city}
-                  className="absolute inset-0 h-full w-full object-cover group-hover:scale-110 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
-                <div className="absolute bottom-6 left-6 right-6 text-white">
-                  <div className="text-[10px] font-black uppercase tracking-[0.3em] text-sky-400 mb-2">
-                    {dest.region}
-                  </div>
-                  <h3 className="text-3xl font-black mb-1">{dest.city}</h3>
-                  <div className="flex items-end justify-between">
-                    <div>
-                      <p className="text-sm opacity-60 font-bold">
-                        {dest.country}
-                      </p>
-                      <p className="mt-2 text-2xl font-black tracking-tight">
-                        from £{dest.from}
-                      </p>
+          <div
+            className="flex w-max animate-conveyor-belt group-hover:[animation-play-state:paused] px-6"
+            style={{
+              animationDuration: `${visible.length * 3}s`,
+            }}
+          >
+            {Array.from({ length: 20 }).flatMap((_, idx) =>
+              visible.map((dest, i) => (
+                <Link
+                  key={`${idx}-${i}`}
+                  to="/search"
+                  className="group relative aspect-[4/5] w-[350px] shrink-0 rounded-[2rem] overflow-hidden shadow-2xl glass-gloss transition-transform hover:-translate-y-2 duration-500 mr-6"
+                >
+                  <img
+                    src={dest.image}
+                    alt={dest.city}
+                    className="absolute inset-0 h-full w-full object-cover group-hover:scale-110 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
+                  <div className="absolute bottom-6 left-6 right-6 text-white">
+                    <div className="text-[10px] font-black uppercase tracking-[0.3em] text-sky-400 mb-2">
+                      {dest.region}
                     </div>
-                    <div className="glass-button rounded-full bg-white/20 px-4 py-2 text-xs font-black uppercase tracking-widest backdrop-blur-md border border-white/30">
-                      Track
+                    <h3 className="text-3xl font-black mb-1">{dest.city}</h3>
+                    <div className="flex items-end justify-between">
+                      <div>
+                        <p className="text-sm opacity-60 font-bold">
+                          {dest.country}
+                        </p>
+                        <p className="mt-2 text-2xl font-black tracking-tight">
+                          from £{dest.from}
+                        </p>
+                      </div>
+                      <div className="glass-button rounded-full bg-white/20 px-4 py-2 text-xs font-black uppercase tracking-widest backdrop-blur-md border border-white/30">
+                        Track
+                      </div>
                     </div>
                   </div>
-                </div>
-              </Link>
-            ))}
+                </Link>
+              )),
+            )}
           </div>
         </div>
       </div>

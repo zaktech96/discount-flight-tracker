@@ -22,6 +22,19 @@ verified before merge - no exceptions.
 
 ## Log
 
+### SL-032 - Destination Expansion & Conveyor Belt Optimization
+
+**Scope:** `app/routes/home.tsx`, `app/app.css`
+
+**Summary:** 
+- Expanded the `DESTINATIONS` list with 17+ global cities across Europe, Asia, Americas, South America, and Africa (adding Rome, London, Barcelona, Bangkok, Seoul, Bali, Miami, LA, etc.) to ensure rich content in every filter category.
+- Fixed the "empty space" and "duplicate card" bugs in the conveyor belt by implementing a 20-fold duplication of the visible set and a precise `-5%` translation loop.
+- Decoupled item spacing from the parent container (`gap-6` removed in favor of `mr-6` on items) to ensure a mathematically perfect infinite scroll without jitter.
+- Implemented a dynamic `animationDuration` (`visible.length * 3s`) to maintain a consistent, smooth scrolling speed regardless of the number of items currently filtered.
+- Verified that all regions now show a diverse set of popular destinations and the "Beach" vibe filter works as intended.
+
+**Verification:** Build passes successfully.
+
 ### SL-031 - Build Hotfix & Backend Deployment
 
 **Scope:** `app/routes/home.tsx`, `convex/`

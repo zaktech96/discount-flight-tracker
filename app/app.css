@@ -350,11 +350,11 @@ img[loading="lazy"] {
     transform: translateX(0);
   }
   100% {
-    transform: translateX(calc(-33.333333% - 10px));
+    transform: translateX(-5%);
   }
 }
 .animate-conveyor-belt {
-  animation: conveyor-belt 60s linear infinite;
+  animation: conveyor-belt 30s linear infinite;
 }
 
 /* Friendly marketing-page animations */
