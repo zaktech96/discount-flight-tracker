@@ -22,6 +22,22 @@ verified before merge - no exceptions.
 
 ## Log
 
+### SL-038 - Demo Interactivity & Global Image Fixes
+
+**Scope:** `app/routes/home.tsx`
+
+**Summary:** 
+- **Demo Interactivity:** 
+    - Removed browser-default focus outlines from demo step buttons, replacing them with custom accessible focus rings.
+    - Added scaling hover effects to demo navigation for a more tactile feel.
+    - Fully overhauled the "Get the ping" (Stage 4) demo scene: added immersive background imagery matching the destination, a notification pulse effect on the alert bell, and a transition to a "Booked!" state for higher user engagement.
+- **Global Destination Fixes:**
+    - Corrected imagery for **Lima (Peru)**, **Nairobi (Kenya)**, **Tunis (Tunisia)**, and **Cape Town (South Africa)** using verified, high-quality Unsplash sources.
+    - Expanded the South American catalog by adding **Santiago (Chile)** and **Montevideo (Uruguay)**.
+    - Verified all 30+ global destination cards for visual accuracy and aesthetic consistency.
+
+**Verification:** Build passes successfully; demo scene fluidity verified manually.
+
 ### SL-037 - Phase 2 Refinement & Production Readiness
 
 **Scope:** `convex/flights.ts`, `app/routes/dashboard.tsx`, `docs/GOING_LIVE.md`

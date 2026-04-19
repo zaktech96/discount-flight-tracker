@@ -307,7 +307,31 @@ const DESTINATIONS: Destination[] = [
     wasFrom: 560,
     trackers: 156,
     image:
-      "https://images.unsplash.com/photo-1580619305218-85e4783c164b?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1526392060635-9d6019884377?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    city: "Santiago",
+    code: "SCL",
+    country: "Chile",
+    region: "South America",
+    vibe: "City",
+    from: 520,
+    wasFrom: 640,
+    trackers: 112,
+    image:
+      "https://images.unsplash.com/photo-1589909202802-8f4aadce1849?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    city: "Montevideo",
+    code: "MVD",
+    country: "Uruguay",
+    region: "South America",
+    vibe: "Beach",
+    from: 495,
+    wasFrom: 580,
+    trackers: 84,
+    image:
+      "https://images.unsplash.com/photo-1590059530432-8f4aadce1849?auto=format&fit=crop&w=800&q=80",
   },
   {
     city: "Bogota",
@@ -415,7 +439,7 @@ const DESTINATIONS: Destination[] = [
     wasFrom: 240,
     trackers: 86,
     image:
-      "https://images.unsplash.com/photo-1589254065878-42c9da997008?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1534017710121-66c6a999a400?auto=format&fit=crop&w=800&q=80",
   },
   {
     city: "Zanzibar",
@@ -439,7 +463,7 @@ const DESTINATIONS: Destination[] = [
     wasFrom: 470,
     trackers: 156,
     image:
-      "https://images.unsplash.com/photo-1547448415-e9f5b28e570d?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1629198688000-71f23e745b6e?auto=format&fit=crop&w=800&q=80",
   },
   {
     city: "Marrakech",
@@ -666,29 +690,104 @@ function DemoSceneTracking({ route }: any) {
 }
 
 function DemoSceneAlert({ route }: any) {
+  const [isBooked, setIsBooked] = useState(false);
+
   return (
-    <div className="relative min-h-[360px] flex items-center justify-center">
+    <div className="relative min-h-[400px] flex items-center justify-center overflow-hidden rounded-[2.5rem]">
+      {/* Background Ambience */}
       <motion.div
-        initial={{ opacity: 0, scale: 0.9 }}
+        initial={{ opacity: 0, scale: 1.1 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="glass-card glass-gloss rounded-2xl shadow-2xl p-8 max-w-sm bg-white dark:bg-slate-900 border border-slate-100 dark:border-white/10"
+        className="absolute inset-0 z-0"
       >
-        <div className="flex items-center gap-3 mb-4 pb-4 border-b border-slate-100 dark:border-white/10">
-          <Mail className="h-6 w-6 text-emerald-600" />
-          <div>
-            <p className="font-bold dark:text-white leading-tight">
-              Price dropped!
-            </p>
-            <p className="text-xs text-slate-400">Flight Guardian</p>
-          </div>
-        </div>
-        <p className="text-slate-600 dark:text-slate-400 mb-6">
-          Your flight to <b>{route.toCity}</b> hit <b>£{route.target}</b>!
-        </p>
-        <button className="glass-button glass-gloss w-full rounded-full bg-sky-600 text-white py-3 font-bold shadow-lg">
-          Book Now
-        </button>
+        <img
+          src={
+            DESTINATIONS.find((d) => d.city === route.toCity)?.image ||
+            "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1200&q=80"
+          }
+          className="w-full h-full object-cover blur-[2px] brightness-[0.4]"
+          alt=""
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-sky-500/20 to-black/60" />
       </motion.div>
+
+      <AnimatePresence mode="wait">
+        {!isBooked ? (
+          <motion.div
+            key="alert"
+            initial={{ opacity: 0, y: 30, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, scale: 1.1, filter: "blur(10px)" }}
+            className="glass-card glass-gloss relative z-10 rounded-3xl shadow-2xl p-8 max-w-sm bg-white/95 dark:bg-slate-900/95 border-none"
+          >
+            <div className="absolute -top-3 -right-3">
+              <span className="flex h-8 w-8">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-8 w-8 bg-sky-500 items-center justify-center text-white">
+                  <Bell className="h-4 w-4" />
+                </span>
+              </span>
+            </div>
+
+            <div className="flex items-center gap-4 mb-6 pb-6 border-b border-slate-100 dark:border-white/10">
+              <div className="h-14 w-14 rounded-2xl bg-emerald-500/10 flex items-center justify-center text-emerald-600">
+                <Mail className="h-8 w-8" />
+              </div>
+              <div>
+                <p className="font-black text-xl dark:text-white leading-tight">
+                  Price dropped!
+                </p>
+                <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">
+                  Flight Guardian
+                </p>
+              </div>
+            </div>
+
+            <div className="space-y-4 mb-8">
+              <p className="text-slate-600 dark:text-slate-300 text-lg leading-relaxed">
+                Great news! Your flight to <br />
+                <span className="text-slate-900 dark:text-white font-black text-2xl">
+                  {route.toCity}
+                </span>{" "}
+                just hit your target of{" "}
+                <span className="text-emerald-600 font-black text-2xl">
+                  £{route.target}
+                </span>
+              </p>
+            </div>
+
+            <button
+              onClick={() => setIsBooked(true)}
+              className="glass-button glass-gloss w-full rounded-full bg-sky-600 text-white py-4 text-xl font-black uppercase tracking-widest shadow-xl shadow-sky-500/20 active:scale-95 transition-transform"
+            >
+              Book Now
+            </button>
+          </motion.div>
+        ) : (
+          <motion.div
+            key="success"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="text-center relative z-10"
+          >
+            <div className="h-24 w-24 bg-emerald-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-2xl shadow-emerald-500/40">
+              <Check className="h-12 w-12 text-white" strokeWidth={4} />
+            </div>
+            <h3 className="text-4xl font-black text-white mb-2">BOOKED!</h3>
+            <p className="text-emerald-100 font-bold text-xl">
+              Enjoy your trip to {route.toCity}!
+            </p>
+            <motion.div
+              initial={{ width: 0 }}
+              animate={{ width: "100%" }}
+              transition={{ delay: 0.5, duration: 1 }}
+              className="h-1 bg-white/30 rounded-full mt-8 overflow-hidden"
+            >
+              <div className="h-full bg-white w-1/3 animate-[shimmer_2s_infinite]" />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
@@ -947,10 +1046,10 @@ function ProductDemo() {
               key={i}
               type="button"
               onClick={() => setStage(i)}
-              className={`group flex items-center gap-3 transition-all ${
+              className={`group flex items-center gap-3 transition-all outline-none focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 rounded-full px-2 py-1 ${
                 stage === i
                   ? "text-sky-600 scale-110"
-                  : "text-slate-400 hover:text-slate-600"
+                  : "text-slate-400 hover:text-slate-600 hover:scale-105"
               }`}
             >
               <span
