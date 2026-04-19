@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
+import { motion, AnimatePresence } from "framer-motion";
 import type { Route } from "./+types/home";
 
 export const meta: Route.MetaFunction = () => [
@@ -505,6 +506,225 @@ const RECENT_DROPS = [
   { from: "Birmingham", to: "Madrid", drop: 38, price: 72, time: "20m ago" },
 ];
 
+function HowItWorks() {
+  return (
+    <section className="py-24 px-6 relative overflow-hidden bg-white/50">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 -z-10 opacity-30"
+      >
+        <div className="absolute top-1/4 left-1/4 w-72 h-72 rounded-full bg-sky-100/40 blur-3xl animate-blob-drift" />
+        <div
+          className="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full bg-amber-100/40 blur-3xl animate-blob-drift"
+          style={{ animationDelay: "4s" }}
+        />
+      </div>
+
+      <div className="max-w-6xl mx-auto text-center">
+        <motion.span
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-sky-600 mb-3"
+        >
+          <Sparkles className="h-3.5 w-3.5" />
+          Simple steps
+        </motion.span>
+        <motion.h2
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.1 }}
+          className="text-3xl md:text-5xl font-bold tracking-tight leading-[1.1]"
+        >
+          How Flight Guardian{" "}
+          <span className="relative inline-block">
+            <span className="relative z-10 text-sky-600">works</span>
+            <span
+              aria-hidden
+              className="absolute left-0 bottom-1 h-3 w-full rounded-full bg-amber-200/70 -z-0"
+            />
+          </span>
+          .
+        </motion.h2>
+        <motion.p
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.2 }}
+          className="text-slate-600 mt-5 text-lg max-w-xl mx-auto"
+        >
+          It's easier than you think to save big on your next flight.
+        </motion.p>
+
+        <div className="mt-20 relative">
+          {/* Connecting line for desktop */}
+          <div
+            aria-hidden
+            className="hidden md:block absolute top-1/2 left-0 w-full h-0.5 -translate-y-1/2 bg-gradient-to-r from-sky-100 via-sky-200 to-sky-100 -z-0"
+          >
+            <motion.div
+              className="h-full bg-sky-500"
+              initial={{ width: "0%" }}
+              whileInView={{ width: "100%" }}
+              viewport={{ once: true }}
+              transition={{ duration: 2, ease: "easeInOut" }}
+            />
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 relative z-10">
+            <StepCard
+              number="1"
+              icon={Search}
+              title="Search & Set"
+              description="Tell us your desired route and the price you'd pay. We'll do the rest."
+              color="sky"
+              delay={0}
+            />
+            <StepCard
+              number="2"
+              icon={Clock}
+              title="We Watch 24/7"
+              description="Our smart system constantly monitors thousands of flights for price drops."
+              color="emerald"
+              delay={0.2}
+              isActive
+            />
+            <StepCard
+              number="3"
+              icon={Bell}
+              title="Get Your Alert"
+              description="We'll send you an email the instant your flight hits your target price."
+              color="amber"
+              delay={0.4}
+              showNotification
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function StepCard({
+  number,
+  icon: Icon,
+  title,
+  description,
+  color,
+  delay,
+  isActive = false,
+  showNotification = false,
+}: {
+  number: string;
+  icon: any;
+  title: string;
+  description: string;
+  color: "sky" | "emerald" | "amber";
+  delay: number;
+  isActive?: boolean;
+  showNotification?: boolean;
+}) {
+  const colorClasses = {
+    sky: "bg-sky-50 text-sky-600 ring-sky-200",
+    emerald: "bg-emerald-50 text-emerald-600 ring-emerald-200",
+    amber: "bg-amber-50 text-amber-600 ring-amber-200",
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ delay, duration: 0.5 }}
+      className="group relative"
+    >
+      {/* Number Badge */}
+      <div className="absolute -top-10 left-1/2 -translate-x-1/2 md:left-0 md:translate-x-0 z-20">
+        <span
+          className={`inline-flex items-center justify-center w-10 h-10 rounded-full border-4 border-white font-bold text-white shadow-lg shadow-sky-200/50 scale-110 ${
+            color === "sky"
+              ? "bg-sky-500"
+              : color === "emerald"
+                ? "bg-emerald-500"
+                : "bg-amber-500"
+          }`}
+        >
+          {number}
+        </span>
+      </div>
+
+      <div className="glass-card p-8 pt-10 rounded-3xl shadow-xl group-hover:shadow-2xl group-hover:shadow-sky-100 transition-all duration-500 h-full flex flex-col items-center md:items-start text-center md:text-left border-2 border-transparent group-hover:border-sky-100/50 bg-white/80">
+        <div
+          className={`flex items-center justify-center h-16 w-16 rounded-2xl mb-6 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500 relative ${colorClasses[color]}`}
+        >
+          <Icon className="h-8 w-8" />
+          {isActive && (
+            <span className="absolute -top-1 -right-1 flex h-4 w-4">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-4 w-4 bg-emerald-500 border-2 border-white" />
+            </span>
+          )}
+        </div>
+
+        <h3 className="text-2xl font-bold mb-3 group-hover:text-sky-600 transition-colors">
+          {title}
+        </h3>
+        <p className="text-slate-600 leading-relaxed text-sm lg:text-base">
+          {description}
+        </p>
+
+        {isActive && (
+          <div className="mt-6 w-full flex gap-1 items-end h-8 overflow-hidden">
+            {[0.4, 0.7, 0.5, 0.9, 0.6, 0.8, 0.4].map((h, i) => (
+              <motion.div
+                key={i}
+                className="flex-1 bg-emerald-400/30 rounded-t-sm"
+                animate={{
+                  height: [`${h * 100}%`, `${(h + 0.1) * 100}%`, `${h * 100}%`],
+                }}
+                transition={{
+                  repeat: Infinity,
+                  duration: 1.5,
+                  delay: i * 0.1,
+                }}
+              />
+            ))}
+          </div>
+        )}
+
+        {showNotification && (
+          <div className="mt-6 relative w-full h-12">
+            <motion.div
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: [0, 1, 1, 0], x: [-10, 0, 0, 10] }}
+              transition={{
+                repeat: Infinity,
+                duration: 3,
+                times: [0, 0.1, 0.9, 1],
+              }}
+              className="absolute inset-0 flex items-center gap-2 bg-white rounded-xl border border-amber-100 shadow-sm px-3"
+            >
+              <div className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
+              <div className="flex-1 space-y-1">
+                <div className="h-1.5 w-16 bg-slate-100 rounded" />
+                <div className="h-1.5 w-12 bg-slate-50 rounded" />
+              </div>
+              <Check className="h-3 w-3 text-emerald-500" />
+            </motion.div>
+          </div>
+        )}
+      </div>
+
+      {/* Decorative ring on hover */}
+      <div
+        aria-hidden
+        className={`absolute inset-0 rounded-3xl ring-4 ring-transparent opacity-0 group-hover:opacity-100 group-hover:ring-${color}-200/50 transition-all duration-500 -z-10 scale-[1.02]`}
+      />
+    </motion.div>
+  );
+}
+
 function BentoPriceWatching() {
   const [index, setIndex] = useState(0);
   const deal = BENTO_DEALS[index];
@@ -726,15 +946,23 @@ function ProductDemo() {
           </div>
 
           {/* Stage content — keyed by stage+route so it remounts and replays animations on each change */}
-          <div className="p-6 md:p-10 min-h-[420px] bg-gradient-to-b from-white/60 to-sky-50/40 relative">
-            <div key={`${routeIndex}-${stage}`} className="animate-fade-in">
-              {stage === 0 && (
-                <DemoSceneSearch route={route} duration={DEMO_DURATIONS[0]} />
-              )}
-              {stage === 1 && <DemoSceneResults route={route} />}
-              {stage === 2 && <DemoSceneTracking route={route} />}
-              {stage === 3 && <DemoSceneAlert route={route} />}
-            </div>
+          <div className="p-6 md:p-10 min-h-[420px] bg-gradient-to-b from-white/60 to-sky-50/40 relative overflow-hidden">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={`${routeIndex}-${stage}`}
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
+              >
+                {stage === 0 && (
+                  <DemoSceneSearch route={route} duration={DEMO_DURATIONS[0]} />
+                )}
+                {stage === 1 && <DemoSceneResults route={route} />}
+                {stage === 2 && <DemoSceneTracking route={route} />}
+                {stage === 3 && <DemoSceneAlert route={route} />}
+              </motion.div>
+            </AnimatePresence>
           </div>
 
           {/* Progress bar */}
@@ -1562,90 +1790,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* HOW IT WORKS */}
-      <section className="py-24 px-6 relative">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 -z-10 opacity-30"
-        >
-          <div className="absolute top-1/4 left-1/4 w-72 h-72 rounded-full bg-sky-100/40 blur-3xl animate-blob-drift" />
-          <div
-            className="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full bg-amber-100/40 blur-3xl animate-blob-drift"
-            style={{ animationDelay: "4s" }}
-          />
-        </div>
-
-        <div className="max-w-6xl mx-auto text-center">
-          <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-sky-600 mb-3">
-            <Sparkles className="h-3.5 w-3.5" />
-            Simple steps
-          </span>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tight leading-[1.1]">
-            How Flight Guardian{" "}
-            <span className="relative inline-block">
-              <span className="relative z-10 text-sky-600">works</span>
-              <span
-                aria-hidden
-                className="absolute left-0 bottom-1 h-3 w-full rounded-full bg-amber-200/70 -z-0"
-              />
-            </span>
-            .
-          </h2>
-          <p className="text-slate-600 mt-5 text-lg max-w-xl mx-auto">
-            It's easier than you think to save big on your next flight.
-          </p>
-
-          <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Step 1: Search & Set */}
-            <div className="group relative glass-card p-8 rounded-3xl shadow-xl hover:shadow-2xl hover:shadow-sky-200/50 transition-all duration-500 hover:-translate-y-2">
-              <div className="flex items-center justify-center h-16 w-16 mx-auto rounded-full bg-sky-50 mb-6 group-hover:scale-110 transition-transform duration-500">
-                <Search className="h-8 w-8 text-sky-600" />
-              </div>
-              <h3 className="text-xl font-bold mb-2">Search & Set</h3>
-              <p className="text-slate-600 leading-relaxed">
-                Tell us your desired route and the price you'd pay. We'll do the
-                rest.
-              </p>
-              <div
-                aria-hidden
-                className="absolute inset-0 rounded-3xl ring-4 ring-transparent group-hover:ring-sky-200/50 transition-all duration-500"
-              />
-            </div>
-
-            {/* Step 2: We Watch */}
-            <div className="group relative glass-card p-8 rounded-3xl shadow-xl hover:shadow-2xl hover:shadow-emerald-200/50 transition-all duration-500 delay-100 hover:-translate-y-2">
-              <div className="flex items-center justify-center h-16 w-16 mx-auto rounded-full bg-emerald-50 mb-6 group-hover:scale-110 transition-transform duration-500">
-                <Clock className="h-8 w-8 text-emerald-600" />
-              </div>
-              <h3 className="text-xl font-bold mb-2">We Watch 24/7</h3>
-              <p className="text-slate-600 leading-relaxed">
-                Our smart system constantly monitors thousands of flights for
-                price drops.
-              </p>
-              <div
-                aria-hidden
-                className="absolute inset-0 rounded-3xl ring-4 ring-transparent group-hover:ring-emerald-200/50 transition-all duration-500"
-              />
-            </div>
-
-            {/* Step 3: Get Alert */}
-            <div className="group relative glass-card p-8 rounded-3xl shadow-xl hover:shadow-2xl hover:shadow-amber-200/50 transition-all duration-500 delay-200 hover:-translate-y-2">
-              <div className="flex items-center justify-center h-16 w-16 mx-auto rounded-full bg-amber-50 mb-6 group-hover:scale-110 transition-transform duration-500">
-                <Bell className="h-8 w-8 text-amber-600" />
-              </div>
-              <h3 className="text-xl font-bold mb-2">Get Your Alert</h3>
-              <p className="text-slate-600 leading-relaxed">
-                We'll send you an email the instant your flight hits your target
-                price.
-              </p>
-              <div
-                aria-hidden
-                className="absolute inset-0 rounded-3xl ring-4 ring-transparent group-hover:ring-amber-200/50 transition-all duration-500"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
+      <HowItWorks />
 
       {/* POPULAR DESTINATIONS */}
       <DestinationsSection />

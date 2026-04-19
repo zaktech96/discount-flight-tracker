@@ -22,6 +22,19 @@ verified before merge - no exceptions.
 
 ## Log
 
+### SL-020 - Interactive 'How It Works' Section & Jitter Fix
+
+**Scope:** `app/routes/home.tsx`
+
+**Summary:** 
+- Completely redesigned the "How It Works" section to be highly interactive and visually engaging.
+- Added interactive step cards with custom animations, colored badges, and a connecting path that animates on scroll.
+- Step 2 ("We Watch 24/7") now features a live "scanning" pulse animation.
+- Step 3 ("Get Your Alert") features a simulated notification popup.
+- Fixed a "jitter" issue in the `ProductDemo` component by integrating `framer-motion`'s `AnimatePresence`. Stage transitions are now smooth cross-fades rather than jarring React remounts.
+
+**Verification:** Build passes successfully.
+
 ### SL-019 - Automated Price Alert Email Flow
 
 **Scope:** `convex/flights.ts`, `convex/sendEmails.ts`, `convex/users.ts`
