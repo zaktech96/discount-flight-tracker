@@ -30,7 +30,7 @@ export default function TrackFlight({ params }: Route.ComponentProps) {
   if (!flight) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-sky-50 to-white dark:from-slate-900 dark:to-slate-950 flex items-center justify-center px-6 pt-24 transition-colors duration-300">
-        <div className="glass-card dark:bg-slate-900/40 dark:border-white/10 max-w-md text-center rounded-2xl p-10">
+        <div className="glass-card dark:bg-slate-950/40 dark:border-white/10 max-w-md text-center rounded-2xl p-10">
           <h1 className="text-2xl font-bold mb-2 dark:text-white">
             We can't find that flight
           </h1>
@@ -94,7 +94,7 @@ export default function TrackFlight({ params }: Route.ComponentProps) {
           Back to results
         </Link>
 
-        <div className="glass-card dark:bg-slate-900/40 dark:border-white/10 rounded-3xl shadow-xl shadow-sky-100 dark:shadow-sky-900/10">
+        <div className="glass-card dark:bg-slate-950/40 dark:border-white/10 rounded-3xl shadow-xl shadow-sky-100 dark:shadow-sky-900/10">
           {/* Route header */}
           <div className="bg-gradient-to-br from-sky-600 to-sky-500 text-white p-6 text-center">
             <div className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-white/20 mb-3">
@@ -156,7 +156,7 @@ export default function TrackFlight({ params }: Route.ComponentProps) {
               <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
                 What price would make you book?
               </label>
-              <div className="glass-input dark:bg-slate-900/60 dark:border-white/5 flex items-center gap-1 rounded-xl border border-white/70 dark:border-white/10 px-4 py-3 focus-within:ring-2 focus-within:ring-sky-500 focus-within:border-transparent mb-2">
+              <div className="glass-input dark:bg-slate-950/60 dark:border-white/5 flex items-center gap-1 rounded-xl border border-white/70 dark:border-white/10 px-4 py-3 focus-within:ring-2 focus-within:ring-sky-500 focus-within:border-transparent mb-2">
                 <span className="text-xl text-slate-400">£</span>
                 <input
                   type="number"

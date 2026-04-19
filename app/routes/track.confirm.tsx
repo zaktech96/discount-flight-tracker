@@ -29,7 +29,7 @@ export default function TrackConfirm() {
         </p>
 
         {flight ? (
-          <div className="glass-card dark:bg-slate-900/40 dark:border-white/10 rounded-2xl p-6 text-left mb-6">
+          <div className="glass-card dark:bg-slate-950/40 dark:border-white/10 rounded-2xl p-6 text-left mb-6">
             <div className="flex items-center gap-3 mb-4 pb-4 border-b border-slate-100 dark:border-white/5">
               <div className="h-10 w-10 rounded-full bg-sky-50 dark:bg-sky-900/20 flex items-center justify-center text-sky-600 dark:text-sky-400 shrink-0">
                 <Plane className="h-5 w-5" />
@@ -65,7 +65,7 @@ export default function TrackConfirm() {
           </div>
         ) : null}
 
-        <div className="glass-card dark:bg-slate-900/40 dark:border-white/10 rounded-2xl p-5 flex items-center gap-3 text-left mb-8">
+        <div className="glass-card dark:bg-slate-950/40 dark:border-white/10 rounded-2xl p-5 flex items-center gap-3 text-left mb-8">
           <div className="h-10 w-10 rounded-full bg-sky-50 dark:bg-sky-900/20 flex items-center justify-center text-sky-600 dark:text-sky-400 shrink-0">
             <Mail className="h-5 w-5" />
           </div>

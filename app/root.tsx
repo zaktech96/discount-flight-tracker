@@ -80,8 +80,8 @@ export function ErrorBoundary({ error }: { error: Error }) {
         <Meta />
         <Links />
       </head>
-      <body className="bg-gradient-to-b from-sky-50 to-white dark:from-slate-900 dark:to-slate-950 text-slate-900 dark:text-white min-h-screen flex items-center justify-center p-6 transition-colors duration-300">
-        <div className="max-w-md w-full rounded-2xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-white/10 shadow-sm p-8 text-center">
+      <body className="bg-gradient-to-b from-sky-50 to-white dark:from-slate-950 dark:to-slate-950 text-slate-900 dark:text-white min-h-screen flex items-center justify-center p-6 transition-colors duration-300">
+        <div className="max-w-md w-full rounded-2xl bg-white dark:bg-slate-950 border border-slate-100 dark:border-white/10 shadow-sm p-8 text-center">
           <h1 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">
             Something went wrong
           </h1>

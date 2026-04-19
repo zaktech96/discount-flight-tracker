@@ -17,7 +17,7 @@ export function Navbar() {
   useEffect(() => setMounted(true), []);
 
   return (
-    <nav className="w-full border-b border-white/60 dark:border-white/10 bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl backdrop-saturate-150 fixed top-0 z-50 shadow-[0_1px_0_rgba(255,255,255,0.9)_inset,0_2px_12px_-6px_rgba(14,165,233,0.15)] dark:shadow-none">
+    <nav className="w-full border-b border-white/60 dark:border-white/10 bg-white/70 dark:bg-slate-950/70 backdrop-blur-xl backdrop-saturate-150 fixed top-0 z-50 shadow-[0_1px_0_rgba(255,255,255,0.9)_inset,0_2px_12px_-6px_rgba(14,165,233,0.15)] dark:shadow-none">
       <div className="max-w-6xl mx-auto flex justify-between items-center px-6 py-4 text-slate-900 dark:text-slate-100">
         <Link
           to="/"

@@ -22,6 +22,18 @@ verified before merge - no exceptions.
 
 ## Log
 
+### SL-041 - Global Night Mode Aesthetic Enhancement
+
+**Scope:** `app/routes/*.tsx`, `app/root.tsx`, `app/components/**/*.tsx`
+
+**Summary:** 
+- **Aesthetic Refinement:** Standardized the dark mode color palette by replacing the greyish `slate-900` with the deeper, more premium `slate-950` across all global surfaces.
+- **Improved Contrast:** Updated all glass cards, background gradients, form inputs, and navigation elements to use `dark:bg-slate-950`. This significantly improves visual depth and text readability in night mode.
+- **Consistency Audit:** Applied the color standardization to the Hero section, Trending Deals, Search results, Dashboard alerts, and even the Error Boundary to ensure a unified "Terminal Minimalist" identity in both themes.
+- **Visual Depth:** Maintained transparency ratios (e.g., `dark:bg-slate-950/40`) to preserve the premium glassmorphism effect while achieving a much richer dark background.
+
+**Verification:** Build passes successfully; dark mode contrast verified manually across all primary and secondary routes.
+
 ### SL-040 - Cinematic Hero Animation & Image Quality Audit
 
 **Scope:** `app/routes/home.tsx`

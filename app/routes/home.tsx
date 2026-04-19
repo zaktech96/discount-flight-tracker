@@ -711,7 +711,7 @@ function DemoSceneResults({ route }: any) {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.1 }}
-            className={`rounded-[1.5rem] glass-card glass-gloss p-6 md:p-8 flex items-center justify-between gap-4 bg-white/80 dark:bg-slate-900/60 ${f.highlight ? "ring-2 ring-sky-400" : ""}`}
+            className={`rounded-[1.5rem] glass-card glass-gloss p-6 md:p-8 flex items-center justify-between gap-4 bg-white/80 dark:bg-slate-950/60 ${f.highlight ? "ring-2 ring-sky-400" : ""}`}
           >
             <div className="flex items-center gap-5">
               <div className="h-14 w-14 rounded-2xl bg-sky-50 dark:bg-sky-500/10 flex items-center justify-center text-sky-600">
@@ -743,7 +743,7 @@ function DemoSceneResults({ route }: any) {
 function DemoSceneTracking({ route }: any) {
   return (
     <div className="space-y-10 max-w-2xl mx-auto w-full">
-      <div className="rounded-2xl border-2 border-sky-400 glass-input px-6 py-8 flex items-center justify-between shadow-2xl dark:bg-slate-900/60 bg-white/50">
+      <div className="rounded-2xl border-2 border-sky-400 glass-input px-6 py-8 flex items-center justify-between shadow-2xl dark:bg-slate-950/60 bg-white/50">
         <div className="flex items-baseline">
           <span className="text-5xl font-black text-slate-900 dark:text-white">
             £{route.target}
@@ -790,7 +790,7 @@ function DemoSceneAlert({ route }: any) {
             initial={{ opacity: 0, y: 30, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, scale: 1.1, filter: "blur(10px)" }}
-            className="glass-card glass-gloss relative z-10 rounded-3xl shadow-2xl p-8 max-w-sm bg-white/95 dark:bg-slate-900/95 border-none"
+            className="glass-card glass-gloss relative z-10 rounded-3xl shadow-2xl p-8 max-w-sm bg-white/95 dark:bg-slate-950/95 border-none"
           >
             <div className="absolute -top-3 -right-3">
               <span className="flex h-8 w-8">
@@ -1065,8 +1065,8 @@ function ProductDemo() {
           </motion.p>
         </div>
 
-        <div className="relative glass-card glass-gloss rounded-[2.5rem] shadow-2xl shadow-sky-200/60 border-white/40 overflow-hidden dark:bg-slate-900/50">
-          <div className="flex items-center gap-3 px-6 py-4 border-b border-white/60 dark:border-white/10 bg-white/40 dark:bg-slate-900/40">
+        <div className="relative glass-card glass-gloss rounded-[2.5rem] shadow-2xl shadow-sky-200/60 border-white/40 overflow-hidden dark:bg-slate-950/50">
+          <div className="flex items-center gap-3 px-6 py-4 border-b border-white/60 dark:border-white/10 bg-white/40 dark:bg-slate-950/40">
             <div className="flex gap-2">
               <div className="h-3.5 w-3.5 rounded-full bg-red-400/90" />
               <div className="h-3.5 w-3.5 rounded-full bg-amber-400/90" />
@@ -1180,7 +1180,7 @@ function StepCard({
         </span>
       </div>
 
-      <div className="glass-card glass-gloss p-8 pt-10 rounded-3xl shadow-xl h-full flex flex-col items-center md:items-start text-center md:text-left bg-white/80 dark:bg-slate-900/80">
+      <div className="glass-card glass-gloss p-8 pt-10 rounded-3xl shadow-xl h-full flex flex-col items-center md:items-start text-center md:text-left bg-white/80 dark:bg-slate-950/80">
         <div
           className={`flex items-center justify-center h-16 w-16 rounded-2xl mb-6 relative ${colorClasses[color]}`}
         >
@@ -1202,7 +1202,7 @@ function HowItWorks() {
       whileInView="animate"
       viewport={{ once: true, margin: "-100px" }}
       variants={sectionVariants}
-      className="py-24 px-6 relative overflow-hidden bg-white/50 dark:bg-slate-900/50"
+      className="py-24 px-6 relative overflow-hidden bg-white/50 dark:bg-slate-950/50"
     >
       <div className="max-w-7xl mx-auto text-center">
         <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-sky-600 mb-3">
@@ -1332,7 +1332,7 @@ function DestinationsSection() {
               <button
                 key={f}
                 onClick={() => setFilter(f)}
-                className={`px-4 py-2 rounded-full text-sm font-bold transition-all ${filter === f ? "bg-sky-600 text-white shadow-lg" : "glass-card-soft dark:bg-slate-900/60 dark:text-slate-300"}`}
+                className={`px-4 py-2 rounded-full text-sm font-bold transition-all ${filter === f ? "bg-sky-600 text-white shadow-lg" : "glass-card-soft dark:bg-slate-950/60 dark:text-slate-300"}`}
               >
                 {f}
               </button>
@@ -1521,12 +1521,12 @@ export default function Home() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 0.8 }}
-        className="py-24 px-6 relative overflow-hidden bg-slate-50 dark:bg-slate-900/30"
+        className="py-24 px-6 relative overflow-hidden bg-slate-50 dark:bg-slate-950/30"
       >
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-6 gap-6">
             <BentoPriceWatching />
-            <div className="glass-card glass-gloss md:col-span-2 group relative rounded-[2.5rem] p-10 flex flex-col justify-between overflow-hidden bg-white dark:bg-slate-900 shadow-2xl">
+            <div className="glass-card glass-gloss md:col-span-2 group relative rounded-[2.5rem] p-10 flex flex-col justify-between overflow-hidden bg-white dark:bg-slate-950 shadow-2xl">
               <div>
                 <PiggyBank className="h-12 w-12 text-emerald-500 mb-8" />
                 <div className="flex items-baseline gap-2 mb-4">
@@ -1549,7 +1549,7 @@ export default function Home() {
                 </span>
               </div>
             </div>
-            <div className="glass-card glass-gloss md:col-span-2 group relative rounded-[2.5rem] p-10 flex flex-col justify-between overflow-hidden bg-white dark:bg-slate-900 shadow-2xl">
+            <div className="glass-card glass-gloss md:col-span-2 group relative rounded-[2.5rem] p-10 flex flex-col justify-between overflow-hidden bg-white dark:bg-slate-950 shadow-2xl">
               <div>
                 <Clock className="h-12 w-12 text-amber-500 mb-8" />
                 <div className="flex items-baseline gap-2 mb-4">
@@ -1588,7 +1588,7 @@ export default function Home() {
                 We strictly only send price drop notifications. No newsletters,
                 no ads, no data selling.
               </p>
-              <div className="rounded-3xl bg-white dark:bg-slate-900/50 p-6 shadow-2xl border border-black/5 dark:border-white/5 relative overflow-hidden">
+              <div className="rounded-3xl bg-white dark:bg-slate-950/50 p-6 shadow-2xl border border-black/5 dark:border-white/5 relative overflow-hidden">
                 <div className="flex items-center gap-4 mb-4 pb-4 border-b dark:border-white/5">
                   <div className="h-10 w-10 rounded-full bg-sky-500/10 flex items-center justify-center text-sky-500">
                     <Mail className="h-5 w-5" />
@@ -1620,7 +1620,7 @@ export default function Home() {
       >
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12">
-            <div className="glass-card glass-gloss rounded-[3rem] p-12 bg-slate-50 dark:bg-slate-900/40 border-none shadow-2xl">
+            <div className="glass-card glass-gloss rounded-[3rem] p-12 bg-slate-50 dark:bg-slate-950/40 border-none shadow-2xl">
               <Frown className="h-12 w-12 text-slate-400 mb-10" />
               <h3 className="text-4xl font-black mb-8">Hunting Alone</h3>
               <ul className="space-y-6">
@@ -1638,7 +1638,7 @@ export default function Home() {
                 ))}
               </ul>
             </div>
-            <div className="glass-card glass-gloss rounded-[3rem] p-12 bg-white dark:bg-slate-900 border-none shadow-2xl ring-4 ring-sky-500/10">
+            <div className="glass-card glass-gloss rounded-[3rem] p-12 bg-white dark:bg-slate-950 border-none shadow-2xl ring-4 ring-sky-500/10">
               <Plane className="h-12 w-12 text-sky-500 mb-10" />
               <h3 className="text-4xl font-black mb-8">With Guardian</h3>
               <ul className="space-y-6">

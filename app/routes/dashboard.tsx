@@ -92,7 +92,7 @@ export default function Dashboard() {
         </header>
 
         {backendAlerts === undefined && isSignedIn ? (
-          <div className="glass-card dark:bg-slate-900/40 dark:border-white/10 rounded-2xl p-10 text-center">
+          <div className="glass-card dark:bg-slate-950/40 dark:border-white/10 rounded-2xl p-10 text-center">
             <p className="text-slate-500 dark:text-slate-400">
               Loading your flights…
             </p>
@@ -105,7 +105,7 @@ export default function Dashboard() {
               return (
                 <div
                   key={flight.id}
-                  className="glass-card dark:bg-slate-900/40 dark:border-white/10 rounded-2xl p-5 md:p-6 hover:shadow-xl hover:shadow-sky-100 dark:hover:shadow-sky-900/10 hover:-translate-y-0.5 transition-all"
+                  className="glass-card dark:bg-slate-950/40 dark:border-white/10 rounded-2xl p-5 md:p-6 hover:shadow-xl hover:shadow-sky-100 dark:hover:shadow-sky-900/10 hover:-translate-y-0.5 transition-all"
                 >
                   <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div className="flex items-center gap-4 flex-1 min-w-0">
@@ -178,7 +178,7 @@ export default function Dashboard() {
             })}
           </div>
         ) : (
-          <div className="glass-card dark:bg-slate-900/40 dark:border-white/10 rounded-2xl p-10 md:p-14 text-center">
+          <div className="glass-card dark:bg-slate-950/40 dark:border-white/10 rounded-2xl p-10 md:p-14 text-center">
             <div className="mx-auto h-16 w-16 rounded-full bg-sky-50 dark:bg-sky-900/20 flex items-center justify-center text-sky-600 dark:text-sky-400 mb-5">
               <Plane className="h-7 w-7" />
             </div>

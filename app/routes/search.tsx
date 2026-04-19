@@ -76,7 +76,7 @@ export default function FlightSearch() {
           variants={itemVariants}
           transition={{ duration: 0.5, ease: "easeOut" }}
           onSubmit={handleSubmit}
-          className="glass-card dark:bg-slate-900/40 dark:border-white/10 rounded-2xl p-6 md:p-8 mb-10"
+          className="glass-card dark:bg-slate-950/40 dark:border-white/10 rounded-2xl p-6 md:p-8 mb-10"
         >
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <label className="flex flex-col">
@@ -87,7 +87,7 @@ export default function FlightSearch() {
               <input
                 value={from}
                 onChange={(e) => setFrom(e.target.value)}
-                className="glass-input dark:bg-slate-900/60 dark:border-white/5 dark:text-white rounded-xl border border-white/70 px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent placeholder:text-slate-400 dark:placeholder:text-slate-500"
+                className="glass-input dark:bg-slate-950/60 dark:border-white/5 dark:text-white rounded-xl border border-white/70 px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent placeholder:text-slate-400 dark:placeholder:text-slate-500"
                 placeholder="City or airport (e.g. London)"
               />
             </label>
@@ -99,7 +99,7 @@ export default function FlightSearch() {
               <input
                 value={to}
                 onChange={(e) => setTo(e.target.value)}
-                className="glass-input dark:bg-slate-900/60 dark:border-white/5 dark:text-white rounded-xl border border-white/70 px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent placeholder:text-slate-400 dark:placeholder:text-slate-500"
+                className="glass-input dark:bg-slate-950/60 dark:border-white/5 dark:text-white rounded-xl border border-white/70 px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent placeholder:text-slate-400 dark:placeholder:text-slate-500"
                 placeholder="City or airport (e.g. Paris)"
               />
             </label>
@@ -112,7 +112,7 @@ export default function FlightSearch() {
                 type="date"
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
-                className="rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/60 px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent text-slate-700 dark:text-white"
+                className="rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-950/60 px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent text-slate-700 dark:text-white"
               />
             </label>
           </div>
@@ -159,7 +159,7 @@ export default function FlightSearch() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
-              className="glass-card dark:bg-slate-900/40 dark:border-white/10 rounded-2xl p-10 text-center"
+              className="glass-card dark:bg-slate-950/40 dark:border-white/10 rounded-2xl p-10 text-center"
             >
               <div className="mx-auto h-14 w-14 rounded-full bg-slate-50 dark:bg-slate-800 flex items-center justify-center text-slate-400 dark:text-slate-500 mb-4">
                 <Plane className="h-6 w-6" />
@@ -198,7 +198,7 @@ export default function FlightSearch() {
                   >
                     <Link
                       to={`/track/${flight.id}`}
-                      className="glass-card dark:bg-slate-900/40 dark:border-white/10 block rounded-2xl p-5 md:p-6 hover:shadow-xl hover:shadow-sky-100 dark:hover:shadow-sky-900/10 hover:-translate-y-0.5 transition-all"
+                      className="glass-card dark:bg-slate-950/40 dark:border-white/10 block rounded-2xl p-5 md:p-6 hover:shadow-xl hover:shadow-sky-100 dark:hover:shadow-sky-900/10 hover:-translate-y-0.5 transition-all"
                     >
                       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                         <div className="flex items-center gap-4">
