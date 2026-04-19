@@ -558,18 +558,56 @@ function HowItWorks() {
         </motion.p>
 
         <div className="mt-24 relative">
-          {/* Connecting line for desktop */}
+          {/* Animated Flight Path for desktop */}
           <div
             aria-hidden
-            className="hidden md:block absolute top-1/2 left-0 w-full h-0.5 -translate-y-1/2 bg-gradient-to-r from-sky-100 via-sky-200 to-sky-100 -z-0"
+            className="hidden md:block absolute top-[40%] left-0 w-full h-24 -translate-y-1/2 -z-0"
           >
-            <motion.div
-              className="h-full bg-sky-500"
-              initial={{ width: "0%" }}
-              whileInView={{ width: "100%" }}
-              viewport={{ once: true }}
-              transition={{ duration: 2, ease: "easeInOut" }}
-            />
+            <svg
+              width="100%"
+              height="100%"
+              viewBox="0 0 1000 100"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="preserve-3d"
+            >
+              <motion.path
+                d="M 50 50 Q 250 -20 500 50 T 950 50"
+                stroke="url(#gradient-path)"
+                strokeWidth="3"
+                strokeDasharray="8 12"
+                initial={{ pathLength: 0 }}
+                whileInView={{ pathLength: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 2.5, ease: "easeInOut" }}
+              />
+              <defs>
+                <linearGradient
+                  id="gradient-path"
+                  x1="0%"
+                  y1="0%"
+                  x2="100%"
+                  y2="0%"
+                >
+                  <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.2" />
+                  <stop offset="50%" stopColor="#3b82f6" stopOpacity="0.6" />
+                  <stop offset="100%" stopColor="#3b82f6" stopOpacity="0.2" />
+                </linearGradient>
+              </defs>
+
+              {/* Moving plane indicator */}
+              <motion.g
+                initial={{ offsetDistance: "0%" }}
+                whileInView={{ offsetDistance: "100%" }}
+                viewport={{ once: true }}
+                transition={{ duration: 2.5, ease: "easeInOut" }}
+                style={{
+                  offsetPath: "path('M 50 50 Q 250 -20 500 50 T 950 50')",
+                }}
+              >
+                <Plane className="h-5 w-5 text-sky-500 -rotate-45 fill-white" />
+              </motion.g>
+            </svg>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-16 relative z-10">

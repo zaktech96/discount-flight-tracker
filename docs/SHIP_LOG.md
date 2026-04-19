@@ -22,6 +22,18 @@ verified before merge - no exceptions.
 
 ## Log
 
+### SL-024 - Premium Animated Flight Path
+
+**Scope:** `app/routes/home.tsx`
+
+**Summary:** 
+- Replaced the generic blue connecting line in the "How It Works" section with a custom-engineered, animated SVG flight path.
+- The new connection features a dashed arc that draws itself on scroll, using `motion.path` and `pathLength`.
+- Integrated a micro-plane icon that physically traverses the arc as it animates, creating a high-end, thematic user journey between steps.
+- Refined the layout and positioning of the path to perfectly align with the upscaled step cards.
+
+**Verification:** Build passes successfully.
+
 ### SL-023 - Dynamic Live Feed & High-End Visuals
 
 **Scope:** `app/routes/home.tsx`, `app/app.css`
