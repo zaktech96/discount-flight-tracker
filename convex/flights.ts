@@ -191,7 +191,7 @@ export const listActiveRoutes = query({
   handler: async (ctx) => {
     const alerts = await ctx.db
       .query("alerts")
-      .withIndex("by_user_active", (q) => q.eq("active", true))
+      .withIndex("by_active", (q) => q.eq("active", true))
       .collect();
 
     // Group by unique route to save API calls
