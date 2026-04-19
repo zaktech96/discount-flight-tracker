@@ -1032,6 +1032,26 @@ function DestinationsSection() {
                         Track it <ArrowRight className="h-3.5 w-3.5" />
                       </span>
                     </div>
+
+                    {/* Interactive hover details */}
+                    <div
+                      className={`overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] ${
+                        hovered
+                          ? "max-h-20 opacity-100 mt-4"
+                          : "max-h-0 opacity-0 mt-0"
+                      }`}
+                    >
+                      <div className="pt-3 border-t border-white/20 flex items-center justify-between text-[11px] text-white/80 font-medium">
+                        <div className="flex items-center gap-1.5">
+                          <Bell className="h-3 w-3 text-sky-300" />
+                          {dest.trackers * 3} alerts sent
+                        </div>
+                        <div className="flex items-center gap-1.5">
+                          <Sparkles className="h-3 w-3 text-amber-300" />
+                          {dest.wasFrom ? "Hot deal" : "Volatile"}
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </Link>
               );

@@ -22,6 +22,16 @@ verified before merge - no exceptions.
 
 ## Log
 
+### SL-008 - Immersive Destination Cards
+
+**Scope:** `app/routes/home.tsx`
+
+**Summary:** 
+- Redesigned the destination cards in the "Trending Deals" section to include an interactive "insight drawer" that slides up from the bottom on hover. This drawer reveals engaging, contextual simulated data like "alerts sent this week" and volatility metrics (e.g., "Hot deal" or "Volatile").
+- Enhanced the copy and layout to naturally draw users' attention to the price drops and the tracker button without feeling cluttered.
+
+**Verification:** Build passes successfully.
+
 ### SL-007 - Expanded Product Demo & Reduced Wordiness
 
 **Scope:** `app/routes/home.tsx`
