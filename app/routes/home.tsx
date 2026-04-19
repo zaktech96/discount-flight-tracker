@@ -379,7 +379,7 @@ const DESTINATIONS: Destination[] = [
     wasFrom: 560,
     trackers: 156,
     image:
-      "https://images.unsplash.com/photo-1526392060635-9d6019884377?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1580619305218-85e4783c164b?auto=format&fit=crop&w=800&q=80",
   },
   {
     city: "Santiago",
@@ -511,7 +511,7 @@ const DESTINATIONS: Destination[] = [
     wasFrom: 240,
     trackers: 86,
     image:
-      "https://images.unsplash.com/photo-1534017710121-66c6a999a400?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1589254065878-42c9da997008?auto=format&fit=crop&w=800&q=80",
   },
   {
     city: "Zanzibar",
@@ -535,7 +535,7 @@ const DESTINATIONS: Destination[] = [
     wasFrom: 470,
     trackers: 156,
     image:
-      "https://images.unsplash.com/photo-1629198688000-71f23e745b6e?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1547448415-e9f5b28e570d?auto=format&fit=crop&w=800&q=80",
   },
   {
     city: "Marrakech",
@@ -1434,7 +1434,7 @@ export default function Home() {
               <span className="relative inline-flex rounded-full h-2 w-2 bg-sky-500" />
             </span>
             <span className="text-[10px] font-black uppercase tracking-widest text-sky-600 dark:text-sky-400">
-              Trusted by 12,843 users
+              Discover the best deals
             </span>
           </motion.div>
           <motion.h1
@@ -1481,22 +1481,23 @@ export default function Home() {
           </motion.div>
         </div>
 
-        {/* Cinematic Plane Animation */}
+        {/* Cinematic Plane Animation - Enhanced Entrance */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden -z-0">
           <motion.div
-            initial={{ x: "-100%", y: "40%", rotate: 15, opacity: 0 }}
-            animate={{ x: "200%", y: "0%", opacity: [0, 0.4, 0.4, 0] }}
+            initial={{ x: "-20%", y: "60%", rotate: 10, opacity: 0 }}
+            animate={{ x: "200%", y: "-20%", opacity: [0, 0.6, 0.6, 0] }}
             transition={{
-              duration: 8,
+              duration: 10,
               repeat: Infinity,
-              repeatDelay: 2,
+              repeatDelay: 3,
               ease: "linear",
             }}
-            className="absolute top-1/2 left-0 text-sky-400/20"
+            className="absolute top-1/2 left-0 text-sky-400/30"
           >
             <div className="relative">
-              <Plane className="h-16 w-16 fill-current" />
-              <div className="absolute right-full top-1/2 -translate-y-1/2 w-48 h-[2px] bg-gradient-to-l from-current to-transparent opacity-50 blur-[1px]" />
+              <Plane className="h-20 w-20 fill-current" />
+              <div className="absolute right-[90%] top-1/2 -translate-y-1/2 w-64 h-[3px] bg-gradient-to-l from-current to-transparent opacity-40 blur-[2px]" />
+              <div className="absolute right-[90%] top-1/2 -translate-y-1/2 w-32 h-[1px] bg-white opacity-60" />
             </div>
           </motion.div>
         </div>

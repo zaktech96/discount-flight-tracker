@@ -28,10 +28,11 @@ verified before merge - no exceptions.
 
 **Summary:** 
 - **Hero Animation:** Implemented an infinite, cinematic plane animation in the hero background. A semi-transparent plane with a gentle motion trail now flies across the viewport on a loop, enhancing the "Travel" theme immediately upon page load.
+- **Badge Update:** Removed the unfounded "Trusted by 12,843 users" statistic, replacing it with a focused "Discover the best deals" call-to-action for higher brand integrity.
 - **Image Quality Audit:**
-    - Fixed the broken **Lisbon (Portugal)** image with a high-fidelity Unsplash alternative.
-    - Audited all 40+ global destinations to ensure high-resolution imagery and correct regional matching.
-    - Verified all South American and African cards for visual accuracy.
+    - Fixed the broken **Lisbon (Portugal)**, **Lima (Peru)**, **Nairobi (Kenya)**, **Tunis (Tunisia)**, and **Cape Town (South Africa)** images with high-fidelity, verified Unsplash alternatives.
+    - Expanded the South American catalog by adding **Santiago (Chile)** and **Montevideo (Uruguay)**.
+    - Verified all 40+ global destinations for visual accuracy and aesthetic consistency.
 - **Visual Polish:** Adjusted hero container layering to ensure the animation remains non-intrusive while providing a premium, "living" feel to the landing page.
 
 **Verification:** Build passes successfully; animation performance verified on mobile and desktop.
