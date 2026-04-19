@@ -867,91 +867,105 @@ function LiveDealStream() {
   useEffect(() => {
     const id = setInterval(() => {
       setDealOffset((prev) => (prev + 1) % RECENT_DROPS.length);
-    }, 4500);
+    }, 3000);
     return () => clearInterval(id);
   }, []);
 
-  // Get a sliding window of 4 deals
   const currentDeals = [
     RECENT_DROPS[dealOffset % RECENT_DROPS.length],
     RECENT_DROPS[(dealOffset + 1) % RECENT_DROPS.length],
-    RECENT_DROPS[(dealOffset + 2) % RECENT_DROPS.length],
-    RECENT_DROPS[(dealOffset + 3) % RECENT_DROPS.length],
   ];
 
   return (
-    <div className="glass-card md:col-span-3 group relative rounded-3xl p-7 hover:-translate-y-1 hover:shadow-xl hover:shadow-indigo-100 transition-all duration-500 bg-gradient-to-br from-indigo-50/80 via-white/85 to-sky-50/80 overflow-hidden flex flex-col">
-      <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center gap-2">
-          <div className="h-10 w-10 rounded-2xl bg-white shadow-sm flex items-center justify-center text-indigo-600 border border-indigo-50">
-            <Globe className="h-5 w-5" />
+    <div className="glass-card glass-gloss md:col-span-3 group relative rounded-3xl p-8 hover:-translate-y-1 hover:shadow-2xl transition-all duration-500 bg-slate-900 text-white overflow-hidden flex flex-col h-full min-h-[400px]">
+      <div className="flex items-center justify-between mb-8 relative z-10">
+        <div className="flex items-center gap-3">
+          <div className="h-12 w-12 rounded-2xl bg-sky-500/20 flex items-center justify-center text-sky-400 border border-sky-500/30 shadow-lg shadow-sky-500/10">
+            <Globe className="h-6 w-6" />
           </div>
-          <h3 className="text-lg font-bold text-slate-800 tracking-tight">
-            Live Tracker
-          </h3>
+          <div>
+            <h3 className="text-xl font-bold tracking-tight text-white">
+              Signal Feed
+            </h3>
+            <p className="text-[10px] text-sky-400 font-black uppercase tracking-[0.2em]">
+              Global Scan
+            </p>
+          </div>
         </div>
         <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20">
           <span className="relative flex h-2 w-2">
-            <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75 animate-ping" />
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+            <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75 animate-ping" />
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
           </span>
           <span className="text-[10px] font-black text-emerald-600 uppercase tracking-widest">
-            Active
+            Live
           </span>
         </div>
       </div>
 
-      <div className="flex-1 relative min-h-[280px]">
-        <div className="space-y-3">
-          <AnimatePresence mode="popLayout" initial={false}>
-            {currentDeals.map((drop, i) => (
-              <motion.div
-                key={`${drop.from}-${drop.to}-${dealOffset + i}`}
-                initial={{ opacity: 0, y: 20, scale: 0.95 }}
-                animate={{ opacity: 1 - i * 0.2, y: 0, scale: 1 - i * 0.02 }}
-                exit={{ opacity: 0, y: -20, scale: 0.95 }}
-                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                className="flex items-center justify-between p-4 rounded-2xl bg-white/60 border border-white/80 shadow-sm hover:bg-white/90 transition-colors glass-gloss"
-              >
+      <div className="flex-1 space-y-4 relative min-h-[220px]">
+        <AnimatePresence mode="popLayout">
+          {currentDeals.map((drop, i) => (
+            <motion.div
+              key={`${drop.from}-${drop.to}-${dealOffset + i}`}
+              initial={{ opacity: 0, x: 20, filter: "blur(10px)" }}
+              animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
+              exit={{ opacity: 0, x: -20, filter: "blur(10px)" }}
+              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+              className="relative p-5 rounded-[2rem] bg-white/5 border border-white/10 overflow-hidden"
+            >
+              <div className="flex items-center justify-between relative z-10">
                 <div className="flex items-center gap-4">
-                  <div className="h-10 w-10 rounded-xl bg-sky-500/10 flex items-center justify-center text-sky-600 group-hover:scale-110 transition-transform">
-                    <Plane className="h-4 w-4" />
+                  <div className="h-12 w-12 rounded-xl bg-white/10 flex items-center justify-center">
+                    <Plane className="h-5 w-5 text-sky-400" />
                   </div>
                   <div>
-                    <p className="text-sm font-black text-slate-900 leading-none flex items-center gap-1.5">
-                      {drop.from}
-                      <ArrowRight className="h-3 w-3 text-slate-400" />
-                      {drop.to}
-                    </p>
-                    <p className="text-[10px] font-bold text-slate-400 mt-1.5 uppercase tracking-tighter">
+                    <div className="flex items-center gap-2">
+                      <span className="text-base font-bold text-white">
+                        {drop.from}
+                      </span>
+                      <ArrowRight className="h-3 w-3 text-white/30" />
+                      <span className="text-base font-bold text-white">
+                        {drop.to}
+                      </span>
+                    </div>
+                    <span className="text-[10px] font-medium text-white/40 uppercase tracking-wider">
                       Detected {drop.time}
-                    </p>
+                    </span>
                   </div>
                 </div>
                 <div className="text-right">
-                  <div className="flex items-center justify-end gap-1 text-emerald-600">
-                    <TrendingDown className="h-3 w-3" />
-                    <p className="text-sm font-black leading-none">
-                      -£{drop.drop}
-                    </p>
+                  <div className="text-emerald-400 font-black text-lg leading-none">
+                    -£{drop.drop}
                   </div>
-                  <p className="text-base font-black text-slate-900 mt-1">
+                  <div className="text-white font-black text-xl mt-1">
                     £{drop.price}
-                  </p>
+                  </div>
                 </div>
-              </motion.div>
-            ))}
-          </AnimatePresence>
-        </div>
-
-        {/* Fade overlay at bottom to emphasize the stack */}
-        <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-sky-50 to-transparent pointer-events-none z-10" />
+              </div>
+              <div className="absolute inset-0 bg-gradient-to-r from-sky-500/0 via-sky-500/5 to-sky-500/0 translate-x-[-100%] animate-[shimmer_3s_infinite]" />
+            </motion.div>
+          ))}
+        </AnimatePresence>
       </div>
 
-      <div className="mt-6 pt-4 border-t border-slate-100/50">
-        <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest text-center">
-          Monitoring 12,843 routes 24/7
-        </p>
+      <div className="mt-8 pt-6 border-t border-white/5 relative z-10">
+        <div className="flex justify-between items-end">
+          <div>
+            <div className="text-[10px] text-white/40 font-bold uppercase tracking-widest mb-1">
+              Coverage
+            </div>
+            <div className="text-sm font-bold text-sky-400">12,843 Routes</div>
+          </div>
+          <div className="text-right">
+            <div className="text-[10px] text-white/40 font-bold uppercase tracking-widest mb-1">
+              Accuracy
+            </div>
+            <div className="text-sm font-bold text-emerald-400">
+              99.8% Real-time
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -1906,21 +1920,60 @@ export default function Home() {
             </div>
 
             {/* Medium — no spam */}
-            <div className="glass-card md:col-span-3 group relative rounded-3xl p-7 hover:-translate-y-1 hover:shadow-xl hover:shadow-rose-100 transition-all duration-300 bg-gradient-to-br from-rose-50/80 via-white/85 to-white/80">
-              <div className="flex items-start gap-4">
-                <div className="h-12 w-12 shrink-0 rounded-2xl bg-white shadow-sm flex items-center justify-center text-rose-500 group-hover:scale-110 group-hover:rotate-6 transition-transform">
-                  <Heart className="h-6 w-6 fill-current" />
+            <div className="glass-card glass-gloss md:col-span-3 group relative rounded-3xl p-8 hover:-translate-y-1 hover:shadow-xl transition-all duration-300 bg-gradient-to-br from-white/95 via-white/90 to-rose-50/30 overflow-hidden flex flex-col justify-between">
+              <div>
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="h-12 w-12 rounded-2xl bg-rose-50 flex items-center justify-center text-rose-500 shadow-sm group-hover:scale-110 group-hover:rotate-6 transition-transform">
+                    <Heart className="h-6 w-6 fill-current" />
+                  </div>
+                  <h3 className="text-2xl font-bold tracking-tight text-slate-800">
+                    Zero spam. Promise.
+                  </h3>
                 </div>
-                <div>
-                  <h3 className="text-xl font-semibold">Zero spam. Promise.</h3>
-                  <p className="text-slate-600 mt-1.5 leading-relaxed">
-                    The only email we'll send you is{" "}
-                    <span className="font-semibold text-slate-800">
-                      "Your flight just dropped £180."
-                    </span>{" "}
-                    That's the whole business.
-                  </p>
+                <p className="text-slate-600 text-lg leading-relaxed mb-6">
+                  The only email we'll ever send you is a notification that your
+                  flight just dropped in price. No newsletters, no marketing, no
+                  noise.
+                </p>
+                <ul className="space-y-3 mb-8">
+                  {[
+                    "No marketing newsletters",
+                    "We never sell your data",
+                    "One-click unsubscribe",
+                    "Direct booking links only",
+                  ].map((text, i) => (
+                    <li
+                      key={i}
+                      className="flex items-center gap-2 text-sm font-semibold text-slate-500"
+                    >
+                      <Check className="h-4 w-4 text-emerald-500" />
+                      {text}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Mock email preview to fill space */}
+              <div className="relative mt-auto pt-6 border-t border-slate-100">
+                <div className="rounded-2xl border border-slate-200 bg-white shadow-sm p-4 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                  <div className="flex items-center gap-3 mb-3 pb-3 border-b border-slate-50">
+                    <div className="h-8 w-8 rounded-full bg-sky-50 flex items-center justify-center text-sky-500">
+                      <Mail className="h-4 w-4" />
+                    </div>
+                    <div className="space-y-1">
+                      <div className="h-2 w-24 bg-slate-100 rounded" />
+                      <div className="h-1.5 w-16 bg-slate-50 rounded" />
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <div className="h-2 w-full bg-slate-50 rounded" />
+                    <div className="h-2 w-4/5 bg-slate-50 rounded" />
+                  </div>
                 </div>
+                <div
+                  aria-hidden
+                  className="absolute -bottom-10 right-0 h-32 w-32 rounded-full bg-rose-100/50 blur-3xl"
+                />
               </div>
             </div>
 

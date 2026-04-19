@@ -22,6 +22,19 @@ verified before merge - no exceptions.
 
 ## Log
 
+### SL-025 - High-Density Signal Feed & Zero Jitter Fix
+
+**Scope:** `app/routes/home.tsx`
+
+**Summary:** 
+- Redesigned the "Live Tracker" into a dark-themed "Signal Feed" with a technical, high-density layout.
+- Added a "shimmer" scan effect to deal cards and a dual-metric footer (Coverage & Accuracy) to fill the card effectively.
+- Enhanced the "Zero Spam" card by adding a feature list (No selling data, One-click unsubscribe, etc.) and a mock email inbox preview, eliminating previously empty space.
+- Completely eliminated page jitter in the `ProductDemo` by applying strict, responsive height locks to the content container. This prevents the page layout from shifting when transitioning between demo stages.
+- Switched `ProductDemo` transitions to `mode="wait"` for maximum stability during heavy layout changes.
+
+**Verification:** Build passes successfully.
+
 ### SL-024 - Premium Animated Flight Path
 
 **Scope:** `app/routes/home.tsx`
