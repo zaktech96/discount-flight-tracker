@@ -144,50 +144,126 @@ function useTypewriter(text: string, speed = 70, startDelay = 0) {
   return { display, done };
 }
 
-const DESTINATIONS = [
+type Destination = {
+  city: string;
+  code: string;
+  country: string;
+  region: "Europe" | "Asia" | "Americas";
+  vibe: "City" | "Beach" | "Culture";
+  from: number;
+  wasFrom?: number;     // if present, the price recently dropped
+  trackers: number;     // social proof — how many are watching
+  image: string;
+};
+
+const DESTINATIONS: Destination[] = [
   {
     city: "Paris",
     code: "CDG",
+    country: "France",
+    region: "Europe",
+    vibe: "City",
     from: 189,
+    wasFrom: 217,
+    trackers: 142,
     image:
       "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=800&q=80",
   },
   {
     city: "Tokyo",
     code: "NRT",
+    country: "Japan",
+    region: "Asia",
+    vibe: "City",
     from: 438,
+    trackers: 89,
     image:
       "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=800&q=80",
   },
   {
     city: "New York",
     code: "JFK",
+    country: "USA",
+    region: "Americas",
+    vibe: "City",
     from: 298,
+    wasFrom: 340,
+    trackers: 203,
     image:
       "https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?auto=format&fit=crop&w=800&q=80",
   },
   {
     city: "Dubai",
     code: "DXB",
+    country: "UAE",
+    region: "Asia",
+    vibe: "City",
     from: 315,
+    trackers: 67,
     image:
       "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=800&q=80",
   },
   {
     city: "Lisbon",
     code: "LIS",
+    country: "Portugal",
+    region: "Europe",
+    vibe: "Culture",
     from: 149,
+    wasFrom: 167,
+    trackers: 94,
     image:
       "https://images.unsplash.com/photo-1585208798174-6cedd86e019a?auto=format&fit=crop&w=800&q=80",
   },
   {
     city: "Bali",
     code: "DPS",
+    country: "Indonesia",
+    region: "Asia",
+    vibe: "Beach",
     from: 489,
+    trackers: 156,
     image:
       "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=800&q=80",
   },
+  {
+    city: "Barcelona",
+    code: "BCN",
+    country: "Spain",
+    region: "Europe",
+    vibe: "Beach",
+    from: 168,
+    trackers: 112,
+    image:
+      "https://images.unsplash.com/photo-1583422409516-2895a77efded?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    city: "Mexico City",
+    code: "MEX",
+    country: "Mexico",
+    region: "Americas",
+    vibe: "Culture",
+    from: 345,
+    wasFrom: 388,
+    trackers: 78,
+    image:
+      "https://images.unsplash.com/photo-1518105779142-d975f22f1b0a?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    city: "Bangkok",
+    code: "BKK",
+    country: "Thailand",
+    region: "Asia",
+    vibe: "Culture",
+    from: 412,
+    trackers: 58,
+    image:
+      "https://images.unsplash.com/photo-1508009603885-50cf7c579365?auto=format&fit=crop&w=800&q=80",
+  },
 ];
+
+const DESTINATION_FILTERS = ["All", "Europe", "Asia", "Americas", "Beach"] as const;
+type DestinationFilter = (typeof DESTINATION_FILTERS)[number];
 
 const FAQS = [
   {
@@ -669,6 +745,186 @@ function DemoSceneAlert({ route }: { route: DemoRoute }) {
   );
 }
 
+function matchesFilter(dest: Destination, filter: DestinationFilter) {
+  if (filter === "All") return true;
+  if (filter === "Beach") return dest.vibe === "Beach";
+  return dest.region === filter;
+}
+
+function DestinationsSection() {
+  const [filter, setFilter] = useState<DestinationFilter>("All");
+  const [hoveredCode, setHoveredCode] = useState<string | null>(null);
+
+  const visible = DESTINATIONS.filter((d) => matchesFilter(d, filter));
+
+  return (
+    <section className="py-24 px-6 relative">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 -z-10 opacity-40"
+      >
+        <div className="absolute top-1/3 left-1/4 w-80 h-80 rounded-full bg-sky-200/40 blur-3xl animate-blob-drift" />
+        <div
+          className="absolute bottom-1/4 right-1/4 w-72 h-72 rounded-full bg-indigo-200/30 blur-3xl animate-blob-drift"
+          style={{ animationDelay: "6s" }}
+        />
+      </div>
+
+      <div className="max-w-6xl mx-auto">
+        <div className="text-center mb-10">
+          <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-sky-600 mb-3">
+            <Sparkles className="h-3.5 w-3.5" />
+            Popular right now
+          </span>
+          <h2 className="text-3xl md:text-4xl font-bold tracking-tight">
+            Where are you dreaming of?
+          </h2>
+          <p className="text-slate-600 mt-3 text-lg">
+            Tap a destination to start tracking — we'll ping you when it drops.
+          </p>
+        </div>
+
+        {/* Filter pills */}
+        <div
+          role="tablist"
+          aria-label="Filter destinations"
+          className="flex flex-wrap justify-center gap-2 mb-10"
+        >
+          {DESTINATION_FILTERS.map((f) => {
+            const active = filter === f;
+            return (
+              <button
+                key={f}
+                role="tab"
+                aria-selected={active}
+                onClick={() => setFilter(f)}
+                className={`px-4 py-2 rounded-full text-sm font-semibold transition-all duration-300 border ${
+                  active
+                    ? "bg-sky-600 text-white border-sky-600 shadow-md shadow-sky-200 scale-105"
+                    : "glass-card-soft text-slate-700 border-white/70 hover:border-sky-200 hover:text-sky-700 hover:-translate-y-0.5"
+                }`}
+              >
+                {f === "All" ? "All deals" : f}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Cards */}
+        {visible.length === 0 ? (
+          <div className="glass-card text-center rounded-2xl p-10 text-slate-600">
+            No matches yet — try another filter.
+          </div>
+        ) : (
+          <div
+            key={filter}
+            className="grid grid-cols-2 md:grid-cols-3 gap-5"
+          >
+            {visible.map((dest, i) => {
+              const hovered = hoveredCode === dest.code;
+              const savings = dest.wasFrom ? dest.wasFrom - dest.from : 0;
+
+              return (
+                <Link
+                  key={dest.code}
+                  to="/search"
+                  onMouseEnter={() => setHoveredCode(dest.code)}
+                  onMouseLeave={() =>
+                    setHoveredCode((c) => (c === dest.code ? null : c))
+                  }
+                  className="group relative aspect-[4/5] rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl hover:shadow-sky-200/60 transition-all duration-500 hover:-translate-y-1.5 animate-fade-up focus:outline-none focus-visible:ring-4 focus-visible:ring-sky-300"
+                  style={{ animationDelay: `${i * 70}ms` }}
+                  aria-label={`Track flights to ${dest.city}, ${dest.country}, from £${dest.from}`}
+                >
+                  <img
+                    src={dest.image}
+                    alt={`${dest.city} cityscape`}
+                    loading="lazy"
+                    className="absolute inset-0 h-full w-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/30 to-black/10 group-hover:from-black/85 transition-colors duration-500" />
+
+                  {/* Top-left: live tracker count */}
+                  <div className="absolute top-4 left-4 flex items-center gap-1.5 rounded-full bg-black/35 backdrop-blur-md border border-white/20 px-2.5 py-1 text-[11px] font-semibold text-white">
+                    <span className="relative flex h-1.5 w-1.5">
+                      <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75 animate-ping" />
+                      <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
+                    </span>
+                    {dest.trackers} tracking
+                  </div>
+
+                  {/* Top-right: dropped badge if applicable, else plane */}
+                  {dest.wasFrom ? (
+                    <div className="absolute top-4 right-4 inline-flex items-center gap-1 rounded-full bg-emerald-500 text-white px-2.5 py-1 text-[11px] font-bold shadow-lg animate-float-gentle">
+                      <TrendingDown className="h-3 w-3" />
+                      -£{savings}
+                    </div>
+                  ) : (
+                    <Plane
+                      className="absolute top-4 right-4 h-5 w-5 text-white/90 drop-shadow-md transition-all duration-500 group-hover:translate-x-3 group-hover:-translate-y-3 group-hover:rotate-12"
+                    />
+                  )}
+
+                  {/* Bottom content */}
+                  <div className="absolute bottom-5 left-5 right-5 text-white">
+                    <div className="flex items-baseline gap-2">
+                      <span className="text-2xl md:text-3xl font-bold drop-shadow">
+                        {dest.city}
+                      </span>
+                      <span className="text-white/70 text-xs font-medium">
+                        {dest.code}
+                      </span>
+                    </div>
+                    <div className="text-white/75 text-xs tracking-wide mb-3">
+                      {dest.country} · {dest.vibe}
+                    </div>
+
+                    <div className="flex items-end justify-between">
+                      <div>
+                        <div className="text-white/70 text-[11px]">from</div>
+                        <div className="flex items-baseline gap-1.5">
+                          <span className="text-xl font-semibold drop-shadow">
+                            £{dest.from}
+                          </span>
+                          {dest.wasFrom ? (
+                            <span className="text-xs text-white/60 line-through">
+                              £{dest.wasFrom}
+                            </span>
+                          ) : null}
+                        </div>
+                      </div>
+                      <span
+                        className={`rounded-full bg-white/25 backdrop-blur-md border border-white/30 px-3 py-1.5 text-xs font-semibold flex items-center gap-1 transition-all duration-300 ${
+                          hovered
+                            ? "opacity-100 translate-y-0 bg-white text-sky-700"
+                            : "opacity-0 translate-y-2"
+                        }`}
+                      >
+                        Track it <ArrowRight className="h-3 w-3" />
+                      </span>
+                    </div>
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+        )}
+
+        {/* Footer hint */}
+        <p className="text-center text-sm text-slate-500 mt-10">
+          Don't see your route?{" "}
+          <Link
+            to="/search"
+            className="text-sky-600 font-semibold hover:text-sky-700 underline underline-offset-4"
+          >
+            Search any flight
+          </Link>
+        </p>
+      </div>
+    </section>
+  );
+}
+
 export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-sky-50 via-white to-white text-slate-900 overflow-x-hidden">
@@ -967,63 +1223,7 @@ export default function Home() {
       </section>
 
       {/* POPULAR DESTINATIONS */}
-      <section className="py-24 px-6">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-14">
-            <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-sky-600 mb-3">
-              <Sparkles className="h-3.5 w-3.5" />
-              Popular right now
-            </span>
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight">
-              Where are you dreaming of?
-            </h2>
-            <p className="text-slate-600 mt-3 text-lg">
-              Some of the best deals our members are tracking today.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-5">
-            {DESTINATIONS.map((dest) => (
-              <Link
-                key={dest.code}
-                to="/search"
-                className="group relative aspect-[4/5] rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-1"
-              >
-                <img
-                  src={dest.image}
-                  alt={`${dest.city} cityscape`}
-                  loading="lazy"
-                  className="absolute inset-0 h-full w-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/25 to-black/10 group-hover:from-black/80 transition-colors duration-500" />
-
-                {/* Plane flies on hover */}
-                <Plane className="absolute top-6 right-6 h-6 w-6 text-white drop-shadow-md group-hover:translate-x-2 group-hover:-translate-y-2 transition-transform duration-500" />
-
-                <div className="absolute bottom-5 left-5 right-5 text-white">
-                  <div className="text-2xl font-bold drop-shadow">
-                    {dest.city}
-                  </div>
-                  <div className="text-white/80 text-sm tracking-wide">
-                    {dest.code}
-                  </div>
-                  <div className="mt-3 flex items-end justify-between">
-                    <div>
-                      <div className="text-white/70 text-xs">from</div>
-                      <div className="text-xl font-semibold drop-shadow">
-                        £{dest.from}
-                      </div>
-                    </div>
-                    <span className="rounded-full bg-white/25 backdrop-blur-md border border-white/30 px-3 py-1 text-xs font-semibold opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0 transition-all">
-                      Track it →
-                    </span>
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
+      <DestinationsSection />
 
       {/* THE DIFFERENCE — before / after comparison */}
       <section className="py-24 px-6 bg-sky-50">
