@@ -654,7 +654,7 @@ function StepCard({
         </span>
       </div>
 
-      <div className="glass-card p-8 pt-10 rounded-3xl shadow-xl group-hover:shadow-2xl group-hover:shadow-sky-100 transition-all duration-500 h-full flex flex-col items-center md:items-start text-center md:text-left border-2 border-transparent group-hover:border-sky-100/50 bg-white/80">
+      <div className="glass-card glass-gloss p-8 pt-10 rounded-3xl shadow-xl group-hover:shadow-2xl group-hover:shadow-sky-100 transition-all duration-500 h-full flex flex-col items-center md:items-start text-center md:text-left border-2 border-transparent group-hover:border-sky-100/50 bg-white/80">
         <div
           className={`flex items-center justify-center h-16 w-16 rounded-2xl mb-6 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500 relative ${colorClasses[color]}`}
         >
@@ -947,7 +947,7 @@ function ProductDemo() {
         </div>
 
         {/* Faux browser */}
-        <div className="relative glass-card rounded-[2.5rem] shadow-2xl shadow-sky-200/60 border-white/40">
+        <div className="relative glass-card glass-gloss rounded-[2.5rem] shadow-2xl shadow-sky-200/60 border-white/40">
           {/* Browser chrome */}
           <div className="flex items-center gap-3 px-6 py-4 border-b border-white/60 bg-white/40">
             <div className="flex gap-2">
@@ -964,13 +964,14 @@ function ProductDemo() {
 
           {/* Stage content — keyed by stage+route so it remounts and replays animations on each change */}
           <div className="p-8 md:p-14 lg:p-20 min-h-[500px] md:min-h-[600px] bg-gradient-to-b from-white/60 to-sky-50/40 relative overflow-hidden flex flex-col justify-center">
-            <AnimatePresence mode="wait">
+            <AnimatePresence mode="popLayout">
               <motion.div
                 key={`${routeIndex}-${stage}`}
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-                transition={{ duration: 0.4, ease: "easeOut" }}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                className="w-full h-full flex flex-col justify-center"
               >
                 {stage === 0 && (
                   <DemoSceneSearch route={route} duration={DEMO_DURATIONS[0]} />
@@ -1598,9 +1599,27 @@ function DestinationsSection() {
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-sky-50 via-white to-white text-slate-900 overflow-x-hidden">
+    <motion.div
+      initial="initial"
+      animate="animate"
+      variants={{
+        animate: {
+          transition: {
+            staggerChildren: 0.1,
+          },
+        },
+      }}
+      className="min-h-screen bg-gradient-to-b from-sky-50 via-white to-white text-slate-900 overflow-x-hidden"
+    >
       {/* HERO */}
-      <section className="relative pt-28 pb-24 px-6">
+      <motion.section
+        variants={{
+          initial: { opacity: 0, y: 20 },
+          animate: { opacity: 1, y: 0 },
+        }}
+        transition={{ duration: 0.8 }}
+        className="relative pt-28 pb-24 px-6"
+      >
         {/* Soft animated background blobs */}
         <div
           aria-hidden
@@ -1627,7 +1646,7 @@ export default function Home() {
         </div>
 
         <div className="max-w-7xl mx-auto text-center">
-          <span className="glass-card-soft inline-flex items-center gap-2 rounded-full text-slate-700 px-5 py-2 text-sm font-medium animate-fade-up">
+          <span className="glass-card-soft inline-flex items-center gap-2 rounded-full text-slate-700 px-5 py-2 text-sm font-medium">
             <span className="relative flex h-2 w-2">
               <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75 animate-ping" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
@@ -1636,7 +1655,7 @@ export default function Home() {
             flights right now
           </span>
 
-          <h1 className="mt-10 text-5xl md:text-7xl lg:text-[5.5rem] font-bold tracking-tight leading-[1.05] animate-fade-up delay-75">
+          <h1 className="mt-10 text-5xl md:text-7xl lg:text-[5.5rem] font-bold tracking-tight leading-[1.05]">
             Book flights at the{" "}
             <span className="relative inline-block">
               <span className="relative z-10 text-sky-600">perfect moment</span>
@@ -1648,17 +1667,22 @@ export default function Home() {
             .
           </h1>
 
-          <p className="mt-8 text-slate-600 text-lg md:text-2xl max-w-3xl mx-auto leading-relaxed animate-fade-up delay-150">
+          <p className="mt-8 text-slate-600 text-lg md:text-2xl max-w-3xl mx-auto leading-relaxed">
             Tell us where you want to go. We'll watch prices 24/7 and email you
             when it's time to book — so you never overpay again.
           </p>
 
-          <div className="mt-12 flex flex-col sm:flex-row justify-center gap-4 animate-fade-up delay-300 relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.8, duration: 0.8 }}
+            className="mt-12 flex flex-col sm:flex-row justify-center gap-4 relative z-10"
+          >
             <div className="relative group">
               <div className="absolute -inset-1 bg-gradient-to-r from-sky-400 to-indigo-400 rounded-full blur opacity-25 group-hover:opacity-75 transition duration-500 group-hover:duration-200" />
               <Link
                 to="/search"
-                className="relative glass-button inline-flex items-center justify-center gap-2 rounded-full bg-sky-600 text-white px-10 py-5 text-lg font-semibold shadow-lg shadow-sky-200/50 hover:bg-sky-500 hover:shadow-xl hover:shadow-sky-400/60 hover:-translate-y-0.5 transition-all w-full"
+                className="relative glass-button glass-gloss inline-flex items-center justify-center gap-2 rounded-full bg-sky-600 text-white px-10 py-5 text-lg font-semibold shadow-lg shadow-sky-200/50 hover:bg-sky-500 transition-all w-full"
               >
                 <Search className="h-6 w-6 transition-transform group-hover:rotate-6" />
                 Find cheap flights
@@ -1666,19 +1690,29 @@ export default function Home() {
             </div>
             <Link
               to="/dashboard"
-              className="glass-button-light inline-flex items-center justify-center gap-2 rounded-full bg-white/80 text-slate-900 border border-slate-200/60 px-10 py-5 text-lg font-semibold hover:bg-white hover:border-slate-300 hover:shadow-md hover:-translate-y-0.5 transition-all"
+              className="glass-button-light glass-gloss inline-flex items-center justify-center gap-2 rounded-full bg-white/80 text-slate-900 border border-slate-200/60 px-10 py-5 text-lg font-semibold hover:bg-white hover:border-slate-300 hover:shadow-md hover:-translate-y-0.5 transition-all"
             >
               My tracked flights
             </Link>
-          </div>
+          </motion.div>
 
-          <p className="mt-6 text-slate-500 text-base animate-fade-up delay-450">
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1, duration: 1 }}
+            className="mt-6 text-slate-500 text-base"
+          >
             Free to get started · No credit card needed
-          </p>
+          </motion.p>
 
           {/* Price-drop preview card */}
-          <div className="mt-16 max-w-md mx-auto animate-fade-up delay-600">
-            <div className="glass-card rounded-2xl shadow-xl shadow-sky-100 p-5 text-left flex items-center gap-4 animate-float-gentle hover:shadow-2xl hover:shadow-sky-200 transition-shadow">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 1.2, duration: 0.8 }}
+            className="mt-16 max-w-md mx-auto"
+          >
+            <div className="glass-card glass-gloss rounded-2xl shadow-xl shadow-sky-100 p-5 text-left flex items-center gap-4 animate-float-gentle hover:shadow-2xl hover:shadow-sky-200 transition-shadow">
               <div className="h-12 w-12 rounded-full bg-emerald-50 flex items-center justify-center text-emerald-600 shrink-0">
                 <Bell className="h-6 w-6" />
               </div>
@@ -1702,14 +1736,21 @@ export default function Home() {
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
-      </section>
+      </motion.section>
 
       <ProductDemo />
 
       {/* WHY TRAVELERS LOVE US — Bento layout */}
-      <section className="relative py-24 px-6 bg-gradient-to-b from-white to-sky-50 overflow-hidden">
+      <motion.section
+        variants={{
+          initial: { opacity: 0 },
+          animate: { opacity: 1 },
+        }}
+        transition={{ duration: 1 }}
+        className="relative py-24 px-6 bg-gradient-to-b from-white to-sky-50 overflow-hidden"
+      >
         {/* Soft background glow */}
         <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
           <div className="absolute top-20 -left-20 w-80 h-80 rounded-full bg-sky-200/30 blur-3xl animate-blob-drift" />
@@ -1808,7 +1849,7 @@ export default function Home() {
             <LiveDealStream />
           </div>
         </div>
-      </section>
+      </motion.section>
 
       <HowItWorks />
 
@@ -1816,7 +1857,13 @@ export default function Home() {
       <DestinationsSection />
 
       {/* THE DIFFERENCE — before / after comparison */}
-      <section className="py-24 px-6 bg-sky-50">
+      <motion.section
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 1 }}
+        className="py-24 px-6 bg-sky-50"
+      >
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-sky-600 mb-3">
@@ -1841,7 +1888,7 @@ export default function Home() {
 
           <div className="relative grid md:grid-cols-2 gap-10">
             {/* BEFORE card */}
-            <div className="glass-card group rounded-[2.5rem] p-10 md:p-14 transition-all duration-300 hover:-translate-y-0.5">
+            <div className="glass-card glass-gloss group rounded-[2.5rem] p-10 md:p-14 transition-all duration-300 hover:-translate-y-0.5">
               <div className="flex items-center gap-5 mb-10 pb-8 border-b border-slate-100">
                 <div className="h-14 w-14 rounded-2xl bg-slate-100 flex items-center justify-center text-slate-500 group-hover:scale-110 transition-transform">
                   <Frown className="h-7 w-7" />
@@ -1883,7 +1930,7 @@ export default function Home() {
             </div>
 
             {/* AFTER card */}
-            <div className="glass-card group relative rounded-[2.5rem] p-10 md:p-14 shadow-2xl shadow-sky-100 transition-all duration-300 hover:-translate-y-1 hover:shadow-sky-200 bg-gradient-to-br from-white/95 via-white/90 to-sky-50/80 ring-4 ring-sky-100/50 z-10">
+            <div className="glass-card glass-gloss group relative rounded-[2.5rem] p-10 md:p-14 shadow-2xl shadow-sky-100 transition-all duration-300 hover:-translate-y-1 hover:shadow-sky-200 bg-gradient-to-br from-white/95 via-white/90 to-sky-50/80 ring-4 ring-sky-100/50 z-10">
               <div
                 aria-hidden
                 className="absolute -inset-px rounded-[2.5rem] bg-gradient-to-br from-sky-300/40 via-transparent to-emerald-200/40 blur-2xl -z-10"
@@ -1939,10 +1986,16 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* FAQ */}
-      <section className="py-24 px-6">
+      <motion.section
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 1 }}
+        className="py-24 px-6"
+      >
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
             <span className="inline-block text-xs font-semibold uppercase tracking-wider text-sky-600 mb-3">
@@ -1957,7 +2010,7 @@ export default function Home() {
             {FAQS.map(({ q, a }, i) => (
               <details
                 key={i}
-                className="glass-card group rounded-2xl p-5 hover:shadow-md transition-shadow open:shadow-md"
+                className="glass-card glass-gloss group rounded-2xl p-5 hover:shadow-md transition-shadow open:shadow-md"
               >
                 <summary className="flex items-center justify-between gap-4 font-semibold text-slate-900 cursor-pointer list-none">
                   {q}
@@ -1968,10 +2021,16 @@ export default function Home() {
             ))}
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* FINAL CTA */}
-      <section className="py-24 px-6">
+      <motion.section
+        initial={{ opacity: 0, scale: 0.95 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.8 }}
+        className="py-24 px-6"
+      >
         <div className="max-w-5xl mx-auto text-center">
           <div className="relative rounded-3xl bg-gradient-to-br from-sky-600 via-sky-500 to-indigo-600 p-12 md:p-16 text-white shadow-xl shadow-sky-200 overflow-hidden animate-gradient-shift">
             {/* Decorative circles */}
@@ -1995,7 +2054,7 @@ export default function Home() {
               </p>
               <Link
                 to="/search"
-                className="glass-button-light group inline-flex items-center gap-2 rounded-full bg-white text-sky-700 px-8 py-4 font-semibold shadow-lg hover:scale-[1.02] transition-all"
+                className="glass-button-light glass-gloss group inline-flex items-center gap-2 rounded-full bg-white text-sky-700 px-8 py-4 font-semibold shadow-lg hover:scale-[1.02] transition-all"
               >
                 <Plane className="h-5 w-5 transition-transform group-hover:translate-x-1 group-hover:-translate-y-0.5 group-hover:rotate-12" />
                 Start tracking a flight
@@ -2014,7 +2073,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
-    </div>
+      </motion.section>
+    </motion.div>
   );
 }

@@ -22,6 +22,20 @@ verified before merge - no exceptions.
 
 ## Log
 
+### SL-022 - Premium Touch & Jitter Fix Refinement
+
+**Scope:** `app/routes/home.tsx`, `app/app.css`
+
+**Summary:** 
+- Added a "premium touch" across the entire landing page with enhanced glass and gloss effects.
+- Introduced `glass-gloss` utility with an animated shimmering sheen that sweeps across cards and buttons on hover.
+- Refined `glass-card` and `glass-button` CSS with higher blur values (`20px`), increased depth, and multi-layered gradients.
+- Resolved the "reload/jitter" feeling in `ProductDemo` by optimizing `AnimatePresence` with `mode="popLayout"` and ensuring a stable container height.
+- Added staggered loading entry animations to all major page sections using `framer-motion` variants for a cinematic first-load experience.
+- Fixed a transient build issue by switching to `npm` for dependency resolution, ensuring `lucide-react` is correctly bundled.
+
+**Verification:** Build passes successfully.
+
 ### SL-021 - Layout Scaling for Large Screens
 
 **Scope:** `app/routes/home.tsx`
