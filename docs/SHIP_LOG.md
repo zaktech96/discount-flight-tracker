@@ -22,6 +22,20 @@ verified before merge - no exceptions.
 
 ## Log
 
+### SL-036 - Phase 2: Persistent Backend Tracking & Migration
+
+**Scope:** `convex/schema.ts`, `convex/flights.ts`, `app/routes/track.$id.tsx`, `app/routes/dashboard.tsx`
+
+**Summary:** 
+- Formally initiated Phase 2 of the "Going Live" roadmap by migrating flight tracking from purely client-side `localStorage` to the Convex backend for authenticated users.
+- **Schema Evolution:** Updated `flights` and `alerts` tables to include `originCode`, `destCode`, and `departureDate`. Refined indices for high-performance route matching.
+- **Backend Mutations:** Implemented `createAlert` and `deactivateAlert` in `convex/flights.ts`. Enhanced alert-trigger logic to support precise matching against live price snapshots.
+- **Unified Tracking:** Updated the Tracking page to automatically detect `isSignedIn` status; saving alerts to the database for users and falling back to `localStorage` for guests.
+- **Intelligent Dashboard:** Overhauled the Dashboard to provide a unified view. It now merges backend data with local storage, providing real-time reactivity for persistent alerts while preserving trial data for new visitors.
+- **Visual Polish:** Added "Backend" status tags and 24/7 watching indicators to the Dashboard UI to communicate system status clearly.
+
+**Verification:** Convex schema validated; Dashboard verified to handle dual-source data successfully.
+
 ### SL-035 - Premium Entrance Animations & Loading Transitions
 
 **Scope:** `app/routes/home.tsx`, `app/routes/search.tsx`

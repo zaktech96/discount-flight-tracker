@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { Link } from "react-router";
 import { Plane, Plus, Search, Bell, Trash2, TrendingDown } from "lucide-react";
 import {
@@ -6,20 +6,65 @@ import {
   removeTrackedFlight,
   type TrackedFlight,
 } from "~/lib/tracked-flights";
+import { useQuery, useMutation } from "convex/react";
+import { api } from "../../convex/_generated/api";
+import { useAuth } from "@clerk/react-router";
 
 export default function Dashboard() {
-  const [flights, setFlights] = useState<TrackedFlight[] | null>(null);
+  const { userId, isSignedIn } = useAuth();
+  const backendAlerts = useQuery(
+    api.flights.getUserAlerts,
+    isSignedIn && userId ? { userId } : "skip",
+  );
+  const deactivateAlert = useMutation(api.flights.deactivateAlert);
+
+  const [localFlights, setLocalFlights] = useState<TrackedFlight[]>([]);
 
   useEffect(() => {
-    setFlights(getTrackedFlights());
+    setLocalFlights(getTrackedFlights());
   }, []);
 
-  const handleRemove = (id: string) => {
-    removeTrackedFlight(id);
-    setFlights(getTrackedFlights());
+  const handleRemove = async (id: string, isBackend: boolean) => {
+    if (isBackend) {
+      await deactivateAlert({ alertId: id as any });
+    } else {
+      removeTrackedFlight(id);
+      setLocalFlights(getTrackedFlights());
+    }
   };
 
-  const hasFlights = flights && flights.length > 0;
+  const allFlights = useMemo(() => {
+    const combined: (TrackedFlight & { isBackend?: boolean; _id?: string })[] =
+      [];
+
+    // Add local flights
+    localFlights.forEach((f) => combined.push({ ...f, isBackend: false }));
+
+    // Add backend flights
+    if (backendAlerts) {
+      backendAlerts.forEach((a) => {
+        combined.push({
+          id: a._id,
+          _id: a._id,
+          origin: a.origin,
+          destination: a.dest,
+          originCode: a.originCode,
+          destinationCode: a.destCode,
+          airline: "Live Tracking",
+          departureDate: a.departureDate || "Multiple Dates",
+          currentPrice: a.targetPrice + 10, // Mock current price for now
+          targetPrice: a.targetPrice,
+          stops: "Direct/1 Stop",
+          duration: "Varies",
+          isBackend: true,
+        });
+      });
+    }
+
+    return combined;
+  }, [localFlights, backendAlerts]);
+
+  const hasFlights = allFlights.length > 0;
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-sky-50 to-white text-slate-900 dark:from-slate-900 dark:to-slate-950 dark:text-white pt-24 pb-16 px-6 transition-colors duration-300">
@@ -44,7 +89,7 @@ export default function Dashboard() {
           </Link>
         </header>
 
-        {flights === null ? (
+        {backendAlerts === undefined && isSignedIn ? (
           <div className="glass-card dark:bg-slate-900/40 dark:border-white/10 rounded-2xl p-10 text-center">
             <p className="text-slate-500 dark:text-slate-400">
               Loading your flights…
@@ -52,7 +97,7 @@ export default function Dashboard() {
           </div>
         ) : hasFlights ? (
           <div className="space-y-3">
-            {flights.map((flight) => {
+            {allFlights.map((flight) => {
               const diff = flight.currentPrice - flight.targetPrice;
               const hitTarget = diff <= 0;
               return (
@@ -71,6 +116,11 @@ export default function Dashboard() {
                         </p>
                         <p className="text-sm text-slate-500 dark:text-slate-400 truncate">
                           {flight.airline} · Departs {flight.departureDate}
+                          {flight.isBackend && (
+                            <span className="ml-2 text-[10px] bg-sky-500/10 text-sky-500 px-1.5 py-0.5 rounded uppercase font-black tracking-tighter">
+                              Backend
+                            </span>
+                          )}
                         </p>
                       </div>
                     </div>
@@ -95,7 +145,9 @@ export default function Dashboard() {
                       </div>
                       <button
                         type="button"
-                        onClick={() => handleRemove(flight.id)}
+                        onClick={() =>
+                          handleRemove(flight.id, flight.isBackend || false)
+                        }
                         aria-label="Stop tracking"
                         className="h-10 w-10 rounded-full flex items-center justify-center text-slate-400 dark:text-slate-500 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition"
                       >
@@ -113,7 +165,9 @@ export default function Dashboard() {
                       </span>
                     ) : (
                       <span className="text-slate-600 dark:text-slate-400">
-                        £{diff} to go to hit your target price
+                        {flight.isBackend
+                          ? "Watching 24/7 for price drops..."
+                          : `£${diff} to go to hit your target price`}
                       </span>
                     )}
                   </div>

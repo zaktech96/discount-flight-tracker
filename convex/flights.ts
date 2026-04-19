@@ -9,15 +9,15 @@ import { internal } from "./_generated/api";
  */
 export const getRecentPrices = query({
   args: {
-    origin: v.string(),
-    dest: v.string(),
+    originCode: v.string(),
+    destCode: v.string(),
     limit: v.optional(v.number()),
   },
   handler: async (ctx, args) => {
     return ctx.db
       .query("flights")
       .withIndex("by_route", (q) =>
-        q.eq("origin", args.origin).eq("dest", args.dest),
+        q.eq("originCode", args.originCode).eq("destCode", args.destCode),
       )
       .order("desc")
       .take(args.limit ?? 20);
@@ -48,6 +48,8 @@ export const savePriceSnapshot = mutation({
   args: {
     origin: v.string(),
     dest: v.string(),
+    originCode: v.string(),
+    destCode: v.string(),
     price: v.number(),
     currency: v.optional(v.string()),
     airline: v.optional(v.string()),
@@ -61,8 +63,9 @@ export const savePriceSnapshot = mutation({
     // Check if any alerts should be triggered by this new price
     // @ts-ignore - internal.flights exists in generated API
     await ctx.scheduler.runAfter(0, internal.flights.checkAndTriggerAlerts, {
-      origin: args.origin,
-      dest: args.dest,
+      originCode: args.originCode,
+      destCode: args.destCode,
+      departureDate: args.departureDate,
       currentPrice: args.price,
       currency: args.currency,
       airline: args.airline,
@@ -78,42 +81,52 @@ export const savePriceSnapshot = mutation({
  */
 export const checkAndTriggerAlerts = mutation({
   args: {
-    origin: v.string(),
-    dest: v.string(),
+    originCode: v.string(),
+    destCode: v.string(),
+    departureDate: v.optional(v.string()),
     currentPrice: v.number(),
     currency: v.optional(v.string()),
     airline: v.optional(v.string()),
   },
-  handler: async (ctx, { origin, dest, currentPrice, currency, airline }) => {
-    // Find all active alerts for this route
+  handler: async (
+    ctx,
+    { originCode, destCode, departureDate, currentPrice, currency, airline },
+  ) => {
+    // Find all active alerts for this specific route and date
     const activeAlerts = await ctx.db
       .query("alerts")
-      .withIndex("by_route", (q) => q.eq("origin", origin).eq("dest", dest))
-      .filter((q) => q.eq(q.field("active"), true))
+      .withIndex("by_route", (q) =>
+        q.eq("originCode", originCode).eq("destCode", destCode),
+      )
+      .filter((q) =>
+        q.and(
+          q.eq(q.field("active"), true),
+          q.eq(q.field("departureDate"), departureDate),
+        ),
+      )
       .collect();
 
     for (const alert of activeAlerts) {
       // Trigger if current price is at or below target
       if (currentPrice <= alert.targetPrice) {
         // Get user details
-        const user = await ctx.db.get(alert.userId as any);
+        const user = await ctx.db
+          .query("users")
+          .withIndex("by_token", (q) => q.eq("tokenIdentifier", alert.userId))
+          .unique();
 
-        // Safety check: ensure we have a valid user with an email
-        const isValidUser =
-          user && "email" in user && typeof user.email === "string";
-
-        if (isValidUser) {
+        if (user && user.email) {
           // Send email alert
           await ctx.scheduler.runAfter(
             0,
             internal.sendEmails.sendPriceAlertEmail,
             {
-              email: user.email as string,
+              email: user.email,
               origin: alert.origin,
               dest: alert.dest,
               price: currentPrice,
               targetPrice: alert.targetPrice,
-              currency: currency || alert.currency,
+              currency: currency || alert.currency || "£",
               airline: airline,
             },
           );
@@ -125,7 +138,7 @@ export const checkAndTriggerAlerts = mutation({
           });
 
           console.log(
-            `🚀 Price alert triggered for ${user.email}: ${origin} -> ${dest} at ${currentPrice}`,
+            `🚀 Price alert triggered for ${user.email}: ${alert.origin} -> ${alert.dest} at ${currentPrice}`,
           );
         }
       }
@@ -141,6 +154,9 @@ export const createAlert = mutation({
     userId: v.string(),
     origin: v.string(),
     dest: v.string(),
+    originCode: v.string(),
+    destCode: v.string(),
+    departureDate: v.optional(v.string()),
     targetPrice: v.number(),
     currency: v.optional(v.string()),
   },

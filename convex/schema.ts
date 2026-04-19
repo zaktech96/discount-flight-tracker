@@ -48,6 +48,8 @@ export default defineSchema({
   flights: defineTable({
     origin: v.string(),
     dest: v.string(),
+    originCode: v.string(),
+    destCode: v.string(),
     price: v.number(),
     currency: v.optional(v.string()),
     airline: v.optional(v.string()),
@@ -55,13 +57,16 @@ export default defineSchema({
     source: v.optional(v.string()),
     timestamp: v.number(),
   })
-    .index("by_route", ["origin", "dest"])
+    .index("by_route", ["originCode", "destCode"])
     .index("by_timestamp", ["timestamp"]),
 
   alerts: defineTable({
     userId: v.string(),
     origin: v.string(),
     dest: v.string(),
+    originCode: v.string(),
+    destCode: v.string(),
+    departureDate: v.optional(v.string()),
     targetPrice: v.number(),
     currency: v.optional(v.string()),
     active: v.boolean(),
@@ -69,7 +74,7 @@ export default defineSchema({
     createdAt: v.number(),
   })
     .index("by_user", ["userId"])
-    .index("by_route", ["origin", "dest"])
+    .index("by_route", ["originCode", "destCode"])
     .index("by_user_active", ["userId", "active"]),
 
   webhookEvents: defineTable({

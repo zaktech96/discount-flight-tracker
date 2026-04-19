@@ -4,6 +4,9 @@ import { Plane, Bell, ArrowLeft, Clock, Calendar } from "lucide-react";
 import type { Route } from "./+types/track.$id";
 import { getFlight, formatRoute } from "~/lib/flights";
 import { addTrackedFlight } from "~/lib/tracked-flights";
+import { useMutation } from "convex/react";
+import { api } from "../../convex/_generated/api";
+import { useAuth } from "@clerk/react-router";
 
 export function meta({ params }: Route.MetaArgs) {
   const flight = getFlight(params.id);
@@ -16,6 +19,9 @@ export function meta({ params }: Route.MetaArgs) {
 export default function TrackFlight({ params }: Route.ComponentProps) {
   const flight = getFlight(params.id);
   const navigate = useNavigate();
+  const { userId, isSignedIn } = useAuth();
+  const createAlert = useMutation(api.flights.createAlert);
+
   const [targetPrice, setTargetPrice] = useState<string>(
     flight ? String(Math.max(50, flight.currentPrice - 50)) : "",
   );
@@ -47,13 +53,34 @@ export default function TrackFlight({ params }: Route.ComponentProps) {
   const saved = flight.originalPrice - flight.currentPrice;
   const pct = Math.round((saved / flight.originalPrice) * 100);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const price = Number(targetPrice);
     if (!price || price <= 0) return;
     setSaving(true);
-    addTrackedFlight(flight, price);
-    navigate(`/track/confirm?id=${flight.id}`);
+
+    try {
+      if (isSignedIn && userId) {
+        // Save to Backend (Convex)
+        await createAlert({
+          userId,
+          origin: flight.origin,
+          dest: flight.destination,
+          originCode: flight.originCode,
+          destCode: flight.destinationCode,
+          departureDate: flight.departureDate,
+          targetPrice: price,
+          currency: "GBP",
+        });
+      } else {
+        // Guest Fallback (localStorage)
+        addTrackedFlight(flight, price);
+      }
+      navigate(`/track/confirm?id=${flight.id}`);
+    } catch (err) {
+      console.error("Failed to create alert:", err);
+      setSaving(false);
+    }
   };
 
   return (
