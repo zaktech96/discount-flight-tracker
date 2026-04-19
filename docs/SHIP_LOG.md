@@ -22,6 +22,19 @@ verified before merge - no exceptions.
 
 ## Log
 
+### SL-028 - Signal Feed Redesign & Total Jitter Elimination
+
+**Scope:** `app/routes/home.tsx`, `app/app.css`
+
+**Summary:** 
+- Redesigned the "Live Tracker" into a high-density, dark-themed "Signal Feed" for a superior technical aesthetic.
+- Added visible, high-contrast flight data to the Signal Feed, ensuring legibility in all lighting conditions.
+- Filled the "Zero Spam" card with a detailed feature list and a dynamic mock email preview, eliminating unused space and reinforcing brand trust.
+- Successfully eliminated the "Product Demo jitter" by implementing strict, responsive height locking and switching `AnimatePresence` to `mode="wait"`. Transitions are now rock-solid and do not affect the layout of sections below.
+- Corrected a critical file duplication error in `app/routes/home.tsx` and removed unused legacy imports.
+
+**Verification:** Build passes successfully.
+
 ### SL-027 - Premium Touch & Night Mode Support
 
 **Scope:** `app/root.tsx`, `app/components/navigation/navbar.tsx`, `app/routes/home.tsx`, `app/app.css`

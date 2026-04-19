@@ -18,12 +18,10 @@ import {
   Search,
   Heart,
   Check,
-  ChevronDown,
   Sparkles,
   Globe,
   Clock,
   TrendingDown,
-  Coffee,
   Calendar,
   MapPin,
   ArrowRight,
@@ -41,7 +39,6 @@ const DEMO_CAPTIONS = [
 ];
 
 // Slower + more breathable — roughly 1.7× the previous timings.
-// Stage 0 (search) is longest because the typing effect plays out there.
 const DEMO_DURATIONS = [7200, 5400, 4800, 6200];
 
 type DemoRoute = {
@@ -153,93 +150,6 @@ const DEMO_ROUTES: DemoRoute[] = [
       { airline: "Lufthansa", price: 720, original: 910, duration: "14h 30m" },
     ],
   },
-  {
-    fromCity: "London",
-    fromCode: "LGW",
-    toCity: "Berlin",
-    toCode: "BER",
-    date: "Aug 10, 2026",
-    airline: "Ryanair",
-    duration: "1h 50m",
-    current: 45,
-    original: 120,
-    target: 35,
-    drop: 10,
-    deals: [
-      {
-        airline: "Ryanair",
-        price: 45,
-        original: 120,
-        duration: "1h 50m",
-        highlight: true,
-      },
-      { airline: "easyJet", price: 52, original: 135, duration: "1h 55m" },
-      {
-        airline: "British Airways",
-        price: 85,
-        original: 210,
-        duration: "1h 45m",
-      },
-    ],
-  },
-  {
-    fromCity: "London",
-    fromCode: "LHR",
-    toCity: "Cape Town",
-    toCode: "CPT",
-    date: "Nov 04, 2026",
-    airline: "Virgin Atlantic",
-    duration: "11h 30m",
-    current: 580,
-    original: 750,
-    target: 500,
-    drop: 80,
-    deals: [
-      {
-        airline: "Virgin Atlantic",
-        price: 580,
-        original: 750,
-        duration: "11h 30m",
-        highlight: true,
-      },
-      {
-        airline: "British Airways",
-        price: 610,
-        original: 820,
-        duration: "11h 25m",
-      },
-      { airline: "KLM", price: 645, original: 790, duration: "14h 15m" },
-    ],
-  },
-  {
-    fromCity: "Madrid",
-    fromCode: "MAD",
-    toCity: "Rio de Janeiro",
-    toCode: "GIG",
-    date: "Feb 15, 2027",
-    airline: "Iberia",
-    duration: "10h 40m",
-    current: 495,
-    original: 890,
-    target: 450,
-    drop: 45,
-    deals: [
-      {
-        airline: "Iberia",
-        price: 495,
-        original: 890,
-        duration: "10h 40m",
-        highlight: true,
-      },
-      { airline: "LATAM", price: 520, original: 840, duration: "11h 10m" },
-      {
-        airline: "TAP Air Portugal",
-        price: 580,
-        original: 910,
-        duration: "13h 20m",
-      },
-    ],
-  },
 ];
 
 function useTypewriter(text: string, speed = 70, startDelay = 0) {
@@ -272,8 +182,8 @@ type Destination = {
   region: "Europe" | "Asia" | "Americas" | "South America" | "Africa";
   vibe: "City" | "Beach" | "Culture";
   from: number;
-  wasFrom?: number; // if present, the price recently dropped
-  trackers: number; // social proof — how many are watching
+  wasFrom?: number;
+  trackers: number;
   image: string;
 };
 
@@ -313,120 +223,6 @@ const DESTINATIONS: Destination[] = [
     image:
       "https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?auto=format&fit=crop&w=800&q=80",
   },
-  {
-    city: "Dubai",
-    code: "DXB",
-    country: "UAE",
-    region: "Asia",
-    vibe: "City",
-    from: 315,
-    trackers: 67,
-    image:
-      "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=800&q=80",
-  },
-  {
-    city: "Lisbon",
-    code: "LIS",
-    country: "Portugal",
-    region: "Europe",
-    vibe: "Culture",
-    from: 149,
-    wasFrom: 167,
-    trackers: 94,
-    image:
-      "https://images.unsplash.com/photo-1585208798174-6cedd86e019a?auto=format&fit=crop&w=800&q=80",
-  },
-  {
-    city: "Bali",
-    code: "DPS",
-    country: "Indonesia",
-    region: "Asia",
-    vibe: "Beach",
-    from: 489,
-    trackers: 156,
-    image:
-      "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=800&q=80",
-  },
-  {
-    city: "Barcelona",
-    code: "BCN",
-    country: "Spain",
-    region: "Europe",
-    vibe: "Beach",
-    from: 168,
-    trackers: 112,
-    image:
-      "https://images.unsplash.com/photo-1583422409516-2895a77efded?auto=format&fit=crop&w=800&q=80",
-  },
-  {
-    city: "Mexico City",
-    code: "MEX",
-    country: "Mexico",
-    region: "Americas",
-    vibe: "Culture",
-    from: 345,
-    wasFrom: 388,
-    trackers: 78,
-    image:
-      "https://images.unsplash.com/photo-1518105779142-d975f22f1b0a?auto=format&fit=crop&w=800&q=80",
-  },
-  {
-    city: "Bangkok",
-    code: "BKK",
-    country: "Thailand",
-    region: "Asia",
-    vibe: "Culture",
-    from: 412,
-    trackers: 58,
-    image:
-      "https://images.unsplash.com/photo-1508009603885-50cf7c579365?auto=format&fit=crop&w=800&q=80",
-  },
-  {
-    city: "Cape Town",
-    code: "CPT",
-    country: "South Africa",
-    region: "Africa",
-    vibe: "Culture",
-    from: 580,
-    wasFrom: 750,
-    trackers: 134,
-    image:
-      "https://images.unsplash.com/photo-1580060839134-75a5edca2e99?auto=format&fit=crop&w=800&q=80",
-  },
-  {
-    city: "Rio de Janeiro",
-    code: "GIG",
-    country: "Brazil",
-    region: "South America",
-    vibe: "Beach",
-    from: 495,
-    trackers: 215,
-    image:
-      "https://images.unsplash.com/photo-1483729558449-99ef09a8c325?auto=format&fit=crop&w=800&q=80",
-  },
-  {
-    city: "Marrakech",
-    code: "RAK",
-    country: "Morocco",
-    region: "Africa",
-    vibe: "Culture",
-    from: 120,
-    wasFrom: 180,
-    trackers: 95,
-    image:
-      "https://images.unsplash.com/photo-1539020140153-e479b8c22e70?auto=format&fit=crop&w=800&q=80",
-  },
-  {
-    city: "Buenos Aires",
-    code: "EZE",
-    country: "Argentina",
-    region: "South America",
-    vibe: "City",
-    from: 540,
-    trackers: 82,
-    image:
-      "https://images.unsplash.com/photo-1589909202802-8f4aadce1849?auto=format&fit=crop&w=800&q=80",
-  },
 ];
 
 const DESTINATION_FILTERS = [
@@ -443,23 +239,11 @@ type DestinationFilter = (typeof DESTINATION_FILTERS)[number];
 const FAQS = [
   {
     q: "Is Flight Guardian really free?",
-    a: "Yep, 100% free to track flights. No credit card, no trial, no hidden catches. We only make money if you choose to upgrade for premium features later on.",
+    a: "Yep, 100% free to track flights. No credit card, no hidden catches.",
   },
   {
     q: "How quickly will I get an alert when prices drop?",
-    a: "The moment we spot a drop — usually within minutes. We check thousands of routes every hour, so you won't miss anything.",
-  },
-  {
-    q: "Can I track flights from any airport?",
-    a: "Absolutely. We watch flights from airports all over the world, whether you're flying from London, Lagos, or Los Angeles.",
-  },
-  {
-    q: "What happens when my flight hits the target price?",
-    a: "You'll get a friendly email with a direct link to book on the airline's site. No middleman, no markup — just you and a great deal.",
-  },
-  {
-    q: "Can I stop tracking a flight?",
-    a: "Of course! Head to your dashboard, click the remove button, and it's gone. We won't email you about it again.",
+    a: "The moment we spot a drop — usually within minutes.",
   },
 ];
 
@@ -488,14 +272,6 @@ const BENTO_DEALS = [
     drop: 25,
     history: [85, 82, 88, 80, 75, 72, 68],
   },
-  {
-    from: "London",
-    to: "Cape Town",
-    price: 580,
-    original: 750,
-    drop: 22,
-    history: [90, 88, 92, 85, 80, 78, 75],
-  },
 ];
 
 const RECENT_DROPS = [
@@ -508,35 +284,18 @@ const RECENT_DROPS = [
 
 function HowItWorks() {
   return (
-    <section className="py-24 px-6 relative overflow-hidden bg-white/50">
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 -z-10 opacity-30"
-      >
-        <div className="absolute top-1/4 left-1/4 w-72 h-72 rounded-full bg-sky-100/40 blur-3xl animate-blob-drift" />
-        <div
-          className="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full bg-amber-100/40 blur-3xl animate-blob-drift"
-          style={{ animationDelay: "4s" }}
-        />
-      </div>
-
+    <motion.section
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true, margin: "-100px" }}
+      className="py-24 px-6 relative overflow-hidden bg-white/50 dark:bg-slate-900/50"
+    >
       <div className="max-w-7xl mx-auto text-center">
-        <motion.span
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-sky-600 mb-3"
-        >
+        <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-sky-600 mb-3">
           <Sparkles className="h-3.5 w-3.5" />
           Simple steps
-        </motion.span>
-        <motion.h2
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.1 }}
-          className="text-4xl md:text-6xl font-bold tracking-tight leading-[1.1]"
-        >
+        </span>
+        <h2 className="text-4xl md:text-6xl font-bold tracking-tight leading-[1.1]">
           How Flight Guardian{" "}
           <span className="relative inline-block">
             <span className="relative z-10 text-sky-600">works</span>
@@ -546,19 +305,12 @@ function HowItWorks() {
             />
           </span>
           .
-        </motion.h2>
-        <motion.p
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.2 }}
-          className="text-slate-600 mt-6 text-xl md:text-2xl max-w-2xl mx-auto"
-        >
+        </h2>
+        <p className="text-slate-600 dark:text-slate-400 mt-6 text-xl md:text-2xl max-w-2xl mx-auto">
           It's easier than you think to save big on your next flight.
-        </motion.p>
+        </p>
 
         <div className="mt-24 relative">
-          {/* Animated Flight Path for desktop */}
           <div
             aria-hidden
             className="hidden md:block absolute top-[40%] left-0 w-full h-24 -translate-y-1/2 -z-0"
@@ -569,7 +321,6 @@ function HowItWorks() {
               viewBox="0 0 1000 100"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
-              className="preserve-3d"
             >
               <motion.path
                 d="M 50 50 Q 250 -20 500 50 T 950 50"
@@ -594,8 +345,6 @@ function HowItWorks() {
                   <stop offset="100%" stopColor="#3b82f6" stopOpacity="0.2" />
                 </linearGradient>
               </defs>
-
-              {/* Moving plane indicator */}
               <motion.g
                 initial={{ offsetDistance: "0%" }}
                 whileInView={{ offsetDistance: "100%" }}
@@ -615,7 +364,7 @@ function HowItWorks() {
               number="1"
               icon={Search}
               title="Search & Set"
-              description="Tell us your desired route and the price you'd pay. We'll do the rest."
+              description="Tell us your desired route and the price you'd pay."
               color="sky"
               delay={0}
             />
@@ -623,7 +372,7 @@ function HowItWorks() {
               number="2"
               icon={Clock}
               title="We Watch 24/7"
-              description="Our smart system constantly monitors thousands of flights for price drops."
+              description="Our smart system constantly monitors thousands of flights."
               color="emerald"
               delay={0.2}
               isActive
@@ -632,7 +381,7 @@ function HowItWorks() {
               number="3"
               icon={Bell}
               title="Get Your Alert"
-              description="We'll send you an email the instant your flight hits your target price."
+              description="We'll send you an email the instant your flight hits your target."
               color="amber"
               delay={0.4}
               showNotification
@@ -640,7 +389,7 @@ function HowItWorks() {
           </div>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }
 
@@ -653,20 +402,12 @@ function StepCard({
   delay,
   isActive = false,
   showNotification = false,
-}: {
-  number: string;
-  icon: any;
-  title: string;
-  description: string;
-  color: "sky" | "emerald" | "amber";
-  delay: number;
-  isActive?: boolean;
-  showNotification?: boolean;
-}) {
-  const colorClasses = {
-    sky: "bg-sky-50 text-sky-600 ring-sky-200",
-    emerald: "bg-emerald-50 text-emerald-600 ring-emerald-200",
-    amber: "bg-amber-50 text-amber-600 ring-amber-200",
+}: any) {
+  const colorClasses: any = {
+    sky: "bg-sky-50 text-sky-600 ring-sky-200 dark:bg-sky-500/10",
+    emerald:
+      "bg-emerald-50 text-emerald-600 ring-emerald-200 dark:bg-emerald-500/10",
+    amber: "bg-amber-50 text-amber-600 ring-amber-200 dark:bg-amber-500/10",
   };
 
   return (
@@ -677,10 +418,9 @@ function StepCard({
       transition={{ delay, duration: 0.5 }}
       className="group relative"
     >
-      {/* Number Badge */}
       <div className="absolute -top-10 left-1/2 -translate-x-1/2 md:left-0 md:translate-x-0 z-20">
         <span
-          className={`inline-flex items-center justify-center w-10 h-10 rounded-full border-4 border-white font-bold text-white shadow-lg shadow-sky-200/50 scale-110 ${
+          className={`inline-flex items-center justify-center w-10 h-10 rounded-full border-4 border-white dark:border-slate-900 font-bold text-white shadow-lg ${
             color === "sky"
               ? "bg-sky-500"
               : color === "emerald"
@@ -692,73 +432,17 @@ function StepCard({
         </span>
       </div>
 
-      <div className="glass-card glass-gloss p-8 pt-10 rounded-3xl shadow-xl group-hover:shadow-2xl group-hover:shadow-sky-100 transition-all duration-500 h-full flex flex-col items-center md:items-start text-center md:text-left border-2 border-transparent group-hover:border-sky-100/50 bg-white/80">
+      <div className="glass-card glass-gloss p-8 pt-10 rounded-3xl shadow-xl group-hover:shadow-2xl transition-all duration-500 h-full flex flex-col items-center md:items-start text-center md:text-left bg-white/80 dark:bg-slate-900/80">
         <div
-          className={`flex items-center justify-center h-16 w-16 rounded-2xl mb-6 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500 relative ${colorClasses[color]}`}
+          className={`flex items-center justify-center h-16 w-16 rounded-2xl mb-6 group-hover:scale-110 transition-transform duration-500 relative ${colorClasses[color]}`}
         >
           <Icon className="h-8 w-8" />
-          {isActive && (
-            <span className="absolute -top-1 -right-1 flex h-4 w-4">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-4 w-4 bg-emerald-500 border-2 border-white" />
-            </span>
-          )}
         </div>
-
-        <h3 className="text-2xl font-bold mb-3 group-hover:text-sky-600 transition-colors">
-          {title}
-        </h3>
-        <p className="text-slate-600 leading-relaxed text-sm lg:text-base">
+        <h3 className="text-2xl font-bold mb-3 dark:text-white">{title}</h3>
+        <p className="text-slate-600 dark:text-slate-400 leading-relaxed text-sm">
           {description}
         </p>
-
-        {isActive && (
-          <div className="mt-6 w-full flex gap-1 items-end h-8 overflow-hidden">
-            {[0.4, 0.7, 0.5, 0.9, 0.6, 0.8, 0.4].map((h, i) => (
-              <motion.div
-                key={i}
-                className="flex-1 bg-emerald-400/30 rounded-t-sm"
-                animate={{
-                  height: [`${h * 100}%`, `${(h + 0.1) * 100}%`, `${h * 100}%`],
-                }}
-                transition={{
-                  repeat: Infinity,
-                  duration: 1.5,
-                  delay: i * 0.1,
-                }}
-              />
-            ))}
-          </div>
-        )}
-
-        {showNotification && (
-          <div className="mt-6 relative w-full h-12">
-            <motion.div
-              initial={{ opacity: 0, x: -10 }}
-              animate={{ opacity: [0, 1, 1, 0], x: [-10, 0, 0, 10] }}
-              transition={{
-                repeat: Infinity,
-                duration: 3,
-                times: [0, 0.1, 0.9, 1],
-              }}
-              className="absolute inset-0 flex items-center gap-2 bg-white rounded-xl border border-amber-100 shadow-sm px-3"
-            >
-              <div className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
-              <div className="flex-1 space-y-1">
-                <div className="h-1.5 w-16 bg-slate-100 rounded" />
-                <div className="h-1.5 w-12 bg-slate-50 rounded" />
-              </div>
-              <Check className="h-3 w-3 text-emerald-500" />
-            </motion.div>
-          </div>
-        )}
       </div>
-
-      {/* Decorative ring on hover */}
-      <div
-        aria-hidden
-        className={`absolute inset-0 rounded-3xl ring-4 ring-transparent opacity-0 group-hover:opacity-100 group-hover:ring-${color}-200/50 transition-all duration-500 -z-10 scale-[1.02]`}
-      />
     </motion.div>
   );
 }
@@ -775,10 +459,8 @@ function BentoPriceWatching() {
   }, []);
 
   return (
-    <div className="glass-card-dark md:col-span-4 md:row-span-2 group relative rounded-3xl p-8 md:p-10 text-white shadow-xl shadow-slate-200 hover:shadow-2xl hover:shadow-sky-200 transition-all duration-500 overflow-hidden">
-      {/* Decorative plane */}
+    <div className="glass-card-dark glass-gloss md:col-span-4 md:row-span-2 group relative rounded-3xl p-8 md:p-10 text-white shadow-xl shadow-slate-200 hover:shadow-2xl transition-all duration-500 overflow-hidden">
       <Plane className="absolute -top-2 -right-2 h-32 w-32 text-white/5 -rotate-12 group-hover:rotate-0 group-hover:scale-110 transition-transform duration-700" />
-
       <div key={index} className="relative z-10 animate-fade-in">
         <div className="inline-flex items-center gap-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 px-3 py-1.5 text-xs font-medium">
           <span className="relative flex h-2 w-2">
@@ -787,7 +469,6 @@ function BentoPriceWatching() {
           </span>
           Live · tracking {deal.from} → {deal.to}
         </div>
-
         <h3 className="mt-5 text-2xl md:text-3xl font-bold leading-tight">
           We check the price every hour.
           <br />
@@ -795,17 +476,10 @@ function BentoPriceWatching() {
             You get a ping the moment it drops.
           </span>
         </h3>
-
-        <p className="mt-3 text-slate-300 leading-relaxed max-w-md">
-          No refreshing travel sites at 2am. No "did I miss it?" regret. Just a
-          friendly email when it's time to book.
-        </p>
-
-        {/* Mini price chart */}
         <div className="mt-8 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 p-5">
           <div className="flex items-center justify-between mb-3">
             <span className="text-xs uppercase tracking-wider text-slate-400">
-              {deal.from} → {deal.to} · last 7 days
+              {deal.from} → {deal.to}
             </span>
             <span className="inline-flex items-center gap-1 text-emerald-400 font-semibold text-sm">
               <TrendingDown className="h-4 w-4" /> -{deal.drop}%
@@ -815,45 +489,22 @@ function BentoPriceWatching() {
             {deal.history.map((h, i) => (
               <motion.div
                 key={i}
-                className={`flex-1 rounded-t-md animate-fade-up relative group/bar ${
+                className={`flex-1 rounded-t-md relative group/bar ${
                   i === 6
                     ? "bg-gradient-to-t from-emerald-400 to-emerald-300 shadow-lg shadow-emerald-500/30"
-                    : "bg-white/20 hover:bg-sky-400 hover:shadow-[0_0_15px_rgba(56,189,248,0.5)] transition-all duration-300"
+                    : "bg-white/20 hover:bg-sky-400 transition-all duration-300"
                 }`}
-                style={{
-                  height: `${h}%`,
-                  animationDelay: `${i * 90}ms`,
-                }}
+                style={{ height: `${h}%` }}
               >
-                {i === 6 && (
-                  <span className="absolute -top-1.5 left-1/2 -translate-x-1/2 h-3 w-3 rounded-full bg-emerald-400 shadow-lg animate-ping" />
-                )}
-                {/* Tooltip on hover */}
-                <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-white text-slate-900 text-[10px] font-bold px-2 py-1 rounded shadow-xl opacity-0 group-hover/bar:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-30">
+                <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-white text-slate-900 text-[10px] font-bold px-2 py-1 rounded shadow-xl opacity-0 group-hover/bar:opacity-100 transition-opacity whitespace-nowrap z-30">
                   £{Math.floor(deal.original * (h / 100))}
                 </div>
               </motion.div>
             ))}
           </div>
-          <div className="flex items-center justify-between mt-2">
-            <span className="text-xs text-slate-500">Mon</span>
-            <div className="flex items-center gap-1.5">
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              <span className="text-xs text-emerald-400 font-semibold">
-                Today
-              </span>
-            </div>
-          </div>
           <div className="mt-4 pt-4 border-t border-white/10 flex items-baseline justify-between">
             <span className="text-sm text-slate-300">Today's price</span>
-            <span className="flex items-baseline gap-2">
-              <span className="text-2xl font-bold text-white">
-                £{deal.price}
-              </span>
-              <span className="text-sm text-slate-500 line-through">
-                £{deal.original}
-              </span>
-            </span>
+            <span className="text-2xl font-bold text-white">£{deal.price}</span>
           </div>
         </div>
       </div>
@@ -863,109 +514,70 @@ function BentoPriceWatching() {
 
 function LiveDealStream() {
   const [dealOffset, setDealOffset] = useState(0);
-
   useEffect(() => {
-    const id = setInterval(() => {
-      setDealOffset((prev) => (prev + 1) % RECENT_DROPS.length);
-    }, 3000);
+    const id = setInterval(
+      () => setDealOffset((prev) => (prev + 1) % RECENT_DROPS.length),
+      3000,
+    );
     return () => clearInterval(id);
   }, []);
-
   const currentDeals = [
     RECENT_DROPS[dealOffset % RECENT_DROPS.length],
     RECENT_DROPS[(dealOffset + 1) % RECENT_DROPS.length],
   ];
 
   return (
-    <div className="glass-card glass-gloss md:col-span-3 group relative rounded-3xl p-8 hover:-translate-y-1 hover:shadow-2xl transition-all duration-500 bg-slate-900 text-white overflow-hidden flex flex-col h-full min-h-[400px]">
+    <div className="glass-card-dark glass-gloss md:col-span-3 group relative rounded-3xl p-8 hover:-translate-y-1 transition-all duration-500 bg-slate-900 text-white overflow-hidden flex flex-col h-full min-h-[400px]">
       <div className="flex items-center justify-between mb-8 relative z-10">
         <div className="flex items-center gap-3">
-          <div className="h-12 w-12 rounded-2xl bg-sky-500/20 flex items-center justify-center text-sky-400 border border-sky-500/30 shadow-lg shadow-sky-500/10">
+          <div className="h-12 w-12 rounded-2xl bg-sky-500/20 flex items-center justify-center text-sky-400 border border-sky-500/30 shadow-lg">
             <Globe className="h-6 w-6" />
           </div>
           <div>
-            <h3 className="text-xl font-bold tracking-tight text-white">
-              Signal Feed
-            </h3>
+            <h3 className="text-xl font-bold text-white">Signal Feed</h3>
             <p className="text-[10px] text-sky-400 font-black uppercase tracking-[0.2em]">
               Global Scan
             </p>
           </div>
         </div>
-        <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20">
-          <span className="relative flex h-2 w-2">
-            <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75 animate-ping" />
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
-          </span>
-          <span className="text-[10px] font-black text-emerald-600 uppercase tracking-widest">
-            Live
-          </span>
-        </div>
       </div>
-
       <div className="flex-1 space-y-4 relative min-h-[220px]">
         <AnimatePresence mode="popLayout">
           {currentDeals.map((drop, i) => (
             <motion.div
               key={`${drop.from}-${drop.to}-${dealOffset + i}`}
-              initial={{ opacity: 0, x: 20, filter: "blur(10px)" }}
-              animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
-              exit={{ opacity: 0, x: -20, filter: "blur(10px)" }}
-              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-              className="relative p-5 rounded-[2rem] bg-white/5 border border-white/10 overflow-hidden"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.8 }}
+              className="relative p-5 rounded-[2rem] bg-white/5 border border-white/10"
             >
               <div className="flex items-center justify-between relative z-10">
                 <div className="flex items-center gap-4">
                   <div className="h-12 w-12 rounded-xl bg-white/10 flex items-center justify-center">
                     <Plane className="h-5 w-5 text-sky-400" />
                   </div>
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <span className="text-base font-bold text-white">
-                        {drop.from}
-                      </span>
-                      <ArrowRight className="h-3 w-3 text-white/30" />
-                      <span className="text-base font-bold text-white">
-                        {drop.to}
-                      </span>
+                  <div className="text-white">
+                    <div className="flex items-center gap-2 font-bold">
+                      {drop.from} → {drop.to}
                     </div>
-                    <span className="text-[10px] font-medium text-white/40 uppercase tracking-wider">
+                    <span className="text-[10px] font-medium text-white/40 uppercase">
                       Detected {drop.time}
                     </span>
                   </div>
                 </div>
                 <div className="text-right">
-                  <div className="text-emerald-400 font-black text-lg leading-none">
+                  <div className="text-emerald-400 font-black text-lg">
                     -£{drop.drop}
                   </div>
-                  <div className="text-white font-black text-xl mt-1">
+                  <div className="text-white font-black text-xl">
                     £{drop.price}
                   </div>
                 </div>
               </div>
-              <div className="absolute inset-0 bg-gradient-to-r from-sky-500/0 via-sky-500/5 to-sky-500/0 translate-x-[-100%] animate-[shimmer_3s_infinite]" />
             </motion.div>
           ))}
         </AnimatePresence>
-      </div>
-
-      <div className="mt-8 pt-6 border-t border-white/5 relative z-10">
-        <div className="flex justify-between items-end">
-          <div>
-            <div className="text-[10px] text-white/40 font-bold uppercase tracking-widest mb-1">
-              Coverage
-            </div>
-            <div className="text-sm font-bold text-sky-400">12,843 Routes</div>
-          </div>
-          <div className="text-right">
-            <div className="text-[10px] text-white/40 font-bold uppercase tracking-widest mb-1">
-              Accuracy
-            </div>
-            <div className="text-sm font-bold text-emerald-400">
-              99.8% Real-time
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   );
@@ -980,10 +592,7 @@ function ProductDemo() {
     const id = setTimeout(() => {
       setStage((s) => {
         const next = (s + 1) % DEMO_CAPTIONS.length;
-        // Each time we wrap back to stage 0, rotate to the next route
-        if (next === 0) {
-          setRouteIndex((r) => (r + 1) % DEMO_ROUTES.length);
-        }
+        if (next === 0) setRouteIndex((r) => (r + 1) % DEMO_ROUTES.length);
         return next;
       });
     }, DEMO_DURATIONS[stage]);
@@ -992,14 +601,6 @@ function ProductDemo() {
 
   return (
     <section className="relative py-24 px-6 overflow-hidden">
-      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute top-20 -left-20 w-80 h-80 rounded-full bg-sky-200/30 blur-3xl animate-blob-drift" />
-        <div
-          className="absolute bottom-20 -right-20 w-96 h-96 rounded-full bg-amber-100/40 blur-3xl animate-blob-drift"
-          style={{ animationDelay: "4s" }}
-        />
-      </div>
-
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
           <motion.span
@@ -1008,8 +609,7 @@ function ProductDemo() {
             viewport={{ once: true }}
             className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-sky-600 mb-3"
           >
-            <Sparkles className="h-3.5 w-3.5" />
-            Watch it work
+            <Sparkles className="h-3.5 w-3.5" /> Watch it work
           </motion.span>
           <motion.h2
             initial={{ opacity: 0, y: 10 }}
@@ -1033,37 +633,33 @@ function ProductDemo() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="text-slate-600 mt-6 text-xl md:text-2xl max-w-3xl mx-auto"
+            className="text-slate-600 dark:text-slate-400 mt-6 text-xl md:text-2xl max-w-3xl mx-auto"
           >
             Search, track, and save. It really is that simple.
           </motion.p>
         </div>
 
-        {/* Faux browser */}
-        <div className="relative glass-card glass-gloss rounded-[2.5rem] shadow-2xl shadow-sky-200/60 border-white/40 overflow-hidden">
-          {/* Browser chrome */}
-          <div className="flex items-center gap-3 px-6 py-4 border-b border-white/60 bg-white/40">
+        <div className="relative glass-card glass-gloss rounded-[2.5rem] shadow-2xl shadow-sky-200/60 border-white/40 overflow-hidden dark:bg-slate-900/50">
+          <div className="flex items-center gap-3 px-6 py-4 border-b border-white/60 dark:border-white/10 bg-white/40 dark:bg-slate-900/40">
             <div className="flex gap-2">
-              <div className="h-3.5 w-3.5 rounded-full bg-red-400/90 shadow-sm" />
-              <div className="h-3.5 w-3.5 rounded-full bg-amber-400/90 shadow-sm" />
-              <div className="h-3.5 w-3.5 rounded-full bg-emerald-400/90 shadow-sm" />
+              <div className="h-3.5 w-3.5 rounded-full bg-red-400/90" />
+              <div className="h-3.5 w-3.5 rounded-full bg-amber-400/90" />
+              <div className="h-3.5 w-3.5 rounded-full bg-emerald-400/90" />
             </div>
-            <div className="flex-1 h-9 max-w-md mx-auto rounded-xl glass-input border border-white/60 px-4 text-sm text-slate-500 flex items-center justify-center gap-2">
-              <Lock className="h-3.5 w-3.5" />
-              flightguardian.app
+            <div className="flex-1 h-9 max-w-md mx-auto rounded-xl glass-input border border-white/60 dark:border-white/10 px-4 text-sm text-slate-500 flex items-center justify-center gap-2">
+              <Lock className="h-3.5 w-3.5" /> flightguardian.app
             </div>
             <div className="w-20" />
           </div>
 
-          {/* Stage content — FIXED HEIGHT to prevent page jitter */}
-          <div className="h-[550px] md:h-[650px] lg:h-[750px] bg-gradient-to-b from-white/60 to-sky-50/40 relative flex flex-col justify-center overflow-hidden">
+          <div className="h-[550px] md:h-[650px] lg:h-[750px] bg-gradient-to-b from-white/60 to-sky-50/40 dark:from-slate-900/60 dark:to-slate-900/40 relative flex flex-col justify-center overflow-hidden">
             <AnimatePresence mode="wait">
               <motion.div
                 key={`${routeIndex}-${stage}`}
                 initial={{ opacity: 0, scale: 0.98 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 1.02 }}
-                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                transition={{ duration: 0.5 }}
                 className="w-full px-8 md:px-14 lg:p-20"
               >
                 {stage === 0 && (
@@ -1076,46 +672,19 @@ function ProductDemo() {
             </AnimatePresence>
           </div>
 
-          {/* Progress bar */}
-          <div className="h-1 bg-slate-100 relative overflow-hidden">
-            <div
+          <div className="h-1.5 bg-slate-100/50 relative overflow-hidden">
+            <motion.div
               key={`bar-${stage}`}
-              className="absolute inset-y-0 left-0 bg-gradient-to-r from-sky-500 to-indigo-500"
-              style={{
-                animation: `progress ${DEMO_DURATIONS[stage]}ms linear forwards`,
+              className="absolute inset-y-0 left-0 bg-gradient-to-r from-sky-500 via-indigo-500 to-sky-500"
+              initial={{ width: "0%" }}
+              animate={{ width: "100%" }}
+              transition={{
+                duration: DEMO_DURATIONS[stage] / 1000,
+                ease: "linear",
               }}
             />
           </div>
         </div>
-
-        {/* Stage dots */}
-        <div className="mt-8 flex flex-wrap items-center justify-center gap-x-5 gap-y-3">
-          {DEMO_CAPTIONS.map((cap, i) => (
-            <button
-              key={i}
-              type="button"
-              onClick={() => setStage(i)}
-              className={`group flex items-center gap-2 transition-colors ${
-                stage === i
-                  ? "text-sky-600"
-                  : "text-slate-400 hover:text-slate-600"
-              }`}
-            >
-              <span
-                className={`inline-flex h-7 w-7 items-center justify-center rounded-full text-xs font-bold transition-all ${
-                  stage === i
-                    ? "bg-sky-600 text-white shadow-md shadow-sky-200 scale-110"
-                    : "bg-slate-100 text-slate-500 group-hover:bg-slate-200"
-                }`}
-              >
-                {i + 1}
-              </span>
-              <span className="text-sm font-medium">{cap}</span>
-            </button>
-          ))}
-        </div>
-
-        <style>{`@keyframes progress { from { width: 0% } to { width: 100% } }`}</style>
       </div>
     </section>
   );
@@ -1128,563 +697,232 @@ function DemoTypingField({
   startDelay,
   speed = 65,
   activeNow,
-}: {
-  label: string;
-  icon: typeof MapPin;
-  text: string;
-  startDelay: number;
-  speed?: number;
-  activeNow: boolean;
-}) {
+}: any) {
   const { display, done } = useTypewriter(text, speed, startDelay);
   const borderClass = activeNow
-    ? "border-sky-400 shadow-sm shadow-sky-100"
+    ? "border-sky-400 shadow-sm"
     : done
       ? "border-emerald-300"
-      : "border-slate-200";
+      : "border-slate-200 dark:border-white/10";
   return (
     <div>
-      <span className="text-xs font-medium text-slate-700 mb-1.5 flex items-center gap-1.5">
+      <span className="text-xs font-medium text-slate-700 dark:text-slate-300 mb-1.5 flex items-center gap-1.5">
         <Icon className="h-3.5 w-3.5 text-sky-600" /> {label}
       </span>
       <div
-        className={`rounded-xl border-2 glass-input px-3.5 py-3 text-sm font-medium text-slate-800 flex items-center min-h-[46px] transition-colors ${borderClass}`}
+        className={`rounded-xl border-2 glass-input px-3.5 py-3 text-sm font-medium text-slate-800 dark:text-white flex items-center min-h-[46px] transition-colors ${borderClass}`}
       >
         <span className="truncate">{display}</span>
         {activeNow && !done && (
           <span className="inline-block w-0.5 h-4 bg-sky-600 ml-0.5 animate-pulse" />
-        )}
-        {done && (
-          <Check className="h-3.5 w-3.5 text-emerald-500 ml-auto shrink-0" />
         )}
       </div>
     </div>
   );
 }
 
-function DemoSceneSearch({
-  route,
-  duration,
-}: {
-  route: DemoRoute;
-  duration: number;
-}) {
-  // Sequence the typing so fields fill one after another.
-  // Each field starts after the previous one would have finished.
+function DemoSceneSearch({ route, duration }: any) {
   const fromText = `${route.fromCity} (${route.fromCode})`;
   const toText = `${route.toCity} (${route.toCode})`;
   const dateText = route.date;
-
-  const fromStart = 300;
-  const fromEnd = fromStart + fromText.length * 65;
-  const toStart = fromEnd + 200;
-  const toEnd = toStart + toText.length * 65;
-  const dateStart = toEnd + 200;
-  const dateEnd = dateStart + dateText.length * 65;
-
-  // Track elapsed time locally so we can highlight the field currently typing
   const [elapsed, setElapsed] = useState(0);
   useEffect(() => {
     const start = Date.now();
     const id = setInterval(() => setElapsed(Date.now() - start), 100);
-    const stopAt = setTimeout(() => clearInterval(id), duration);
-    return () => {
-      clearInterval(id);
-      clearTimeout(stopAt);
-    };
-  }, [duration]);
-
+    return () => clearInterval(id);
+  }, []);
+  const fromEnd = 300 + fromText.length * 65;
+  const toEnd = fromEnd + 200 + toText.length * 65;
+  const dateEnd = toEnd + 200 + dateText.length * 65;
   const activeField =
     elapsed < fromEnd ? 0 : elapsed < toEnd ? 1 : elapsed < dateEnd ? 2 : 3;
 
   return (
     <div className="space-y-10 max-w-4xl mx-auto w-full">
-      <div className="flex items-center gap-3 text-lg text-slate-500 font-medium">
-        <Search className="h-6 w-6 text-sky-600" />
-        <span>Tell us where you want to fly</span>
+      <div className="flex items-center gap-3 text-lg text-slate-500 font-medium dark:text-slate-400">
+        <Search className="h-6 w-6 text-sky-600" /> Tell us where you want to
+        fly
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <DemoTypingField
           label="Flying from"
           icon={MapPin}
           text={fromText}
-          startDelay={fromStart}
+          startDelay={300}
           activeNow={activeField === 0}
         />
         <DemoTypingField
           label="Flying to"
           icon={Plane}
           text={toText}
-          startDelay={toStart}
+          startDelay={fromEnd + 200}
           activeNow={activeField === 1}
         />
         <DemoTypingField
           label="When"
           icon={Calendar}
           text={dateText}
-          startDelay={dateStart}
+          startDelay={toEnd + 200}
           activeNow={activeField === 2}
         />
       </div>
-      <div
-        className="flex items-center gap-4 animate-fade-up"
-        style={{
-          animationDelay: `${dateEnd + 200}ms`,
-          animationFillMode: "backwards",
-        }}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: activeField === 3 ? 1 : 0 }}
+        className="flex items-center gap-4"
       >
-        <button
-          type="button"
-          className="glass-button inline-flex items-center gap-3 rounded-full bg-sky-600 text-white px-10 py-5 text-xl font-bold shadow-xl shadow-sky-200 animate-pulse"
-        >
-          Search flights
-          <ArrowRight className="h-6 w-6" />
+        <button className="glass-button inline-flex items-center gap-3 rounded-full bg-sky-600 text-white px-10 py-5 text-xl font-bold shadow-xl shadow-sky-200">
+          Search flights <ArrowRight className="h-6 w-6" />
         </button>
-        <span className="text-sm text-slate-400 font-medium italic">tap!</span>
-      </div>
+      </motion.div>
     </div>
   );
 }
 
-function DemoSceneResults({ route }: { route: DemoRoute }) {
+function DemoSceneResults({ route }: any) {
   return (
     <div className="max-w-4xl mx-auto w-full">
       <div className="flex items-center gap-4 flex-wrap mb-8">
-        <span className="inline-flex items-center gap-2 rounded-full bg-sky-50 text-sky-700 px-4 py-2 text-sm font-bold border border-sky-100">
+        <span className="inline-flex items-center gap-2 rounded-full bg-sky-50 dark:bg-sky-500/10 text-sky-700 dark:text-sky-400 px-4 py-2 text-sm font-bold border border-sky-100 dark:border-sky-500/20">
           <MapPin className="h-4 w-4" /> {route.fromCity} → {route.toCity}
-        </span>
-        <span className="inline-flex items-center gap-2 rounded-full bg-slate-100 text-slate-700 px-4 py-2 text-sm font-bold">
-          <Calendar className="h-4 w-4" /> {route.date}
-        </span>
-        <span className="text-sm font-medium text-slate-400 ml-auto">
-          {route.deals.length} great deals found
         </span>
       </div>
       <div className="space-y-4">
-        {route.deals.map((f, i) => (
-          <div
+        {route.deals.map((f: any, i: number) => (
+          <motion.div
             key={i}
-            className={`animate-fade-up rounded-[1.5rem] glass-card-soft p-6 md:p-8 flex items-center justify-between gap-4 transition-all ${
-              f.highlight
-                ? "ring-2 ring-sky-400 shadow-2xl shadow-sky-100 scale-[1.02]"
-                : "opacity-80"
-            }`}
-            style={{
-              animationDelay: `${i * 260}ms`,
-              animationFillMode: "backwards",
-            }}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: i * 0.1 }}
+            className={`rounded-[1.5rem] glass-card-soft p-6 md:p-8 flex items-center justify-between gap-4 dark:bg-slate-900/60 ${f.highlight ? "ring-2 ring-sky-400" : ""}`}
           >
-            <div className="flex items-center gap-5 min-w-0">
-              <div className="h-14 w-14 rounded-2xl bg-sky-50 flex items-center justify-center text-sky-600 shrink-0 shadow-inner">
+            <div className="flex items-center gap-5">
+              <div className="h-14 w-14 rounded-2xl bg-sky-50 dark:bg-sky-500/10 flex items-center justify-center text-sky-600">
                 <Plane className="h-7 w-7" />
               </div>
-              <div className="min-w-0">
-                <p className="font-bold text-slate-900 text-lg md:text-xl truncate">
+              <div>
+                <p className="font-bold text-slate-900 dark:text-white text-lg">
                   {f.airline}
-                </p>
-                <p className="text-sm md:text-base text-slate-500 font-medium">
-                  Direct · {f.duration}
                 </p>
               </div>
             </div>
-            <div className="flex items-center gap-6">
-              <div className="text-right">
-                <p className="text-2xl md:text-3xl font-black text-slate-900 leading-none">
-                  £{f.price}
-                </p>
-                <p className="text-sm md:text-base text-slate-400 line-through mt-1">
-                  £{f.original}
-                </p>
-              </div>
+            <div className="text-right">
+              <p className="text-2xl font-black text-slate-900 dark:text-white">
+                £{f.price}
+              </p>
               {f.highlight && (
-                <span className="rounded-full bg-sky-600 text-white px-5 py-2.5 text-sm md:text-base font-bold whitespace-nowrap shadow-lg shadow-sky-200 animate-pulse">
-                  Track →
+                <span className="text-sky-600 dark:text-sky-400 text-sm font-bold">
+                  Best Deal
                 </span>
               )}
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
     </div>
   );
 }
 
-function DemoSceneTracking({ route }: { route: DemoRoute }) {
-  const shortDate = route.date.split(",")[0];
+function DemoSceneTracking({ route }: any) {
   return (
     <div className="space-y-10 max-w-2xl mx-auto w-full">
-      <div className="animate-fade-up rounded-2xl bg-gradient-to-r from-sky-50 to-indigo-50 border-2 border-sky-100 p-6 flex items-center gap-5 shadow-sm">
-        <div className="h-14 w-14 rounded-2xl bg-white flex items-center justify-center text-sky-600 shrink-0 shadow-md">
-          <Plane className="h-7 w-7" />
-        </div>
-        <div className="min-w-0">
-          <p className="font-bold text-slate-900 text-lg">
-            {route.fromCity} → {route.toCity}
-          </p>
-          <p className="text-base text-slate-500 font-medium">
-            {route.airline} · {shortDate} · currently £{route.current}
-          </p>
-        </div>
-        <span className="ml-auto hidden sm:inline-flex items-center gap-2 rounded-full bg-white border-2 border-emerald-100 px-4 py-1.5 text-sm font-bold text-emerald-700 shrink-0 shadow-sm">
-          <Check className="h-4 w-4 text-emerald-500" /> Selected
-        </span>
-      </div>
-      <div
-        className="animate-fade-up"
-        style={{ animationDelay: "500ms", animationFillMode: "backwards" }}
-      >
-        <label className="text-lg font-bold text-slate-700 mb-4 block flex items-center gap-2">
-          <Bell className="h-5 w-5 text-sky-600" /> Ping me when it drops below
-        </label>
-        <div className="rounded-2xl border-2 border-sky-400 glass-input px-6 py-8 flex items-center justify-between shadow-2xl shadow-sky-100">
-          <div className="flex items-baseline">
-            <span className="text-5xl font-black text-slate-900">
-              £{route.target}
-            </span>
-            <span className="inline-block w-1 h-10 bg-sky-600 ml-2 animate-pulse rounded-full" />
-          </div>
-          <span className="text-sm text-emerald-700 bg-emerald-50 border border-emerald-100 rounded-full px-4 py-2 font-bold shadow-sm">
-            £{route.drop} under current
+      <div className="rounded-2xl border-2 border-sky-400 glass-input px-6 py-8 flex items-center justify-between shadow-2xl dark:bg-slate-900/60">
+        <div className="flex items-baseline">
+          <span className="text-5xl font-black text-slate-900 dark:text-white">
+            £{route.target}
           </span>
+          <span className="inline-block w-1 h-10 bg-sky-600 ml-2 animate-pulse rounded-full" />
         </div>
-      </div>
-      <div
-        className="animate-fade-up flex flex-col sm:flex-row items-center gap-5"
-        style={{ animationDelay: "1600ms", animationFillMode: "backwards" }}
-      >
-        <button
-          type="button"
-          className="glass-button w-full sm:w-auto inline-flex items-center justify-center gap-3 rounded-full bg-sky-600 text-white px-10 py-5 text-xl font-bold shadow-xl shadow-sky-200 animate-pulse"
-        >
-          <Bell className="h-6 w-6" />
-          Start watching
-        </button>
-        <span className="text-base text-slate-400 font-medium italic">
-          then go live your life
+        <span className="text-sm text-emerald-700 bg-emerald-50 px-4 py-2 font-bold rounded-full">
+          Target Set
         </span>
       </div>
+      <button className="glass-button w-full inline-flex items-center justify-center gap-3 rounded-full bg-sky-600 text-white px-10 py-5 text-xl font-bold shadow-xl shadow-sky-200">
+        <Bell className="h-6 w-6" /> Start watching
+      </button>
     </div>
   );
 }
 
-function DemoSceneAlert({ route }: { route: DemoRoute }) {
+function DemoSceneAlert({ route }: any) {
   return (
-    <div className="relative min-h-[360px]">
-      {/* Dimmed dashboard in background */}
-      <div className="opacity-[0.85] pointer-events-none select-none">
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg font-bold text-slate-700">
-            My tracked flights
-          </h3>
-          <span className="text-xs font-medium text-slate-400">1 watching</span>
-        </div>
-        <div className="rounded-2xl bg-white/60 border border-slate-200/60 shadow-sm p-4 flex items-center gap-4">
-          <div className="h-10 w-10 rounded-full bg-sky-50 flex items-center justify-center">
-            <Plane className="h-5 w-5 text-sky-500" />
-          </div>
-          <div className="flex-1 min-w-0">
-            <p className="font-bold text-slate-800 text-sm">
-              {route.fromCity} → {route.toCity}
-            </p>
-            <p className="text-xs font-medium text-slate-500 mt-0.5">
-              Alert set at £{route.target}
-            </p>
-          </div>
-          <div className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-        </div>
-      </div>
-
-      {/* Email notification sliding in */}
-      <div
-        className="absolute top-0 right-0 left-0 sm:left-auto sm:max-w-sm animate-fade-up z-20"
-        style={{ animationDelay: "200ms", animationFillMode: "backwards" }}
+    <div className="relative min-h-[360px] flex items-center justify-center">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="glass-card-soft rounded-2xl shadow-2xl p-8 max-w-sm bg-white dark:bg-slate-900"
       >
-        <div className="glass-card-soft rounded-2xl shadow-2xl shadow-emerald-200/50 p-5">
-          <div className="flex items-center gap-2 mb-3 pb-3 border-b border-slate-100">
-            <div className="h-7 w-7 rounded-full bg-emerald-100 flex items-center justify-center">
-              <Mail className="h-3.5 w-3.5 text-emerald-600" />
-            </div>
-            <div className="min-w-0">
-              <p className="text-xs font-semibold text-slate-800 leading-tight">
-                Flight Guardian
-              </p>
-              <p className="text-[10px] text-slate-400 leading-tight">
-                to you · just now
-              </p>
-            </div>
-            <span className="ml-auto inline-flex items-center gap-1 rounded-full bg-emerald-50 text-emerald-700 px-2 py-0.5 text-[10px] font-semibold">
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-              New
-            </span>
+        <div className="flex items-center gap-3 mb-4 pb-4 border-b border-slate-100 dark:border-white/10">
+          <Mail className="h-6 w-6 text-emerald-600" />
+          <div>
+            <p className="font-bold dark:text-white leading-tight">
+              Price dropped!
+            </p>
+            <p className="text-xs text-slate-400">Flight Guardian</p>
           </div>
-          <p className="font-bold text-slate-900 mb-1.5 flex items-center gap-1.5">
-            <TrendingDown className="h-4 w-4 text-emerald-600" />
-            Price just dropped!
-          </p>
-          <p className="text-sm text-slate-600 leading-snug mb-4">
-            Your{" "}
-            <span className="font-semibold">
-              {route.fromCity} → {route.toCity}
-            </span>{" "}
-            flight hit{" "}
-            <span className="font-bold text-emerald-600">£{route.target}</span>{" "}
-            — down <span className="font-semibold">£{route.drop}</span> from
-            when you started watching.
-          </p>
-          <button
-            type="button"
-            className="glass-button inline-flex items-center gap-1.5 rounded-full bg-sky-600 text-white px-4 py-2 text-sm font-semibold hover:bg-sky-700 transition"
-          >
-            Book now <ArrowRight className="h-3.5 w-3.5" />
-          </button>
         </div>
-      </div>
-
-      {/* Floating sparkles */}
-      <Sparkles className="absolute top-4 left-6 h-5 w-5 text-amber-400 animate-float-gentle z-30 opacity-70" />
-      <Sparkles
-        className="absolute top-24 left-1/3 h-4 w-4 text-sky-400 animate-float-gentle z-30 opacity-80"
-        style={{ animationDelay: "0.8s" }}
-      />
-      <Sparkles
-        className="absolute bottom-12 left-12 h-3 w-3 text-emerald-400 animate-float-gentle z-30 opacity-90"
-        style={{ animationDelay: "1.4s" }}
-      />
+        <p className="text-slate-600 dark:text-slate-400 mb-6">
+          Your flight to <b>{route.toCity}</b> hit <b>£{route.target}</b>!
+        </p>
+        <button className="glass-button w-full rounded-full bg-sky-600 text-white py-3 font-bold">
+          Book Now
+        </button>
+      </motion.div>
     </div>
   );
-}
-
-function matchesFilter(dest: Destination, filter: DestinationFilter) {
-  if (filter === "All") return true;
-  if (filter === "Beach") return dest.vibe === "Beach";
-  return dest.region === filter;
 }
 
 function DestinationsSection() {
   const [filter, setFilter] = useState<DestinationFilter>("All");
-  const [hoveredCode, setHoveredCode] = useState<string | null>(null);
-
-  const visible = DESTINATIONS.filter((d) => matchesFilter(d, filter));
-
+  const visible = DESTINATIONS.filter(
+    (d) =>
+      filter === "All" ||
+      d.region === filter ||
+      (filter === "Beach" && d.vibe === "Beach"),
+  );
   return (
     <section className="py-24 px-6 relative">
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 -z-10 opacity-40"
-      >
-        <div className="absolute top-1/3 left-1/4 w-80 h-80 rounded-full bg-sky-200/40 blur-3xl animate-blob-drift" />
-        <div
-          className="absolute bottom-1/4 right-1/4 w-72 h-72 rounded-full bg-indigo-200/30 blur-3xl animate-blob-drift"
-          style={{ animationDelay: "6s" }}
-        />
-      </div>
-
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-10 relative group cursor-default">
-          <Plane className="absolute -top-4 md:-top-6 left-[15%] md:left-1/4 h-6 w-6 md:h-8 md:w-8 text-sky-400 opacity-0 group-hover:opacity-100 transition-opacity duration-700 animate-fly-across" />
-          <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-sky-600 mb-3">
-            <Sparkles className="h-3.5 w-3.5" />
-            Trending Deals
-          </span>
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tight">
+        <div className="text-center mb-10">
+          <h2 className="text-3xl md:text-4xl font-bold tracking-tight dark:text-white">
             Pick your next getaway.
           </h2>
-          <p className="text-slate-600 mt-3 text-lg">
+          <p className="text-slate-600 dark:text-slate-400 mt-3 text-lg">
             Tap to start tracking. We'll handle the rest.
           </p>
         </div>
-
-        {/* Filter pills */}
-        <div
-          role="tablist"
-          aria-label="Filter destinations"
-          className="flex flex-wrap justify-center gap-2 mb-10"
-        >
-          {DESTINATION_FILTERS.map((f) => {
-            const active = filter === f;
-            return (
-              <button
-                key={f}
-                role="tab"
-                aria-selected={active}
-                onClick={() => setFilter(f)}
-                className={`px-4 py-2 rounded-full text-sm font-semibold transition-all duration-300 border ${
-                  active
-                    ? "bg-sky-600 text-white border-sky-600 shadow-md shadow-sky-200 scale-105"
-                    : "glass-card-soft text-slate-700 border-white/70 hover:border-sky-200 hover:text-sky-700 hover:-translate-y-0.5"
-                }`}
-              >
-                {f === "All" ? "All deals" : f}
-              </button>
-            );
-          })}
+        <div className="flex flex-wrap justify-center gap-2 mb-10">
+          {DESTINATION_FILTERS.map((f) => (
+            <button
+              key={f}
+              onClick={() => setFilter(f)}
+              className={`px-4 py-2 rounded-full text-sm font-semibold transition-all ${filter === f ? "bg-sky-600 text-white" : "glass-card-soft dark:bg-slate-900/50 dark:text-white"}`}
+            >
+              {f}
+            </button>
+          ))}
         </div>
-
-        {/* Cards */}
-        {visible.length === 0 ? (
-          <div className="glass-card text-center rounded-2xl p-10 text-slate-600">
-            No matches yet — try another filter.
-          </div>
-        ) : (
-          <div className="relative w-full overflow-hidden pb-12 pt-4 group rounded-3xl">
-            {/* The fading edges to make the conveyor belt look nice */}
-            <div className="absolute top-0 bottom-0 left-0 w-16 md:w-32 bg-gradient-to-r from-sky-50 to-transparent z-20 pointer-events-none" />
-            <div className="absolute top-0 bottom-0 right-0 w-16 md:w-32 bg-gradient-to-l from-sky-50 to-transparent z-20 pointer-events-none" />
-
-            <div className="flex w-max animate-conveyor-belt group-hover:[animation-play-state:paused] gap-5 px-5">
-              {[...visible, ...visible, ...visible].map((dest, i) => {
-                const hovered = hoveredCode === `${dest.code}-${i}`;
-                const savings = dest.wasFrom ? dest.wasFrom - dest.from : 0;
-
-                return (
-                  <Link
-                    key={`${dest.code}-${i}`}
-                    to="/search"
-                    onMouseEnter={() => setHoveredCode(`${dest.code}-${i}`)}
-                    onMouseLeave={() =>
-                      setHoveredCode((c) =>
-                        c === `${dest.code}-${i}` ? null : c,
-                      )
-                    }
-                    className="group relative aspect-[4/5] w-[280px] sm:w-[300px] md:w-[320px] lg:w-[340px] xl:w-[380px] shrink-0 rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl hover:shadow-sky-400/30 transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] focus:outline-none focus-visible:ring-4 focus-visible:ring-sky-300"
-                    aria-label={`Track flights to ${dest.city}, ${dest.country}, from £${dest.from}`}
-                  >
-                    <img
-                      src={dest.image}
-                      alt={`${dest.city} cityscape`}
-                      loading="lazy"
-                      className="absolute inset-0 h-full w-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent group-hover:from-black/90 group-hover:via-black/40 transition-colors duration-500" />
-
-                    {/* Top-left: live tracker count */}
-                    <div className="absolute top-4 left-4 flex items-center gap-1.5 rounded-full bg-black/35 backdrop-blur-md border border-white/20 px-2.5 py-1 text-[11px] font-semibold text-white z-10">
-                      <span className="relative flex h-1.5 w-1.5">
-                        <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75 animate-ping" />
-                        <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
-                      </span>
-                      {dest.trackers} tracking
-                    </div>
-
-                    {/* Top-right: dropped badge if applicable, else plane */}
-                    <div className="absolute top-4 right-4 flex flex-col items-end gap-2 z-10">
-                      {dest.wasFrom ? (
-                        <div className="inline-flex items-center gap-1 rounded-full bg-emerald-500 text-white px-2.5 py-1 text-[11px] font-bold shadow-lg animate-float-gentle">
-                          <TrendingDown className="h-3 w-3" />
-                          -£{savings}
-                        </div>
-                      ) : null}
-                      <Plane
-                        className={`h-5 w-5 text-white/90 drop-shadow-md transition-all duration-700 group-hover:translate-x-12 group-hover:-translate-y-12 group-hover:opacity-0 group-hover:rotate-45 ${dest.wasFrom ? "mt-1" : ""}`}
-                      />
-                    </div>
-
-                    {/* Animated takeoff plane on hover */}
-                    <Plane className="absolute bottom-24 right-8 h-8 w-8 text-sky-400 drop-shadow-2xl opacity-0 -translate-x-16 translate-y-16 -rotate-45 transition-all duration-700 ease-out group-hover:translate-x-0 group-hover:translate-y-0 group-hover:opacity-100 z-10 pointer-events-none" />
-
-                    {/* Bottom content — Now a distinct frosted card that expands */}
-                    <div className="absolute bottom-4 left-4 right-4 z-10">
-                      <div className="rounded-2xl bg-black/40 backdrop-blur-md border border-white/20 p-4 transition-all duration-500 group-hover:bg-black/60 group-hover:border-white/30">
-                        <div className="flex items-baseline gap-2 text-white">
-                          <span className="text-xl md:text-2xl font-bold">
-                            {dest.city}
-                          </span>
-                          <span className="text-white/70 text-xs font-medium">
-                            {dest.code}
-                          </span>
-                        </div>
-                        <div className="text-white/75 text-xs mb-3">
-                          {dest.country} · {dest.vibe}
-                        </div>
-
-                        <div className="flex items-end justify-between text-white">
-                          <div>
-                            <div className="text-white/70 text-[11px]">
-                              from
-                            </div>
-                            <div className="flex items-baseline gap-1.5">
-                              <span className="text-xl font-bold">
-                                £{dest.from}
-                              </span>
-                              {dest.wasFrom ? (
-                                <span className="text-xs text-white/60 line-through">
-                                  £{dest.wasFrom}
-                                </span>
-                              ) : null}
-                            </div>
-                          </div>
-                          <span
-                            className={`glass-button rounded-full px-3 py-1.5 text-xs font-bold flex items-center gap-1 transition-all duration-300 ${
-                              hovered
-                                ? "opacity-100 translate-y-0 bg-sky-500 text-white border border-sky-400/80 shadow-lg shadow-sky-500/40"
-                                : "opacity-0 translate-y-2 bg-white/20 text-white/90 backdrop-blur-md border border-white/30"
-                            }`}
-                          >
-                            Track <ArrowRight className="h-3 w-3" />
-                          </span>
-                        </div>
-
-                        {/* Interactive hover details - more robust and engaging */}
-                        <div
-                          className={`overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] ${
-                            hovered
-                              ? "max-h-32 opacity-100 mt-4"
-                              : "max-h-0 opacity-0 mt-0"
-                          }`}
-                        >
-                          <div className="pt-3 border-t border-white/20 flex flex-col gap-2">
-                            <div className="flex items-center justify-between text-[11px] text-white/90">
-                              <span className="flex items-center gap-1.5 text-sky-200">
-                                <Bell className="h-3 w-3" />
-                                {dest.trackers * 3} alerts sent
-                              </span>
-                              <span className="flex items-center gap-1.5 text-amber-200">
-                                <Sparkles className="h-3 w-3" />
-                                {dest.wasFrom
-                                  ? "Price dropping"
-                                  : "High volatility"}
-                              </span>
-                            </div>
-                            {dest.wasFrom && (
-                              <div className="w-full bg-white/10 rounded-full h-1.5 mt-1 overflow-hidden">
-                                <div
-                                  className="bg-emerald-400 h-1.5 rounded-full"
-                                  style={{ width: "75%" }}
-                                />
-                              </div>
-                            )}
-                            {!dest.wasFrom && (
-                              <div className="w-full bg-white/10 rounded-full h-1.5 mt-1 overflow-hidden">
-                                <div
-                                  className="bg-sky-400 h-1.5 rounded-full"
-                                  style={{ width: "40%" }}
-                                />
-                              </div>
-                            )}
-                            <p className="text-[9px] text-white/60 text-right mt-0.5">
-                              Chance of drop: {dest.wasFrom ? "High" : "Medium"}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </Link>
-                );
-              })}
-            </div>
-          </div>
-        )}
-
-        {/* Footer hint */}
-        <p className="text-center text-sm text-slate-500 mt-10">
-          Don't see your route?{" "}
-          <Link
-            to="/search"
-            className="text-sky-600 font-semibold hover:text-sky-700 underline underline-offset-4"
-          >
-            Search any flight
-          </Link>
-        </p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {visible.map((dest, i) => (
+            <Link
+              key={i}
+              to="/search"
+              className="group relative aspect-[4/5] rounded-3xl overflow-hidden shadow-lg"
+            >
+              <img
+                src={dest.image}
+                alt={dest.city}
+                className="absolute inset-0 h-full w-full object-cover group-hover:scale-110 transition-transform duration-700"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
+              <div className="absolute bottom-6 left-6 text-white">
+                <p className="text-2xl font-bold">{dest.city}</p>
+                <p className="text-sm opacity-80">{dest.country}</p>
+                <p className="mt-2 text-xl font-bold">from £{dest.from}</p>
+              </div>
+            </Link>
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -1695,60 +933,26 @@ export default function Home() {
     <motion.div
       initial="initial"
       animate="animate"
-      variants={{
-        animate: {
-          transition: {
-            staggerChildren: 0.1,
-          },
-        },
-      }}
-      className="min-h-screen bg-gradient-to-b from-sky-50 via-white to-white text-slate-900 overflow-x-hidden"
+      variants={{ animate: { transition: { staggerChildren: 0.1 } } }}
+      className="min-h-screen bg-gradient-to-b from-sky-50 via-white to-white dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 text-slate-900 dark:text-slate-100 overflow-x-hidden"
     >
-      {/* HERO */}
       <motion.section
         variants={{
           initial: { opacity: 0, y: 20 },
           animate: { opacity: 1, y: 0 },
         }}
-        transition={{ duration: 0.8 }}
         className="relative pt-28 pb-24 px-6"
       >
-        {/* Soft animated background blobs */}
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
-        >
-          <div className="absolute top-10 left-1/4 w-72 h-72 rounded-full bg-sky-200/40 blur-3xl animate-blob-drift" />
-          <div
-            className="absolute top-40 right-1/4 w-80 h-80 rounded-full bg-indigo-200/40 blur-3xl animate-blob-drift"
-            style={{ animationDelay: "3s" }}
-          />
-          <div
-            className="absolute bottom-0 left-1/3 w-72 h-72 rounded-full bg-amber-100/50 blur-3xl animate-blob-drift"
-            style={{ animationDelay: "6s" }}
-          />
-
-          {/* Subtle plane drifting across */}
-          <svg
-            viewBox="0 0 24 24"
-            className="absolute h-8 w-8 text-sky-500/40 animate-fly-across"
-            fill="currentColor"
-          >
-            <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z" />
-          </svg>
+        <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
+          <div className="absolute top-10 left-1/4 w-72 h-72 rounded-full bg-sky-200/40 dark:bg-sky-500/10 blur-3xl" />
         </div>
-
         <div className="max-w-7xl mx-auto text-center">
-          <span className="glass-card-soft inline-flex items-center gap-2 rounded-full text-slate-700 px-5 py-2 text-sm font-medium">
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75 animate-ping" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
-            </span>
-            Watching <span className="font-semibold text-sky-600">12,843</span>{" "}
-            flights right now
-          </span>
-
-          <h1 className="mt-10 text-5xl md:text-7xl lg:text-[5.5rem] font-bold tracking-tight leading-[1.05]">
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4, duration: 1 }}
+            className="text-5xl md:text-7xl lg:text-[5.5rem] font-bold tracking-tight leading-[1.05]"
+          >
             Book flights at the{" "}
             <span className="relative inline-block">
               <span className="relative z-10 text-sky-600">perfect moment</span>
@@ -1758,501 +962,156 @@ export default function Home() {
               />
             </span>
             .
-          </h1>
-
-          <p className="mt-8 text-slate-600 text-lg md:text-2xl max-w-3xl mx-auto leading-relaxed">
+          </motion.h1>
+          <p className="mt-8 text-slate-600 dark:text-slate-400 text-lg md:text-2xl max-w-3xl mx-auto leading-relaxed">
             Tell us where you want to go. We'll watch prices 24/7 and email you
-            when it's time to book — so you never overpay again.
+            when it's time to book.
           </p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8, duration: 0.8 }}
-            className="mt-12 flex flex-col sm:flex-row justify-center gap-4 relative z-10"
-          >
-            <div className="relative group">
-              <div className="absolute -inset-1 bg-gradient-to-r from-sky-400 to-indigo-400 rounded-full blur opacity-25 group-hover:opacity-75 transition duration-500 group-hover:duration-200" />
-              <Link
-                to="/search"
-                className="relative glass-button glass-gloss inline-flex items-center justify-center gap-2 rounded-full bg-sky-600 text-white px-10 py-5 text-lg font-semibold shadow-lg shadow-sky-200/50 hover:bg-sky-500 transition-all w-full"
-              >
-                <Search className="h-6 w-6 transition-transform group-hover:rotate-6" />
-                Find cheap flights
-              </Link>
-            </div>
+          <div className="mt-12 flex flex-col sm:flex-row justify-center gap-4 relative z-10">
             <Link
-              to="/dashboard"
-              className="glass-button-light glass-gloss inline-flex items-center justify-center gap-2 rounded-full bg-white/80 text-slate-900 border border-slate-200/60 px-10 py-5 text-lg font-semibold hover:bg-white hover:border-slate-300 hover:shadow-md hover:-translate-y-0.5 transition-all"
+              to="/search"
+              className="glass-button glass-gloss rounded-full bg-sky-600 text-white px-10 py-5 text-lg font-semibold shadow-lg"
             >
-              My tracked flights
+              Find cheap flights
             </Link>
-          </motion.div>
-
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1, duration: 1 }}
-            className="mt-6 text-slate-500 text-base"
-          >
-            Free to get started · No credit card needed
-          </motion.p>
-
-          {/* Price-drop preview card */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 1.2, duration: 0.8 }}
-            className="mt-16 max-w-md mx-auto"
-          >
-            <div className="glass-card glass-gloss rounded-2xl shadow-xl shadow-sky-100 p-5 text-left flex items-center gap-4 animate-float-gentle hover:shadow-2xl hover:shadow-sky-200 transition-shadow">
-              <div className="h-12 w-12 rounded-full bg-emerald-50 flex items-center justify-center text-emerald-600 shrink-0">
-                <Bell className="h-6 w-6" />
-              </div>
-              <div className="flex-1">
-                <p className="text-xs font-semibold uppercase tracking-wide text-emerald-600">
-                  Price dropped!
-                </p>
-                <p className="text-slate-900 font-semibold mt-0.5">
-                  London → New York
-                </p>
-                <div className="flex items-baseline gap-2 mt-1">
-                  <span className="text-2xl font-bold text-slate-900">
-                    £340
-                  </span>
-                  <span className="text-sm text-slate-400 line-through">
-                    £520
-                  </span>
-                  <span className="text-xs font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">
-                    Save 35%
-                  </span>
-                </div>
-              </div>
-            </div>
-          </motion.div>
+          </div>
         </div>
       </motion.section>
 
       <ProductDemo />
 
-      {/* WHY TRAVELERS LOVE US — Bento layout */}
       <motion.section
-        variants={{
-          initial: { opacity: 0 },
-          animate: { opacity: 1 },
-        }}
-        transition={{ duration: 1 }}
-        className="relative py-24 px-6 bg-gradient-to-b from-white to-sky-50 overflow-hidden"
+        variants={{ initial: { opacity: 0 }, whileInView: { opacity: 1 } }}
+        viewport={{ once: true }}
+        className="relative py-24 px-6 bg-gradient-to-b from-white to-sky-50 dark:from-slate-900 dark:to-slate-950 overflow-hidden"
       >
-        {/* Soft background glow */}
-        <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
-          <div className="absolute top-20 -left-20 w-80 h-80 rounded-full bg-sky-200/30 blur-3xl animate-blob-drift" />
-          <div
-            className="absolute bottom-10 -right-20 w-96 h-96 rounded-full bg-amber-100/40 blur-3xl animate-blob-drift"
-            style={{ animationDelay: "4s" }}
-          />
-        </div>
-
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-14">
-            <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-sky-600 mb-3">
-              <Sparkles className="h-3.5 w-3.5" />
-              What makes it magic
-            </span>
-            <h2 className="text-3xl md:text-5xl font-bold tracking-tight leading-[1.1]">
-              We do the hunting.{" "}
-              <span className="relative inline-block">
-                <span className="relative z-10">You do the holidaying.</span>
-                <span
-                  aria-hidden
-                  className="absolute left-0 bottom-1 h-3 w-full rounded-full bg-amber-200/70 -z-0"
-                />
-              </span>
-            </h2>
-            <p className="text-slate-600 mt-5 text-lg max-w-xl mx-auto">
-              We monitor prices 24/7 in the background, so you don't have to.
-            </p>
-          </div>
-
-          {/* Bento grid */}
-          <div className="grid grid-cols-1 md:grid-cols-6 gap-4 md:gap-5">
-            {/* BIG card — live price-watching demo */}
+          <div className="grid grid-cols-1 md:grid-cols-6 gap-5">
             <BentoPriceWatching />
-
-            {/* Small — savings stat */}
-            <div className="glass-card glass-gloss md:col-span-2 group relative rounded-3xl p-8 hover:-translate-y-1 hover:shadow-xl hover:shadow-emerald-100 transition-all duration-300 flex flex-col justify-between overflow-hidden">
-              <div className="relative z-10">
-                <div className="h-14 w-14 rounded-2xl bg-emerald-50 flex items-center justify-center text-emerald-600 mb-6 group-hover:scale-110 group-hover:rotate-6 transition-transform">
-                  <PiggyBank className="h-7 w-7" />
-                </div>
+            <div className="glass-card glass-gloss md:col-span-2 group relative rounded-3xl p-8 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between overflow-hidden dark:bg-slate-900/60">
+              <div>
+                <PiggyBank className="h-10 w-10 text-emerald-600 mb-6" />
                 <div className="flex items-baseline gap-2">
-                  <span className="text-5xl font-black text-slate-900">
-                    £220
-                  </span>
-                  <span className="text-sm font-bold text-slate-400 uppercase tracking-wider">
+                  <span className="text-5xl font-black">£220</span>
+                  <span className="text-sm font-bold opacity-40 uppercase">
                     avg saved
                   </span>
                 </div>
-                <p className="text-slate-600 mt-4 leading-relaxed font-medium">
-                  Per booking, according to our members. Some save way more.
+              </div>
+              <div className="mt-8 pt-6 border-t border-slate-100 dark:border-white/5">
+                <p className="text-[10px] font-black opacity-40 uppercase tracking-widest">
+                  Community Total
                 </p>
+                <p className="text-lg font-bold text-emerald-600">£1.4M+</p>
               </div>
-
-              {/* Interactive community stat reveal */}
-              <div className="mt-8 pt-6 border-t border-slate-100 relative z-10">
-                <div className="flex items-center justify-between group/stat">
-                  <div className="space-y-0.5">
-                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
-                      Community Total
-                    </p>
-                    <p className="text-lg font-bold text-emerald-600">£1.4M+</p>
-                  </div>
-                  <div className="h-8 w-8 rounded-full bg-emerald-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all group-hover:translate-x-1">
-                    <ArrowRight className="h-4 w-4 text-emerald-600" />
-                  </div>
-                </div>
-              </div>
-
-              <div
-                aria-hidden
-                className="absolute -bottom-10 -right-10 h-40 w-40 rounded-full bg-emerald-100/20 blur-3xl group-hover:bg-emerald-100/40 transition-colors duration-500"
-              />
             </div>
-
-            {/* Small — setup time */}
-            <div className="glass-card glass-gloss md:col-span-2 group relative rounded-3xl p-8 hover:-translate-y-1 hover:shadow-xl hover:shadow-amber-100 transition-all duration-300 flex flex-col justify-between overflow-hidden">
-              <div className="relative z-10">
-                <div className="h-14 w-14 rounded-2xl bg-amber-50 flex items-center justify-center text-amber-600 mb-6 group-hover:scale-110 group-hover:-rotate-6 transition-transform">
-                  <Clock className="h-7 w-7" />
-                </div>
+            <div className="glass-card glass-gloss md:col-span-2 group relative rounded-3xl p-8 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between overflow-hidden dark:bg-slate-900/60">
+              <div>
+                <Clock className="h-10 w-10 text-amber-600 mb-6" />
                 <div className="flex items-baseline gap-2">
-                  <span className="text-5xl font-black text-slate-900">
-                    30s
-                  </span>
-                  <span className="text-sm font-bold text-slate-400 uppercase tracking-wider">
+                  <span className="text-5xl font-black">30s</span>
+                  <span className="text-sm font-bold opacity-40 uppercase">
                     to set up
                   </span>
                 </div>
-                <p className="text-slate-600 mt-4 leading-relaxed font-medium">
-                  Pick your route, set a target price, go make a cup of tea.
-                </p>
               </div>
-
-              {/* Interactive setup steps */}
-              <div className="mt-8 pt-6 border-t border-slate-100 relative z-10">
+              <div className="mt-8 pt-6 border-t border-slate-100 dark:border-white/5">
                 <div className="flex gap-2">
-                  {[1, 2, 3].map((step) => (
+                  {[1, 2, 3].map((s) => (
                     <div
-                      key={step}
-                      className="flex-1 h-1.5 rounded-full bg-slate-100 overflow-hidden relative"
-                    >
-                      <motion.div
-                        className="absolute inset-0 bg-amber-400"
-                        initial={{ x: "-100%" }}
-                        whileInView={{ x: "0%" }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.5 + step * 0.2, duration: 0.8 }}
-                      />
-                    </div>
+                      key={s}
+                      className="flex-1 h-1.5 rounded-full bg-slate-100 dark:bg-white/10"
+                    />
                   ))}
                 </div>
-                <div className="flex justify-between mt-2 text-[10px] font-black text-slate-400 uppercase tracking-tighter">
-                  <span>Search</span>
-                  <span>Track</span>
-                  <span>Done</span>
-                </div>
-              </div>
-
-              <Coffee
-                aria-hidden
-                className="absolute -bottom-6 -right-6 h-24 w-24 text-amber-100/40 group-hover:text-amber-200/60 group-hover:rotate-12 transition-all duration-700"
-              />
-            </div>
-
-            {/* Medium — no spam */}
-            <div className="glass-card glass-gloss md:col-span-3 group relative rounded-3xl p-8 hover:-translate-y-1 hover:shadow-xl transition-all duration-300 bg-gradient-to-br from-white/95 via-white/90 to-rose-50/30 overflow-hidden flex flex-col justify-between">
-              <div>
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="h-12 w-12 rounded-2xl bg-rose-50 flex items-center justify-center text-rose-500 shadow-sm group-hover:scale-110 group-hover:rotate-6 transition-transform">
-                    <Heart className="h-6 w-6 fill-current" />
-                  </div>
-                  <h3 className="text-2xl font-bold tracking-tight text-slate-800">
-                    Zero spam. Promise.
-                  </h3>
-                </div>
-                <p className="text-slate-600 text-lg leading-relaxed mb-6">
-                  The only email we'll ever send you is a notification that your
-                  flight just dropped in price. No newsletters, no marketing, no
-                  noise.
-                </p>
-                <ul className="space-y-3 mb-8">
-                  {[
-                    "No marketing newsletters",
-                    "We never sell your data",
-                    "One-click unsubscribe",
-                    "Direct booking links only",
-                  ].map((text, i) => (
-                    <li
-                      key={i}
-                      className="flex items-center gap-2 text-sm font-semibold text-slate-500"
-                    >
-                      <Check className="h-4 w-4 text-emerald-500" />
-                      {text}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Mock email preview to fill space */}
-              <div className="relative mt-auto pt-6 border-t border-slate-100">
-                <div className="rounded-2xl border border-slate-200 bg-white shadow-sm p-4 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                  <div className="flex items-center gap-3 mb-3 pb-3 border-b border-slate-50">
-                    <div className="h-8 w-8 rounded-full bg-sky-50 flex items-center justify-center text-sky-500">
-                      <Mail className="h-4 w-4" />
-                    </div>
-                    <div className="space-y-1">
-                      <div className="h-2 w-24 bg-slate-100 rounded" />
-                      <div className="h-1.5 w-16 bg-slate-50 rounded" />
-                    </div>
-                  </div>
-                  <div className="space-y-2">
-                    <div className="h-2 w-full bg-slate-50 rounded" />
-                    <div className="h-2 w-4/5 bg-slate-50 rounded" />
-                  </div>
-                </div>
-                <div
-                  aria-hidden
-                  className="absolute -bottom-10 right-0 h-32 w-32 rounded-full bg-rose-100/50 blur-3xl"
-                />
               </div>
             </div>
-
-            {/* Medium — any route */}
+            <div className="glass-card glass-gloss md:col-span-3 group relative rounded-3xl p-8 hover:-translate-y-1 transition-all bg-gradient-to-br from-white to-rose-50/30 dark:from-slate-900 dark:to-slate-950 overflow-hidden">
+              <Heart className="h-10 w-10 text-rose-500 mb-6" />
+              <h3 className="text-2xl font-bold mb-4">Zero spam. Promise.</h3>
+              <p className="text-slate-600 dark:text-slate-400 mb-6">
+                No newsletters, no marketing, no noise. Only drop alerts.
+              </p>
+              <div className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900 p-4">
+                <div className="flex items-center gap-3 mb-3 pb-3 border-b dark:border-white/5">
+                  <Mail className="h-4 w-4 text-sky-500" />
+                  <div className="text-[10px] font-bold">
+                    Price Drop: London → NYC
+                  </div>
+                </div>
+                <div className="text-[10px] opacity-60">
+                  Good news! Your flight hit £340.
+                </div>
+              </div>
+            </div>
             <LiveDealStream />
           </div>
         </div>
       </motion.section>
 
       <HowItWorks />
-
-      {/* POPULAR DESTINATIONS */}
       <DestinationsSection />
 
-      {/* THE DIFFERENCE — before / after comparison */}
       <motion.section
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
-        viewport={{ once: true, margin: "-100px" }}
+        viewport={{ once: true }}
         transition={{ duration: 1 }}
-        className="py-24 px-6 bg-sky-50"
+        className="py-24 px-6 bg-sky-50 dark:bg-slate-950"
       >
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-sky-600 mb-3">
-              <Sparkles className="h-3.5 w-3.5" />
-              The difference
-            </span>
-            <h2 className="text-4xl md:text-6xl font-bold tracking-tight leading-[1.1]">
-              Flight hunting,{" "}
-              <span className="relative inline-block">
-                <span className="relative z-10">reinvented</span>
-                <span
-                  aria-hidden
-                  className="absolute left-0 bottom-1 h-3 w-full rounded-full bg-amber-200/70 -z-0"
-                />
-              </span>
-              .
-            </h2>
-            <p className="text-slate-600 mt-6 text-xl md:text-2xl max-w-2xl mx-auto">
-              Here's what changes when you stop doing this yourself.
-            </p>
-          </div>
-
-          <div className="relative grid md:grid-cols-2 gap-10">
-            {/* BEFORE card */}
-            <div className="glass-card glass-gloss group rounded-[2.5rem] p-10 md:p-14 transition-all duration-300 hover:-translate-y-0.5">
-              <div className="flex items-center gap-5 mb-10 pb-8 border-b border-slate-100">
-                <div className="h-14 w-14 rounded-2xl bg-slate-100 flex items-center justify-center text-slate-500 group-hover:scale-110 transition-transform">
-                  <Frown className="h-7 w-7" />
-                </div>
-                <div>
-                  <p className="text-sm font-bold uppercase tracking-wider text-slate-400">
-                    Before
-                  </p>
-                  <h3 className="text-2xl font-black text-slate-700">
-                    Hunting flights alone
-                  </h3>
-                </div>
-              </div>
-              <ul className="space-y-6">
-                {[
-                  "17 Chrome tabs. Across three devices.",
-                  "Prices change every hour and you always miss the drop.",
-                  '"Is this a good deal?" — asked 40 times a day.',
-                  "Book now, watch it drop £100 tomorrow, cry a little.",
-                  "Skyscanner rabbit hole at 2am. Every week.",
-                ].map((item, i) => (
-                  <li
-                    key={i}
-                    className="flex items-start gap-4 animate-fade-up"
-                    style={{
-                      animationDelay: `${i * 90}ms`,
-                      animationFillMode: "backwards",
-                    }}
-                  >
-                    <span className="shrink-0 mt-1 h-6 w-6 rounded-full bg-rose-50 flex items-center justify-center text-rose-500 shadow-sm">
-                      <X className="h-4 w-4" strokeWidth={3} />
-                    </span>
-                    <span className="text-slate-500 text-lg md:text-xl leading-relaxed">
-                      {item}
-                    </span>
-                  </li>
-                ))}
+          <div className="grid md:grid-cols-2 gap-10">
+            <div className="glass-card glass-gloss rounded-[2.5rem] p-10 md:p-14 bg-white dark:bg-slate-900/60">
+              <Frown className="h-10 w-10 text-slate-400 mb-8" />
+              <h3 className="text-2xl font-black mb-6">Hunting alone</h3>
+              <ul className="space-y-4 text-slate-500">
+                <li className="flex items-center gap-3">
+                  <X className="h-4 w-4 text-rose-500" /> 17 Chrome tabs open
+                </li>
+                <li className="flex items-center gap-3">
+                  <X className="h-4 w-4 text-rose-500" /> Missed every price
+                  drop
+                </li>
               </ul>
             </div>
-
-            {/* AFTER card */}
-            <div className="glass-card glass-gloss group relative rounded-[2.5rem] p-10 md:p-14 shadow-2xl shadow-sky-100 transition-all duration-300 hover:-translate-y-1 hover:shadow-sky-200 bg-gradient-to-br from-white/95 via-white/90 to-sky-50/80 ring-4 ring-sky-100/50 z-10">
-              <div
-                aria-hidden
-                className="absolute -inset-px rounded-[2.5rem] bg-gradient-to-br from-sky-300/40 via-transparent to-emerald-200/40 blur-2xl -z-10"
-              />
-              <div className="flex items-center gap-5 mb-10 pb-8 border-b border-sky-100">
-                <div className="h-14 w-14 rounded-2xl bg-gradient-to-br from-sky-500 to-indigo-500 flex items-center justify-center text-white shadow-xl shadow-sky-200 group-hover:scale-110 group-hover:rotate-6 transition-transform">
-                  <Plane className="h-7 w-7" />
-                </div>
-                <div>
-                  <p className="text-sm font-bold uppercase tracking-wider text-sky-600">
-                    With Flight Guardian
-                  </p>
-                  <h3 className="text-2xl font-black text-slate-900">
-                    Hunting handled.
-                  </h3>
-                </div>
-              </div>
-              <ul className="space-y-6">
-                {[
-                  "One saved search. One email when it drops. Done.",
-                  "We check every hour, so you don't have to.",
-                  "Know with confidence you got the best price.",
-                  "Set once, forget, save hundreds — without lifting a finger.",
-                  "Sleep well at 2am. Travel happy at 2pm.",
-                ].map((item, i) => (
-                  <li
-                    key={i}
-                    className="flex items-start gap-4 animate-fade-up"
-                    style={{
-                      animationDelay: `${i * 90 + 200}ms`,
-                      animationFillMode: "backwards",
-                    }}
-                  >
-                    <span className="shrink-0 mt-1 h-6 w-6 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 shadow-md">
-                      <Check className="h-4 w-4" strokeWidth={3} />
-                    </span>
-                    <span className="text-slate-800 text-lg md:text-xl leading-relaxed font-bold">
-                      {item}
-                    </span>
-                  </li>
-                ))}
+            <div className="glass-card glass-gloss rounded-[2.5rem] p-10 md:p-14 bg-white dark:bg-slate-900 ring-4 ring-sky-500/20">
+              <Plane className="h-10 w-10 text-sky-600 mb-8" />
+              <h3 className="text-2xl font-black mb-6">With Guardian</h3>
+              <ul className="space-y-4">
+                <li className="flex items-center gap-3 font-bold">
+                  <Check className="h-4 w-4 text-emerald-500" /> Set once,
+                  forget forever
+                </li>
+                <li className="flex items-center gap-3 font-bold">
+                  <Check className="h-4 w-4 text-emerald-500" /> Email the
+                  second it drops
+                </li>
               </ul>
-            </div>
-
-            {/* Arrow pivot between cards — desktop only */}
-            <div
-              aria-hidden
-              className="hidden md:flex absolute inset-y-0 left-1/2 -translate-x-1/2 items-center pointer-events-none z-20"
-            >
-              <div className="glass-card h-16 w-16 rounded-full flex items-center justify-center text-sky-600 animate-float-gentle shadow-2xl border-2 border-sky-100/50 bg-white">
-                <ArrowRight className="h-7 w-7" />
-              </div>
             </div>
           </div>
         </div>
       </motion.section>
 
-      {/* FAQ */}
-      <motion.section
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 1 }}
-        className="py-24 px-6"
-      >
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-12">
-            <span className="inline-block text-xs font-semibold uppercase tracking-wider text-sky-600 mb-3">
-              Good questions
-            </span>
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight">
-              Quick answers
-            </h2>
-          </div>
-
-          <div className="space-y-3">
-            {FAQS.map(({ q, a }, i) => (
-              <details
-                key={i}
-                className="glass-card glass-gloss group rounded-2xl p-5 hover:shadow-md transition-shadow open:shadow-md"
-              >
-                <summary className="flex items-center justify-between gap-4 font-semibold text-slate-900 cursor-pointer list-none">
-                  {q}
-                  <ChevronDown className="h-5 w-5 text-slate-400 group-open:rotate-180 transition-transform flex-shrink-0" />
-                </summary>
-                <p className="mt-3 text-slate-600 leading-relaxed">{a}</p>
-              </details>
-            ))}
-          </div>
-        </div>
-      </motion.section>
-
-      {/* FINAL CTA */}
       <motion.section
         initial={{ opacity: 0, scale: 0.95 }}
         whileInView={{ opacity: 1, scale: 1 }}
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.8 }}
+        viewport={{ once: true }}
         className="py-24 px-6"
       >
         <div className="max-w-5xl mx-auto text-center">
-          <div className="relative rounded-3xl bg-gradient-to-br from-sky-600 via-sky-500 to-indigo-600 p-12 md:p-16 text-white shadow-xl shadow-sky-200 overflow-hidden animate-gradient-shift">
-            {/* Decorative circles */}
-            <div
-              aria-hidden
-              className="absolute -top-10 -left-10 h-40 w-40 rounded-full bg-white/10 animate-blob-drift"
-            />
-            <div
-              aria-hidden
-              className="absolute -bottom-10 -right-10 h-48 w-48 rounded-full bg-white/10 animate-blob-drift"
-              style={{ animationDelay: "4s" }}
-            />
-
-            <div className="relative">
-              <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">
-                Ready for your next trip?
-              </h2>
-              <p className="text-sky-100 text-lg mb-8 max-w-xl mx-auto">
-                Start watching a flight now. It's free, and you can cancel the
-                alert any time.
-              </p>
-              <Link
-                to="/search"
-                className="glass-button-light glass-gloss group inline-flex items-center gap-2 rounded-full bg-white text-sky-700 px-8 py-4 font-semibold shadow-lg hover:scale-[1.02] transition-all"
-              >
-                <Plane className="h-5 w-5 transition-transform group-hover:translate-x-1 group-hover:-translate-y-0.5 group-hover:rotate-12" />
-                Start tracking a flight
-              </Link>
-              <div className="mt-6 flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-sky-100">
-                <span className="inline-flex items-center gap-1.5">
-                  <Check className="h-4 w-4" /> Free to start
-                </span>
-                <span className="inline-flex items-center gap-1.5">
-                  <Check className="h-4 w-4" /> No credit card
-                </span>
-                <span className="inline-flex items-center gap-1.5">
-                  <Check className="h-4 w-4" /> Cancel anytime
-                </span>
-              </div>
-            </div>
+          <div className="relative rounded-3xl bg-gradient-to-br from-sky-600 to-indigo-600 p-16 text-white shadow-xl overflow-hidden">
+            <h2 className="text-4xl font-bold mb-4">
+              Ready for your next trip?
+            </h2>
+            <p className="text-sky-100 mb-8 max-w-xl mx-auto">
+              Start watching a flight now. It's free and takes 30 seconds.
+            </p>
+            <Link
+              to="/search"
+              className="glass-button glass-gloss rounded-full bg-white text-sky-700 px-10 py-5 text-xl font-bold"
+            >
+              Start tracking now
+            </Link>
           </div>
         </div>
       </motion.section>
