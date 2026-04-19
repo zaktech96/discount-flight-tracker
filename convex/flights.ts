@@ -1,5 +1,6 @@
 import { action, mutation, query } from "./_generated/server";
 import { v } from "convex/values";
+import { internal } from "./_generated/api";
 
 // ── Queries ────────────────────────────────────────────────────────────────
 
@@ -16,7 +17,7 @@ export const getRecentPrices = query({
     return ctx.db
       .query("flights")
       .withIndex("by_route", (q) =>
-        q.eq("origin", args.origin).eq("dest", args.dest)
+        q.eq("origin", args.origin).eq("dest", args.dest),
       )
       .order("desc")
       .take(args.limit ?? 20);
@@ -32,7 +33,7 @@ export const getUserAlerts = query({
     return ctx.db
       .query("alerts")
       .withIndex("by_user_active", (q) =>
-        q.eq("userId", args.userId).eq("active", true)
+        q.eq("userId", args.userId).eq("active", true),
       )
       .collect();
   },
@@ -55,7 +56,80 @@ export const savePriceSnapshot = mutation({
     timestamp: v.number(),
   },
   handler: async (ctx, args) => {
-    return ctx.db.insert("flights", args);
+    const flightId = await ctx.db.insert("flights", args);
+
+    // Check if any alerts should be triggered by this new price
+    // @ts-ignore - internal.flights exists in generated API
+    await ctx.scheduler.runAfter(0, internal.flights.checkAndTriggerAlerts, {
+      origin: args.origin,
+      dest: args.dest,
+      currentPrice: args.price,
+      currency: args.currency,
+      airline: args.airline,
+    });
+
+    return flightId;
+  },
+});
+
+/**
+ * Internal mutation to check and trigger price alerts.
+ * This is called automatically when a new price snapshot is saved.
+ */
+export const checkAndTriggerAlerts = mutation({
+  args: {
+    origin: v.string(),
+    dest: v.string(),
+    currentPrice: v.number(),
+    currency: v.optional(v.string()),
+    airline: v.optional(v.string()),
+  },
+  handler: async (ctx, { origin, dest, currentPrice, currency, airline }) => {
+    // Find all active alerts for this route
+    const activeAlerts = await ctx.db
+      .query("alerts")
+      .withIndex("by_route", (q) => q.eq("origin", origin).eq("dest", dest))
+      .filter((q) => q.eq(q.field("active"), true))
+      .collect();
+
+    for (const alert of activeAlerts) {
+      // Trigger if current price is at or below target
+      if (currentPrice <= alert.targetPrice) {
+        // Get user details
+        const user = await ctx.db.get(alert.userId as any);
+
+        // Safety check: ensure we have a valid user with an email
+        const isValidUser =
+          user && "email" in user && typeof user.email === "string";
+
+        if (isValidUser) {
+          // Send email alert
+          await ctx.scheduler.runAfter(
+            0,
+            internal.sendEmails.sendPriceAlertEmail,
+            {
+              email: user.email as string,
+              origin: alert.origin,
+              dest: alert.dest,
+              price: currentPrice,
+              targetPrice: alert.targetPrice,
+              currency: currency || alert.currency,
+              airline: airline,
+            },
+          );
+
+          // Deactivate the alert
+          await ctx.db.patch(alert._id, {
+            active: false,
+            triggeredAt: Date.now(),
+          });
+
+          console.log(
+            `🚀 Price alert triggered for ${user.email}: ${origin} -> ${dest} at ${currentPrice}`,
+          );
+        }
+      }
+    }
   },
 });
 
@@ -108,37 +182,8 @@ export const fetchLivePrices = action({
     departureDate: v.optional(v.string()),
   },
   handler: async (_ctx, args): Promise<{ price: number; source: string }[]> => {
-    // TODO: replace with real provider call, e.g.:
-    //
-    // const response = await fetch(
-    //   `https://partners.api.skyscanner.net/apiservices/v3/flights/live/search/create`,
-    //   {
-    //     method: "POST",
-    //     headers: {
-    //       "x-api-key": process.env.SKYSCANNER_API_KEY!,
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify({
-    //       query: {
-    //         market: "US",
-    //         locale: "en-US",
-    //         currency: "USD",
-    //         queryLegs: [
-    //           {
-    //             originPlaceId: { iata: args.origin },
-    //             destinationPlaceId: { iata: args.dest },
-    //             date: { year: ..., month: ..., day: ... },
-    //           },
-    //         ],
-    //         adults: 1,
-    //       },
-    //     }),
-    //   }
-    // );
-    // const data = await response.json();
-    // return data.content.results.itineraries.map(...);
-
-    void args; // suppress unused-variable warning until real API is wired up
+    // TODO: replace with real provider call
+    void args;
     return [];
   },
 });

@@ -22,6 +22,19 @@ verified before merge - no exceptions.
 
 ## Log
 
+### SL-019 - Automated Price Alert Email Flow
+
+**Scope:** `convex/flights.ts`, `convex/sendEmails.ts`, `convex/users.ts`
+
+**Summary:** 
+- Implemented the full backend flow for automated price drop notifications.
+- Added `sendPriceAlertEmail` in `convex/sendEmails.ts` with a premium HTML template featuring clear discount information, branding, and a call-to-action button.
+- Integrated `checkAndTriggerAlerts` into the `savePriceSnapshot` mutation in `convex/flights.ts`. Every time a new flight price is recorded, the system automatically checks for active user alerts on that route and triggers a Resend email if the target price is met.
+- Deployed a `getUser` query in `convex/users.ts` to facilitate secure email retrieval for alert triggers.
+- Alerts are automatically deactivated after triggering to prevent redundant notifications.
+
+**Verification:** Build passes successfully.
+
 ### SL-018 - Interactive Bento & Product Demo Refinement
 
 **Scope:** `app/routes/home.tsx`
