@@ -80,15 +80,15 @@ export function ErrorBoundary({ error }: { error: Error }) {
         <Meta />
         <Links />
       </head>
-      <body className="bg-gradient-to-b from-sky-50 to-white text-slate-900 min-h-screen flex items-center justify-center p-6">
-        <div className="max-w-md w-full rounded-2xl bg-white border border-slate-100 shadow-sm p-8 text-center">
-          <h1 className="text-2xl font-bold text-slate-900 mb-2">
+      <body className="bg-gradient-to-b from-sky-50 to-white dark:from-slate-900 dark:to-slate-950 text-slate-900 dark:text-white min-h-screen flex items-center justify-center p-6 transition-colors duration-300">
+        <div className="max-w-md w-full rounded-2xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-white/10 shadow-sm p-8 text-center">
+          <h1 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">
             Something went wrong
           </h1>
-          <p className="text-slate-600 mb-4">
+          <p className="text-slate-600 dark:text-slate-400 mb-4">
             We hit a snag loading this page. Please try again in a moment.
           </p>
-          <pre className="mt-4 bg-slate-50 text-slate-600 p-4 rounded-xl overflow-auto text-xs text-left">
+          <pre className="mt-4 bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 p-4 rounded-xl overflow-auto text-xs text-left">
             {error?.message || "Please refresh or contact support."}
           </pre>
         </div>

@@ -32,13 +32,13 @@ export default function FlightSearch() {
     : "Today's best deals";
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-sky-50 to-white text-slate-900 pt-24 pb-16 px-6">
+    <div className="min-h-screen bg-gradient-to-b from-sky-50 to-white text-slate-900 dark:from-slate-900 dark:to-slate-950 dark:text-white pt-24 pb-16 px-6 transition-colors duration-300">
       <div className="max-w-4xl mx-auto">
         <header className="mb-10">
           <h1 className="text-3xl md:text-4xl font-bold tracking-tight">
             Find your flight
           </h1>
-          <p className="text-slate-600 mt-2 text-lg">
+          <p className="text-slate-600 dark:text-slate-400 mt-2 text-lg">
             Pick a deal below to start tracking — we'll watch the price and
             email you the moment it drops.
           </p>
@@ -47,40 +47,43 @@ export default function FlightSearch() {
         {/* Search form */}
         <form
           onSubmit={handleSubmit}
-          className="glass-card rounded-2xl p-6 md:p-8 mb-10"
+          className="glass-card dark:bg-slate-900/40 dark:border-white/10 rounded-2xl p-6 md:p-8 mb-10"
         >
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <label className="flex flex-col">
-              <span className="text-sm font-medium text-slate-700 mb-1.5 flex items-center gap-1.5">
-                <MapPin className="h-4 w-4 text-sky-600" /> Flying from
+              <span className="text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5 flex items-center gap-1.5">
+                <MapPin className="h-4 w-4 text-sky-600 dark:text-sky-400" />{" "}
+                Flying from
               </span>
               <input
                 value={from}
                 onChange={(e) => setFrom(e.target.value)}
-                className="glass-input rounded-xl border border-white/70 px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent placeholder:text-slate-400"
+                className="glass-input dark:bg-slate-900/60 dark:border-white/5 dark:text-white rounded-xl border border-white/70 px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent placeholder:text-slate-400 dark:placeholder:text-slate-500"
                 placeholder="City or airport (e.g. London)"
               />
             </label>
             <label className="flex flex-col">
-              <span className="text-sm font-medium text-slate-700 mb-1.5 flex items-center gap-1.5">
-                <Plane className="h-4 w-4 text-sky-600" /> Flying to
+              <span className="text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5 flex items-center gap-1.5">
+                <Plane className="h-4 w-4 text-sky-600 dark:text-sky-400" />{" "}
+                Flying to
               </span>
               <input
                 value={to}
                 onChange={(e) => setTo(e.target.value)}
-                className="glass-input rounded-xl border border-white/70 px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent placeholder:text-slate-400"
+                className="glass-input dark:bg-slate-900/60 dark:border-white/5 dark:text-white rounded-xl border border-white/70 px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent placeholder:text-slate-400 dark:placeholder:text-slate-500"
                 placeholder="City or airport (e.g. Paris)"
               />
             </label>
             <label className="flex flex-col">
-              <span className="text-sm font-medium text-slate-700 mb-1.5 flex items-center gap-1.5">
-                <Calendar className="h-4 w-4 text-sky-600" /> When
+              <span className="text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5 flex items-center gap-1.5">
+                <Calendar className="h-4 w-4 text-sky-600 dark:text-sky-400" />{" "}
+                When
               </span>
               <input
                 type="date"
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
-                className="rounded-xl border border-slate-200 bg-white px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent text-slate-700"
+                className="rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/60 px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent text-slate-700 dark:text-white"
               />
             </label>
           </div>
@@ -88,7 +91,7 @@ export default function FlightSearch() {
           <div className="mt-6 flex flex-col sm:flex-row gap-3 items-start sm:items-center">
             <button
               type="submit"
-              className="glass-button rounded-full bg-sky-600 text-white px-8 py-3 font-semibold shadow-lg shadow-sky-200 hover:bg-sky-700 hover:-translate-y-0.5 transition-all inline-flex items-center justify-center gap-2"
+              className="glass-button rounded-full bg-sky-600 text-white px-8 py-3 font-semibold shadow-lg shadow-sky-200 dark:shadow-sky-900/20 hover:bg-sky-700 hover:-translate-y-0.5 transition-all inline-flex items-center justify-center gap-2"
             >
               Search flights
               <ArrowRight className="h-4 w-4" />
@@ -97,7 +100,7 @@ export default function FlightSearch() {
               <button
                 type="button"
                 onClick={handleClear}
-                className="inline-flex items-center gap-1.5 text-sm font-medium text-slate-500 hover:text-slate-900 transition"
+                className="inline-flex items-center gap-1.5 text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition"
               >
                 <X className="h-4 w-4" />
                 Clear search
@@ -109,23 +112,24 @@ export default function FlightSearch() {
         {/* Results header */}
         <div className="flex items-center gap-2 mb-4">
           {isFiltered ? (
-            <MapPin className="h-5 w-5 text-sky-600" />
+            <MapPin className="h-5 w-5 text-sky-600 dark:text-sky-400" />
           ) : (
             <Sparkles className="h-5 w-5 text-amber-500" />
           )}
-          <h2 className="text-xl font-semibold">{heading}</h2>
+          <h2 className="text-xl font-semibold dark:text-white">{heading}</h2>
         </div>
 
         {results.length === 0 ? (
-          <div className="glass-card rounded-2xl p-10 text-center">
-            <div className="mx-auto h-14 w-14 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 mb-4">
+          <div className="glass-card dark:bg-slate-900/40 dark:border-white/10 rounded-2xl p-10 text-center">
+            <div className="mx-auto h-14 w-14 rounded-full bg-slate-50 dark:bg-slate-800 flex items-center justify-center text-slate-400 dark:text-slate-500 mb-4">
               <Plane className="h-6 w-6" />
             </div>
-            <h3 className="text-lg font-semibold mb-1">No flights for that route yet</h3>
-            <p className="text-slate-600 max-w-md mx-auto mb-5">
-              We don't have live prices for this route in the sample data. Try
-              a different city, or clear your search to browse today's best
-              deals.
+            <h3 className="text-lg font-semibold mb-1 dark:text-white">
+              No flights for that route yet
+            </h3>
+            <p className="text-slate-600 dark:text-slate-400 max-w-md mx-auto mb-5">
+              We don't have live prices for this route in the sample data. Try a
+              different city, or clear your search to browse today's best deals.
             </p>
             <button
               onClick={handleClear}
@@ -143,21 +147,21 @@ export default function FlightSearch() {
                 <Link
                   key={flight.id}
                   to={`/track/${flight.id}`}
-                  className="glass-card block rounded-2xl p-5 md:p-6 hover:shadow-xl hover:shadow-sky-100 hover:-translate-y-0.5 transition-all"
+                  className="glass-card dark:bg-slate-900/40 dark:border-white/10 block rounded-2xl p-5 md:p-6 hover:shadow-xl hover:shadow-sky-100 dark:hover:shadow-sky-900/10 hover:-translate-y-0.5 transition-all"
                 >
                   <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div className="flex items-center gap-4">
-                      <div className="h-12 w-12 rounded-full bg-sky-50 flex items-center justify-center text-sky-600 shrink-0">
+                      <div className="h-12 w-12 rounded-full bg-sky-50 dark:bg-sky-900/20 flex items-center justify-center text-sky-600 dark:text-sky-400 shrink-0">
                         <Plane className="h-5 w-5" />
                       </div>
                       <div>
-                        <p className="font-semibold text-slate-900">
+                        <p className="font-semibold text-slate-900 dark:text-white">
                           {formatRoute(flight)}
                         </p>
-                        <p className="text-sm text-slate-500">
+                        <p className="text-sm text-slate-500 dark:text-slate-400">
                           {flight.airline} · {flight.duration} · {flight.stops}
                         </p>
-                        <p className="text-xs text-slate-400 mt-0.5">
+                        <p className="text-xs text-slate-400 dark:text-slate-500 mt-0.5">
                           Departs {flight.departureDate}
                         </p>
                       </div>
@@ -166,18 +170,18 @@ export default function FlightSearch() {
                     <div className="flex items-center gap-4 md:gap-6">
                       <div className="text-right">
                         <div className="flex items-baseline gap-2 justify-end">
-                          <span className="text-2xl font-bold text-slate-900">
+                          <span className="text-2xl font-bold text-slate-900 dark:text-white">
                             £{flight.currentPrice}
                           </span>
-                          <span className="text-sm text-slate-400 line-through">
+                          <span className="text-sm text-slate-400 dark:text-slate-500 line-through">
                             £{flight.originalPrice}
                           </span>
                         </div>
-                        <p className="text-xs font-semibold text-emerald-600 mt-0.5">
+                        <p className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 mt-0.5">
                           Save £{saved} ({pct}% off)
                         </p>
                       </div>
-                      <span className="glass-button rounded-full bg-sky-600 text-white px-5 py-2.5 text-sm font-semibold shadow-md shadow-sky-200 whitespace-nowrap">
+                      <span className="glass-button rounded-full bg-sky-600 text-white px-5 py-2.5 text-sm font-semibold shadow-md shadow-sky-200 dark:shadow-sky-900/20 whitespace-nowrap">
                         Track this flight
                       </span>
                     </div>
@@ -188,7 +192,7 @@ export default function FlightSearch() {
           </div>
         )}
 
-        <p className="text-center text-sm text-slate-500 mt-10">
+        <p className="text-center text-sm text-slate-500 dark:text-slate-400 mt-10">
           Tracking a flight is free. You can stop watching any time from your
           dashboard.
         </p>

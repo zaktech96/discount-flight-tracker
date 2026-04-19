@@ -22,6 +22,23 @@ verified before merge - no exceptions.
 
 ## Log
 
+### SL-034 - Global Dark Mode Compatibility & Aesthetic Continuity
+
+**Scope:** `app/routes/search.tsx`, `app/routes/dashboard.tsx`, `app/routes/track.$id.tsx`, `app/routes/track.confirm.tsx`, `app/root.tsx`
+
+**Summary:** 
+- Standardized dark mode support across all secondary routes (`/search`, `/dashboard`, `/track/*`) by applying `dark:` Tailwind variants to all background gradients, text colors, and glass components.
+- Resolved a critical visibility issue where the Search and Track pages remained in light mode even after toggling the dark theme.
+- Updated the `ErrorBoundary` in `app/root.tsx` to ensure visual consistency during error states in both themes.
+- Refined component styling for dark mode:
+    - Backgrounds transitioned to `dark:from-slate-900 dark:to-slate-950`.
+    - Glass cards adjusted to `dark:bg-slate-900/40 dark:border-white/10`.
+    - Input fields updated to `dark:bg-slate-900/60 dark:text-white dark:border-white/10`.
+    - Icons and status indicators (e.g., "Track this flight" buttons) optimized for dark-theme contrast.
+- Ensured 100% aesthetic continuity across the entire application, maintaining the "Terminal Minimalist" brand identity.
+
+**Verification:** Build passes successfully.
+
 ### SL-033 - Global Destination Expansion & Image Hotfix
 
 **Scope:** `app/routes/home.tsx`
