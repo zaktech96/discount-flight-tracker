@@ -22,6 +22,15 @@ verified before merge - no exceptions.
 
 ## Log
 
+### SL-015 - Hotfix: Convex Deployment after UI changes
+
+**Scope:** `convex/`
+
+**Summary:** 
+- Performed a Convex deployment to ensure all backend changes (including newly expanded demo routes) are reflected in the production environment after the recent UI modifications.
+
+**Verification:** Convex deployment completed successfully.
+
 ### SL-014 - Hotfix: Missing JSX Closing Tag
 
 **Scope:** `app/routes/home.tsx`
