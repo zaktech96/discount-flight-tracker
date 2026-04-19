@@ -22,6 +22,18 @@ verified before merge - no exceptions.
 
 ## Log
 
+### SL-018 - Interactive Bento & Product Demo Refinement
+
+**Scope:** `app/routes/home.tsx`
+
+**Summary:** 
+- Transformed the static "What Makes It Magic" bento section into a dynamic, interactive experience.
+- The main price watching card now cycles through multiple real-world flight routes (`BENTO_DEALS`), featuring a live-updating price chart with pulsing "Today" indicators and interactive tooltips on hover.
+- Replaced the static "Every route" card with a `LiveDealStream` component that shows a feed of recent simulated price drops to showcase the product's effectiveness.
+- Resolved a "refreshing" UX issue in the `ProductDemo` ("See it in action") section by moving the React `key` to an inner content wrapper, preventing the entire browser-chrome container from remounting during stage transitions.
+
+**Verification:** Build passes successfully.
+
 ### SL-017 - New Interactive 'How It Works' Section
 
 **Scope:** `app/routes/home.tsx`

@@ -462,6 +462,202 @@ const FAQS = [
   },
 ];
 
+const BENTO_DEALS = [
+  {
+    from: "London",
+    to: "New York",
+    price: 340,
+    original: 520,
+    drop: 34,
+    history: [72, 78, 75, 82, 70, 58, 48],
+  },
+  {
+    from: "Manchester",
+    to: "Dubai",
+    price: 395,
+    original: 530,
+    drop: 25,
+    history: [65, 70, 68, 72, 60, 55, 52],
+  },
+  {
+    from: "Edinburgh",
+    to: "Tokyo",
+    price: 612,
+    original: 820,
+    drop: 25,
+    history: [85, 82, 88, 80, 75, 72, 68],
+  },
+  {
+    from: "London",
+    to: "Cape Town",
+    price: 580,
+    original: 750,
+    drop: 22,
+    history: [90, 88, 92, 85, 80, 78, 75],
+  },
+];
+
+const RECENT_DROPS = [
+  { from: "London", to: "Lisbon", drop: 45, price: 89, time: "2m ago" },
+  { from: "Manchester", to: "Paris", drop: 30, price: 65, time: "5m ago" },
+  { from: "Edinburgh", to: "Berlin", drop: 22, price: 48, time: "12m ago" },
+  { from: "London", to: "New York", drop: 180, price: 340, time: "15m ago" },
+  { from: "Birmingham", to: "Madrid", drop: 38, price: 72, time: "20m ago" },
+];
+
+function BentoPriceWatching() {
+  const [index, setIndex] = useState(0);
+  const deal = BENTO_DEALS[index];
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setIndex((i) => (i + 1) % BENTO_DEALS.length);
+    }, 6000);
+    return () => clearInterval(id);
+  }, []);
+
+  return (
+    <div className="glass-card-dark md:col-span-4 md:row-span-2 group relative rounded-3xl p-8 md:p-10 text-white shadow-xl shadow-slate-200 hover:shadow-2xl hover:shadow-sky-200 transition-all duration-500 overflow-hidden">
+      {/* Decorative plane */}
+      <Plane className="absolute -top-2 -right-2 h-32 w-32 text-white/5 -rotate-12 group-hover:rotate-0 group-hover:scale-110 transition-transform duration-700" />
+
+      <div key={index} className="relative z-10 animate-fade-in">
+        <div className="inline-flex items-center gap-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 px-3 py-1.5 text-xs font-medium">
+          <span className="relative flex h-2 w-2">
+            <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75 animate-ping" />
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
+          </span>
+          Live · tracking {deal.from} → {deal.to}
+        </div>
+
+        <h3 className="mt-5 text-2xl md:text-3xl font-bold leading-tight">
+          We check the price every hour.
+          <br />
+          <span className="text-sky-300">
+            You get a ping the moment it drops.
+          </span>
+        </h3>
+
+        <p className="mt-3 text-slate-300 leading-relaxed max-w-md">
+          No refreshing travel sites at 2am. No "did I miss it?" regret. Just a
+          friendly email when it's time to book.
+        </p>
+
+        {/* Mini price chart */}
+        <div className="mt-8 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 p-5">
+          <div className="flex items-center justify-between mb-3">
+            <span className="text-xs uppercase tracking-wider text-slate-400">
+              {deal.from} → {deal.to} · last 7 days
+            </span>
+            <span className="inline-flex items-center gap-1 text-emerald-400 font-semibold text-sm">
+              <TrendingDown className="h-4 w-4" /> -{deal.drop}%
+            </span>
+          </div>
+          <div className="flex items-end gap-1.5 h-24">
+            {deal.history.map((h, i) => (
+              <div
+                key={i}
+                className={`flex-1 rounded-t-md animate-fade-up relative group ${
+                  i === 6
+                    ? "bg-gradient-to-t from-emerald-400 to-emerald-300 shadow-lg shadow-emerald-500/30"
+                    : "bg-white/20 hover:bg-white/30 transition-colors"
+                }`}
+                style={{
+                  height: `${h}%`,
+                  animationDelay: `${i * 90}ms`,
+                }}
+              >
+                {i === 6 && (
+                  <span className="absolute -top-1.5 left-1/2 -translate-x-1/2 h-3 w-3 rounded-full bg-emerald-400 shadow-lg animate-ping" />
+                )}
+                {/* Tooltip on hover */}
+                <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-white text-slate-900 text-[10px] font-bold px-1.5 py-0.5 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
+                  £{Math.floor(deal.original * (h / 100))}
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="flex items-center justify-between mt-2">
+            <span className="text-xs text-slate-500">Mon</span>
+            <div className="flex items-center gap-1.5">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="text-xs text-emerald-400 font-semibold">
+                Today
+              </span>
+            </div>
+          </div>
+          <div className="mt-4 pt-4 border-t border-white/10 flex items-baseline justify-between">
+            <span className="text-sm text-slate-300">Today's price</span>
+            <span className="flex items-baseline gap-2">
+              <span className="text-2xl font-bold text-white">
+                £{deal.price}
+              </span>
+              <span className="text-sm text-slate-500 line-through">
+                £{deal.original}
+              </span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function LiveDealStream() {
+  return (
+    <div className="glass-card md:col-span-3 group relative rounded-3xl p-7 hover:-translate-y-1 hover:shadow-xl hover:shadow-indigo-100 transition-all duration-300 bg-gradient-to-br from-indigo-50/80 via-white/85 to-sky-50/80 overflow-hidden">
+      <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center gap-2">
+          <div className="h-10 w-10 rounded-2xl bg-white shadow-sm flex items-center justify-center text-indigo-600">
+            <Globe className="h-5 w-5" />
+          </div>
+          <h3 className="text-lg font-semibold">Live Price Drops</h3>
+        </div>
+        <span className="flex items-center gap-1 text-[10px] font-bold text-emerald-600 uppercase tracking-wider bg-emerald-50 px-2 py-1 rounded-full">
+          <span className="h-1 w-1 rounded-full bg-emerald-500 animate-ping" />
+          Live
+        </span>
+      </div>
+
+      <div className="space-y-3 relative">
+        {RECENT_DROPS.map((drop, i) => (
+          <div
+            key={i}
+            className="flex items-center justify-between p-3 rounded-xl bg-white/50 border border-white/60 hover:bg-white/80 transition-colors group/item"
+          >
+            <div className="flex items-center gap-3">
+              <div className="h-8 w-8 rounded-full bg-sky-50 flex items-center justify-center text-sky-600 group-hover/item:scale-110 transition-transform">
+                <Plane className="h-3.5 w-3.5" />
+              </div>
+              <div>
+                <p className="text-xs font-bold text-slate-900 leading-none">
+                  {drop.from} → {drop.to}
+                </p>
+                <p className="text-[10px] text-slate-400 mt-1">{drop.time}</p>
+              </div>
+            </div>
+            <div className="text-right">
+              <p className="text-sm font-bold text-emerald-600 leading-none">
+                -£{drop.drop}
+              </p>
+              <p className="text-[10px] font-bold text-slate-900 mt-1">
+                £{drop.price}
+              </p>
+            </div>
+          </div>
+        ))}
+
+        {/* Fade overlay at bottom */}
+        <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-white/80 to-transparent pointer-events-none" />
+      </div>
+
+      <p className="text-[10px] text-slate-400 mt-4 text-center">
+        Monitoring 12,000+ routes every 60 minutes
+      </p>
+    </div>
+  );
+}
+
 function ProductDemo() {
   const [stage, setStage] = useState(0);
   const [routeIndex, setRouteIndex] = useState(0);
@@ -530,16 +726,15 @@ function ProductDemo() {
           </div>
 
           {/* Stage content — keyed by stage+route so it remounts and replays animations on each change */}
-          <div
-            key={`${routeIndex}-${stage}`}
-            className="p-6 md:p-10 min-h-[420px] bg-gradient-to-b from-white/60 to-sky-50/40 animate-fade-in"
-          >
-            {stage === 0 && (
-              <DemoSceneSearch route={route} duration={DEMO_DURATIONS[0]} />
-            )}
-            {stage === 1 && <DemoSceneResults route={route} />}
-            {stage === 2 && <DemoSceneTracking route={route} />}
-            {stage === 3 && <DemoSceneAlert route={route} />}
+          <div className="p-6 md:p-10 min-h-[420px] bg-gradient-to-b from-white/60 to-sky-50/40 relative">
+            <div key={`${routeIndex}-${stage}`} className="animate-fade-in">
+              {stage === 0 && (
+                <DemoSceneSearch route={route} duration={DEMO_DURATIONS[0]} />
+              )}
+              {stage === 1 && <DemoSceneResults route={route} />}
+              {stage === 2 && <DemoSceneTracking route={route} />}
+              {stage === 3 && <DemoSceneAlert route={route} />}
+            </div>
           </div>
 
           {/* Progress bar */}
@@ -1300,80 +1495,7 @@ export default function Home() {
           {/* Bento grid */}
           <div className="grid grid-cols-1 md:grid-cols-6 gap-4 md:gap-5">
             {/* BIG card — live price-watching demo */}
-            <div className="glass-card-dark md:col-span-4 md:row-span-2 group relative rounded-3xl p-8 md:p-10 text-white shadow-xl shadow-slate-200 hover:shadow-2xl hover:shadow-sky-200 transition-all duration-500">
-              {/* Decorative plane */}
-              <Plane className="absolute -top-2 -right-2 h-32 w-32 text-white/5 -rotate-12 group-hover:rotate-0 group-hover:scale-110 transition-transform duration-700" />
-
-              <div className="relative z-10">
-                <div className="inline-flex items-center gap-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 px-3 py-1.5 text-xs font-medium">
-                  <span className="relative flex h-2 w-2">
-                    <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75 animate-ping" />
-                    <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
-                  </span>
-                  Live · last checked 2 min ago
-                </div>
-
-                <h3 className="mt-5 text-2xl md:text-3xl font-bold leading-tight">
-                  We check the price every hour.
-                  <br />
-                  <span className="text-sky-300">
-                    You get a ping the moment it drops.
-                  </span>
-                </h3>
-
-                <p className="mt-3 text-slate-300 leading-relaxed max-w-md">
-                  No refreshing travel sites at 2am. No "did I miss it?" regret.
-                  Just a friendly email when it's time to book.
-                </p>
-
-                {/* Mini price chart */}
-                <div className="mt-8 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 p-5">
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="text-xs uppercase tracking-wider text-slate-400">
-                      London → New York · last 7 days
-                    </span>
-                    <span className="inline-flex items-center gap-1 text-emerald-400 font-semibold text-sm">
-                      <TrendingDown className="h-4 w-4" /> -34%
-                    </span>
-                  </div>
-                  <div className="flex items-end gap-1.5 h-24">
-                    {[72, 78, 75, 82, 70, 58, 48].map((h, i) => (
-                      <div
-                        key={i}
-                        className={`flex-1 rounded-t-md animate-fade-up ${
-                          i === 6
-                            ? "bg-gradient-to-t from-emerald-400 to-emerald-300 shadow-lg shadow-emerald-500/30"
-                            : "bg-white/20"
-                        }`}
-                        style={{
-                          height: `${h}%`,
-                          animationDelay: `${i * 90}ms`,
-                        }}
-                      />
-                    ))}
-                  </div>
-                  <div className="flex items-center justify-between mt-2">
-                    <span className="text-xs text-slate-500">Mon</span>
-                    <span className="text-xs text-emerald-400 font-semibold">
-                      Today
-                    </span>
-                  </div>
-                  <div className="mt-4 pt-4 border-t border-white/10 flex items-baseline justify-between">
-                    <span className="text-sm text-slate-300">
-                      Today's price
-                    </span>
-                    <span className="flex items-baseline gap-2">
-                      <span className="text-2xl font-bold text-white">
-                        £340
-                      </span>
-                      <span className="text-sm text-slate-500 line-through">
-                        £520
-                      </span>
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <BentoPriceWatching />
 
             {/* Small — savings stat */}
             <div className="glass-card md:col-span-2 group relative rounded-3xl p-7 hover:-translate-y-1 hover:shadow-xl hover:shadow-emerald-100 transition-all duration-300">
@@ -1435,22 +1557,7 @@ export default function Home() {
             </div>
 
             {/* Medium — any route */}
-            <div className="glass-card md:col-span-3 group relative rounded-3xl p-7 hover:-translate-y-1 hover:shadow-xl hover:shadow-indigo-100 transition-all duration-300 bg-gradient-to-br from-indigo-50/80 via-white/85 to-sky-50/80">
-              <div className="flex items-start gap-4">
-                <div className="h-12 w-12 shrink-0 rounded-2xl bg-white shadow-sm flex items-center justify-center text-indigo-600 group-hover:scale-110 group-hover:rotate-12 transition-transform">
-                  <Globe className="h-6 w-6" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-semibold">
-                    Every route. Every airline.
-                  </h3>
-                  <p className="text-slate-600 mt-1.5 leading-relaxed">
-                    London to Lagos. Boston to Bali. Tokyo to Toronto. If it's
-                    flying, we're watching.
-                  </p>
-                </div>
-              </div>
-            </div>
+            <LiveDealStream />
           </div>
         </div>
       </section>
