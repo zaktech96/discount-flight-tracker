@@ -765,7 +765,7 @@ function DemoSceneAlert({ route }: any) {
   const [isBooked, setIsBooked] = useState(false);
 
   return (
-    <div className="relative min-h-[400px] flex items-center justify-center overflow-hidden rounded-[2.5rem]">
+    <div className="relative min-h-[420px] flex items-center justify-center overflow-hidden rounded-[3rem]">
       {/* Background Ambience */}
       <motion.div
         initial={{ opacity: 0, scale: 1.1 }}
@@ -777,63 +777,61 @@ function DemoSceneAlert({ route }: any) {
             DESTINATIONS.find((d) => d.city === route.toCity)?.image ||
             "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1200&q=80"
           }
-          className="w-full h-full object-cover blur-[2px] brightness-[0.4]"
+          className="w-full h-full object-cover blur-[1px] brightness-[0.5]"
           alt=""
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-sky-500/20 to-black/60" />
+        <div className="absolute inset-0 bg-gradient-to-tr from-slate-950 via-slate-950/40 to-transparent" />
       </motion.div>
 
       <AnimatePresence mode="wait">
         {!isBooked ? (
           <motion.div
             key="alert"
-            initial={{ opacity: 0, y: 30, scale: 0.9 }}
+            initial={{ opacity: 0, y: 40, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, scale: 1.1, filter: "blur(10px)" }}
-            className="glass-card glass-gloss relative z-10 rounded-3xl shadow-2xl p-8 max-w-sm bg-white/95 dark:bg-slate-950/95 border-none"
+            exit={{ opacity: 0, scale: 1.05, filter: "blur(15px)" }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="glass-card relative z-10 rounded-[2.5rem] shadow-[0_32px_64px_-12px_rgba(0,0,0,0.6)] p-10 max-w-sm bg-white/10 dark:bg-slate-950/20 backdrop-blur-2xl border border-white/20"
           >
-            <div className="absolute -top-3 -right-3">
-              <span className="flex h-8 w-8">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-8 w-8 bg-sky-500 items-center justify-center text-white">
-                  <Bell className="h-4 w-4" />
-                </span>
-              </span>
-            </div>
+            <div className="flex flex-col items-center text-center">
+              <motion.div
+                initial={{ scale: 0.5, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ delay: 0.3, type: "spring" }}
+                className="h-20 w-20 rounded-3xl bg-emerald-500/20 flex items-center justify-center text-emerald-400 mb-8 border border-emerald-500/30"
+              >
+                <Mail className="h-10 w-10" />
+              </motion.div>
 
-            <div className="flex items-center gap-4 mb-6 pb-6 border-b border-slate-100 dark:border-white/10">
-              <div className="h-14 w-14 rounded-2xl bg-emerald-500/10 flex items-center justify-center text-emerald-600">
-                <Mail className="h-8 w-8" />
-              </div>
-              <div>
-                <p className="font-black text-xl dark:text-white leading-tight">
-                  Price dropped!
-                </p>
-                <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">
-                  Flight Guardian
-                </p>
-              </div>
-            </div>
+              <h3 className="text-sm font-black uppercase tracking-[0.3em] text-emerald-400 mb-2">
+                Price Drop Alert
+              </h3>
 
-            <div className="space-y-4 mb-8">
-              <p className="text-slate-600 dark:text-slate-300 text-lg leading-relaxed">
-                Great news! Your flight to <br />
-                <span className="text-slate-900 dark:text-white font-black text-2xl">
+              <div className="space-y-1 mb-10">
+                <p className="text-4xl font-black text-white tracking-tighter">
                   {route.toCity}
-                </span>{" "}
-                just hit your target of{" "}
-                <span className="text-emerald-600 font-black text-2xl">
-                  £{route.target}
-                </span>
+                </p>
+                <div className="flex items-center justify-center gap-2">
+                  <span className="text-white/40 font-bold uppercase text-[10px] tracking-widest">
+                    Now Only
+                  </span>
+                  <span className="text-3xl font-black text-white">
+                    £{route.target}
+                  </span>
+                </div>
+              </div>
+
+              <button
+                onClick={() => setIsBooked(true)}
+                className="glass-button w-full rounded-2xl bg-sky-600 text-white py-5 text-lg font-black uppercase tracking-[0.2em] shadow-[0_20px_40px_-10px_rgba(2,132,199,0.5)] active:scale-95 transition-all duration-300"
+              >
+                Book Now
+              </button>
+
+              <p className="mt-6 text-[10px] font-bold text-white/30 uppercase tracking-[0.15em]">
+                Verified by Flight Guardian Scan
               </p>
             </div>
-
-            <button
-              onClick={() => setIsBooked(true)}
-              className="glass-button glass-gloss w-full rounded-full bg-sky-600 text-white py-4 text-xl font-black uppercase tracking-widest shadow-xl shadow-sky-500/20 active:scale-95 transition-transform"
-            >
-              Book Now
-            </button>
           </motion.div>
         ) : (
           <motion.div
@@ -842,21 +840,15 @@ function DemoSceneAlert({ route }: any) {
             animate={{ opacity: 1, scale: 1 }}
             className="text-center relative z-10"
           >
-            <div className="h-24 w-24 bg-emerald-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-2xl shadow-emerald-500/40">
-              <Check className="h-12 w-12 text-white" strokeWidth={4} />
+            <div className="h-28 w-28 bg-emerald-500 rounded-full flex items-center justify-center mx-auto mb-8 shadow-[0_0_50px_rgba(16,185,129,0.4)]">
+              <Check className="h-14 w-14 text-white" strokeWidth={5} />
             </div>
-            <h3 className="text-4xl font-black text-white mb-2">BOOKED!</h3>
-            <p className="text-emerald-100 font-bold text-xl">
-              Enjoy your trip to {route.toCity}!
+            <h3 className="text-5xl font-black text-white tracking-tighter mb-3">
+              RESERVED
+            </h3>
+            <p className="text-emerald-100/60 font-bold text-lg tracking-wide uppercase text-xs">
+              Tickets sent to your inbox
             </p>
-            <motion.div
-              initial={{ width: 0 }}
-              animate={{ width: "100%" }}
-              transition={{ delay: 0.5, duration: 1 }}
-              className="h-1 bg-white/30 rounded-full mt-8 overflow-hidden"
-            >
-              <div className="h-full bg-white w-1/3 animate-[shimmer_2s_infinite]" />
-            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>

@@ -22,6 +22,22 @@ verified before merge - no exceptions.
 
 ## Log
 
+### SL-042 - Premium Demo Overhaul: 'Price Drop Alert'
+
+**Scope:** `app/routes/home.tsx`
+
+**Summary:** 
+- **Design Evolution:** Replaced the previous "Price dropped!" card with a sophisticated, minimal "Price Drop Alert" scene.
+- **Visual Depth:** Enhanced the glassmorphism effect using a refined `backdrop-blur-2xl` and optimized transparency ratios (`bg-white/10` and `dark:bg-slate-950/20`) for a deeper, more premium feel.
+- **High-Contrast Typography:** Implemented a bold typographic hierarchy, utilizing `font-black` and extreme tracking (`tracking-[0.3em]`) for status labels to align with high-end tech aesthetics.
+- **Micro-Interactions:** 
+    - Refined the notification icon with a custom `spring` animation.
+    - Updated the "Book Now" call-to-action with a custom shadow glow and tactile feedback.
+    - Overhauled the "Reserved" success state with a cinematic scale-up and expanded shadow ambience.
+- **Atmospheric Background:** Adjusted the background ambience with a custom `slate-950` gradient overlay to ensure text legibility while preserving destination imagery context.
+
+**Verification:** Build passes successfully; demo scene aesthetic verified manually on both themes.
+
 ### SL-041 - Global Night Mode Aesthetic Enhancement
 
 **Scope:** `app/routes/*.tsx`, `app/root.tsx`, `app/components/**/*.tsx`
