@@ -1040,7 +1040,7 @@ function ProductDemo() {
         </div>
 
         {/* Faux browser */}
-        <div className="relative glass-card glass-gloss rounded-[2.5rem] shadow-2xl shadow-sky-200/60 border-white/40">
+        <div className="relative glass-card glass-gloss rounded-[2.5rem] shadow-2xl shadow-sky-200/60 border-white/40 overflow-hidden">
           {/* Browser chrome */}
           <div className="flex items-center gap-3 px-6 py-4 border-b border-white/60 bg-white/40">
             <div className="flex gap-2">
@@ -1055,16 +1055,16 @@ function ProductDemo() {
             <div className="w-20" />
           </div>
 
-          {/* Stage content — keyed by stage+route so it remounts and replays animations on each change */}
-          <div className="p-8 md:p-14 lg:p-20 min-h-[500px] md:min-h-[600px] bg-gradient-to-b from-white/60 to-sky-50/40 relative overflow-hidden flex flex-col justify-center">
-            <AnimatePresence mode="popLayout">
+          {/* Stage content — FIXED HEIGHT to prevent page jitter */}
+          <div className="h-[550px] md:h-[650px] lg:h-[750px] bg-gradient-to-b from-white/60 to-sky-50/40 relative flex flex-col justify-center overflow-hidden">
+            <AnimatePresence mode="wait">
               <motion.div
                 key={`${routeIndex}-${stage}`}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
+                initial={{ opacity: 0, scale: 0.98 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 1.02 }}
                 transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                className="w-full h-full flex flex-col justify-center"
+                className="w-full px-8 md:px-14 lg:p-20"
               >
                 {stage === 0 && (
                   <DemoSceneSearch route={route} duration={DEMO_DURATIONS[0]} />

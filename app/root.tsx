@@ -5,6 +5,7 @@ import { rootAuthLoader } from "@clerk/react-router/ssr.server";
 import { ConvexProviderWithClerk } from "convex/react-clerk";
 import { ConvexReactClient } from "convex/react";
 import { Navbar } from "./components/navigation/navbar";
+import { ThemeProvider } from "next-themes";
 import "./app.css";
 
 export const links: Route.LinksFunction = () => [
@@ -50,20 +51,22 @@ export default function App({ loaderData }: Route.ComponentProps) {
         <Meta />
         <Links />
       </head>
-      <body className="bg-white text-slate-900">
-        <ClerkProvider
-          loaderData={loaderData}
-          publishableKey={import.meta.env.VITE_CLERK_PUBLISHABLE_KEY}
-        >
-          <ConvexProviderWithClerk client={convex} useAuth={useAuth}>
-            <Navbar />
-            <div>
-              <Outlet />
-            </div>
-            <ScrollRestoration />
-            <Scripts />
-          </ConvexProviderWithClerk>
-        </ClerkProvider>
+      <body className="bg-white text-slate-900 transition-colors duration-300 dark:bg-slate-950 dark:text-slate-50">
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <ClerkProvider
+            loaderData={loaderData}
+            publishableKey={import.meta.env.VITE_CLERK_PUBLISHABLE_KEY}
+          >
+            <ConvexProviderWithClerk client={convex} useAuth={useAuth}>
+              <Navbar />
+              <div>
+                <Outlet />
+              </div>
+              <ScrollRestoration />
+              <Scripts />
+            </ConvexProviderWithClerk>
+          </ClerkProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

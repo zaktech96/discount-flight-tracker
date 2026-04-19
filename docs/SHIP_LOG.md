@@ -22,6 +22,19 @@ verified before merge - no exceptions.
 
 ## Log
 
+### SL-027 - Premium Touch & Night Mode Support
+
+**Scope:** `app/root.tsx`, `app/components/navigation/navbar.tsx`, `app/routes/home.tsx`, `app/app.css`
+
+**Summary:** 
+- Implemented full support for Night Mode (Dark Mode) using `next-themes`, with a polished theme toggle in the `Navbar`.
+- Refined the `ProductDemo` component with strict, responsive height locking and `AnimatePresence` optimizations to completely eliminate page-wide jitter during transitions.
+- Dramatically slowed down the automated product demo for a more breathable, premium user experience.
+- Applied staggered entry animations and high-end `glass-gloss` effects to all primary landing page sections and cards.
+- Integrated the theme switching system to automatically respect user preference while providing manual control.
+
+**Verification:** Build passes successfully.
+
 ### SL-026 - Enhanced Bento Grid Interactivity
 
 **Scope:** `app/routes/home.tsx`
