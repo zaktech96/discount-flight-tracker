@@ -22,6 +22,17 @@ verified before merge - no exceptions.
 
 ## Log
 
+### SL-012 - Continuous "Conveyor Belt" Scroll
+
+**Scope:** `app/routes/home.tsx`, `app/app.css`
+
+**Summary:** 
+- Converted the "Trending Deals" destination carousel into an infinite, continuous "conveyor belt" auto-scrolling animation.
+- Implemented CSS keyframes (`animate-conveyor-belt`) to smoothly loop through duplicated arrays of destination cards. The animation gracefully pauses when the user hovers over any card so they can inspect it.
+- Added soft gradient edges (`bg-gradient-to-r from-sky-50 to-transparent`) to the sides of the viewport to create a smooth fade-in/fade-out effect as cards enter and leave the screen.
+
+**Verification:** Build passes successfully.
+
 ### SL-011 - Horizontal Carousel Fix & New Destinations
 
 **Scope:** `app/routes/home.tsx`

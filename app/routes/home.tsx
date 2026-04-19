@@ -989,23 +989,27 @@ function DestinationsSection() {
             No matches yet — try another filter.
           </div>
         ) : (
-          <div className="flex overflow-x-auto snap-x snap-mandatory pb-12 pt-4 -mx-6 px-6 gap-5 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
-            {visible.map((dest, i) => {
-              const hovered = hoveredCode === dest.code;
-              const savings = dest.wasFrom ? dest.wasFrom - dest.from : 0;
+          <div className="relative w-[100vw] left-1/2 -ml-[50vw] overflow-hidden pb-12 pt-4 group">
+            {/* The fading edges to make the conveyor belt look nice */}
+            <div className="absolute top-0 bottom-0 left-0 w-16 md:w-32 bg-gradient-to-r from-sky-50 to-transparent z-20 pointer-events-none" />
+            <div className="absolute top-0 bottom-0 right-0 w-16 md:w-32 bg-gradient-to-l from-sky-50 to-transparent z-20 pointer-events-none" />
 
-              return (
-                <Link
-                  key={dest.code}
-                  to="/search"
-                  onMouseEnter={() => setHoveredCode(dest.code)}
-                  onMouseLeave={() =>
-                    setHoveredCode((c) => (c === dest.code ? null : c))
-                  }
-                  className="group relative aspect-[4/5] w-[280px] sm:w-[320px] md:w-[calc(33.333%-14px)] shrink-0 snap-center rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl hover:shadow-sky-400/30 transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] animate-fade-up focus:outline-none focus-visible:ring-4 focus-visible:ring-sky-300"
-                  style={{ animationDelay: `${(i % 3) * 70}ms` }}
-                  aria-label={`Track flights to ${dest.city}, ${dest.country}, from £${dest.from}`}
-                >
+            <div className="flex w-max animate-conveyor-belt group-hover:[animation-play-state:paused] gap-5 px-5">
+              {[...visible, ...visible, ...visible].map((dest, i) => {
+                const hovered = hoveredCode === `${dest.code}-${i}`;
+                const savings = dest.wasFrom ? dest.wasFrom - dest.from : 0;
+
+                return (
+                  <Link
+                    key={`${dest.code}-${i}`}
+                    to="/search"
+                    onMouseEnter={() => setHoveredCode(`${dest.code}-${i}`)}
+                    onMouseLeave={() =>
+                      setHoveredCode((c) => (c === `${dest.code}-${i}` ? null : c))
+                    }
+                    className="group relative aspect-[4/5] w-[280px] sm:w-[320px] shrink-0 rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl hover:shadow-sky-400/30 transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] focus:outline-none focus-visible:ring-4 focus-visible:ring-sky-300"
+                    aria-label={`Track flights to ${dest.city}, ${dest.country}, from £${dest.from}`}
+                  >
                   <img
                     src={dest.image}
                     alt={`${dest.city} cityscape`}
