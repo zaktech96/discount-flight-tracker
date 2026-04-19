@@ -1005,131 +1005,136 @@ function DestinationsSection() {
                     to="/search"
                     onMouseEnter={() => setHoveredCode(`${dest.code}-${i}`)}
                     onMouseLeave={() =>
-                      setHoveredCode((c) => (c === `${dest.code}-${i}` ? null : c))
+                      setHoveredCode((c) =>
+                        c === `${dest.code}-${i}` ? null : c,
+                      )
                     }
                     className="group relative aspect-[4/5] w-[280px] sm:w-[300px] md:w-[320px] lg:w-[340px] xl:w-[380px] shrink-0 rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl hover:shadow-sky-400/30 transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] focus:outline-none focus-visible:ring-4 focus-visible:ring-sky-300"
                     aria-label={`Track flights to ${dest.city}, ${dest.country}, from £${dest.from}`}
                   >
-                  <img
-                    src={dest.image}
-                    alt={`${dest.city} cityscape`}
-                    loading="lazy"
-                    className="absolute inset-0 h-full w-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent group-hover:from-black/90 group-hover:via-black/40 transition-colors duration-500" />
-
-                  {/* Top-left: live tracker count */}
-                  <div className="absolute top-4 left-4 flex items-center gap-1.5 rounded-full bg-black/35 backdrop-blur-md border border-white/20 px-2.5 py-1 text-[11px] font-semibold text-white z-10">
-                    <span className="relative flex h-1.5 w-1.5">
-                      <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75 animate-ping" />
-                      <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
-                    </span>
-                    {dest.trackers} tracking
-                  </div>
-
-                  {/* Top-right: dropped badge if applicable, else plane */}
-                  <div className="absolute top-4 right-4 flex flex-col items-end gap-2 z-10">
-                    {dest.wasFrom ? (
-                      <div className="inline-flex items-center gap-1 rounded-full bg-emerald-500 text-white px-2.5 py-1 text-[11px] font-bold shadow-lg animate-float-gentle">
-                        <TrendingDown className="h-3 w-3" />
-                        -£{savings}
-                      </div>
-                    ) : null}
-                    <Plane
-                      className={`h-5 w-5 text-white/90 drop-shadow-md transition-all duration-700 group-hover:translate-x-12 group-hover:-translate-y-12 group-hover:opacity-0 group-hover:rotate-45 ${dest.wasFrom ? "mt-1" : ""}`}
+                    <img
+                      src={dest.image}
+                      alt={`${dest.city} cityscape`}
+                      loading="lazy"
+                      className="absolute inset-0 h-full w-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
                     />
-                  </div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent group-hover:from-black/90 group-hover:via-black/40 transition-colors duration-500" />
 
-                  {/* Animated takeoff plane on hover */}
-                  <Plane className="absolute bottom-24 right-8 h-8 w-8 text-sky-400 drop-shadow-2xl opacity-0 -translate-x-16 translate-y-16 -rotate-45 transition-all duration-700 ease-out group-hover:translate-x-0 group-hover:translate-y-0 group-hover:opacity-100 z-10 pointer-events-none" />
+                    {/* Top-left: live tracker count */}
+                    <div className="absolute top-4 left-4 flex items-center gap-1.5 rounded-full bg-black/35 backdrop-blur-md border border-white/20 px-2.5 py-1 text-[11px] font-semibold text-white z-10">
+                      <span className="relative flex h-1.5 w-1.5">
+                        <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75 animate-ping" />
+                        <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
+                      </span>
+                      {dest.trackers} tracking
+                    </div>
 
-                  {/* Bottom content — Now a distinct frosted card that expands */}
-                  <div className="absolute bottom-4 left-4 right-4 z-10">
-                    <div className="rounded-2xl bg-black/40 backdrop-blur-md border border-white/20 p-4 transition-all duration-500 group-hover:bg-black/60 group-hover:border-white/30">
-                      <div className="flex items-baseline gap-2 text-white">
-                        <span className="text-xl md:text-2xl font-bold">
-                          {dest.city}
-                        </span>
-                        <span className="text-white/70 text-xs font-medium">
-                          {dest.code}
-                        </span>
-                      </div>
-                      <div className="text-white/75 text-xs mb-3">
-                        {dest.country} · {dest.vibe}
-                      </div>
-
-                      <div className="flex items-end justify-between text-white">
-                        <div>
-                          <div className="text-white/70 text-[11px]">from</div>
-                          <div className="flex items-baseline gap-1.5">
-                            <span className="text-xl font-bold">
-                              £{dest.from}
-                            </span>
-                            {dest.wasFrom ? (
-                              <span className="text-xs text-white/60 line-through">
-                                £{dest.wasFrom}
-                              </span>
-                            ) : null}
-                          </div>
+                    {/* Top-right: dropped badge if applicable, else plane */}
+                    <div className="absolute top-4 right-4 flex flex-col items-end gap-2 z-10">
+                      {dest.wasFrom ? (
+                        <div className="inline-flex items-center gap-1 rounded-full bg-emerald-500 text-white px-2.5 py-1 text-[11px] font-bold shadow-lg animate-float-gentle">
+                          <TrendingDown className="h-3 w-3" />
+                          -£{savings}
                         </div>
-                        <span
-                          className={`glass-button rounded-full px-3 py-1.5 text-xs font-bold flex items-center gap-1 transition-all duration-300 ${
+                      ) : null}
+                      <Plane
+                        className={`h-5 w-5 text-white/90 drop-shadow-md transition-all duration-700 group-hover:translate-x-12 group-hover:-translate-y-12 group-hover:opacity-0 group-hover:rotate-45 ${dest.wasFrom ? "mt-1" : ""}`}
+                      />
+                    </div>
+
+                    {/* Animated takeoff plane on hover */}
+                    <Plane className="absolute bottom-24 right-8 h-8 w-8 text-sky-400 drop-shadow-2xl opacity-0 -translate-x-16 translate-y-16 -rotate-45 transition-all duration-700 ease-out group-hover:translate-x-0 group-hover:translate-y-0 group-hover:opacity-100 z-10 pointer-events-none" />
+
+                    {/* Bottom content — Now a distinct frosted card that expands */}
+                    <div className="absolute bottom-4 left-4 right-4 z-10">
+                      <div className="rounded-2xl bg-black/40 backdrop-blur-md border border-white/20 p-4 transition-all duration-500 group-hover:bg-black/60 group-hover:border-white/30">
+                        <div className="flex items-baseline gap-2 text-white">
+                          <span className="text-xl md:text-2xl font-bold">
+                            {dest.city}
+                          </span>
+                          <span className="text-white/70 text-xs font-medium">
+                            {dest.code}
+                          </span>
+                        </div>
+                        <div className="text-white/75 text-xs mb-3">
+                          {dest.country} · {dest.vibe}
+                        </div>
+
+                        <div className="flex items-end justify-between text-white">
+                          <div>
+                            <div className="text-white/70 text-[11px]">
+                              from
+                            </div>
+                            <div className="flex items-baseline gap-1.5">
+                              <span className="text-xl font-bold">
+                                £{dest.from}
+                              </span>
+                              {dest.wasFrom ? (
+                                <span className="text-xs text-white/60 line-through">
+                                  £{dest.wasFrom}
+                                </span>
+                              ) : null}
+                            </div>
+                          </div>
+                          <span
+                            className={`glass-button rounded-full px-3 py-1.5 text-xs font-bold flex items-center gap-1 transition-all duration-300 ${
+                              hovered
+                                ? "opacity-100 translate-y-0 bg-sky-500 text-white border border-sky-400/80 shadow-lg shadow-sky-500/40"
+                                : "opacity-0 translate-y-2 bg-white/20 text-white/90 backdrop-blur-md border border-white/30"
+                            }`}
+                          >
+                            Track <ArrowRight className="h-3 w-3" />
+                          </span>
+                        </div>
+
+                        {/* Interactive hover details - more robust and engaging */}
+                        <div
+                          className={`overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] ${
                             hovered
-                              ? "opacity-100 translate-y-0 bg-sky-500 text-white border border-sky-400/80 shadow-lg shadow-sky-500/40"
-                              : "opacity-0 translate-y-2 bg-white/20 text-white/90 backdrop-blur-md border border-white/30"
+                              ? "max-h-32 opacity-100 mt-4"
+                              : "max-h-0 opacity-0 mt-0"
                           }`}
                         >
-                          Track <ArrowRight className="h-3 w-3" />
-                        </span>
-                      </div>
-
-                      {/* Interactive hover details - more robust and engaging */}
-                      <div
-                        className={`overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] ${
-                          hovered
-                            ? "max-h-32 opacity-100 mt-4"
-                            : "max-h-0 opacity-0 mt-0"
-                        }`}
-                      >
-                        <div className="pt-3 border-t border-white/20 flex flex-col gap-2">
-                          <div className="flex items-center justify-between text-[11px] text-white/90">
-                            <span className="flex items-center gap-1.5 text-sky-200">
-                              <Bell className="h-3 w-3" />
-                              {dest.trackers * 3} alerts sent
-                            </span>
-                            <span className="flex items-center gap-1.5 text-amber-200">
-                              <Sparkles className="h-3 w-3" />
-                              {dest.wasFrom
-                                ? "Price dropping"
-                                : "High volatility"}
-                            </span>
+                          <div className="pt-3 border-t border-white/20 flex flex-col gap-2">
+                            <div className="flex items-center justify-between text-[11px] text-white/90">
+                              <span className="flex items-center gap-1.5 text-sky-200">
+                                <Bell className="h-3 w-3" />
+                                {dest.trackers * 3} alerts sent
+                              </span>
+                              <span className="flex items-center gap-1.5 text-amber-200">
+                                <Sparkles className="h-3 w-3" />
+                                {dest.wasFrom
+                                  ? "Price dropping"
+                                  : "High volatility"}
+                              </span>
+                            </div>
+                            {dest.wasFrom && (
+                              <div className="w-full bg-white/10 rounded-full h-1.5 mt-1 overflow-hidden">
+                                <div
+                                  className="bg-emerald-400 h-1.5 rounded-full"
+                                  style={{ width: "75%" }}
+                                />
+                              </div>
+                            )}
+                            {!dest.wasFrom && (
+                              <div className="w-full bg-white/10 rounded-full h-1.5 mt-1 overflow-hidden">
+                                <div
+                                  className="bg-sky-400 h-1.5 rounded-full"
+                                  style={{ width: "40%" }}
+                                />
+                              </div>
+                            )}
+                            <p className="text-[9px] text-white/60 text-right mt-0.5">
+                              Chance of drop: {dest.wasFrom ? "High" : "Medium"}
+                            </p>
                           </div>
-                          {dest.wasFrom && (
-                            <div className="w-full bg-white/10 rounded-full h-1.5 mt-1 overflow-hidden">
-                              <div
-                                className="bg-emerald-400 h-1.5 rounded-full"
-                                style={{ width: "75%" }}
-                              />
-                            </div>
-                          )}
-                          {!dest.wasFrom && (
-                            <div className="w-full bg-white/10 rounded-full h-1.5 mt-1 overflow-hidden">
-                              <div
-                                className="bg-sky-400 h-1.5 rounded-full"
-                                style={{ width: "40%" }}
-                              />
-                            </div>
-                          )}
-                          <p className="text-[9px] text-white/60 text-right mt-0.5">
-                            Chance of drop: {dest.wasFrom ? "High" : "Medium"}
-                          </p>
                         </div>
                       </div>
                     </div>
-                  </div>
-                </Link>
-              );
-            })}
+                  </Link>
+                );
+              })}
+            </div>
           </div>
         )}
 

@@ -22,6 +22,16 @@ verified before merge - no exceptions.
 
 ## Log
 
+### SL-014 - Hotfix: Missing JSX Closing Tag
+
+**Scope:** `app/routes/home.tsx`
+
+**Summary:** 
+- Resolved a critical build failure (`The character "}" is not valid inside a JSX element`) that occurred during the Vercel deployment. 
+- The error was traced to a missing closing `</div>` tag introduced during the conveyor belt container resizing. The tag has been restored and the production build now passes successfully.
+
+**Verification:** Build passes successfully via `npm run build`.
+
 ### SL-013 - Conveyor Belt Sizing Constraints
 
 **Scope:** `app/routes/home.tsx`
