@@ -48,6 +48,8 @@ Real screenshots of price drops the tracker flagged. The single highest-leverage
 Screenshots from the journal. Devs reward honesty; travel folks don't care but aren't the audience here.
 
 **Angles**
+- "Convex + Clerk auth deployment hurdles. Schema validation failing on production because `VITE_CLERK_FRONTEND_API_URL` was missing from the Convex dashboard env variables. Always sync your Clerk keys!"
+- "Resolving nasty React/Convex peer dependency conflicts. Sometimes you just have to nuke `node_modules` and `npm install --legacy-peer-deps` to get the CLI working again."
 - "Here's what the glass UI looks like — backdrop-blur is pretty on desktop, murder on mobile. Here's how I gated it:" + code snippet
 - "React Router 7 + Clerk middleware nearly killed me. The one line that fixed it."
 - "Swapped gradient placeholders for real destination photos. Delta in how the page *feels* is massive."

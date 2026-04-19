@@ -22,6 +22,14 @@ verified before merge - no exceptions.
 
 ## Log
 
+### SL-003 - Convex Production Deployment
+
+**Scope:** `convex/`, `.env.local`
+
+**Summary:** Resolved local package/peer dependency conflicts by clearing node_modules and running a clean `npm install --legacy-peer-deps`. Configured `VITE_CLERK_FRONTEND_API_URL` on the Convex production environment with the local Clerk issuer and successfully pushed schemas, migrations, and functions via `npx convex deploy --yes`.
+
+**Verification:** Convex deployment finished successfully, schemas validated, and table indexes initialized on production.
+
 ### SL-002 - Dynamic Tracking Route UI
 
 **Scope:** `app/routes/track.$id.tsx`, `app/components/PriceDisplay.tsx`, `app/routes.ts`, `app/components/FlightSearch.tsx`, `app/components/homepage/footer.tsx`.

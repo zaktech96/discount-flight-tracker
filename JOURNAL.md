@@ -4,6 +4,19 @@ A running log of what shipped, what broke, and what we learned. Newest entries a
 
 ---
 
+## 📝 2026-04-19 — Convex Production Deployment & Dependency Resolution
+
+**Shipped**
+- Resolved local package/peer dependency conflicts by clearing `node_modules` and performing a clean `npm install --legacy-peer-deps`.
+- Configured `VITE_CLERK_FRONTEND_API_URL` on the Convex production environment to resolve Clerk authentication schema validation errors.
+- Successfully pushed schemas, generated TypeScript bindings, initialized table indexes, and deployed backend functions to production via `npx convex deploy --yes`.
+
+**Lessons**
+- **Dependency Conflicts:** The `@convex-dev/migrations` package had strict peer dependencies on `convex` versions, causing `npm install` and `bun install` to fail or leave the workspace in a broken state. `npm install --legacy-peer-deps` was necessary to force resolution and get the Convex CLI working correctly.
+- **Convex + Clerk in Prod:** The Convex backend strictly requires `VITE_CLERK_FRONTEND_API_URL` to be present in its environment variables when using Clerk for authentication, otherwise the schema deployment will fail.
+
+---
+
 ## 📝 2026-04-19 — Glass UI & Smarter Product Demo
 
 **Shipped**
