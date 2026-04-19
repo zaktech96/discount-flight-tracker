@@ -22,6 +22,16 @@ verified before merge - no exceptions.
 
 ## Log
 
+### SL-010 - Immersive Destination Cards
+
+**Scope:** `app/routes/home.tsx`
+
+**Summary:** 
+- Redesigned the destination cards in the "Trending Deals" section to move the text into a distinct, frosted glass card at the bottom.
+- Enhanced the interactive "insight drawer" that slides up from the bottom on hover. It now includes a simulated progress bar indicating "High volatility" or "Price dropping" trends and "Chance of drop" metrics, giving users engaging, actionable data.
+
+**Verification:** Build passes successfully.
+
 ### SL-009 - Scaled Up Layout & Responsiveness
 
 **Scope:** `app/routes/home.tsx`
