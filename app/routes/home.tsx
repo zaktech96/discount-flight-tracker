@@ -242,12 +242,36 @@ const DESTINATIONS: Destination[] = [
     code: "BKK",
     country: "Thailand",
     region: "Asia",
-    vibe: "Beach",
+    vibe: "City",
     from: 395,
     wasFrom: 480,
     trackers: 312,
     image:
       "https://images.unsplash.com/photo-1504609770332-e224483f76f5?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    city: "Mexico City",
+    code: "MEX",
+    country: "Mexico",
+    region: "Americas",
+    vibe: "Culture",
+    from: 412,
+    wasFrom: 520,
+    trackers: 184,
+    image:
+      "https://images.unsplash.com/photo-1518105779142-d975f22f1b0a?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    city: "Cancun",
+    code: "CUN",
+    country: "Mexico",
+    region: "Americas",
+    vibe: "Beach",
+    from: 356,
+    wasFrom: 440,
+    trackers: 295,
+    image:
+      "https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?auto=format&fit=crop&w=800&q=80",
   },
   {
     city: "Seoul",
@@ -272,6 +296,30 @@ const DESTINATIONS: Destination[] = [
     trackers: 428,
     image:
       "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    city: "Lima",
+    code: "LIM",
+    country: "Peru",
+    region: "South America",
+    vibe: "Culture",
+    from: 485,
+    wasFrom: 560,
+    trackers: 156,
+    image:
+      "https://images.unsplash.com/photo-1580619305218-85e4783c164b?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    city: "Bogota",
+    code: "BOG",
+    country: "Colombia",
+    region: "South America",
+    vibe: "City",
+    from: 442,
+    wasFrom: 510,
+    trackers: 128,
+    image:
+      "https://images.unsplash.com/photo-1583531172005-814191b8b6c0?auto=format&fit=crop&w=800&q=80",
   },
   {
     city: "New York",
@@ -344,6 +392,54 @@ const DESTINATIONS: Destination[] = [
     trackers: 134,
     image:
       "https://images.unsplash.com/photo-1589909202802-8f4aadce1849?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    city: "Cairo",
+    code: "CAI",
+    country: "Egypt",
+    region: "Africa",
+    vibe: "Culture",
+    from: 285,
+    wasFrom: 360,
+    trackers: 412,
+    image:
+      "https://images.unsplash.com/photo-1572252009286-268acec5ca0a?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    city: "Tunis",
+    code: "TUN",
+    country: "Tunisia",
+    region: "Africa",
+    vibe: "Culture",
+    from: 195,
+    wasFrom: 240,
+    trackers: 86,
+    image:
+      "https://images.unsplash.com/photo-1589254065878-42c9da997008?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    city: "Zanzibar",
+    code: "ZNZ",
+    country: "Tanzania",
+    region: "Africa",
+    vibe: "Beach",
+    from: 420,
+    wasFrom: 510,
+    trackers: 342,
+    image:
+      "https://images.unsplash.com/photo-1586861635167-e5223aadc9fe?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    city: "Nairobi",
+    code: "NBO",
+    country: "Kenya",
+    region: "Africa",
+    vibe: "City",
+    from: 395,
+    wasFrom: 470,
+    trackers: 156,
+    image:
+      "https://images.unsplash.com/photo-1547448415-e9f5b28e570d?auto=format&fit=crop&w=800&q=80",
   },
   {
     city: "Marrakech",

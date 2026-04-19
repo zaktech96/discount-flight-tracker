@@ -22,6 +22,21 @@ verified before merge - no exceptions.
 
 ## Log
 
+### SL-033 - Global Destination Expansion & Image Hotfix
+
+**Scope:** `app/routes/home.tsx`
+
+**Summary:** 
+- Resolved a missing image issue for Bangkok by updating to a high-fidelity Unsplash source.
+- Significantly expanded the global destination catalog to provide better coverage for all regions:
+    - **Americas:** Added Mexico City and Cancun (Mexico).
+    - **South America:** Added Lima (Peru) and Bogota (Colombia).
+    - **Africa:** Added Cairo (Egypt), Tunis (Tunisia), Zanzibar (Tanzania), and Nairobi (Kenya).
+- Verified that all new cards have correct image URLs, region tags, and appropriate "vibe" metadata (Culture, Beach, City).
+- Expanded content ensures that filtering by any region now provides a dense, visually rich conveyor belt experience.
+
+**Verification:** Build passes successfully.
+
 ### SL-032 - Destination Expansion & Conveyor Belt Optimization
 
 **Scope:** `app/routes/home.tsx`, `app/app.css`
