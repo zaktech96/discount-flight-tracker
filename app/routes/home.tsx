@@ -78,8 +78,19 @@ const DEMO_ROUTES: DemoRoute[] = [
     target: 340,
     drop: 40,
     deals: [
-      { airline: "Virgin Atlantic", price: 380, original: 490, duration: "8h 35m", highlight: true },
-      { airline: "British Airways", price: 420, original: 560, duration: "8h 20m" },
+      {
+        airline: "Virgin Atlantic",
+        price: 380,
+        original: 490,
+        duration: "8h 35m",
+        highlight: true,
+      },
+      {
+        airline: "British Airways",
+        price: 420,
+        original: 560,
+        duration: "8h 20m",
+      },
       { airline: "United", price: 485, original: 640, duration: "11h 20m" },
     ],
   },
@@ -96,9 +107,25 @@ const DEMO_ROUTES: DemoRoute[] = [
     target: 350,
     drop: 45,
     deals: [
-      { airline: "Emirates", price: 395, original: 530, duration: "6h 45m", highlight: true },
-      { airline: "Qatar Airways", price: 440, original: 580, duration: "7h 10m" },
-      { airline: "Turkish Airlines", price: 475, original: 610, duration: "9h 50m" },
+      {
+        airline: "Emirates",
+        price: 395,
+        original: 530,
+        duration: "6h 45m",
+        highlight: true,
+      },
+      {
+        airline: "Qatar Airways",
+        price: 440,
+        original: 580,
+        duration: "7h 10m",
+      },
+      {
+        airline: "Turkish Airlines",
+        price: 475,
+        original: 610,
+        duration: "9h 50m",
+      },
     ],
   },
   {
@@ -114,7 +141,13 @@ const DEMO_ROUTES: DemoRoute[] = [
     target: 550,
     drop: 62,
     deals: [
-      { airline: "ANA", price: 612, original: 820, duration: "12h 10m", highlight: true },
+      {
+        airline: "ANA",
+        price: 612,
+        original: 820,
+        duration: "12h 10m",
+        highlight: true,
+      },
       { airline: "JAL", price: 655, original: 840, duration: "12h 25m" },
       { airline: "Lufthansa", price: 720, original: 910, duration: "14h 30m" },
     ],
@@ -151,8 +184,8 @@ type Destination = {
   region: "Europe" | "Asia" | "Americas";
   vibe: "City" | "Beach" | "Culture";
   from: number;
-  wasFrom?: number;     // if present, the price recently dropped
-  trackers: number;     // social proof — how many are watching
+  wasFrom?: number; // if present, the price recently dropped
+  trackers: number; // social proof — how many are watching
   image: string;
 };
 
@@ -262,7 +295,13 @@ const DESTINATIONS: Destination[] = [
   },
 ];
 
-const DESTINATION_FILTERS = ["All", "Europe", "Asia", "Americas", "Beach"] as const;
+const DESTINATION_FILTERS = [
+  "All",
+  "Europe",
+  "Asia",
+  "Americas",
+  "Beach",
+] as const;
 type DestinationFilter = (typeof DESTINATION_FILTERS)[number];
 
 const FAQS = [
@@ -335,8 +374,8 @@ function ProductDemo() {
             .
           </h2>
           <p className="text-slate-600 mt-4 text-lg max-w-xl mx-auto">
-            No reading. No sign-up. Just watch Flight Guardian go from search
-            to savings.
+            No reading. No sign-up. Just watch Flight Guardian go from search to
+            savings.
           </p>
         </div>
 
@@ -361,7 +400,9 @@ function ProductDemo() {
             key={`${routeIndex}-${stage}`}
             className="p-6 md:p-10 min-h-[420px] bg-gradient-to-b from-white/60 to-sky-50/40 animate-fade-in"
           >
-            {stage === 0 && <DemoSceneSearch route={route} duration={DEMO_DURATIONS[0]} />}
+            {stage === 0 && (
+              <DemoSceneSearch route={route} duration={DEMO_DURATIONS[0]} />
+            )}
             {stage === 1 && <DemoSceneResults route={route} />}
             {stage === 2 && <DemoSceneTracking route={route} />}
             {stage === 3 && <DemoSceneAlert route={route} />}
@@ -431,8 +472,8 @@ function DemoTypingField({
   const borderClass = activeNow
     ? "border-sky-400 shadow-sm shadow-sky-100"
     : done
-    ? "border-emerald-300"
-    : "border-slate-200";
+      ? "border-emerald-300"
+      : "border-slate-200";
   return (
     <div>
       <span className="text-xs font-medium text-slate-700 mb-1.5 flex items-center gap-1.5">
@@ -556,9 +597,7 @@ function DemoSceneResults({ route }: { route: DemoRoute }) {
           <div
             key={i}
             className={`animate-fade-up rounded-xl glass-card-soft p-4 flex items-center justify-between gap-3 transition-all ${
-              f.highlight
-                ? "ring-2 ring-sky-300 shadow-lg shadow-sky-100"
-                : ""
+              f.highlight ? "ring-2 ring-sky-300 shadow-lg shadow-sky-100" : ""
             }`}
             style={{
               animationDelay: `${i * 260}ms`,
@@ -573,9 +612,7 @@ function DemoSceneResults({ route }: { route: DemoRoute }) {
                 <p className="font-semibold text-slate-900 text-sm truncate">
                   {f.airline}
                 </p>
-                <p className="text-xs text-slate-500">
-                  Direct · {f.duration}
-                </p>
+                <p className="text-xs text-slate-500">Direct · {f.duration}</p>
               </div>
             </div>
             <div className="flex items-center gap-3">
@@ -816,10 +853,7 @@ function DestinationsSection() {
             No matches yet — try another filter.
           </div>
         ) : (
-          <div
-            key={filter}
-            className="grid grid-cols-2 md:grid-cols-3 gap-5"
-          >
+          <div key={filter} className="grid grid-cols-2 md:grid-cols-3 gap-5">
             {visible.map((dest, i) => {
               const hovered = hoveredCode === dest.code;
               const savings = dest.wasFrom ? dest.wasFrom - dest.from : 0;
@@ -832,7 +866,7 @@ function DestinationsSection() {
                   onMouseLeave={() =>
                     setHoveredCode((c) => (c === dest.code ? null : c))
                   }
-                  className="group relative aspect-[4/5] rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl hover:shadow-sky-200/60 transition-all duration-500 hover:-translate-y-1.5 animate-fade-up focus:outline-none focus-visible:ring-4 focus-visible:ring-sky-300"
+                  className="group relative aspect-[4/5] rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl hover:shadow-sky-400/30 transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] animate-fade-up focus:outline-none focus-visible:ring-4 focus-visible:ring-sky-300"
                   style={{ animationDelay: `${i * 70}ms` }}
                   aria-label={`Track flights to ${dest.city}, ${dest.country}, from £${dest.from}`}
                 >
@@ -842,7 +876,7 @@ function DestinationsSection() {
                     loading="lazy"
                     className="absolute inset-0 h-full w-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/30 to-black/10 group-hover:from-black/85 transition-colors duration-500" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent group-hover:from-black/90 group-hover:via-black/40 transition-colors duration-500" />
 
                   {/* Top-left: live tracker count */}
                   <div className="absolute top-4 left-4 flex items-center gap-1.5 rounded-full bg-black/35 backdrop-blur-md border border-white/20 px-2.5 py-1 text-[11px] font-semibold text-white">
@@ -860,9 +894,7 @@ function DestinationsSection() {
                       -£{savings}
                     </div>
                   ) : (
-                    <Plane
-                      className="absolute top-4 right-4 h-5 w-5 text-white/90 drop-shadow-md transition-all duration-500 group-hover:translate-x-3 group-hover:-translate-y-3 group-hover:rotate-12"
-                    />
+                    <Plane className="absolute top-4 right-4 h-5 w-5 text-white/90 drop-shadow-md transition-all duration-500 group-hover:translate-x-3 group-hover:-translate-y-3 group-hover:rotate-12" />
                   )}
 
                   {/* Bottom content */}
@@ -894,13 +926,13 @@ function DestinationsSection() {
                         </div>
                       </div>
                       <span
-                        className={`rounded-full bg-white/25 backdrop-blur-md border border-white/30 px-3 py-1.5 text-xs font-semibold flex items-center gap-1 transition-all duration-300 ${
+                        className={`glass-button rounded-full px-3 py-1.5 text-[13px] font-bold flex items-center gap-1.5 transition-all duration-300 ${
                           hovered
-                            ? "opacity-100 translate-y-0 bg-white text-sky-700"
-                            : "opacity-0 translate-y-2"
+                            ? "opacity-100 translate-y-0 bg-sky-500 text-white border border-sky-400/80 shadow-lg shadow-sky-500/40"
+                            : "opacity-0 translate-y-2 bg-white/20 text-white/90 backdrop-blur-md border border-white/30"
                         }`}
                       >
-                        Track it <ArrowRight className="h-3 w-3" />
+                        Track it <ArrowRight className="h-3.5 w-3.5" />
                       </span>
                     </div>
                   </div>
@@ -956,14 +988,13 @@ export default function Home() {
         </div>
 
         <div className="max-w-5xl mx-auto text-center">
-          <span
-            className="glass-card-soft inline-flex items-center gap-2 rounded-full text-slate-700 px-4 py-1.5 text-sm font-medium animate-fade-up"
-          >
+          <span className="glass-card-soft inline-flex items-center gap-2 rounded-full text-slate-700 px-4 py-1.5 text-sm font-medium animate-fade-up">
             <span className="relative flex h-2 w-2">
               <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75 animate-ping" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
             </span>
-            Watching <span className="font-semibold text-sky-600">12,843</span> flights right now
+            Watching <span className="font-semibold text-sky-600">12,843</span>{" "}
+            flights right now
           </span>
 
           <h1 className="mt-8 text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1] animate-fade-up delay-75">
@@ -983,17 +1014,20 @@ export default function Home() {
             when it's time to book — so you never overpay again.
           </p>
 
-          <div className="mt-10 flex flex-col sm:flex-row justify-center gap-3 animate-fade-up delay-300">
-            <Link
-              to="/search"
-              className="glass-button group inline-flex items-center justify-center gap-2 rounded-full bg-sky-600 text-white px-8 py-4 font-semibold shadow-lg shadow-sky-200 hover:bg-sky-700 hover:shadow-xl hover:shadow-sky-300 hover:-translate-y-0.5 transition-all"
-            >
-              <Search className="h-5 w-5 transition-transform group-hover:rotate-6" />
-              Find cheap flights
-            </Link>
+          <div className="mt-10 flex flex-col sm:flex-row justify-center gap-3 animate-fade-up delay-300 relative z-10">
+            <div className="relative group">
+              <div className="absolute -inset-1 bg-gradient-to-r from-sky-400 to-indigo-400 rounded-full blur opacity-25 group-hover:opacity-75 transition duration-500 group-hover:duration-200" />
+              <Link
+                to="/search"
+                className="relative glass-button inline-flex items-center justify-center gap-2 rounded-full bg-sky-600 text-white px-8 py-4 font-semibold shadow-lg shadow-sky-200/50 hover:bg-sky-500 hover:shadow-xl hover:shadow-sky-400/60 hover:-translate-y-0.5 transition-all w-full"
+              >
+                <Search className="h-5 w-5 transition-transform group-hover:rotate-6" />
+                Find cheap flights
+              </Link>
+            </div>
             <Link
               to="/dashboard"
-              className="glass-button-light inline-flex items-center justify-center gap-2 rounded-full bg-white/80 text-slate-900 border border-white/70 px-8 py-4 font-semibold hover:bg-white hover:-translate-y-0.5 transition-all"
+              className="glass-button-light inline-flex items-center justify-center gap-2 rounded-full bg-white/80 text-slate-900 border border-slate-200/60 px-8 py-4 font-semibold hover:bg-white hover:border-slate-300 hover:shadow-md hover:-translate-y-0.5 transition-all"
             >
               My tracked flights
             </Link>
@@ -1017,8 +1051,12 @@ export default function Home() {
                   London → New York
                 </p>
                 <div className="flex items-baseline gap-2 mt-1">
-                  <span className="text-2xl font-bold text-slate-900">£340</span>
-                  <span className="text-sm text-slate-400 line-through">£520</span>
+                  <span className="text-2xl font-bold text-slate-900">
+                    £340
+                  </span>
+                  <span className="text-sm text-slate-400 line-through">
+                    £520
+                  </span>
                   <span className="text-xs font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">
                     Save 35%
                   </span>
@@ -1089,8 +1127,8 @@ export default function Home() {
                 </h3>
 
                 <p className="mt-3 text-slate-300 leading-relaxed max-w-md">
-                  No refreshing travel sites at 2am. No "did I miss it?"
-                  regret. Just a friendly email when it's time to book.
+                  No refreshing travel sites at 2am. No "did I miss it?" regret.
+                  Just a friendly email when it's time to book.
                 </p>
 
                 {/* Mini price chart */}

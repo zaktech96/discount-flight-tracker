@@ -22,6 +22,14 @@ verified before merge - no exceptions.
 
 ## Log
 
+### SL-004 - Enhanced UI Interactions & Contrast
+
+**Scope:** `app/routes/home.tsx`
+
+**Summary:** Fixed low-contrast issue on the destination card "Track it" button by applying a solid `bg-sky-500` and a glass glow effect. Enhanced interactive elements on the landing page by adding scaling hover states (`hover:scale-[1.02]`) to destination cards and applying an animated gradient glow to the primary "Find cheap flights" hero button.
+
+**Verification:** Build passes successfully.
+
 ### SL-003 - Convex Production Deployment
 
 **Scope:** `convex/`, `.env.local`
