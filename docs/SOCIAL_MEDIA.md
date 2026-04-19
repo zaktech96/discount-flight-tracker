@@ -158,8 +158,35 @@ Hold the "launch" post until **at least 5 real save stories exist.** A launch wi
 
 Tag every outbound link with `?utm_source=twitter&utm_campaign=launch` etc. so you can actually read the data.
 
+### 5. 🌏 Global Reach & High-End UX
+Highlighting the expanded destination catalog and the cinematic dark mode.
+
+**Angles**
+- "From Mexico City to Zanzibar: We just expanded our destination catalog to cover every corner of the globe. 20+ new high-fidelity destination cards added."
+- "Cinematic Dark Mode is here. Because tracking price drops shouldn't hurt your eyes at 2 AM."
+- "The math of a perfect loop: How we built a jitter-free, infinite conveyor belt for our trending deals."
+
+**Example post (X):**
+> Global Expansion Pack just dropped 📦✈️
+>
+> Added 20+ new destinations:
+> 🇲🇽 Mexico City & Cancun
+> 🇵🇪 Lima & Bogota
+> 🇹🇿 Zanzibar & Nairobi
+> 🇪🇬 Cairo & Tunis
+>
+> Every region, every vibe. All tracked 24/7.
+> → discount-flight-tracker.vercel.app
+
 ---
 
-## One-Line North Star
+### Tech post (LinkedIn) - Phase 2 Refinement
+> We just moved from "Local Trial" to "Persistent Power." 
+>
+> Phase 2 of Flight Guardian is live:
+> 1. **Convex Backend Migration**: Alerts are now saved to the database, not just your browser.
+> 2. **Airport Code Precision**: Transitioned from city-name matching to IATA codes (LHR, JFK, NRT) for industrial-grade accuracy.
+> 3. **Unified Dashboard**: A seamless merge of guest (localStorage) and user (Convex) data sources.
+>
+> Architecture is now 100% ready for the final step: Live Amadeus API polling.
 
-> Every post either (a) proves the tracker works, (b) teaches something real, or (c) makes someone want to set their first alert. Anything else is filler.

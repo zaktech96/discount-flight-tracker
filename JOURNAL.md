@@ -4,6 +4,22 @@ A running log of what shipped, what broke, and what we learned. Newest entries a
 
 ---
 
+## 📝 2026-04-19 — Phase 2 Backend Migration, Dark Mode & Global Expansion
+
+**Shipped**
+- **Phase 2 Implementation:** Migrated alert tracking from `localStorage` to the Convex backend. Authenticated users now have persistent alerts saved directly to the database, enabling cross-device tracking and automated backend polling.
+- **Cinematic Dark Mode:** Full visual overhaul for dark mode across all routes. Added `dark:` Tailwind variants to gradients, glass cards, and form inputs. Standardized on a deep slate/navy palette (#0F172A).
+- **Global Expansion Pack:** Added 20+ new high-fidelity destination cards covering the Americas (Mexico City, Cancun), South America (Lima, Bogota), and Africa (Cairo, Tunis, Zanzibar, Nairobi).
+- **Conveyor Belt 2.0:** Re-engineered the trending deals section with a 20x item duplication logic and a precise `-5%` translation loop for a mathematically perfect infinite scroll.
+- **Premium Transitions:** Added coordinated Framer Motion entrance animations for the Home and Search pages, providing an "app-like" loading feel.
+
+**Lessons**
+- **Type Safety in Transitions:** Framer Motion's `Variants` type is surprisingly strict about the `transition` object structure. Moving transition parameters directly into component props is often cleaner than fighting the interface definition.
+- **Dual-Source Dashboard:** Merging backend queries with local state requires careful memoization (`useMemo`) to prevent jitter when the database layer hydrates over the local storage fallback.
+- **IATA Codes > City Names:** For a production flight tracker, city names are too ambiguous. Transitioning to 3-letter IATA codes (LHR, JFK) early in Phase 2 was critical for high-performance route matching in Convex.
+
+---
+
 ## 📝 2026-04-19 — Convex Production Deployment & Dependency Resolution
 
 **Shipped**
@@ -86,6 +102,6 @@ Once `app/routes.ts` exists, file-based routing is ignored. Every new view must 
 ---
 
 ## 🎯 Next Up
-- **Phase 1 — Real prices.** Wire Amadeus (or equivalent) to replace the dummy flight catalog. Blocked on API credentials.
-- **Phase 2 — Resend alerts.** Email the user when `currentPrice <= targetPrice`. Convex scheduled action polling every N hours.
-- **Phase 3 — User-tied tracked flights.** Move `addTrackedFlight` from localStorage to Convex, keyed by Clerk `userId`.
+- **Phase 3 — Real-Time Polling (Crons):** Implement Convex scheduled actions to poll the Amadeus API every 4–6 hours for active routes.
+- **Phase 4 — Automated Email Alerts:** Fully wire the Resend template to the alert-trigger logic to notify users the second their target price is hit.
+- **Phase 1 (Active) — Live API Integration:** Finalize the Amadeus API provider implementation to replace dummy data with live global flight offers.
