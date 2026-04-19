@@ -989,7 +989,7 @@ function DestinationsSection() {
             No matches yet — try another filter.
           </div>
         ) : (
-          <div className="relative w-[100vw] left-1/2 -ml-[50vw] overflow-hidden pb-12 pt-4 group">
+          <div className="relative w-full overflow-hidden pb-12 pt-4 group rounded-3xl">
             {/* The fading edges to make the conveyor belt look nice */}
             <div className="absolute top-0 bottom-0 left-0 w-16 md:w-32 bg-gradient-to-r from-sky-50 to-transparent z-20 pointer-events-none" />
             <div className="absolute top-0 bottom-0 right-0 w-16 md:w-32 bg-gradient-to-l from-sky-50 to-transparent z-20 pointer-events-none" />
@@ -1007,7 +1007,7 @@ function DestinationsSection() {
                     onMouseLeave={() =>
                       setHoveredCode((c) => (c === `${dest.code}-${i}` ? null : c))
                     }
-                    className="group relative aspect-[4/5] w-[280px] sm:w-[320px] shrink-0 rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl hover:shadow-sky-400/30 transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] focus:outline-none focus-visible:ring-4 focus-visible:ring-sky-300"
+                    className="group relative aspect-[4/5] w-[280px] sm:w-[300px] md:w-[320px] lg:w-[340px] xl:w-[380px] shrink-0 rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl hover:shadow-sky-400/30 transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] focus:outline-none focus-visible:ring-4 focus-visible:ring-sky-300"
                     aria-label={`Track flights to ${dest.city}, ${dest.country}, from £${dest.from}`}
                   >
                   <img

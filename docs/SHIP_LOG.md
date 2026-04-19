@@ -22,6 +22,16 @@ verified before merge - no exceptions.
 
 ## Log
 
+### SL-013 - Conveyor Belt Sizing Constraints
+
+**Scope:** `app/routes/home.tsx`
+
+**Summary:** 
+- Constrained the "Trending Deals" conveyor belt within the main `max-w-7xl` container rather than stretching across `100vw`. 
+- Adjusted the responsive sizing of the destination cards (`w-[280px] sm:w-[300px] md:w-[320px] lg:w-[340px] xl:w-[380px]`) so that exactly three cards are visible simultaneously on standard desktop viewports, enhancing visual continuity and layout balance without cards getting unnaturally huge.
+
+**Verification:** Build passes successfully.
+
 ### SL-012 - Continuous "Conveyor Belt" Scroll
 
 **Scope:** `app/routes/home.tsx`, `app/app.css`
