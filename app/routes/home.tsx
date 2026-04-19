@@ -19,10 +19,12 @@ import {
   Search,
   Heart,
   Check,
+  ChevronDown,
   Sparkles,
   Globe,
   Clock,
   TrendingDown,
+  Coffee,
   Calendar,
   MapPin,
   ArrowRight,
@@ -39,7 +41,6 @@ const DEMO_CAPTIONS = [
   "Get the ping",
 ];
 
-// Slower + more breathable — roughly 1.7× the previous timings.
 const DEMO_DURATIONS = [7200, 5400, 4800, 6200];
 
 type DemoRoute = {
@@ -127,30 +128,6 @@ const DEMO_ROUTES: DemoRoute[] = [
       },
     ],
   },
-  {
-    fromCity: "Edinburgh",
-    fromCode: "EDI",
-    toCity: "Tokyo",
-    toCode: "NRT",
-    date: "Sep 18, 2026",
-    airline: "ANA",
-    duration: "12h 10m",
-    current: 612,
-    original: 820,
-    target: 550,
-    drop: 62,
-    deals: [
-      {
-        airline: "ANA",
-        price: 612,
-        original: 820,
-        duration: "12h 10m",
-        highlight: true,
-      },
-      { airline: "JAL", price: 655, original: 840, duration: "12h 25m" },
-      { airline: "Lufthansa", price: 720, original: 910, duration: "14h 30m" },
-    ],
-  },
 ];
 
 function useTypewriter(text: string, speed = 70, startDelay = 0) {
@@ -224,6 +201,42 @@ const DESTINATIONS: Destination[] = [
     image:
       "https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?auto=format&fit=crop&w=800&q=80",
   },
+  {
+    city: "Istanbul",
+    code: "IST",
+    country: "Turkiye",
+    region: "Asia",
+    vibe: "Culture",
+    from: 156,
+    wasFrom: 198,
+    trackers: 175,
+    image:
+      "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    city: "Rio de Janeiro",
+    code: "GIG",
+    country: "Brazil",
+    region: "South America",
+    vibe: "Beach",
+    from: 495,
+    wasFrom: 540,
+    trackers: 215,
+    image:
+      "https://images.unsplash.com/photo-1483729558449-99ef09a8c325?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    city: "Marrakech",
+    code: "RAK",
+    country: "Morocco",
+    region: "Africa",
+    vibe: "Culture",
+    from: 120,
+    wasFrom: 180,
+    trackers: 95,
+    image:
+      "https://images.unsplash.com/photo-1539020140153-e479b8c22e70?auto=format&fit=crop&w=800&q=80",
+  },
 ];
 
 const DESTINATION_FILTERS = [
@@ -236,17 +249,6 @@ const DESTINATION_FILTERS = [
   "Beach",
 ] as const;
 type DestinationFilter = (typeof DESTINATION_FILTERS)[number];
-
-const FAQS = [
-  {
-    q: "Is Flight Guardian really free?",
-    a: "Yep, 100% free to track flights. No credit card, no hidden catches.",
-  },
-  {
-    q: "How quickly will I get an alert when prices drop?",
-    a: "The moment we spot a drop — usually within minutes.",
-  },
-];
 
 const BENTO_DEALS = [
   {
@@ -265,14 +267,6 @@ const BENTO_DEALS = [
     drop: 25,
     history: [65, 70, 68, 72, 60, 55, 52],
   },
-  {
-    from: "Edinburgh",
-    to: "Tokyo",
-    price: 612,
-    original: 820,
-    drop: 25,
-    history: [85, 82, 88, 80, 75, 72, 68],
-  },
 ];
 
 const RECENT_DROPS = [
@@ -280,7 +274,6 @@ const RECENT_DROPS = [
   { from: "Manchester", to: "Paris", drop: 30, price: 65, time: "5m ago" },
   { from: "Edinburgh", to: "Berlin", drop: 22, price: 48, time: "12m ago" },
   { from: "London", to: "New York", drop: 180, price: 340, time: "15m ago" },
-  { from: "Birmingham", to: "Madrid", drop: 38, price: 72, time: "20m ago" },
 ];
 
 const sectionVariants = {
@@ -303,7 +296,7 @@ function DemoTypingField({
       ? "border-emerald-300"
       : "border-slate-200 dark:border-white/10";
   return (
-    <div>
+    <div className="w-full">
       <span className="text-xs font-medium text-slate-700 dark:text-slate-300 mb-1.5 flex items-center gap-1.5">
         <Icon className="h-3.5 w-3.5 text-sky-600" /> {label}
       </span>
@@ -371,7 +364,7 @@ function DemoSceneSearch({ route }: any) {
         animate={{ opacity: activeField === 3 ? 1 : 0 }}
         className="flex items-center gap-4"
       >
-        <button className="glass-button inline-flex items-center gap-3 rounded-full bg-sky-600 text-white px-10 py-5 text-xl font-bold shadow-xl shadow-sky-200">
+        <button className="glass-button glass-gloss inline-flex items-center gap-3 rounded-full bg-sky-600 text-white px-10 py-5 text-xl font-bold shadow-xl shadow-sky-200">
           Search flights <ArrowRight className="h-6 w-6" />
         </button>
       </motion.div>
@@ -394,7 +387,7 @@ function DemoSceneResults({ route }: any) {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.1 }}
-            className={`rounded-[1.5rem] glass-card-soft p-6 md:p-8 flex items-center justify-between gap-4 dark:bg-slate-900/60 ${f.highlight ? "ring-2 ring-sky-400" : ""}`}
+            className={`rounded-[1.5rem] glass-card glass-gloss p-6 md:p-8 flex items-center justify-between gap-4 bg-white/80 dark:bg-slate-900/60 ${f.highlight ? "ring-2 ring-sky-400" : ""}`}
           >
             <div className="flex items-center gap-5">
               <div className="h-14 w-14 rounded-2xl bg-sky-50 dark:bg-sky-500/10 flex items-center justify-center text-sky-600">
@@ -411,7 +404,7 @@ function DemoSceneResults({ route }: any) {
                 £{f.price}
               </p>
               {f.highlight && (
-                <span className="text-sky-600 dark:text-sky-400 text-sm font-bold">
+                <span className="text-sky-600 dark:text-sky-400 text-sm font-bold uppercase tracking-wider">
                   Best Deal
                 </span>
               )}
@@ -426,18 +419,18 @@ function DemoSceneResults({ route }: any) {
 function DemoSceneTracking({ route }: any) {
   return (
     <div className="space-y-10 max-w-2xl mx-auto w-full">
-      <div className="rounded-2xl border-2 border-sky-400 glass-input px-6 py-8 flex items-center justify-between shadow-2xl dark:bg-slate-900/60">
+      <div className="rounded-2xl border-2 border-sky-400 glass-input px-6 py-8 flex items-center justify-between shadow-2xl dark:bg-slate-900/60 bg-white/50">
         <div className="flex items-baseline">
           <span className="text-5xl font-black text-slate-900 dark:text-white">
             £{route.target}
           </span>
           <span className="inline-block w-1 h-10 bg-sky-600 ml-2 animate-pulse rounded-full" />
         </div>
-        <span className="text-sm text-emerald-700 bg-emerald-50 px-4 py-2 font-bold rounded-full">
+        <span className="text-sm text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-500/10 px-4 py-2 font-bold rounded-full">
           Target Set
         </span>
       </div>
-      <button className="glass-button w-full inline-flex items-center justify-center gap-3 rounded-full bg-sky-600 text-white px-10 py-5 text-xl font-bold shadow-xl shadow-sky-200">
+      <button className="glass-button glass-gloss w-full inline-flex items-center justify-center gap-3 rounded-full bg-sky-600 text-white px-10 py-5 text-xl font-bold shadow-xl shadow-sky-200">
         <Bell className="h-6 w-6" /> Start watching
       </button>
     </div>
@@ -450,7 +443,7 @@ function DemoSceneAlert({ route }: any) {
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="glass-card-soft rounded-2xl shadow-2xl p-8 max-w-sm bg-white dark:bg-slate-900"
+        className="glass-card glass-gloss rounded-2xl shadow-2xl p-8 max-w-sm bg-white dark:bg-slate-900 border border-slate-100 dark:border-white/10"
       >
         <div className="flex items-center gap-3 mb-4 pb-4 border-b border-slate-100 dark:border-white/10">
           <Mail className="h-6 w-6 text-emerald-600" />
@@ -464,172 +457,11 @@ function DemoSceneAlert({ route }: any) {
         <p className="text-slate-600 dark:text-slate-400 mb-6">
           Your flight to <b>{route.toCity}</b> hit <b>£{route.target}</b>!
         </p>
-        <button className="glass-button w-full rounded-full bg-sky-600 text-white py-3 font-bold">
+        <button className="glass-button glass-gloss w-full rounded-full bg-sky-600 text-white py-3 font-bold shadow-lg">
           Book Now
         </button>
       </motion.div>
     </div>
-  );
-}
-
-function HowItWorks() {
-  return (
-    <motion.section
-      initial="initial"
-      whileInView="animate"
-      viewport={{ once: true, margin: "-100px" }}
-      variants={sectionVariants}
-      className="py-24 px-6 relative overflow-hidden bg-white/50 dark:bg-slate-900/50"
-    >
-      <div className="max-w-7xl mx-auto text-center">
-        <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-sky-600 mb-3">
-          <Sparkles className="h-3.5 w-3.5" />
-          Simple steps
-        </span>
-        <h2 className="text-4xl md:text-6xl font-bold tracking-tight leading-[1.1] dark:text-white">
-          How Flight Guardian{" "}
-          <span className="relative inline-block">
-            <span className="relative z-10 text-sky-600">works</span>
-            <span
-              aria-hidden
-              className="absolute left-0 bottom-1 h-3 w-full rounded-full bg-amber-200/70 -z-0"
-            />
-          </span>
-          .
-        </h2>
-        <p className="text-slate-600 dark:text-slate-400 mt-6 text-xl md:text-2xl max-w-2xl mx-auto">
-          It's easier than you think to save big on your next flight.
-        </p>
-
-        <div className="mt-24 relative">
-          <div
-            aria-hidden
-            className="hidden md:block absolute top-[40%] left-0 w-full h-24 -translate-y-1/2 -z-0"
-          >
-            <svg
-              width="100%"
-              height="100%"
-              viewBox="0 0 1000 100"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <motion.path
-                d="M 50 50 Q 250 -20 500 50 T 950 50"
-                stroke="url(#gradient-path)"
-                strokeWidth="3"
-                strokeDasharray="8 12"
-                initial={{ pathLength: 0 }}
-                whileInView={{ pathLength: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 2.5, ease: "easeInOut" }}
-              />
-              <defs>
-                <linearGradient
-                  id="gradient-path"
-                  x1="0%"
-                  y1="0%"
-                  x2="100%"
-                  y2="0%"
-                >
-                  <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.2" />
-                  <stop offset="50%" stopColor="#3b82f6" stopOpacity="0.6" />
-                  <stop offset="100%" stopColor="#3b82f6" stopOpacity="0.2" />
-                </linearGradient>
-              </defs>
-              <motion.g
-                initial={{ offsetDistance: "0%" }}
-                whileInView={{ offsetDistance: "100%" }}
-                viewport={{ once: true }}
-                transition={{ duration: 2.5, ease: "easeInOut" }}
-                style={{
-                  offsetPath: "path('M 50 50 Q 250 -20 500 50 T 950 50')",
-                }}
-              >
-                <Plane className="h-5 w-5 text-sky-500 -rotate-45 fill-white" />
-              </motion.g>
-            </svg>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-16 relative z-10">
-            <StepCard
-              number="1"
-              icon={Search}
-              title="Search & Set"
-              description="Tell us your desired route and the price you'd pay."
-              color="sky"
-              delay={0}
-            />
-            <StepCard
-              number="2"
-              icon={Clock}
-              title="We Watch 24/7"
-              description="Our smart system constantly monitors thousands of flights."
-              color="emerald"
-              delay={0.2}
-            />
-            <StepCard
-              number="3"
-              icon={Bell}
-              title="Get Your Alert"
-              description="We'll send you an email the instant your flight hits your target."
-              color="amber"
-              delay={0.4}
-            />
-          </div>
-        </div>
-      </div>
-    </motion.section>
-  );
-}
-
-function StepCard({
-  number,
-  icon: Icon,
-  title,
-  description,
-  color,
-  delay,
-}: any) {
-  const colorClasses: any = {
-    sky: "bg-sky-50 text-sky-600 dark:bg-sky-500/10",
-    emerald: "bg-emerald-50 text-emerald-600 dark:bg-emerald-500/10",
-    amber: "bg-amber-50 text-amber-600 dark:bg-amber-500/10",
-  };
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ delay, duration: 0.5 }}
-      className="group relative"
-    >
-      <div className="absolute -top-10 left-1/2 -translate-x-1/2 md:left-0 md:translate-x-0 z-20">
-        <span
-          className={`inline-flex items-center justify-center w-10 h-10 rounded-full border-4 border-white dark:border-slate-900 font-bold text-white shadow-lg ${
-            color === "sky"
-              ? "bg-sky-500"
-              : color === "emerald"
-                ? "bg-emerald-500"
-                : "bg-amber-500"
-          }`}
-        >
-          {number}
-        </span>
-      </div>
-
-      <div className="glass-card glass-gloss p-8 pt-10 rounded-3xl shadow-xl h-full flex flex-col items-center md:items-start text-center md:text-left bg-white/80 dark:bg-slate-900/80">
-        <div
-          className={`flex items-center justify-center h-16 w-16 rounded-2xl mb-6 relative ${colorClasses[color]}`}
-        >
-          <Icon className="h-8 w-8" />
-        </div>
-        <h3 className="text-2xl font-bold mb-3 dark:text-white">{title}</h3>
-        <p className="text-slate-600 dark:text-slate-400 leading-relaxed text-sm">
-          {description}
-        </p>
-      </div>
-    </motion.div>
   );
 }
 
@@ -726,6 +558,15 @@ function LiveDealStream() {
             </p>
           </div>
         </div>
+        <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20">
+          <span className="relative flex h-2 w-2">
+            <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75 animate-ping" />
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
+          </span>
+          <span className="text-[10px] font-black text-emerald-600 uppercase tracking-widest text-white">
+            Live
+          </span>
+        </div>
       </div>
       <div className="flex-1 space-y-4 relative min-h-[220px]">
         <AnimatePresence mode="popLayout">
@@ -747,7 +588,7 @@ function LiveDealStream() {
                     <div className="flex items-center gap-2 font-bold">
                       {drop.from} → {drop.to}
                     </div>
-                    <span className="text-[10px] font-medium text-white/40 uppercase">
+                    <span className="text-[10px] font-medium text-white/40 uppercase tracking-wider">
                       Detected {drop.time}
                     </span>
                   </div>
@@ -871,8 +712,197 @@ function ProductDemo() {
             />
           </div>
         </div>
+
+        <div className="mt-12 flex flex-wrap items-center justify-center gap-x-8 gap-y-4">
+          {DEMO_CAPTIONS.map((cap, i) => (
+            <button
+              key={i}
+              type="button"
+              onClick={() => setStage(i)}
+              className={`group flex items-center gap-3 transition-all ${
+                stage === i
+                  ? "text-sky-600 scale-110"
+                  : "text-slate-400 hover:text-slate-600"
+              }`}
+            >
+              <span
+                className={`inline-flex h-10 w-10 items-center justify-center rounded-full text-sm font-bold transition-all ${
+                  stage === i
+                    ? "bg-sky-600 text-white shadow-xl shadow-sky-200"
+                    : "bg-slate-100 text-slate-500 group-hover:bg-slate-200"
+                }`}
+              >
+                {i + 1}
+              </span>
+              <span className="text-base font-bold tracking-tight dark:text-slate-200">
+                {cap}
+              </span>
+            </button>
+          ))}
+        </div>
       </div>
     </section>
+  );
+}
+
+function StepCard({
+  number,
+  icon: Icon,
+  title,
+  description,
+  color,
+  delay,
+}: any) {
+  const colorClasses: any = {
+    sky: "bg-sky-50 text-sky-600 dark:bg-sky-500/10",
+    emerald: "bg-emerald-50 text-emerald-600 dark:bg-emerald-500/10",
+    amber: "bg-amber-50 text-amber-600 dark:bg-amber-500/10",
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ delay, duration: 0.5 }}
+      className="group relative"
+    >
+      <div className="absolute -top-10 left-1/2 -translate-x-1/2 md:left-0 md:translate-x-0 z-20">
+        <span
+          className={`inline-flex items-center justify-center w-10 h-10 rounded-full border-4 border-white dark:border-slate-900 font-bold text-white shadow-lg ${
+            color === "sky"
+              ? "bg-sky-500"
+              : color === "emerald"
+                ? "bg-emerald-500"
+                : "bg-amber-500"
+          }`}
+        >
+          {number}
+        </span>
+      </div>
+
+      <div className="glass-card glass-gloss p-8 pt-10 rounded-3xl shadow-xl h-full flex flex-col items-center md:items-start text-center md:text-left bg-white/80 dark:bg-slate-900/80">
+        <div
+          className={`flex items-center justify-center h-16 w-16 rounded-2xl mb-6 relative ${colorClasses[color]}`}
+        >
+          <Icon className="h-8 w-8" />
+        </div>
+        <h3 className="text-2xl font-bold mb-3 dark:text-white">{title}</h3>
+        <p className="text-slate-600 dark:text-slate-400 leading-relaxed text-sm">
+          {description}
+        </p>
+      </div>
+    </motion.div>
+  );
+}
+
+function HowItWorks() {
+  return (
+    <motion.section
+      initial="initial"
+      whileInView="animate"
+      viewport={{ once: true, margin: "-100px" }}
+      variants={sectionVariants}
+      className="py-24 px-6 relative overflow-hidden bg-white/50 dark:bg-slate-900/50"
+    >
+      <div className="max-w-7xl mx-auto text-center">
+        <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-sky-600 mb-3">
+          <Sparkles className="h-3.5 w-3.5" />
+          Simple steps
+        </span>
+        <h2 className="text-4xl md:text-6xl font-bold tracking-tight leading-[1.1] dark:text-white">
+          How Flight Guardian{" "}
+          <span className="relative inline-block">
+            <span className="relative z-10 text-sky-600">works</span>
+            <span
+              aria-hidden
+              className="absolute left-0 bottom-1 h-3 w-full rounded-full bg-amber-200/70 -z-0"
+            />
+          </span>
+          .
+        </h2>
+        <p className="text-slate-600 dark:text-slate-400 mt-6 text-xl md:text-2xl max-w-2xl mx-auto">
+          It's easier than you think to save big on your next flight.
+        </p>
+
+        <div className="mt-24 relative">
+          <div
+            aria-hidden
+            className="hidden md:block absolute top-[40%] left-0 w-full h-24 -translate-y-1/2 -z-0"
+          >
+            <svg
+              width="100%"
+              height="100%"
+              viewBox="0 0 1000 100"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <motion.path
+                d="M 50 50 Q 250 -20 500 50 T 950 50"
+                stroke="url(#gradient-path)"
+                strokeWidth="3"
+                strokeDasharray="8 12"
+                initial={{ pathLength: 0 }}
+                whileInView={{ pathLength: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 2.5, ease: "easeInOut" }}
+              />
+              <defs>
+                <linearGradient
+                  id="gradient-path"
+                  x1="0%"
+                  y1="0%"
+                  x2="100%"
+                  y2="0%"
+                >
+                  <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.2" />
+                  <stop offset="50%" stopColor="#3b82f6" stopOpacity="0.6" />
+                  <stop offset="100%" stopColor="#3b82f6" stopOpacity="0.2" />
+                </linearGradient>
+              </defs>
+              <motion.g
+                initial={{ offsetDistance: "0%" }}
+                whileInView={{ offsetDistance: "100%" }}
+                viewport={{ once: true }}
+                transition={{ duration: 2.5, ease: "easeInOut" }}
+                style={{
+                  offsetPath: "path('M 50 50 Q 250 -20 500 50 T 950 50')",
+                }}
+              >
+                <Plane className="h-5 w-5 text-sky-500 -rotate-45 fill-white" />
+              </motion.g>
+            </svg>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-16 relative z-10">
+            <StepCard
+              number="1"
+              icon={Search}
+              title="Search & Set"
+              description="Tell us your desired route and the price you'd pay."
+              color="sky"
+              delay={0}
+            />
+            <StepCard
+              number="2"
+              icon={Clock}
+              title="We Watch 24/7"
+              description="Our smart system constantly monitors thousands of flights."
+              color="emerald"
+              delay={0.2}
+            />
+            <StepCard
+              number="3"
+              icon={Bell}
+              title="Get Your Alert"
+              description="We'll send you an email the instant your flight hits your target."
+              color="amber"
+              delay={0.4}
+            />
+          </div>
+        </div>
+      </div>
+    </motion.section>
   );
 }
 
@@ -884,173 +914,248 @@ function DestinationsSection() {
       d.region === filter ||
       (filter === "Beach" && d.vibe === "Beach"),
   );
+
   return (
-    <section className="py-24 px-6 relative">
+    <motion.section
+      initial="initial"
+      whileInView="animate"
+      viewport={{ once: true }}
+      variants={sectionVariants}
+      className="py-24 px-6 relative overflow-hidden"
+    >
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-10">
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tight dark:text-white">
+        <div className="text-center mb-12">
+          <h2 className="text-4xl font-bold dark:text-white mb-4">
             Pick your next getaway.
           </h2>
-          <p className="text-slate-600 dark:text-slate-400 mt-3 text-lg">
-            Tap to start tracking. We'll handle the rest.
-          </p>
+          <div className="flex flex-wrap justify-center gap-2 mb-10">
+            {DESTINATION_FILTERS.map((f) => (
+              <button
+                key={f}
+                onClick={() => setFilter(f)}
+                className={`px-4 py-2 rounded-full text-sm font-bold transition-all ${filter === f ? "bg-sky-600 text-white shadow-lg" : "glass-card-soft dark:bg-slate-900/60 dark:text-slate-300"}`}
+              >
+                {f}
+              </button>
+            ))}
+          </div>
         </div>
-        <div className="flex flex-wrap justify-center gap-2 mb-10">
-          {DESTINATION_FILTERS.map((f) => (
-            <button
-              key={f}
-              onClick={() => setFilter(f)}
-              className={`px-4 py-2 rounded-full text-sm font-semibold transition-all ${filter === f ? "bg-sky-600 text-white" : "glass-card-soft dark:bg-slate-900/50 dark:text-white"}`}
-            >
-              {f}
-            </button>
-          ))}
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {visible.map((dest, i) => (
-            <Link
-              key={i}
-              to="/search"
-              className="group relative aspect-[4/5] rounded-3xl overflow-hidden shadow-lg"
-            >
-              <img
-                src={dest.image}
-                alt={dest.city}
-                className="absolute inset-0 h-full w-full object-cover group-hover:scale-110 transition-transform duration-700"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
-              <div className="absolute bottom-6 left-6 text-white">
-                <p className="text-2xl font-bold">{dest.city}</p>
-                <p className="text-sm opacity-80">{dest.country}</p>
-                <p className="mt-2 text-xl font-bold">from £{dest.from}</p>
-              </div>
-            </Link>
-          ))}
+
+        <div className="relative w-full overflow-hidden pb-12 pt-4 group rounded-3xl">
+          <div className="absolute top-0 bottom-0 left-0 w-32 bg-gradient-to-r from-sky-50 dark:from-slate-950 to-transparent z-20 pointer-events-none" />
+          <div className="absolute top-0 bottom-0 right-0 w-32 bg-gradient-to-l from-sky-50 dark:from-slate-950 to-transparent z-20 pointer-events-none" />
+          <div className="flex w-max animate-conveyor-belt group-hover:[animation-play-state:paused] gap-6 px-6">
+            {[...visible, ...visible, ...visible].map((dest, i) => (
+              <Link
+                key={i}
+                to="/search"
+                className="group relative aspect-[4/5] w-[350px] shrink-0 rounded-[2rem] overflow-hidden shadow-2xl glass-gloss transition-transform hover:-translate-y-2 duration-500"
+              >
+                <img
+                  src={dest.image}
+                  alt={dest.city}
+                  className="absolute inset-0 h-full w-full object-cover group-hover:scale-110 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
+                <div className="absolute bottom-6 left-6 right-6 text-white">
+                  <div className="text-[10px] font-black uppercase tracking-[0.3em] text-sky-400 mb-2">
+                    {dest.region}
+                  </div>
+                  <h3 className="text-3xl font-black mb-1">{dest.city}</h3>
+                  <div className="flex items-end justify-between">
+                    <div>
+                      <p className="text-sm opacity-60 font-bold">
+                        {dest.country}
+                      </p>
+                      <p className="mt-2 text-2xl font-black tracking-tight">
+                        from £{dest.from}
+                      </p>
+                    </div>
+                    <div className="glass-button rounded-full bg-white/20 px-4 py-2 text-xs font-black uppercase tracking-widest backdrop-blur-md border border-white/30">
+                      Track
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }
 
 export default function Home() {
   return (
-    <motion.div
-      initial="initial"
-      animate="animate"
-      variants={{ animate: { transition: { staggerChildren: 0.1 } } }}
-      className="min-h-screen bg-gradient-to-b from-sky-50 via-white to-white dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 text-slate-900 dark:text-slate-100 overflow-x-hidden"
-    >
+    <div className="min-h-screen bg-gradient-to-b from-sky-50 via-white to-white dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 text-slate-900 dark:text-slate-100 overflow-x-hidden">
       <motion.section
-        variants={sectionVariants}
-        className="relative pt-28 pb-24 px-6"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8 }}
+        className="relative pt-32 pb-24 px-6 overflow-hidden"
       >
-        <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
-          <div className="absolute top-10 left-1/4 w-72 h-72 rounded-full bg-sky-200/40 dark:bg-sky-500/10 blur-3xl" />
-        </div>
-        <div className="max-w-7xl mx-auto text-center">
+        <div className="max-w-7xl mx-auto text-center relative z-10">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1 }}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-sky-500/10 border border-sky-500/20 mb-8"
+          >
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-sky-500" />
+            </span>
+            <span className="text-[10px] font-black uppercase tracking-widest text-sky-600 dark:text-sky-400">
+              Trusted by 12,843 users
+            </span>
+          </motion.div>
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4, duration: 1 }}
-            className="text-5xl md:text-7xl lg:text-[5.5rem] font-bold tracking-tight leading-[1.05]"
+            transition={{ delay: 0.2, duration: 1 }}
+            className="text-6xl md:text-8xl font-black tracking-tighter leading-[0.9] mb-8"
           >
-            Book flights at the{" "}
-            <span className="relative inline-block">
-              <span className="relative z-10 text-sky-600">perfect moment</span>
-              <span
-                aria-hidden
-                className="absolute left-0 bottom-2 h-4 w-full rounded-full bg-amber-200/70 -z-0"
+            BOOK FLIGHTS AT THE <br />
+            <span className="text-sky-600 inline-block relative">
+              PERFECT MOMENT
+              <motion.span
+                initial={{ width: 0 }}
+                animate={{ width: "100%" }}
+                transition={{ delay: 1, duration: 1 }}
+                className="absolute bottom-2 left-0 h-4 bg-amber-400/30 -z-10"
               />
             </span>
-            .
           </motion.h1>
-          <p className="mt-8 text-slate-600 dark:text-slate-400 text-lg md:text-2xl max-w-3xl mx-auto leading-relaxed">
-            Tell us where you want to go. We'll watch prices 24/7 and email you
-            when it's time to book.
-          </p>
-          <div className="mt-12 flex flex-col sm:flex-row justify-center gap-4 relative z-10">
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4, duration: 0.8 }}
+            className="text-xl md:text-2xl opacity-60 max-w-2xl mx-auto leading-relaxed mb-12"
+          >
+            Set your price. We watch 24/7. Get a ping the moment it drops. Never
+            overpay again.
+          </motion.p>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 0.8 }}
+            className="flex flex-col sm:flex-row justify-center gap-6"
+          >
             <Link
               to="/search"
-              className="glass-button glass-gloss rounded-full bg-sky-600 text-white px-10 py-5 text-lg font-semibold shadow-lg"
+              className="glass-button glass-gloss rounded-full bg-sky-600 text-white px-12 py-6 text-xl font-black uppercase tracking-widest shadow-2xl shadow-sky-500/20"
             >
               Find cheap flights
             </Link>
-          </div>
+            <Link
+              to="/dashboard"
+              className="glass-button-light glass-gloss rounded-full bg-white/10 dark:bg-white/5 border border-black/5 dark:border-white/10 px-12 py-6 text-xl font-black uppercase tracking-widest backdrop-blur-xl"
+            >
+              My dashboard
+            </Link>
+          </motion.div>
+        </div>
+        <div
+          aria-hidden
+          className="absolute top-0 left-0 w-full h-full -z-0 opacity-50"
+        >
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-sky-500/20 blur-[120px] rounded-full animate-blob-drift" />
+          <div
+            className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-indigo-500/20 blur-[120px] rounded-full animate-blob-drift"
+            style={{ animationDelay: "-4s" }}
+          />
         </div>
       </motion.section>
 
       <ProductDemo />
 
       <motion.section
-        variants={sectionVariants}
-        initial="initial"
-        whileInView="animate"
-        viewport={{ once: true }}
-        className="relative py-24 px-6 bg-gradient-to-b from-white to-sky-50 dark:from-slate-900 dark:to-slate-950 overflow-hidden"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.8 }}
+        className="py-24 px-6 relative overflow-hidden bg-slate-50 dark:bg-slate-900/30"
       >
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-6 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-6 gap-6">
             <BentoPriceWatching />
-            <div className="glass-card glass-gloss md:col-span-2 group relative rounded-3xl p-8 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between overflow-hidden dark:bg-slate-900/60">
+            <div className="glass-card glass-gloss md:col-span-2 group relative rounded-[2.5rem] p-10 flex flex-col justify-between overflow-hidden bg-white dark:bg-slate-900 shadow-2xl">
               <div>
-                <PiggyBank className="h-10 w-10 text-emerald-600 mb-6" />
-                <div className="flex items-baseline gap-2">
-                  <span className="text-5xl font-black text-slate-900 dark:text-white">
-                    £220
-                  </span>
-                  <span className="text-sm font-bold opacity-40 uppercase dark:text-slate-400">
+                <PiggyBank className="h-12 w-12 text-emerald-500 mb-8" />
+                <div className="flex items-baseline gap-2 mb-4">
+                  <span className="text-6xl font-black">£220</span>
+                  <span className="text-xs font-black uppercase tracking-widest opacity-40">
                     avg saved
                   </span>
                 </div>
-              </div>
-              <div className="mt-8 pt-6 border-t border-slate-100 dark:border-white/5">
-                <p className="text-[10px] font-black opacity-40 uppercase tracking-widest dark:text-slate-400">
-                  Community Total
+                <p className="text-lg opacity-60 leading-relaxed font-bold">
+                  Consistent price drops detected daily by our global scanning
+                  engine.
                 </p>
-                <p className="text-lg font-bold text-emerald-600">£1.4M+</p>
+              </div>
+              <div className="mt-8 pt-8 border-t dark:border-white/5 flex items-center justify-between">
+                <span className="text-xs font-black uppercase tracking-[0.2em] opacity-40">
+                  Network Total
+                </span>
+                <span className="text-2xl font-black text-emerald-500">
+                  £1.4M+
+                </span>
               </div>
             </div>
-            <div className="glass-card glass-gloss md:col-span-2 group relative rounded-3xl p-8 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between overflow-hidden dark:bg-slate-900/60">
+            <div className="glass-card glass-gloss md:col-span-2 group relative rounded-[2.5rem] p-10 flex flex-col justify-between overflow-hidden bg-white dark:bg-slate-900 shadow-2xl">
               <div>
-                <Clock className="h-10 w-10 text-amber-600 mb-6" />
-                <div className="flex items-baseline gap-2">
-                  <span className="text-5xl font-black text-slate-900 dark:text-white">
-                    30s
-                  </span>
-                  <span className="text-sm font-bold opacity-40 uppercase dark:text-slate-400">
-                    to set up
+                <Clock className="h-12 w-12 text-amber-500 mb-8" />
+                <div className="flex items-baseline gap-2 mb-4">
+                  <span className="text-6xl font-black">30s</span>
+                  <span className="text-xs font-black uppercase tracking-widest opacity-40">
+                    Setup
                   </span>
                 </div>
+                <p className="text-lg opacity-60 leading-relaxed font-bold">
+                  Fastest set-and-forget experience in travel technology today.
+                </p>
               </div>
-              <div className="mt-8 pt-6 border-t border-slate-100 dark:border-white/5">
-                <div className="flex gap-2">
-                  {[1, 2, 3].map((s) => (
-                    <div
-                      key={s}
-                      className="flex-1 h-1.5 rounded-full bg-slate-100 dark:bg-white/10"
+              <div className="mt-8 pt-8 border-t dark:border-white/5 flex gap-2">
+                {[1, 2, 3].map((s) => (
+                  <div
+                    key={s}
+                    className="flex-1 h-2 rounded-full bg-slate-100 dark:bg-white/5 overflow-hidden"
+                  >
+                    <motion.div
+                      initial={{ width: 0 }}
+                      whileInView={{ width: "100%" }}
+                      transition={{ delay: 1 + s * 0.2, duration: 0.8 }}
+                      className="h-full bg-amber-500"
                     />
-                  ))}
-                </div>
+                  </div>
+                ))}
               </div>
             </div>
-            <div className="glass-card glass-gloss md:col-span-3 group relative rounded-3xl p-8 hover:-translate-y-1 transition-all bg-gradient-to-br from-white to-rose-50/30 dark:from-slate-900 dark:to-slate-950 overflow-hidden">
-              <Heart className="h-10 w-10 text-rose-500 mb-6" />
-              <h3 className="text-2xl font-bold mb-4 dark:text-white">
-                Zero spam. Promise.
+            <div className="glass-card glass-gloss md:col-span-3 group relative rounded-[2.5rem] p-10 bg-gradient-to-br from-white to-rose-50/50 dark:from-slate-900 dark:to-slate-950 shadow-2xl border-none">
+              <Heart className="h-12 w-12 text-rose-500 mb-8" />
+              <h3 className="text-3xl font-black mb-6">
+                Zero spam. <br />
+                That's a promise.
               </h3>
-              <p className="text-slate-600 dark:text-slate-400 mb-6">
-                No newsletters, no marketing, no noise. Only drop alerts.
+              <p className="text-lg opacity-60 leading-relaxed font-bold mb-10">
+                We strictly only send price drop notifications. No newsletters,
+                no ads, no data selling.
               </p>
-              <div className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900 p-4">
-                <div className="flex items-center gap-3 mb-3 pb-3 border-b border-slate-100 dark:border-white/5">
-                  <Mail className="h-4 w-4 text-sky-500" />
-                  <div className="text-[10px] font-bold dark:text-white">
-                    Price Drop: London → NYC
+              <div className="rounded-3xl bg-white dark:bg-slate-900/50 p-6 shadow-2xl border border-black/5 dark:border-white/5 relative overflow-hidden">
+                <div className="flex items-center gap-4 mb-4 pb-4 border-b dark:border-white/5">
+                  <div className="h-10 w-10 rounded-full bg-sky-500/10 flex items-center justify-center text-sky-500">
+                    <Mail className="h-5 w-5" />
+                  </div>
+                  <div className="font-black text-xs uppercase tracking-widest">
+                    Price hit target! London → JFK
                   </div>
                 </div>
-                <div className="text-[10px] opacity-60 dark:text-slate-400">
-                  Good news! Your flight hit £340.
+                <div className="space-y-2 opacity-40">
+                  <div className="h-2 w-full bg-slate-100 dark:bg-white/10 rounded" />
+                  <div className="h-2 w-2/3 bg-slate-100 dark:bg-white/10 rounded" />
                 </div>
+                <div className="absolute inset-0 bg-gradient-to-r from-sky-500/0 via-sky-500/5 to-sky-500/0 translate-x-[-100%] animate-[shimmer_3s_infinite]" />
               </div>
             </div>
             <LiveDealStream />
@@ -1062,43 +1167,48 @@ export default function Home() {
       <DestinationsSection />
 
       <motion.section
-        variants={sectionVariants}
-        initial="initial"
-        whileInView="animate"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
-        className="py-24 px-6 bg-sky-50 dark:bg-slate-950"
+        className="py-24 px-6 bg-white dark:bg-slate-950"
       >
         <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-10">
-            <div className="glass-card glass-gloss rounded-[2.5rem] p-10 md:p-14 bg-white dark:bg-slate-900/60">
-              <Frown className="h-10 w-10 text-slate-400 mb-8" />
-              <h3 className="text-2xl font-black mb-6 dark:text-white">
-                Hunting alone
-              </h3>
-              <ul className="space-y-4 text-slate-500 dark:text-slate-400">
-                <li className="flex items-center gap-3">
-                  <X className="h-4 w-4 text-rose-500" /> 17 Chrome tabs open
-                </li>
-                <li className="flex items-center gap-3">
-                  <X className="h-4 w-4 text-rose-500" /> Missed every price
-                  drop
-                </li>
+          <div className="grid md:grid-cols-2 gap-12">
+            <div className="glass-card glass-gloss rounded-[3rem] p-12 bg-slate-50 dark:bg-slate-900/40 border-none shadow-2xl">
+              <Frown className="h-12 w-12 text-slate-400 mb-10" />
+              <h3 className="text-4xl font-black mb-8">Hunting Alone</h3>
+              <ul className="space-y-6">
+                {[
+                  "17 Chrome tabs open at once",
+                  "Obsessive manual refreshing",
+                  "Always missing the best price",
+                ].map((item, i) => (
+                  <li
+                    key={i}
+                    className="flex items-center gap-4 text-xl opacity-40 font-bold"
+                  >
+                    <X className="h-6 w-6 text-rose-500" /> {item}
+                  </li>
+                ))}
               </ul>
             </div>
-            <div className="glass-card glass-gloss rounded-[2.5rem] p-10 md:p-14 bg-white dark:bg-slate-900 ring-4 ring-sky-500/20">
-              <Plane className="h-10 w-10 text-sky-600 mb-8" />
-              <h3 className="text-2xl font-black mb-6 dark:text-white">
-                With Guardian
-              </h3>
-              <ul className="space-y-4">
-                <li className="flex items-center gap-3 font-bold dark:text-white">
-                  <Check className="h-4 w-4 text-emerald-500" /> Set once,
-                  forget forever
-                </li>
-                <li className="flex items-center gap-3 font-bold dark:text-white">
-                  <Check className="h-4 w-4 text-emerald-500" /> Email the
-                  second it drops
-                </li>
+            <div className="glass-card glass-gloss rounded-[3rem] p-12 bg-white dark:bg-slate-900 border-none shadow-2xl ring-4 ring-sky-500/10">
+              <Plane className="h-12 w-12 text-sky-500 mb-10" />
+              <h3 className="text-4xl font-black mb-8">With Guardian</h3>
+              <ul className="space-y-6">
+                {[
+                  "Set once, forget forever",
+                  "Real-time global scanning",
+                  "Email the second it drops",
+                ].map((item, i) => (
+                  <li
+                    key={i}
+                    className="flex items-center gap-4 text-xl font-black"
+                  >
+                    <Check className="h-6 w-6 text-emerald-500 shadow-lg" />{" "}
+                    {item}
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
@@ -1106,28 +1216,38 @@ export default function Home() {
       </motion.section>
 
       <motion.section
-        initial={{ opacity: 0, scale: 0.95 }}
+        initial={{ opacity: 0, scale: 0.98 }}
         whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true }}
-        className="py-24 px-6"
+        className="py-32 px-6"
       >
-        <div className="max-w-5xl mx-auto text-center">
-          <div className="relative rounded-3xl bg-gradient-to-br from-sky-600 to-indigo-600 p-16 text-white shadow-xl overflow-hidden">
-            <h2 className="text-4xl font-bold mb-4">
-              Ready for your next trip?
+        <div className="max-w-6xl mx-auto">
+          <div className="relative rounded-[4rem] bg-gradient-to-br from-sky-600 via-sky-500 to-indigo-700 p-20 text-white shadow-2xl overflow-hidden text-center">
+            <h2 className="text-5xl md:text-7xl font-black tracking-tighter mb-8">
+              READY FOR YOUR <br />
+              NEXT ADVENTURE?
             </h2>
-            <p className="text-sky-100 mb-8 max-w-xl mx-auto">
-              Start watching a flight now. It's free and takes 30 seconds.
+            <p className="text-xl md:text-2xl opacity-70 mb-16 max-w-2xl mx-auto font-bold">
+              Join 12,843 travelers who never pay full price for flights. Free
+              to start, cancel anytime.
             </p>
             <Link
               to="/search"
-              className="glass-button glass-gloss rounded-full bg-white text-sky-700 px-10 py-5 text-xl font-bold"
+              className="glass-button glass-gloss rounded-full bg-white text-sky-700 px-16 py-8 text-2xl font-black uppercase tracking-widest shadow-2xl"
             >
-              Start tracking now
+              Start Tracking Now
             </Link>
+            <div
+              aria-hidden
+              className="absolute -top-20 -left-20 w-96 h-96 bg-white/10 blur-[100px] rounded-full"
+            />
+            <div
+              aria-hidden
+              className="absolute -bottom-20 -right-20 w-96 h-96 bg-black/10 blur-[100px] rounded-full"
+            />
           </div>
         </div>
       </motion.section>
-    </motion.div>
+    </div>
   );
 }
