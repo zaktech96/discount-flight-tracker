@@ -22,6 +22,20 @@ verified before merge - no exceptions.
 
 ## Log
 
+### SL-029 - Premium Night Mode & UI Polish Finalization
+
+**Scope:** `app/app.css`, `app/routes/home.tsx`
+
+**Summary:** 
+- Finalized a premium dark mode palette using deep navy (#020617) and slate tones, ensuring a high-end, cinematic feel in Night Mode.
+- Fixed visibility issues in the "Signal Feed" by implementing `glass-card-dark` and high-contrast typography, making flight data perfectly legible.
+- Populated the "Zero Spam" email preview with realistic, brand-reinforcing copy and animated loading states.
+- Solidified the `ProductDemo` jitter fix with strict, responsive height locking and `mode="wait"` transitions, ensuring no impact on surrounding components.
+- Applied refined `glass-gloss` effects and staggered entry animations across all sections for a cohesive, professional experience.
+- Verified the build and removed all unused legacy imports and variables.
+
+**Verification:** Build passes successfully.
+
 ### SL-028 - Signal Feed Redesign & Total Jitter Elimination
 
 **Scope:** `app/routes/home.tsx`, `app/app.css`

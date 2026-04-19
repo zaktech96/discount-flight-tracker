@@ -10,7 +10,6 @@ export const meta: Route.MetaFunction = () => [
     content:
       "Pick a route, set a target price, and we'll email you the moment it drops. Free to use, no credit card.",
   },
-];
 import {
   Plane,
   Bell,
