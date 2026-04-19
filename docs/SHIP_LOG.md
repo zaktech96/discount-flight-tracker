@@ -22,6 +22,20 @@ verified before merge - no exceptions.
 
 ## Log
 
+### SL-021 - Layout Scaling for Large Screens
+
+**Scope:** `app/routes/home.tsx`
+
+**Summary:** 
+- Upscaled the entire landing page layout to better utilize screen real estate on larger displays and reduce excessive white space.
+- Increased `max-width` constraints for major sections (`ProductDemo`, `HowItWorks`, `Differences`) to `max-w-7xl`.
+- Enormously increased heading font sizes (e.g., `lg:text-7xl` for section headers) and body text for more impact.
+- Redesigned the faux browser in `ProductDemo` with larger padding (`lg:p-20`), larger icons, and bolder data displays.
+- Enlarged "How It Works" step cards and "The Difference" comparison cards with increased padding and font sizes.
+- Added background glows and ring effects to prominent cards to enhance visual hierarchy on large viewports.
+
+**Verification:** Build passes successfully.
+
 ### SL-020 - Interactive 'How It Works' Section & Jitter Fix
 
 **Scope:** `app/routes/home.tsx`
