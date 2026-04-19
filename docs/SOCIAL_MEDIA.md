@@ -162,8 +162,9 @@ Tag every outbound link with `?utm_source=twitter&utm_campaign=launch` etc. so y
 Highlighting the expanded destination catalog and the cinematic dark mode.
 
 **Angles**
-- "From Mexico City to Zanzibar: We just expanded our destination catalog to cover every corner of the globe. 20+ new high-fidelity destination cards added."
+- "From Mexico City to Zanzibar: We just expanded our destination catalog to cover every corner of the globe. 40+ new high-fidelity destination cards added."
 - "Cinematic Dark Mode is here. Because tracking price drops shouldn't hurt your eyes at 2 AM."
+- "Infinite Hero: Added a cinematic plane animation to the landing page to establish our 'Watchdog' identity the second the page loads."
 - "The math of a perfect loop: How we built a jitter-free, infinite conveyor belt for our trending deals."
 
 **Example post (X):**

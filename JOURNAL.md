@@ -8,8 +8,10 @@ A running log of what shipped, what broke, and what we learned. Newest entries a
 
 **Shipped**
 - **Phase 2 Implementation:** Migrated alert tracking from `localStorage` to the Convex backend. Authenticated users now have persistent alerts saved directly to the database, enabling cross-device tracking and automated backend polling.
+- **Cinematic Hero:** Added an infinite looping plane animation to the hero section background with a gentle motion trail, immediately establishing the "travel watchdog" theme.
+- **Interactive Demo:** Overhauled the "Get the ping" demo scene with immersive destination-matching background imagery and a rewarding "Booked!" success state.
 - **Cinematic Dark Mode:** Full visual overhaul for dark mode across all routes. Added `dark:` Tailwind variants to gradients, glass cards, and form inputs. Standardized on a deep slate/navy palette (#0F172A).
-- **Global Expansion Pack:** Added 20+ new high-fidelity destination cards covering the Americas (Mexico City, Cancun), South America (Lima, Bogota), and Africa (Cairo, Tunis, Zanzibar, Nairobi).
+- **Global Expansion Pack:** Added 40+ high-fidelity destination cards covering Europe (Lisbon, Porto, Santorini, Reykjavik), the Americas (Toronto, Mexico City), South America (Lima, Bogota, Santiago, Montevideo), and Africa (Cairo, Tunis, Zanzibar, Nairobi).
 - **Conveyor Belt 2.0:** Re-engineered the trending deals section with a 20x item duplication logic and a precise `-5%` translation loop for a mathematically perfect infinite scroll.
 - **Premium Transitions:** Added coordinated Framer Motion entrance animations for the Home and Search pages, providing an "app-like" loading feel.
 

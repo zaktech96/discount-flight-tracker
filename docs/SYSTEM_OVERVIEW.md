@@ -54,7 +54,7 @@ If the answer is **YES**:
 ---
 
 ## 4. Current Status
-We are currently in **Phase 2 Refined**. 
-- The UI is 100% complete and dark-mode ready.
+We are currently in **Phase 2 Complete & Polished**. 
+- The UI is 100% complete, dark-mode ready, and features cinematic hero animations.
 - The Backend is 100% ready to store and match alerts.
-- **Next Step**: Plugging in the live API for real-world price data.
+- **Next Step**: Plugging in the live API for real-world price data (Phase 1).
