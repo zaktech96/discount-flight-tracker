@@ -22,6 +22,19 @@ verified before merge - no exceptions.
 
 ## Log
 
+### SL-030 - Bento Fix & Aesthetic Finalization
+
+**Scope:** `app/routes/home.tsx`, `app/app.css`
+
+**Summary:** 
+- Resolved a critical visibility bug where the Bento grid section was not rendering due to variant mismatches; standardized all `motion` components to use a consistent `initial` and `animate` lifecycle.
+- Fully populated the "Zero Spam" card with a high-fidelity mock email inbox preview and a detailed feature list, ensuring a dense and professional information display.
+- Locked the `ProductDemo` stage container to fixed responsive heights to ensure zero layout shift during stage transitions, providing a rock-solid user experience.
+- Refined the dark mode color system with deep navy (#020617) for a more cinematic, high-end technical feel.
+- Cleaned up duplicate component definitions and unused variables to optimize build size and maintainability.
+
+**Verification:** Build passes successfully.
+
 ### SL-029 - Premium Night Mode & UI Polish Finalization
 
 **Scope:** `app/app.css`, `app/routes/home.tsx`

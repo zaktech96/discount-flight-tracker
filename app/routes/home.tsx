@@ -10,6 +10,7 @@ export const meta: Route.MetaFunction = () => [
     content:
       "Pick a route, set a target price, and we'll email you the moment it drops. Free to use, no credit card.",
   },
+];
 import {
   Plane,
   Bell,
@@ -281,12 +282,202 @@ const RECENT_DROPS = [
   { from: "Birmingham", to: "Madrid", drop: 38, price: 72, time: "20m ago" },
 ];
 
+const sectionVariants = {
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0, transition: { duration: 0.8 } },
+};
+
+function DemoTypingField({
+  label,
+  icon: Icon,
+  text,
+  startDelay,
+  speed = 65,
+  activeNow,
+}: any) {
+  const { display, done } = useTypewriter(text, speed, startDelay);
+  const borderClass = activeNow
+    ? "border-sky-400 shadow-sm"
+    : done
+      ? "border-emerald-300"
+      : "border-slate-200 dark:border-white/10";
+  return (
+    <div>
+      <span className="text-xs font-medium text-slate-700 dark:text-slate-300 mb-1.5 flex items-center gap-1.5">
+        <Icon className="h-3.5 w-3.5 text-sky-600" /> {label}
+      </span>
+      <div
+        className={`rounded-xl border-2 glass-input px-3.5 py-3 text-sm font-medium text-slate-800 dark:text-white flex items-center min-h-[46px] transition-colors ${borderClass}`}
+      >
+        <span className="truncate">{display}</span>
+        {activeNow && !done && (
+          <span className="inline-block w-0.5 h-4 bg-sky-600 ml-0.5 animate-pulse" />
+        )}
+      </div>
+    </div>
+  );
+}
+
+function DemoSceneSearch({ route }: any) {
+  const fromText = `${route.fromCity} (${route.fromCode})`;
+  const toText = `${route.toCity} (${route.toCode})`;
+  const dateText = route.date;
+  const [elapsed, setElapsed] = useState(0);
+
+  useEffect(() => {
+    const start = Date.now();
+    const id = setInterval(() => setElapsed(Date.now() - start), 100);
+    return () => clearInterval(id);
+  }, []);
+
+  const fromEnd = 300 + fromText.length * 65;
+  const toEnd = fromEnd + 200 + toText.length * 65;
+  const dateEnd = toEnd + 200 + dateText.length * 65;
+  const activeField =
+    elapsed < fromEnd ? 0 : elapsed < toEnd ? 1 : elapsed < dateEnd ? 2 : 3;
+
+  return (
+    <div className="space-y-10 max-w-4xl mx-auto w-full">
+      <div className="flex items-center gap-3 text-lg text-slate-500 font-medium dark:text-slate-400">
+        <Search className="h-6 w-6 text-sky-600" /> Tell us where you want to
+        fly
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <DemoTypingField
+          label="Flying from"
+          icon={MapPin}
+          text={fromText}
+          startDelay={300}
+          activeNow={activeField === 0}
+        />
+        <DemoTypingField
+          label="Flying to"
+          icon={Plane}
+          text={toText}
+          startDelay={fromEnd + 200}
+          activeNow={activeField === 1}
+        />
+        <DemoTypingField
+          label="When"
+          icon={Calendar}
+          text={dateText}
+          startDelay={toEnd + 200}
+          activeNow={activeField === 2}
+        />
+      </div>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: activeField === 3 ? 1 : 0 }}
+        className="flex items-center gap-4"
+      >
+        <button className="glass-button inline-flex items-center gap-3 rounded-full bg-sky-600 text-white px-10 py-5 text-xl font-bold shadow-xl shadow-sky-200">
+          Search flights <ArrowRight className="h-6 w-6" />
+        </button>
+      </motion.div>
+    </div>
+  );
+}
+
+function DemoSceneResults({ route }: any) {
+  return (
+    <div className="max-w-4xl mx-auto w-full">
+      <div className="flex items-center gap-4 flex-wrap mb-8">
+        <span className="inline-flex items-center gap-2 rounded-full bg-sky-50 dark:bg-sky-500/10 text-sky-700 dark:text-sky-400 px-4 py-2 text-sm font-bold border border-sky-100 dark:border-sky-500/20">
+          <MapPin className="h-4 w-4" /> {route.fromCity} → {route.toCity}
+        </span>
+      </div>
+      <div className="space-y-4">
+        {route.deals.map((f: any, i: number) => (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: i * 0.1 }}
+            className={`rounded-[1.5rem] glass-card-soft p-6 md:p-8 flex items-center justify-between gap-4 dark:bg-slate-900/60 ${f.highlight ? "ring-2 ring-sky-400" : ""}`}
+          >
+            <div className="flex items-center gap-5">
+              <div className="h-14 w-14 rounded-2xl bg-sky-50 dark:bg-sky-500/10 flex items-center justify-center text-sky-600">
+                <Plane className="h-7 w-7" />
+              </div>
+              <div>
+                <p className="font-bold text-slate-900 dark:text-white text-lg">
+                  {f.airline}
+                </p>
+              </div>
+            </div>
+            <div className="text-right">
+              <p className="text-2xl font-black text-slate-900 dark:text-white">
+                £{f.price}
+              </p>
+              {f.highlight && (
+                <span className="text-sky-600 dark:text-sky-400 text-sm font-bold">
+                  Best Deal
+                </span>
+              )}
+            </div>
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function DemoSceneTracking({ route }: any) {
+  return (
+    <div className="space-y-10 max-w-2xl mx-auto w-full">
+      <div className="rounded-2xl border-2 border-sky-400 glass-input px-6 py-8 flex items-center justify-between shadow-2xl dark:bg-slate-900/60">
+        <div className="flex items-baseline">
+          <span className="text-5xl font-black text-slate-900 dark:text-white">
+            £{route.target}
+          </span>
+          <span className="inline-block w-1 h-10 bg-sky-600 ml-2 animate-pulse rounded-full" />
+        </div>
+        <span className="text-sm text-emerald-700 bg-emerald-50 px-4 py-2 font-bold rounded-full">
+          Target Set
+        </span>
+      </div>
+      <button className="glass-button w-full inline-flex items-center justify-center gap-3 rounded-full bg-sky-600 text-white px-10 py-5 text-xl font-bold shadow-xl shadow-sky-200">
+        <Bell className="h-6 w-6" /> Start watching
+      </button>
+    </div>
+  );
+}
+
+function DemoSceneAlert({ route }: any) {
+  return (
+    <div className="relative min-h-[360px] flex items-center justify-center">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="glass-card-soft rounded-2xl shadow-2xl p-8 max-w-sm bg-white dark:bg-slate-900"
+      >
+        <div className="flex items-center gap-3 mb-4 pb-4 border-b border-slate-100 dark:border-white/10">
+          <Mail className="h-6 w-6 text-emerald-600" />
+          <div>
+            <p className="font-bold dark:text-white leading-tight">
+              Price dropped!
+            </p>
+            <p className="text-xs text-slate-400">Flight Guardian</p>
+          </div>
+        </div>
+        <p className="text-slate-600 dark:text-slate-400 mb-6">
+          Your flight to <b>{route.toCity}</b> hit <b>£{route.target}</b>!
+        </p>
+        <button className="glass-button w-full rounded-full bg-sky-600 text-white py-3 font-bold">
+          Book Now
+        </button>
+      </motion.div>
+    </div>
+  );
+}
+
 function HowItWorks() {
   return (
     <motion.section
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
+      initial="initial"
+      whileInView="animate"
       viewport={{ once: true, margin: "-100px" }}
+      variants={sectionVariants}
       className="py-24 px-6 relative overflow-hidden bg-white/50 dark:bg-slate-900/50"
     >
       <div className="max-w-7xl mx-auto text-center">
@@ -294,7 +485,7 @@ function HowItWorks() {
           <Sparkles className="h-3.5 w-3.5" />
           Simple steps
         </span>
-        <h2 className="text-4xl md:text-6xl font-bold tracking-tight leading-[1.1]">
+        <h2 className="text-4xl md:text-6xl font-bold tracking-tight leading-[1.1] dark:text-white">
           How Flight Guardian{" "}
           <span className="relative inline-block">
             <span className="relative z-10 text-sky-600">works</span>
@@ -374,7 +565,6 @@ function HowItWorks() {
               description="Our smart system constantly monitors thousands of flights."
               color="emerald"
               delay={0.2}
-              isActive
             />
             <StepCard
               number="3"
@@ -383,7 +573,6 @@ function HowItWorks() {
               description="We'll send you an email the instant your flight hits your target."
               color="amber"
               delay={0.4}
-              showNotification
             />
           </div>
         </div>
@@ -399,14 +588,11 @@ function StepCard({
   description,
   color,
   delay,
-  isActive = false,
-  showNotification = false,
 }: any) {
   const colorClasses: any = {
-    sky: "bg-sky-50 text-sky-600 ring-sky-200 dark:bg-sky-500/10",
-    emerald:
-      "bg-emerald-50 text-emerald-600 ring-emerald-200 dark:bg-emerald-500/10",
-    amber: "bg-amber-50 text-amber-600 ring-amber-200 dark:bg-amber-500/10",
+    sky: "bg-sky-50 text-sky-600 dark:bg-sky-500/10",
+    emerald: "bg-emerald-50 text-emerald-600 dark:bg-emerald-500/10",
+    amber: "bg-amber-50 text-amber-600 dark:bg-amber-500/10",
   };
 
   return (
@@ -431,9 +617,9 @@ function StepCard({
         </span>
       </div>
 
-      <div className="glass-card glass-gloss p-8 pt-10 rounded-3xl shadow-xl group-hover:shadow-2xl transition-all duration-500 h-full flex flex-col items-center md:items-start text-center md:text-left bg-white/80 dark:bg-slate-900/80">
+      <div className="glass-card glass-gloss p-8 pt-10 rounded-3xl shadow-xl h-full flex flex-col items-center md:items-start text-center md:text-left bg-white/80 dark:bg-slate-900/80">
         <div
-          className={`flex items-center justify-center h-16 w-16 rounded-2xl mb-6 group-hover:scale-110 transition-transform duration-500 relative ${colorClasses[color]}`}
+          className={`flex items-center justify-center h-16 w-16 rounded-2xl mb-6 relative ${colorClasses[color]}`}
         >
           <Icon className="h-8 w-8" />
         </div>
@@ -595,7 +781,7 @@ function ProductDemo() {
         return next;
       });
     }, DEMO_DURATIONS[stage]);
-    return () => clearTimeout(id);
+    return () => clearInterval(id);
   }, [stage]);
 
   return (
@@ -615,11 +801,11 @@ function ProductDemo() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1]"
+            className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1] dark:text-white"
           >
             See it in{" "}
             <span className="relative inline-block">
-              <span className="relative z-10">action</span>
+              <span className="relative z-10 text-sky-600">action</span>
               <span
                 aria-hidden
                 className="absolute left-0 bottom-1 h-3 w-full rounded-full bg-amber-200/70 -z-0"
@@ -689,188 +875,6 @@ function ProductDemo() {
   );
 }
 
-function DemoTypingField({
-  label,
-  icon: Icon,
-  text,
-  startDelay,
-  speed = 65,
-  activeNow,
-}: any) {
-  const { display, done } = useTypewriter(text, speed, startDelay);
-  const borderClass = activeNow
-    ? "border-sky-400 shadow-sm"
-    : done
-      ? "border-emerald-300"
-      : "border-slate-200 dark:border-white/10";
-  return (
-    <div>
-      <span className="text-xs font-medium text-slate-700 dark:text-slate-300 mb-1.5 flex items-center gap-1.5">
-        <Icon className="h-3.5 w-3.5 text-sky-600" /> {label}
-      </span>
-      <div
-        className={`rounded-xl border-2 glass-input px-3.5 py-3 text-sm font-medium text-slate-800 dark:text-white flex items-center min-h-[46px] transition-colors ${borderClass}`}
-      >
-        <span className="truncate">{display}</span>
-        {activeNow && !done && (
-          <span className="inline-block w-0.5 h-4 bg-sky-600 ml-0.5 animate-pulse" />
-        )}
-      </div>
-    </div>
-  );
-}
-
-function DemoSceneSearch({ route, duration }: any) {
-  const fromText = `${route.fromCity} (${route.fromCode})`;
-  const toText = `${route.toCity} (${route.toCode})`;
-  const dateText = route.date;
-  const [elapsed, setElapsed] = useState(0);
-  useEffect(() => {
-    const start = Date.now();
-    const id = setInterval(() => setElapsed(Date.now() - start), 100);
-    return () => clearInterval(id);
-  }, []);
-  const fromEnd = 300 + fromText.length * 65;
-  const toEnd = fromEnd + 200 + toText.length * 65;
-  const dateEnd = toEnd + 200 + dateText.length * 65;
-  const activeField =
-    elapsed < fromEnd ? 0 : elapsed < toEnd ? 1 : elapsed < dateEnd ? 2 : 3;
-
-  return (
-    <div className="space-y-10 max-w-4xl mx-auto w-full">
-      <div className="flex items-center gap-3 text-lg text-slate-500 font-medium dark:text-slate-400">
-        <Search className="h-6 w-6 text-sky-600" /> Tell us where you want to
-        fly
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <DemoTypingField
-          label="Flying from"
-          icon={MapPin}
-          text={fromText}
-          startDelay={300}
-          activeNow={activeField === 0}
-        />
-        <DemoTypingField
-          label="Flying to"
-          icon={Plane}
-          text={toText}
-          startDelay={fromEnd + 200}
-          activeNow={activeField === 1}
-        />
-        <DemoTypingField
-          label="When"
-          icon={Calendar}
-          text={dateText}
-          startDelay={toEnd + 200}
-          activeNow={activeField === 2}
-        />
-      </div>
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: activeField === 3 ? 1 : 0 }}
-        className="flex items-center gap-4"
-      >
-        <button className="glass-button inline-flex items-center gap-3 rounded-full bg-sky-600 text-white px-10 py-5 text-xl font-bold shadow-xl shadow-sky-200">
-          Search flights <ArrowRight className="h-6 w-6" />
-        </button>
-      </motion.div>
-    </div>
-  );
-}
-
-function DemoSceneResults({ route }: any) {
-  return (
-    <div className="max-w-4xl mx-auto w-full">
-      <div className="flex items-center gap-4 flex-wrap mb-8">
-        <span className="inline-flex items-center gap-2 rounded-full bg-sky-50 dark:bg-sky-500/10 text-sky-700 dark:text-sky-400 px-4 py-2 text-sm font-bold border border-sky-100 dark:border-sky-500/20">
-          <MapPin className="h-4 w-4" /> {route.fromCity} → {route.toCity}
-        </span>
-      </div>
-      <div className="space-y-4">
-        {route.deals.map((f: any, i: number) => (
-          <motion.div
-            key={i}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: i * 0.1 }}
-            className={`rounded-[1.5rem] glass-card-soft p-6 md:p-8 flex items-center justify-between gap-4 dark:bg-slate-900/60 ${f.highlight ? "ring-2 ring-sky-400" : ""}`}
-          >
-            <div className="flex items-center gap-5">
-              <div className="h-14 w-14 rounded-2xl bg-sky-50 dark:bg-sky-500/10 flex items-center justify-center text-sky-600">
-                <Plane className="h-7 w-7" />
-              </div>
-              <div>
-                <p className="font-bold text-slate-900 dark:text-white text-lg">
-                  {f.airline}
-                </p>
-              </div>
-            </div>
-            <div className="text-right">
-              <p className="text-2xl font-black text-slate-900 dark:text-white">
-                £{f.price}
-              </p>
-              {f.highlight && (
-                <span className="text-sky-600 dark:text-sky-400 text-sm font-bold">
-                  Best Deal
-                </span>
-              )}
-            </div>
-          </motion.div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function DemoSceneTracking({ route }: any) {
-  return (
-    <div className="space-y-10 max-w-2xl mx-auto w-full">
-      <div className="rounded-2xl border-2 border-sky-400 glass-input px-6 py-8 flex items-center justify-between shadow-2xl dark:bg-slate-900/60">
-        <div className="flex items-baseline">
-          <span className="text-5xl font-black text-slate-900 dark:text-white">
-            £{route.target}
-          </span>
-          <span className="inline-block w-1 h-10 bg-sky-600 ml-2 animate-pulse rounded-full" />
-        </div>
-        <span className="text-sm text-emerald-700 bg-emerald-50 px-4 py-2 font-bold rounded-full">
-          Target Set
-        </span>
-      </div>
-      <button className="glass-button w-full inline-flex items-center justify-center gap-3 rounded-full bg-sky-600 text-white px-10 py-5 text-xl font-bold shadow-xl shadow-sky-200">
-        <Bell className="h-6 w-6" /> Start watching
-      </button>
-    </div>
-  );
-}
-
-function DemoSceneAlert({ route }: any) {
-  return (
-    <div className="relative min-h-[360px] flex items-center justify-center">
-      <motion.div
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        className="glass-card-soft rounded-2xl shadow-2xl p-8 max-w-sm bg-white dark:bg-slate-900"
-      >
-        <div className="flex items-center gap-3 mb-4 pb-4 border-b border-slate-100 dark:border-white/10">
-          <Mail className="h-6 w-6 text-emerald-600" />
-          <div>
-            <p className="font-bold dark:text-white leading-tight">
-              Price dropped!
-            </p>
-            <p className="text-xs text-slate-400">Flight Guardian</p>
-          </div>
-        </div>
-        <p className="text-slate-600 dark:text-slate-400 mb-6">
-          Your flight to <b>{route.toCity}</b> hit <b>£{route.target}</b>!
-        </p>
-        <button className="glass-button w-full rounded-full bg-sky-600 text-white py-3 font-bold">
-          Book Now
-        </button>
-      </motion.div>
-    </div>
-  );
-}
-
 function DestinationsSection() {
   const [filter, setFilter] = useState<DestinationFilter>("All");
   const visible = DESTINATIONS.filter(
@@ -936,10 +940,7 @@ export default function Home() {
       className="min-h-screen bg-gradient-to-b from-sky-50 via-white to-white dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 text-slate-900 dark:text-slate-100 overflow-x-hidden"
     >
       <motion.section
-        variants={{
-          initial: { opacity: 0, y: 20 },
-          animate: { opacity: 1, y: 0 },
-        }}
+        variants={sectionVariants}
         className="relative pt-28 pb-24 px-6"
       >
         <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
@@ -980,7 +981,9 @@ export default function Home() {
       <ProductDemo />
 
       <motion.section
-        variants={{ initial: { opacity: 0 }, whileInView: { opacity: 1 } }}
+        variants={sectionVariants}
+        initial="initial"
+        whileInView="animate"
         viewport={{ once: true }}
         className="relative py-24 px-6 bg-gradient-to-b from-white to-sky-50 dark:from-slate-900 dark:to-slate-950 overflow-hidden"
       >
@@ -991,14 +994,16 @@ export default function Home() {
               <div>
                 <PiggyBank className="h-10 w-10 text-emerald-600 mb-6" />
                 <div className="flex items-baseline gap-2">
-                  <span className="text-5xl font-black">£220</span>
-                  <span className="text-sm font-bold opacity-40 uppercase">
+                  <span className="text-5xl font-black text-slate-900 dark:text-white">
+                    £220
+                  </span>
+                  <span className="text-sm font-bold opacity-40 uppercase dark:text-slate-400">
                     avg saved
                   </span>
                 </div>
               </div>
               <div className="mt-8 pt-6 border-t border-slate-100 dark:border-white/5">
-                <p className="text-[10px] font-black opacity-40 uppercase tracking-widest">
+                <p className="text-[10px] font-black opacity-40 uppercase tracking-widest dark:text-slate-400">
                   Community Total
                 </p>
                 <p className="text-lg font-bold text-emerald-600">£1.4M+</p>
@@ -1008,8 +1013,10 @@ export default function Home() {
               <div>
                 <Clock className="h-10 w-10 text-amber-600 mb-6" />
                 <div className="flex items-baseline gap-2">
-                  <span className="text-5xl font-black">30s</span>
-                  <span className="text-sm font-bold opacity-40 uppercase">
+                  <span className="text-5xl font-black text-slate-900 dark:text-white">
+                    30s
+                  </span>
+                  <span className="text-sm font-bold opacity-40 uppercase dark:text-slate-400">
                     to set up
                   </span>
                 </div>
@@ -1027,18 +1034,20 @@ export default function Home() {
             </div>
             <div className="glass-card glass-gloss md:col-span-3 group relative rounded-3xl p-8 hover:-translate-y-1 transition-all bg-gradient-to-br from-white to-rose-50/30 dark:from-slate-900 dark:to-slate-950 overflow-hidden">
               <Heart className="h-10 w-10 text-rose-500 mb-6" />
-              <h3 className="text-2xl font-bold mb-4">Zero spam. Promise.</h3>
+              <h3 className="text-2xl font-bold mb-4 dark:text-white">
+                Zero spam. Promise.
+              </h3>
               <p className="text-slate-600 dark:text-slate-400 mb-6">
                 No newsletters, no marketing, no noise. Only drop alerts.
               </p>
               <div className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900 p-4">
-                <div className="flex items-center gap-3 mb-3 pb-3 border-b dark:border-white/5">
+                <div className="flex items-center gap-3 mb-3 pb-3 border-b border-slate-100 dark:border-white/5">
                   <Mail className="h-4 w-4 text-sky-500" />
-                  <div className="text-[10px] font-bold">
+                  <div className="text-[10px] font-bold dark:text-white">
                     Price Drop: London → NYC
                   </div>
                 </div>
-                <div className="text-[10px] opacity-60">
+                <div className="text-[10px] opacity-60 dark:text-slate-400">
                   Good news! Your flight hit £340.
                 </div>
               </div>
@@ -1052,18 +1061,20 @@ export default function Home() {
       <DestinationsSection />
 
       <motion.section
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
+        variants={sectionVariants}
+        initial="initial"
+        whileInView="animate"
         viewport={{ once: true }}
-        transition={{ duration: 1 }}
         className="py-24 px-6 bg-sky-50 dark:bg-slate-950"
       >
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-2 gap-10">
             <div className="glass-card glass-gloss rounded-[2.5rem] p-10 md:p-14 bg-white dark:bg-slate-900/60">
               <Frown className="h-10 w-10 text-slate-400 mb-8" />
-              <h3 className="text-2xl font-black mb-6">Hunting alone</h3>
-              <ul className="space-y-4 text-slate-500">
+              <h3 className="text-2xl font-black mb-6 dark:text-white">
+                Hunting alone
+              </h3>
+              <ul className="space-y-4 text-slate-500 dark:text-slate-400">
                 <li className="flex items-center gap-3">
                   <X className="h-4 w-4 text-rose-500" /> 17 Chrome tabs open
                 </li>
@@ -1075,13 +1086,15 @@ export default function Home() {
             </div>
             <div className="glass-card glass-gloss rounded-[2.5rem] p-10 md:p-14 bg-white dark:bg-slate-900 ring-4 ring-sky-500/20">
               <Plane className="h-10 w-10 text-sky-600 mb-8" />
-              <h3 className="text-2xl font-black mb-6">With Guardian</h3>
+              <h3 className="text-2xl font-black mb-6 dark:text-white">
+                With Guardian
+              </h3>
               <ul className="space-y-4">
-                <li className="flex items-center gap-3 font-bold">
+                <li className="flex items-center gap-3 font-bold dark:text-white">
                   <Check className="h-4 w-4 text-emerald-500" /> Set once,
                   forget forever
                 </li>
-                <li className="flex items-center gap-3 font-bold">
+                <li className="flex items-center gap-3 font-bold dark:text-white">
                   <Check className="h-4 w-4 text-emerald-500" /> Email the
                   second it drops
                 </li>
