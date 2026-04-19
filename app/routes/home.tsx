@@ -152,6 +152,93 @@ const DEMO_ROUTES: DemoRoute[] = [
       { airline: "Lufthansa", price: 720, original: 910, duration: "14h 30m" },
     ],
   },
+  {
+    fromCity: "London",
+    fromCode: "LGW",
+    toCity: "Berlin",
+    toCode: "BER",
+    date: "Aug 10, 2026",
+    airline: "Ryanair",
+    duration: "1h 50m",
+    current: 45,
+    original: 120,
+    target: 35,
+    drop: 10,
+    deals: [
+      {
+        airline: "Ryanair",
+        price: 45,
+        original: 120,
+        duration: "1h 50m",
+        highlight: true,
+      },
+      { airline: "easyJet", price: 52, original: 135, duration: "1h 55m" },
+      {
+        airline: "British Airways",
+        price: 85,
+        original: 210,
+        duration: "1h 45m",
+      },
+    ],
+  },
+  {
+    fromCity: "London",
+    fromCode: "LHR",
+    toCity: "Cape Town",
+    toCode: "CPT",
+    date: "Nov 04, 2026",
+    airline: "Virgin Atlantic",
+    duration: "11h 30m",
+    current: 580,
+    original: 750,
+    target: 500,
+    drop: 80,
+    deals: [
+      {
+        airline: "Virgin Atlantic",
+        price: 580,
+        original: 750,
+        duration: "11h 30m",
+        highlight: true,
+      },
+      {
+        airline: "British Airways",
+        price: 610,
+        original: 820,
+        duration: "11h 25m",
+      },
+      { airline: "KLM", price: 645, original: 790, duration: "14h 15m" },
+    ],
+  },
+  {
+    fromCity: "Madrid",
+    fromCode: "MAD",
+    toCity: "Rio de Janeiro",
+    toCode: "GIG",
+    date: "Feb 15, 2027",
+    airline: "Iberia",
+    duration: "10h 40m",
+    current: 495,
+    original: 890,
+    target: 450,
+    drop: 45,
+    deals: [
+      {
+        airline: "Iberia",
+        price: 495,
+        original: 890,
+        duration: "10h 40m",
+        highlight: true,
+      },
+      { airline: "LATAM", price: 520, original: 840, duration: "11h 10m" },
+      {
+        airline: "TAP Air Portugal",
+        price: 580,
+        original: 910,
+        duration: "13h 20m",
+      },
+    ],
+  },
 ];
 
 function useTypewriter(text: string, speed = 70, startDelay = 0) {
@@ -363,9 +450,9 @@ function ProductDemo() {
             Watch it work
           </span>
           <h2 className="text-3xl md:text-5xl font-bold tracking-tight leading-[1.1]">
-            The whole journey, in{" "}
+            See it in{" "}
             <span className="relative inline-block">
-              <span className="relative z-10">one minute</span>
+              <span className="relative z-10">action</span>
               <span
                 aria-hidden
                 className="absolute left-0 bottom-1 h-3 w-full rounded-full bg-amber-200/70 -z-0"
@@ -374,8 +461,7 @@ function ProductDemo() {
             .
           </h2>
           <p className="text-slate-600 mt-4 text-lg max-w-xl mx-auto">
-            No reading. No sign-up. Just watch Flight Guardian go from search to
-            savings.
+            Search, track, and save. It really is that simple.
           </p>
         </div>
 

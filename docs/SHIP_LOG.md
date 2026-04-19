@@ -22,6 +22,16 @@ verified before merge - no exceptions.
 
 ## Log
 
+### SL-007 - Expanded Product Demo & Reduced Wordiness
+
+**Scope:** `app/routes/home.tsx`
+
+**Summary:** 
+- Expanded the `DEMO_ROUTES` array to include Berlin (Europe), Cape Town (Africa), and Rio de Janeiro (South America), making the `ProductDemo` component richer and more global as it cycles through its automatic demonstrations.
+- Tightened up the copy in the "Watch it work" section (changed to "See it in action.") for a punchier, more confident tone.
+
+**Verification:** Build passes successfully.
+
 ### SL-006 - Enhanced Landing Page Interactivity & Visual Polish
 
 **Scope:** `app/routes/home.tsx`
