@@ -487,7 +487,7 @@ const DESTINATIONS: Destination[] = [
     wasFrom: 620,
     trackers: 134,
     image:
-      "https://images.unsplash.com/photo-1589909202802-8f4aadce1849?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1541345023926-55d6e0853f4b?auto=format&fit=crop&w=800&q=80",
   },
   {
     city: "Cairo",
@@ -511,7 +511,7 @@ const DESTINATIONS: Destination[] = [
     wasFrom: 240,
     trackers: 86,
     image:
-      "https://images.unsplash.com/photo-1534017710121-66c6a999a400?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1548019979-b41dc33a9df2?auto=format&fit=crop&w=800&q=80",
   },
   {
     city: "Zanzibar",
@@ -535,7 +535,7 @@ const DESTINATIONS: Destination[] = [
     wasFrom: 470,
     trackers: 156,
     image:
-      "https://images.unsplash.com/photo-1629198688000-71f23e745b6e?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1611348586804-61bf6c080437?auto=format&fit=crop&w=800&q=80",
   },
   {
     city: "Marrakech",
@@ -559,7 +559,7 @@ const DESTINATIONS: Destination[] = [
     wasFrom: 580,
     trackers: 167,
     image:
-      "https://images.unsplash.com/photo-1580619305218-85e4783c164b?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1580060839134-75a5edca2e99?auto=format&fit=crop&w=800&q=80",
   },
 ];
 
@@ -1345,7 +1345,7 @@ function DestinationsSection() {
       whileInView="animate"
       viewport={{ once: true }}
       variants={sectionVariants}
-      className="py-24 px-6 relative overflow-hidden"
+      className="py-16 sm:py-24 px-4 sm:px-6 relative overflow-hidden"
     >
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
@@ -1366,10 +1366,10 @@ function DestinationsSection() {
         </div>
 
         <div className="relative w-full overflow-hidden pb-12 pt-4 group rounded-3xl">
-          <div className="absolute top-0 bottom-0 left-0 w-32 bg-gradient-to-r from-sky-50 dark:from-slate-950 to-transparent z-20 pointer-events-none" />
-          <div className="absolute top-0 bottom-0 right-0 w-32 bg-gradient-to-l from-sky-50 dark:from-slate-950 to-transparent z-20 pointer-events-none" />
+          <div className="absolute top-0 bottom-0 left-0 w-8 sm:w-16 lg:w-32 bg-gradient-to-r from-sky-50 dark:from-slate-950 to-transparent z-20 pointer-events-none" />
+          <div className="absolute top-0 bottom-0 right-0 w-8 sm:w-16 lg:w-32 bg-gradient-to-l from-sky-50 dark:from-slate-950 to-transparent z-20 pointer-events-none" />
           <div
-            className="flex w-max animate-conveyor-belt group-hover:[animation-play-state:paused] px-6"
+            className="flex w-max animate-conveyor-belt group-hover:[animation-play-state:paused] px-3 sm:px-6"
             style={{
               animationDuration: `${visible.length * 3}s`,
             }}
@@ -1379,7 +1379,7 @@ function DestinationsSection() {
                 <Link
                   key={`${idx}-${i}`}
                   to="/search"
-                  className="group relative aspect-[4/5] w-[350px] shrink-0 rounded-[2rem] overflow-hidden shadow-2xl glass-gloss transition-transform hover:-translate-y-2 duration-500 mr-6"
+                  className="group relative aspect-[4/5] w-[220px] sm:w-[280px] lg:w-[350px] shrink-0 rounded-[1.5rem] sm:rounded-[2rem] overflow-hidden shadow-2xl glass-gloss transition-transform hover:-translate-y-2 duration-500 mr-3 sm:mr-4 lg:mr-6"
                 >
                   <img
                     src={dest.image}
@@ -1387,21 +1387,21 @@ function DestinationsSection() {
                     className="absolute inset-0 h-full w-full object-cover group-hover:scale-110 transition-transform duration-700"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
-                  <div className="absolute bottom-6 left-6 right-6 text-white">
-                    <div className="text-[10px] font-black uppercase tracking-[0.3em] text-sky-400 mb-2">
+                  <div className="absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-6 text-white">
+                    <div className="text-[9px] sm:text-[10px] font-black uppercase tracking-[0.3em] text-sky-400 mb-1 sm:mb-2">
                       {dest.region}
                     </div>
-                    <h3 className="text-3xl font-black mb-1">{dest.city}</h3>
+                    <h3 className="text-xl sm:text-2xl lg:text-3xl font-black mb-1">{dest.city}</h3>
                     <div className="flex items-end justify-between">
                       <div>
-                        <p className="text-sm opacity-60 font-bold">
+                        <p className="text-xs sm:text-sm opacity-60 font-bold">
                           {dest.country}
                         </p>
-                        <p className="mt-2 text-2xl font-black tracking-tight">
+                        <p className="mt-1 sm:mt-2 text-lg sm:text-xl lg:text-2xl font-black tracking-tight">
                           from £{dest.from}
                         </p>
                       </div>
-                      <div className="glass-button rounded-full bg-white/20 px-4 py-2 text-xs font-black uppercase tracking-widest backdrop-blur-md border border-white/30">
+                      <div className="glass-button rounded-full bg-white/20 px-3 py-1.5 sm:px-4 sm:py-2 text-[10px] sm:text-xs font-black uppercase tracking-widest backdrop-blur-md border border-white/30">
                         Track
                       </div>
                     </div>
@@ -1446,7 +1446,7 @@ export default function Home() {
       <motion.section
         variants={itemVariants}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        className="relative pt-32 pb-24 px-6 overflow-hidden"
+        className="relative pt-24 sm:pt-32 pb-16 sm:pb-24 px-4 sm:px-6 overflow-hidden"
       >
         <div className="max-w-7xl mx-auto text-center relative z-10">
           <motion.div
@@ -1465,7 +1465,7 @@ export default function Home() {
           <motion.h1
             variants={itemVariants}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="text-6xl md:text-8xl font-black tracking-tighter leading-[0.9] mb-8"
+            className="text-4xl sm:text-6xl md:text-8xl font-black tracking-tighter leading-[0.9] mb-8"
           >
             BOOK FLIGHTS AT THE <br />
             <span className="text-sky-600 inline-block relative">
@@ -1493,13 +1493,13 @@ export default function Home() {
           >
             <Link
               to="/search"
-              className="glass-button glass-gloss rounded-full bg-sky-600 text-white px-12 py-6 text-xl font-black uppercase tracking-widest shadow-2xl shadow-sky-500/20"
+              className="glass-button glass-gloss rounded-full bg-sky-600 text-white px-8 py-4 sm:px-12 sm:py-6 text-base sm:text-xl font-black uppercase tracking-widest shadow-2xl shadow-sky-500/20"
             >
               Find cheap flights
             </Link>
             <Link
               to="/dashboard"
-              className="glass-button-light glass-gloss rounded-full bg-white/10 dark:bg-white/5 border border-black/5 dark:border-white/10 px-12 py-6 text-xl font-black uppercase tracking-widest backdrop-blur-xl"
+              className="glass-button-light glass-gloss rounded-full bg-white/10 dark:bg-white/5 border border-black/5 dark:border-white/10 px-8 py-4 sm:px-12 sm:py-6 text-base sm:text-xl font-black uppercase tracking-widest backdrop-blur-xl"
             >
               My dashboard
             </Link>
@@ -1546,7 +1546,7 @@ export default function Home() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 0.8 }}
-        className="py-24 px-6 relative overflow-hidden bg-slate-50 dark:bg-slate-950/30"
+        className="py-16 sm:py-24 px-4 sm:px-6 relative overflow-hidden bg-slate-50 dark:bg-slate-950/30"
       >
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-6 gap-6">
@@ -1641,14 +1641,14 @@ export default function Home() {
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
-        className="py-24 px-6 bg-white dark:bg-slate-950 text-slate-900 dark:text-white"
+        className="py-16 sm:py-24 px-4 sm:px-6 bg-white dark:bg-slate-950 text-slate-900 dark:text-white"
       >
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12">
-            <div className="glass-card glass-gloss rounded-[3rem] p-12 bg-slate-50 dark:bg-slate-950/40 border-none shadow-2xl">
-              <Frown className="h-12 w-12 text-slate-400 mb-10" />
-              <h3 className="text-4xl font-black mb-8">Hunting Alone</h3>
-              <ul className="space-y-6">
+            <div className="glass-card glass-gloss rounded-[2rem] sm:rounded-[3rem] p-8 sm:p-12 bg-slate-50 dark:bg-slate-950/40 border-none shadow-2xl">
+              <Frown className="h-10 w-10 sm:h-12 sm:w-12 text-slate-400 mb-8 sm:mb-10" />
+              <h3 className="text-3xl sm:text-4xl font-black mb-6 sm:mb-8">Hunting Alone</h3>
+              <ul className="space-y-4 sm:space-y-6">
                 {[
                   "17 Chrome tabs open at once",
                   "Obsessive manual refreshing",
@@ -1656,17 +1656,17 @@ export default function Home() {
                 ].map((item, i) => (
                   <li
                     key={i}
-                    className="flex items-center gap-4 text-xl opacity-40 font-bold"
+                    className="flex items-center gap-3 sm:gap-4 text-base sm:text-xl opacity-40 font-bold"
                   >
-                    <X className="h-6 w-6 text-rose-500" /> {item}
+                    <X className="h-5 w-5 sm:h-6 sm:w-6 text-rose-500 shrink-0" /> {item}
                   </li>
                 ))}
               </ul>
             </div>
-            <div className="glass-card glass-gloss rounded-[3rem] p-12 bg-white dark:bg-slate-950 border-none shadow-2xl ring-4 ring-sky-500/10">
-              <Plane className="h-12 w-12 text-sky-500 mb-10" />
-              <h3 className="text-4xl font-black mb-8">With Guardian</h3>
-              <ul className="space-y-6">
+            <div className="glass-card glass-gloss rounded-[2rem] sm:rounded-[3rem] p-8 sm:p-12 bg-white dark:bg-slate-950 border-none shadow-2xl ring-4 ring-sky-500/10">
+              <Plane className="h-10 w-10 sm:h-12 sm:w-12 text-sky-500 mb-8 sm:mb-10" />
+              <h3 className="text-3xl sm:text-4xl font-black mb-6 sm:mb-8">With Guardian</h3>
+              <ul className="space-y-4 sm:space-y-6">
                 {[
                   "Set once, forget forever",
                   "Real-time global scanning",
@@ -1674,9 +1674,9 @@ export default function Home() {
                 ].map((item, i) => (
                   <li
                     key={i}
-                    className="flex items-center gap-4 text-xl font-black"
+                    className="flex items-center gap-3 sm:gap-4 text-base sm:text-xl font-black"
                   >
-                    <Check className="h-6 w-6 text-emerald-500 shadow-lg" />{" "}
+                    <Check className="h-5 w-5 sm:h-6 sm:w-6 text-emerald-500 shadow-lg shrink-0" />{" "}
                     {item}
                   </li>
                 ))}
@@ -1690,21 +1690,21 @@ export default function Home() {
         initial={{ opacity: 0, scale: 0.98 }}
         whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true }}
-        className="py-32 px-6"
+        className="py-16 sm:py-32 px-4 sm:px-6"
       >
         <div className="max-w-6xl mx-auto">
-          <div className="relative rounded-[4rem] bg-gradient-to-br from-sky-600 via-sky-500 to-indigo-700 p-20 text-white shadow-2xl overflow-hidden text-center">
-            <h2 className="text-5xl md:text-7xl font-black tracking-tighter mb-8">
+          <div className="relative rounded-[2.5rem] sm:rounded-[4rem] bg-gradient-to-br from-sky-600 via-sky-500 to-indigo-700 p-8 sm:p-14 md:p-20 text-white shadow-2xl overflow-hidden text-center">
+            <h2 className="text-3xl sm:text-5xl md:text-7xl font-black tracking-tighter mb-6 sm:mb-8">
               READY FOR YOUR <br />
               NEXT ADVENTURE?
             </h2>
-            <p className="text-xl md:text-2xl opacity-70 mb-16 max-w-2xl mx-auto font-bold">
+            <p className="text-base sm:text-xl md:text-2xl opacity-70 mb-10 sm:mb-16 max-w-2xl mx-auto font-bold">
               Join 12,843 travelers who never pay full price for flights. Free
               to start, cancel anytime.
             </p>
             <Link
               to="/search"
-              className="glass-button glass-gloss rounded-full bg-white text-sky-700 px-16 py-8 text-2xl font-black uppercase tracking-widest shadow-2xl"
+              className="glass-button glass-gloss rounded-full bg-white text-sky-700 px-8 py-5 sm:px-16 sm:py-8 text-lg sm:text-2xl font-black uppercase tracking-widest shadow-2xl"
             >
               Start Tracking Now
             </Link>

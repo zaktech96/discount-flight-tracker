@@ -22,6 +22,17 @@ verified before merge - no exceptions.
 
 ## Log
 
+### SL-045 - Full Responsive Overhaul & Image Audit
+
+**Scope:** `app/routes/home.tsx`
+
+**Summary:**
+- **Image Corrections:** Fixed four destination cards displaying wrong or duplicate imagery - Nairobi (was showing cosmetics product photo), Tunis, Cape Town, and Buenos Aires (was duplicate of Santiago). Replaced all with verified, location-accurate Unsplash photography.
+- **Destination Card Responsiveness:** Cards scaled down from fixed `w-[350px]` to responsive `w-[220px] sm:w-[280px] lg:w-[350px]`. Edge fade gradients reduced from `w-32` to `w-8 sm:w-16 lg:w-32` - on a 375px mobile viewport this expands visible card area from ~119px to ~311px, eliminating the cut-off effect.
+- **Global Responsive Pass:** Applied `sm:` breakpoint scaling across all major sections - hero section (h1 `text-4xl` on mobile), hero CTA buttons, bento section padding, destinations section padding, comparison cards (`p-8 sm:p-12`, `rounded-[2rem] sm:rounded-[3rem]`), and the final CTA section (`p-8 sm:p-14 md:p-20`, h2 `text-3xl sm:text-5xl md:text-7xl`).
+
+**Verification:** `npx tsc --noEmit` passes clean on `home.tsx`. No new errors introduced.
+
 ### SL-044 - Image Hotfix: Bangkok & Montevideo
 
 **Scope:** `app/routes/home.tsx`
