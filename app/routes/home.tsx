@@ -284,7 +284,7 @@ const DESTINATIONS: Destination[] = [
     wasFrom: 490,
     trackers: 198,
     image:
-      "https://images.unsplash.com/photo-1503192851959-c6da8ac80cff?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1720585248084-936d396a305b?auto=format&fit=crop&w=800&q=80",
   },
   {
     city: "Amsterdam",
@@ -403,7 +403,7 @@ const DESTINATIONS: Destination[] = [
     wasFrom: 580,
     trackers: 84,
     image:
-      "https://images.unsplash.com/photo-1582294657152-32943e11762c?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1693192357825-b50aa54738ab?auto=format&fit=crop&w=800&q=80",
   },
   {
     city: "Bogota",
@@ -590,6 +590,22 @@ const BENTO_DEALS = [
     original: 530,
     drop: 25,
     history: [65, 70, 68, 72, 60, 55, 52],
+  },
+  {
+    from: "Edinburgh",
+    to: "Lisbon",
+    price: 89,
+    original: 168,
+    drop: 47,
+    history: [80, 85, 82, 76, 70, 62, 53],
+  },
+  {
+    from: "London",
+    to: "Tokyo",
+    price: 612,
+    original: 840,
+    drop: 27,
+    history: [70, 75, 72, 78, 68, 62, 55],
   },
 ];
 
@@ -856,26 +872,79 @@ function DemoSceneAlert({ route }: any) {
 
 function BentoPriceWatching() {
   const [index, setIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const [hoveredBar, setHoveredBar] = useState<number | null>(null);
+  const [trackedSet, setTrackedSet] = useState<Set<number>>(new Set());
   const deal = BENTO_DEALS[index];
+  const isTracked = trackedSet.has(index);
+  const priceAt = (h: number) => Math.round((h / 100) * deal.original);
+  const displayPrice = hoveredBar !== null ? priceAt(deal.history[hoveredBar]) : deal.price;
+  const displayLabel =
+    hoveredBar === null
+      ? "Current"
+      : hoveredBar === 6
+        ? "Today"
+        : `Day -${6 - hoveredBar}`;
 
   useEffect(() => {
+    if (isPaused) return;
     const id = setInterval(() => {
       setIndex((i) => (i + 1) % BENTO_DEALS.length);
     }, 6000);
     return () => clearInterval(id);
-  }, []);
+  }, [isPaused]);
+
+  const toggleTrack = () => {
+    setTrackedSet((prev) => {
+      const next = new Set(prev);
+      if (next.has(index)) next.delete(index);
+      else next.add(index);
+      return next;
+    });
+  };
 
   return (
-    <div className="glass-card-dark glass-gloss md:col-span-3 group relative rounded-3xl p-6 md:p-7 text-white shadow-xl shadow-slate-200 hover:shadow-2xl transition-all duration-500 overflow-hidden bg-slate-950 border border-white/5">
+    <div
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => {
+        setIsPaused(false);
+        setHoveredBar(null);
+      }}
+      className="glass-card-dark glass-gloss md:col-span-3 group relative rounded-3xl p-6 md:p-7 text-white shadow-xl shadow-slate-200 hover:shadow-2xl transition-all duration-500 overflow-hidden bg-slate-950 border border-white/5"
+    >
       <Plane className="absolute -top-2 -right-2 h-28 w-28 text-white/5 -rotate-12 group-hover:rotate-0 group-hover:scale-110 transition-transform duration-700" />
 
       <div className="relative z-10 h-full flex flex-col">
-        <div className="inline-flex items-center gap-2 rounded-full bg-white/5 border border-white/10 px-3 py-1 text-[10px] font-black uppercase tracking-widest self-start">
-          <span className="relative flex h-2 w-2">
-            <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75 animate-ping" />
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
-          </span>
-          Active Scanning
+        <div className="flex items-center justify-between gap-3">
+          <div className="inline-flex items-center gap-2 rounded-full bg-white/5 border border-white/10 px-3 py-1 text-[10px] font-black uppercase tracking-widest">
+            <span className="relative flex h-2 w-2">
+              <span
+                className={`absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75 ${
+                  isPaused ? "" : "animate-ping"
+                }`}
+              />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
+            </span>
+            {isPaused ? "Paused" : "Active Scanning"}
+          </div>
+
+          <div className="flex items-center gap-1.5" role="tablist" aria-label="Deal selector">
+            {BENTO_DEALS.map((d, i) => (
+              <button
+                key={i}
+                type="button"
+                role="tab"
+                aria-selected={i === index}
+                aria-label={`${d.from} to ${d.to}`}
+                onClick={() => setIndex(i)}
+                className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
+                  i === index
+                    ? "w-6 bg-emerald-400"
+                    : "w-1.5 bg-white/15 hover:bg-white/40"
+                }`}
+              />
+            ))}
+          </div>
         </div>
 
         <div className="mt-4 flex-1">
@@ -907,25 +976,67 @@ function BentoPriceWatching() {
             </div>
 
             <div className="flex items-end gap-1.5 h-12">
-              {deal.history.map((h, i) => (
-                <motion.div
-                  key={`${index}-${i}`}
-                  initial={{ height: 0 }}
-                  animate={{ height: `${h}%` }}
-                  className={`flex-1 rounded-sm relative ${
-                    i === 6 ? "bg-emerald-400" : "bg-white/10"
-                  }`}
-                />
-              ))}
+              {deal.history.map((h, i) => {
+                const isActive = i === 6;
+                const isHover = hoveredBar === i;
+                return (
+                  <motion.button
+                    type="button"
+                    key={`${index}-${i}`}
+                    onMouseEnter={() => setHoveredBar(i)}
+                    onFocus={() => setHoveredBar(i)}
+                    onMouseLeave={() => setHoveredBar(null)}
+                    onBlur={() => setHoveredBar(null)}
+                    aria-label={`Day ${i + 1}: £${priceAt(h)}`}
+                    initial={{ height: 0 }}
+                    animate={{ height: `${h}%` }}
+                    className={`flex-1 rounded-sm cursor-pointer transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 ${
+                      isActive
+                        ? isHover
+                          ? "bg-emerald-300"
+                          : "bg-emerald-400"
+                        : isHover
+                          ? "bg-white/40"
+                          : "bg-white/10"
+                    }`}
+                  />
+                );
+              })}
             </div>
 
             <div className="mt-3 flex items-center justify-between">
               <span className="text-[10px] font-black text-white/40 uppercase tracking-widest">
-                Current
+                {displayLabel}
               </span>
-              <span className="text-xl font-black">£{deal.price}</span>
+              <motion.span
+                key={`${index}-${hoveredBar ?? "live"}`}
+                initial={{ opacity: 0, y: -4 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="text-xl font-black tabular-nums"
+              >
+                £{displayPrice}
+              </motion.span>
             </div>
           </div>
+
+          <button
+            type="button"
+            onClick={toggleTrack}
+            aria-pressed={isTracked}
+            className={`mt-3 w-full rounded-xl py-2 text-[10px] font-black uppercase tracking-[0.25em] transition-all duration-300 cursor-pointer ${
+              isTracked
+                ? "bg-emerald-500/15 text-emerald-300 border border-emerald-500/40 shadow-[0_0_0_3px_rgba(16,185,129,0.08)]"
+                : "bg-white/5 text-white/70 hover:bg-white/10 hover:text-white border border-white/5"
+            }`}
+          >
+            {isTracked ? (
+              <span className="flex items-center justify-center gap-2">
+                <Check className="h-3 w-3" /> Tracking this route
+              </span>
+            ) : (
+              "+ Track this route"
+            )}
+          </button>
         </div>
 
         <div className="mt-4 pt-3 border-t border-white/5 flex items-center justify-between text-[10px] font-bold">

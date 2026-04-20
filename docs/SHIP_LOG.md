@@ -22,6 +22,24 @@ verified before merge - no exceptions.
 
 ## Log
 
+### SL-049 - Interactive Catching Drops Card + Toronto/Montevideo Image Fix
+
+**Scope:** `app/routes/home.tsx`
+
+**Summary:**
+- **Interactivity Overhaul — `BentoPriceWatching`:**
+    - **Pagination dots** (top right beside the status badge) — clickable tabs with `role="tablist"`, active dot stretches to w-6 in emerald, inactive dots hover-brighten. Keyboard focusable and labelled with route (e.g. "London to New York").
+    - **Auto-pause on hover:** moving the cursor over the card flips the badge from "Active Scanning" to "Paused" (no more animate-ping on the indicator) and freezes the rotation interval. Leaving the card resumes.
+    - **Hoverable sparkline bars:** each of the 7 history bars is now a `<motion.button>` — hover/focus shows the derived historical price in the bottom-right readout and flips the label to `Day -N` / `Today`. Active column lightens from `emerald-400` → `emerald-300` on hover, past columns from `white/10` → `white/40`. Focus-visible ring on keyboard navigation.
+    - **Track button:** toggles a per-deal tracked state — unset reads `+ Track this route`, set reads `✓ Tracking this route` with an emerald glow ring and `aria-pressed` for assistive tech. State is kept per-index so each deal remembers its own toggle across rotations.
+    - **Data expansion:** BENTO_DEALS grew from 2 → 4 routes (added Edinburgh→Lisbon and London→Tokyo) so pagination dots have meaningful targets.
+- **Destination imagery fixes (user report):**
+    - Toronto: `photo-1503192851959-c6da8ac80cff` (wrong location) → `photo-1720585248084-936d396a305b` (CN Tower, Toronto, Canada — alt description and tags match).
+    - Montevideo: `photo-1582294657152-32943e11762c` (HTTP 404) → `photo-1693192357825-b50aa54738ab` (sunset rambla skyline of Montevideo, Uruguay — location metadata confirmed).
+    - Verification: both replacements validated via `curl -I` (HTTP 200) and Unsplash `/napi/photos/{id}` metadata lookup before commit.
+
+**Verification:** `npx tsc --noEmit` passes clean on `home.tsx`. No new type errors introduced.
+
 ### SL-048 - Bento Grid Rebalance (Zero Dead Space)
 
 **Scope:** `app/routes/home.tsx`
