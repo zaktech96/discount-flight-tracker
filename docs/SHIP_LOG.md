@@ -22,6 +22,23 @@ verified before merge - no exceptions.
 
 ## Log
 
+### SL-047 - Destination Imagery Overhaul (Verified Unsplash IDs)
+
+**Scope:** `app/routes/home.tsx`
+
+**Summary:**
+- **Broken Asset Remediation:** The previous image audit (SL-044/SL-045) relied on unverified Unsplash photo IDs. HTTP HEAD checks revealed three were returning 404 (Bangkok, Tunis, Los Angeles) and three were live but showing wrong subjects (Nairobi, Cape Town, Buenos Aires - the last rendering a phone on a desk).
+- **Verification Pipeline:** Switched methodology - every replacement candidate was validated via `curl -I` and Unsplash's public search endpoint (`/napi/search/photos`) to read the actual `alt_description` before committing. Full metadata-verified.
+- **New Assets:**
+    - Bangkok → Wat Arun temple by the river
+    - Tunis → Tunisian flag above decorated building
+    - Los Angeles → iconic palm trees + downtown skyline
+    - Buenos Aires → La Boca colorful street with crowd
+    - Nairobi → Maasai Mara giraffe on savanna grass (per user preference for safari/wildlife)
+    - Cape Town → leopard in dry grass (per user preference to lean into wildlife imagery for the South Africa card)
+
+**Verification:** All 6 new image URLs return HTTP 200; descriptions cross-checked against Unsplash metadata. `npx tsc --noEmit` passes clean.
+
 ### SL-046 - Bento Card Compaction & Flight Board Effect
 
 **Scope:** `app/routes/home.tsx`

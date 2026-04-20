@@ -319,7 +319,7 @@ const DESTINATIONS: Destination[] = [
     wasFrom: 480,
     trackers: 312,
     image:
-      "https://images.unsplash.com/photo-1508009603885-50cf7c579367?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1655815917186-76a5e56b58d5?auto=format&fit=crop&w=800&q=80",
   },
   {
     city: "Mexico City",
@@ -451,7 +451,7 @@ const DESTINATIONS: Destination[] = [
     wasFrom: 420,
     trackers: 187,
     image:
-      "https://images.unsplash.com/photo-1534430480872-3498386e7a56?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1597982087634-9884f03198ce?auto=format&fit=crop&w=800&q=80",
   },
   {
     city: "Istanbul",
@@ -487,7 +487,7 @@ const DESTINATIONS: Destination[] = [
     wasFrom: 620,
     trackers: 134,
     image:
-      "https://images.unsplash.com/photo-1541345023926-55d6e0853f4b?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1679417302656-9b5170584526?auto=format&fit=crop&w=800&q=80",
   },
   {
     city: "Cairo",
@@ -511,7 +511,7 @@ const DESTINATIONS: Destination[] = [
     wasFrom: 240,
     trackers: 86,
     image:
-      "https://images.unsplash.com/photo-1548019979-b41dc33a9df2?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1743888768224-c15f2be65e1e?auto=format&fit=crop&w=800&q=80",
   },
   {
     city: "Zanzibar",
@@ -535,7 +535,7 @@ const DESTINATIONS: Destination[] = [
     wasFrom: 470,
     trackers: 156,
     image:
-      "https://images.unsplash.com/photo-1611348586804-61bf6c080437?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1594491837471-bd439938f0b7?auto=format&fit=crop&w=800&q=80",
   },
   {
     city: "Marrakech",
@@ -559,7 +559,7 @@ const DESTINATIONS: Destination[] = [
     wasFrom: 580,
     trackers: 167,
     image:
-      "https://images.unsplash.com/photo-1580060839134-75a5edca2e99?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1728466852402-f233aed0d299?auto=format&fit=crop&w=800&q=80",
   },
 ];
 
