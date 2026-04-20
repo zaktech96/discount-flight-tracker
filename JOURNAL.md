@@ -4,6 +4,20 @@ A running log of what shipped, what broke, and what we learned. Newest entries a
 
 ---
 
+## 📝 2026-04-19 — Bento Optimization & Ultra-Minimal Demo Redesign
+
+**Shipped**
+- **Bento Card Overhaul:** Re-engineered the "Price Watching" bento card to be more compact (`col-span-3`). Added a new "Network Status" section with real-time node latency metadata (LHR-EDGE, JFK-SCAN) to enrich the data-heavy identity and eliminate empty space.
+- **Flicker Fix:** Resolved a persistent UI flickering issue in the Bento section caused by top-level React key remounting. Switched to targeted `AnimatePresence` for internal data points.
+- **Ultra-Minimal Demo:** Redesigned the "Get the ping" (Stage 4) demo scene with a focus on high-end minimalism. Removed heavy glass borders in favor of deep `backdrop-blur-3xl` and cinematic `slate-950` gradient ambience.
+- **Typographic Precision:** Implemented an even more aggressive typographic hierarchy in the demo cards, using `font-black` and wide letter-spacing for status-critical labels.
+
+**Lessons**
+- **Data Density vs. Whitespace:** In travel tech UIs, empty space can sometimes feel like "missing data." Filling gaps with low-priority metadata (like node latency) reinforces the "Watchdog" theme without adding cognitive load.
+- **Animation Stability:** Large container remounts (via `key={index}`) are the primary cause of UI jitter. Animating the *content* rather than the *container* yields a much smoother 60fps experience.
+
+---
+
 ## 📝 2026-04-19 — Phase 2 Backend Migration, Dark Mode & Global Expansion
 
 **Shipped**
