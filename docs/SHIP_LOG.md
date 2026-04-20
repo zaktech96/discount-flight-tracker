@@ -22,6 +22,16 @@ verified before merge - no exceptions.
 
 ## Log
 
+### SL-046 - Bento Card Compaction & Flight Board Effect
+
+**Scope:** `app/routes/home.tsx`
+
+**Summary:**
+- **"Catching Drops" Compaction:** Reduced the `BentoPriceWatching` card height by tightening internal spacing - outer padding `p-8 md:p-10 → p-6 md:p-7`, inner snapshot box `p-6 → p-4`, chart bar height `h-20 → h-12`, vertical rhythm `mt-6/mt-8 → mt-4`. The "Network Node" filler block was collapsed from a 3-row stacked table into a single inline latency strip, reclaiming significant vertical real estate while preserving all data points.
+- **Flight Board Effect:** Rebuilt the `LiveDealStream` ("Signal Feed") card as a departure-board style terminal display. Replaces the previous two-card carousel with a compact 6-row monospace grid (ROUTE | WAS | NOW | STATUS) featuring split-flap `FlipDigit` animations on price changes, a rolling active-row highlight, tabular-nums alignment, emerald/amber status chips, and a live UTC sync clock in the footer.
+
+**Verification:** `npx tsc --noEmit` passes clean on `home.tsx`. No new errors introduced.
+
 ### SL-045 - Full Responsive Overhaul & Image Audit
 
 **Scope:** `app/routes/home.tsx`

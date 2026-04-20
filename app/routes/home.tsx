@@ -866,11 +866,11 @@ function BentoPriceWatching() {
   }, []);
 
   return (
-    <div className="glass-card-dark glass-gloss md:col-span-3 md:row-span-2 group relative rounded-3xl p-8 md:p-10 text-white shadow-xl shadow-slate-200 hover:shadow-2xl transition-all duration-500 overflow-hidden bg-slate-950 border border-white/5">
-      <Plane className="absolute -top-2 -right-2 h-32 w-32 text-white/5 -rotate-12 group-hover:rotate-0 group-hover:scale-110 transition-transform duration-700" />
+    <div className="glass-card-dark glass-gloss md:col-span-3 md:row-span-2 group relative rounded-3xl p-6 md:p-7 text-white shadow-xl shadow-slate-200 hover:shadow-2xl transition-all duration-500 overflow-hidden bg-slate-950 border border-white/5">
+      <Plane className="absolute -top-2 -right-2 h-28 w-28 text-white/5 -rotate-12 group-hover:rotate-0 group-hover:scale-110 transition-transform duration-700" />
 
       <div className="relative z-10 h-full flex flex-col">
-        <div className="inline-flex items-center gap-2 rounded-full bg-white/5 border border-white/10 px-3 py-1.5 text-[10px] font-black uppercase tracking-widest">
+        <div className="inline-flex items-center gap-2 rounded-full bg-white/5 border border-white/10 px-3 py-1 text-[10px] font-black uppercase tracking-widest self-start">
           <span className="relative flex h-2 w-2">
             <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75 animate-ping" />
             <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
@@ -878,35 +878,35 @@ function BentoPriceWatching() {
           Active Scanning
         </div>
 
-        <div className="mt-6 flex-1">
+        <div className="mt-4 flex-1">
           <AnimatePresence mode="wait">
             <motion.div
               key={index}
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: 10 }}
-              className="space-y-1"
+              className="space-y-0.5"
             >
               <p className="text-sky-400 text-xs font-black uppercase tracking-widest">
                 {deal.from} → {deal.to}
               </p>
-              <h3 className="text-3xl font-black tracking-tighter leading-none">
+              <h3 className="text-2xl md:text-3xl font-black tracking-tighter leading-none">
                 CATCHING DROPS.
               </h3>
             </motion.div>
           </AnimatePresence>
 
-          <div className="mt-8 rounded-2xl bg-white/5 border border-white/5 p-6 backdrop-blur-md">
-            <div className="flex items-center justify-between mb-4">
+          <div className="mt-4 rounded-2xl bg-white/5 border border-white/5 p-4 backdrop-blur-md">
+            <div className="flex items-center justify-between mb-3">
               <span className="text-[10px] font-black uppercase tracking-widest opacity-40">
                 Snapshot
               </span>
               <span className="inline-flex items-center gap-1 text-emerald-400 font-black text-xs tracking-tighter">
-                <TrendingDown className="h-3 w-3" /> -{deal.drop}% DROP DETECTED
+                <TrendingDown className="h-3 w-3" /> -{deal.drop}% DROP
               </span>
             </div>
 
-            <div className="flex items-end gap-1.5 h-20">
+            <div className="flex items-end gap-1.5 h-12">
               {deal.history.map((h, i) => (
                 <motion.div
                   key={`${index}-${i}`}
@@ -919,7 +919,7 @@ function BentoPriceWatching() {
               ))}
             </div>
 
-            <div className="mt-4 flex items-center justify-between">
+            <div className="mt-3 flex items-center justify-between">
               <span className="text-[10px] font-black text-white/40 uppercase tracking-widest">
                 Current
               </span>
@@ -928,107 +928,173 @@ function BentoPriceWatching() {
           </div>
         </div>
 
-        {/* Filler content to reduce empty space */}
-        <div className="mt-8 pt-6 border-t border-white/5 space-y-3">
-          <div className="flex items-center justify-between text-[9px] font-black uppercase tracking-[0.2em] opacity-30">
-            <span>Network Node</span>
-            <span>Latency</span>
+        <div className="mt-4 pt-3 border-t border-white/5 flex items-center justify-between text-[10px] font-bold">
+          <span className="text-white/40 font-black uppercase tracking-[0.2em] text-[9px]">
+            Network
+          </span>
+          <div className="flex items-center gap-4 font-mono">
+            <span className="text-white/60 flex items-center gap-1.5">
+              <span className="h-1 w-1 rounded-full bg-emerald-500" />
+              LHR <span className="text-emerald-400/80">12ms</span>
+            </span>
+            <span className="text-white/60 flex items-center gap-1.5">
+              <span className="h-1 w-1 rounded-full bg-emerald-500" />
+              JFK <span className="text-emerald-400/80">18ms</span>
+            </span>
           </div>
-          {[
-            { n: "LHR-EDGE-01", l: "12ms" },
-            { n: "JFK-SCAN-04", l: "18ms" },
-          ].map((node, i) => (
-            <div
-              key={i}
-              className="flex items-center justify-between text-[10px] font-bold"
-            >
-              <span className="text-white/60 flex items-center gap-2">
-                <div className="h-1 w-1 rounded-full bg-emerald-500" /> {node.n}
-              </span>
-              <span className="font-mono text-emerald-400/80">{node.l}</span>
-            </div>
-          ))}
         </div>
       </div>
     </div>
   );
 }
 
+const FLIGHT_BOARD_ROWS = [
+  { route: "LHR→JFK", was: 520, now: 340, status: "DROP" },
+  { route: "LHR→LIS", was: 134, now: 89, status: "DROP" },
+  { route: "MAN→CDG", was: 95, now: 65, status: "DROP" },
+  { route: "MAN→DXB", was: 530, now: 395, status: "LIVE" },
+  { route: "EDI→BER", was: 70, now: 48, status: "DROP" },
+  { route: "LGW→BCN", was: 180, now: 112, status: "LIVE" },
+] as const;
+
+function FlipDigit({ value }: { value: string }) {
+  return (
+    <span className="relative inline-block overflow-hidden align-baseline">
+      <AnimatePresence mode="popLayout" initial={false}>
+        <motion.span
+          key={value}
+          initial={{ y: "-100%", opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: "100%", opacity: 0 }}
+          transition={{ duration: 0.28, ease: "easeOut" }}
+          className="inline-block"
+        >
+          {value}
+        </motion.span>
+      </AnimatePresence>
+    </span>
+  );
+}
+
+function FlightBoardPrice({ amount }: { amount: number }) {
+  const digits = `£${amount}`.split("");
+  return (
+    <span className="inline-flex">
+      {digits.map((d, i) => (
+        <FlipDigit key={`${i}-${d}`} value={d} />
+      ))}
+    </span>
+  );
+}
+
 function LiveDealStream() {
-  const [dealOffset, setDealOffset] = useState(0);
+  const [tick, setTick] = useState(0);
+  const [clock, setClock] = useState("");
+
   useEffect(() => {
-    const id = setInterval(
-      () => setDealOffset((prev) => (prev + 1) % RECENT_DROPS.length),
-      3000,
-    );
+    const id = setInterval(() => setTick((t) => t + 1), 2800);
     return () => clearInterval(id);
   }, []);
-  const currentDeals = [
-    RECENT_DROPS[dealOffset % RECENT_DROPS.length],
-    RECENT_DROPS[(dealOffset + 1) % RECENT_DROPS.length],
-  ];
+
+  useEffect(() => {
+    const update = () => {
+      const d = new Date();
+      setClock(
+        `${d.getUTCHours().toString().padStart(2, "0")}:${d
+          .getUTCMinutes()
+          .toString()
+          .padStart(2, "0")}:${d.getUTCSeconds().toString().padStart(2, "0")} UTC`,
+      );
+    };
+    update();
+    const id = setInterval(update, 1000);
+    return () => clearInterval(id);
+  }, []);
+
+  const rows = FLIGHT_BOARD_ROWS.map((r, i) => ({
+    ...r,
+    now: r.now - ((tick + i) % 3),
+  }));
+  const activeIndex = tick % rows.length;
 
   return (
-    <div className="glass-card-dark glass-gloss md:col-span-3 group relative rounded-3xl p-8 hover:-translate-y-1 transition-all duration-500 bg-slate-950 border border-white/5 text-white overflow-hidden flex flex-col h-full min-h-[400px]">
-      <div className="flex items-center justify-between mb-8 relative z-10">
+    <div className="glass-card-dark glass-gloss md:col-span-3 group relative rounded-3xl p-6 sm:p-7 hover:-translate-y-1 transition-all duration-500 bg-slate-950 border border-white/5 text-white overflow-hidden flex flex-col">
+      <div className="flex items-center justify-between mb-5 relative z-10">
         <div className="flex items-center gap-3">
-          <div className="h-12 w-12 rounded-2xl bg-sky-500/20 flex items-center justify-center text-sky-400 border border-sky-500/30 shadow-lg">
-            <Globe className="h-6 w-6" />
+          <div className="h-10 w-10 rounded-xl bg-sky-500/20 flex items-center justify-center text-sky-400 border border-sky-500/30 shadow-lg">
+            <Globe className="h-5 w-5" />
           </div>
           <div>
-            <h3 className="text-xl font-bold text-white">Signal Feed</h3>
-            <p className="text-[10px] text-sky-400 font-black uppercase tracking-[0.2em]">
+            <h3 className="text-base font-bold text-white leading-none">
+              Signal Feed
+            </h3>
+            <p className="text-[9px] text-sky-400 font-black uppercase tracking-[0.25em] mt-1">
               Global Scan
             </p>
           </div>
         </div>
-        <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20">
-          <span className="relative flex h-2 w-2">
+        <div className="flex items-center gap-2 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20">
+          <span className="relative flex h-1.5 w-1.5">
             <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75 animate-ping" />
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
+            <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
           </span>
-          <span className="text-[10px] font-black text-emerald-600 uppercase tracking-widest text-white">
+          <span className="text-[9px] font-black text-emerald-400 uppercase tracking-widest">
             Live
           </span>
         </div>
       </div>
-      <div className="flex-1 space-y-4 relative min-h-[220px]">
-        <AnimatePresence mode="popLayout">
-          {currentDeals.map((drop, i) => (
-            <motion.div
-              key={`${drop.from}-${drop.to}-${dealOffset + i}`}
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              transition={{ duration: 0.8 }}
-              className="relative p-5 rounded-[2rem] bg-white/5 border border-white/10"
-            >
-              <div className="flex items-center justify-between relative z-10">
-                <div className="flex items-center gap-4">
-                  <div className="h-12 w-12 rounded-xl bg-white/10 flex items-center justify-center">
-                    <Plane className="h-5 w-5 text-sky-400" />
-                  </div>
-                  <div className="text-white">
-                    <div className="flex items-center gap-2 font-bold">
-                      {drop.from} → {drop.to}
-                    </div>
-                    <span className="text-[10px] font-medium text-white/40 uppercase tracking-wider">
-                      Detected {drop.time}
-                    </span>
-                  </div>
-                </div>
-                <div className="text-right">
-                  <div className="text-emerald-400 font-black text-lg">
-                    -£{drop.drop}
-                  </div>
-                  <div className="text-white font-black text-xl">
-                    £{drop.price}
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </AnimatePresence>
+
+      <div className="rounded-2xl bg-black/40 border border-white/5 p-4 font-mono backdrop-blur-sm">
+        <div className="grid grid-cols-[1fr_56px_64px_72px] items-center gap-2 pb-2 mb-2 border-b border-white/5 text-[8.5px] font-black uppercase tracking-[0.25em] text-white/30">
+          <span>Route</span>
+          <span className="text-right">Was</span>
+          <span className="text-right">Now</span>
+          <span className="text-right">Status</span>
+        </div>
+
+        <div className="space-y-1.5">
+          {rows.map((row, i) => {
+            const isActive = i === activeIndex;
+            return (
+              <motion.div
+                key={row.route}
+                animate={{
+                  backgroundColor: isActive
+                    ? "rgba(16, 185, 129, 0.06)"
+                    : "rgba(255,255,255,0)",
+                }}
+                transition={{ duration: 0.4 }}
+                className="grid grid-cols-[1fr_56px_64px_72px] items-center gap-2 py-1.5 px-2 rounded-md text-[11px]"
+              >
+                <span className="text-white font-bold tracking-[0.12em]">
+                  {row.route}
+                </span>
+                <span className="text-right text-white/35 line-through tabular-nums">
+                  £{row.was}
+                </span>
+                <span className="text-right text-white font-black tabular-nums">
+                  <FlightBoardPrice amount={row.now} />
+                </span>
+                <span className="text-right">
+                  <span
+                    className={`inline-flex items-center gap-1 text-[9px] font-black px-1.5 py-0.5 rounded ${
+                      row.status === "DROP"
+                        ? "text-emerald-400 bg-emerald-500/10 border border-emerald-500/20"
+                        : "text-amber-400 bg-amber-500/10 border border-amber-500/20"
+                    }`}
+                  >
+                    {row.status === "DROP" ? "▼DROP" : "●LIVE"}
+                  </span>
+                </span>
+              </motion.div>
+            );
+          })}
+        </div>
+      </div>
+
+      <div className="mt-3 flex items-center justify-between text-[9px] font-black uppercase tracking-[0.25em] text-white/30 font-mono">
+        <span>Last sync</span>
+        <span className="text-emerald-400/70 tabular-nums">{clock || "--:--:-- UTC"}</span>
       </div>
     </div>
   );
