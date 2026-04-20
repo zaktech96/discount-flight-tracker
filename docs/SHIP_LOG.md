@@ -22,6 +22,19 @@ verified before merge - no exceptions.
 
 ## Log
 
+### SL-043 - Bento Optimization & Ultra-Minimal Demo Redesign
+
+**Scope:** `app/routes/home.tsx`
+
+**Summary:** 
+- **Bento Refinement:** Optimized the "Price Watching" bento card by reducing its grid footprint to `col-span-3`, creating a more compact and balanced layout.
+- **Data Enrichment:** Integrated a new "Network Status" section into the Bento card featuring real-time looking node latency metadata (LHR-EDGE, JFK-SCAN) to eliminate empty space and enhance the "Watchdog" identity.
+- **Flicker Resolution:** Eliminated UI flickering in the Bento section by removing the top-level animation key and implementing targeted `AnimatePresence` for data transitions.
+- **Premium Demo Redesign:** Overhauled the "Get the ping" demo scene with an ultra-minimalist design language. Removed heavy borders in favor of high-end `backdrop-blur-3xl`, high-contrast typography (`font-black`), and generous whitespace.
+- **Dynamic Backgrounds:** Refined the background ambience for the alert scene with a sophisticated `slate-950` gradient, ensuring perfect legibility and a cinematic feel.
+
+**Verification:** Build passes successfully; Bento layout stability and Demo aesthetic verified manually.
+
 ### SL-042 - Premium Demo Overhaul: 'Price Drop Alert'
 
 **Scope:** `app/routes/home.tsx`

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { Link } from "react-router";
 import { motion, AnimatePresence } from "framer-motion";
 import type { Route } from "./+types/home";
@@ -104,7 +104,7 @@ const DEMO_ROUTES: DemoRoute[] = [
     duration: "6h 45m",
     current: 395,
     original: 530,
-    target: 350,
+    target: 315,
     drop: 45,
     deals: [
       {
@@ -379,7 +379,7 @@ const DESTINATIONS: Destination[] = [
     wasFrom: 560,
     trackers: 156,
     image:
-      "https://images.unsplash.com/photo-1580619305218-85e4783c164b?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1526392060635-9d6019884377?auto=format&fit=crop&w=800&q=80",
   },
   {
     city: "Santiago",
@@ -511,7 +511,7 @@ const DESTINATIONS: Destination[] = [
     wasFrom: 240,
     trackers: 86,
     image:
-      "https://images.unsplash.com/photo-1589254065878-42c9da997008?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1534017710121-66c6a999a400?auto=format&fit=crop&w=800&q=80",
   },
   {
     city: "Zanzibar",
@@ -535,7 +535,7 @@ const DESTINATIONS: Destination[] = [
     wasFrom: 470,
     trackers: 156,
     image:
-      "https://images.unsplash.com/photo-1547448415-e9f5b28e570d?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1629198688000-71f23e745b6e?auto=format&fit=crop&w=800&q=80",
   },
   {
     city: "Marrakech",
@@ -777,77 +777,75 @@ function DemoSceneAlert({ route }: any) {
             DESTINATIONS.find((d) => d.city === route.toCity)?.image ||
             "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1200&q=80"
           }
-          className="w-full h-full object-cover blur-[1px] brightness-[0.5]"
+          className="w-full h-full object-cover blur-[1px] brightness-[0.35]"
           alt=""
         />
-        <div className="absolute inset-0 bg-gradient-to-tr from-slate-950 via-slate-950/40 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-950/20 via-slate-950/80 to-slate-950" />
       </motion.div>
 
       <AnimatePresence mode="wait">
         {!isBooked ? (
           <motion.div
             key="alert"
-            initial={{ opacity: 0, y: 40, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, scale: 1.05, filter: "blur(15px)" }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="glass-card relative z-10 rounded-[2.5rem] shadow-[0_32px_64px_-12px_rgba(0,0,0,0.6)] p-10 max-w-sm bg-white/10 dark:bg-slate-950/20 backdrop-blur-2xl border border-white/20"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.9, filter: "blur(20px)" }}
+            transition={{ duration: 0.7, ease: [0.19, 1, 0.22, 1] }}
+            className="relative z-10 w-full max-w-[320px] text-center"
           >
-            <div className="flex flex-col items-center text-center">
-              <motion.div
-                initial={{ scale: 0.5, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ delay: 0.3, type: "spring" }}
-                className="h-20 w-20 rounded-3xl bg-emerald-500/20 flex items-center justify-center text-emerald-400 mb-8 border border-emerald-500/30"
-              >
-                <Mail className="h-10 w-10" />
-              </motion.div>
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+              className="mx-auto mb-10 h-24 w-24 rounded-full bg-white/5 backdrop-blur-3xl border border-white/10 flex items-center justify-center relative"
+            >
+              <div className="absolute inset-0 rounded-full bg-sky-500/20 animate-pulse" />
+              <Mail className="h-10 w-10 text-white" />
+            </motion.div>
 
-              <h3 className="text-sm font-black uppercase tracking-[0.3em] text-emerald-400 mb-2">
-                Price Drop Alert
-              </h3>
+            <h3 className="text-[10px] font-black uppercase tracking-[0.4em] text-sky-400 mb-4 opacity-80">
+              Target Price Hit
+            </h3>
 
-              <div className="space-y-1 mb-10">
-                <p className="text-4xl font-black text-white tracking-tighter">
-                  {route.toCity}
-                </p>
-                <div className="flex items-center justify-center gap-2">
-                  <span className="text-white/40 font-bold uppercase text-[10px] tracking-widest">
-                    Now Only
-                  </span>
-                  <span className="text-3xl font-black text-white">
-                    £{route.target}
-                  </span>
-                </div>
-              </div>
+            <h2 className="text-5xl font-black text-white tracking-tighter mb-2">
+              {route.toCity}
+            </h2>
 
-              <button
-                onClick={() => setIsBooked(true)}
-                className="glass-button w-full rounded-2xl bg-sky-600 text-white py-5 text-lg font-black uppercase tracking-[0.2em] shadow-[0_20px_40px_-10px_rgba(2,132,199,0.5)] active:scale-95 transition-all duration-300"
-              >
-                Book Now
-              </button>
-
-              <p className="mt-6 text-[10px] font-bold text-white/30 uppercase tracking-[0.15em]">
-                Verified by Flight Guardian Scan
-              </p>
+            <div className="flex items-center justify-center gap-3 mb-12">
+              <div className="h-px w-8 bg-white/20" />
+              <span className="text-4xl font-black text-emerald-400">
+                £{route.target}
+              </span>
+              <div className="h-px w-8 bg-white/20" />
             </div>
+
+            <button
+              onClick={() => setIsBooked(true)}
+              className="group relative w-full py-6 rounded-2xl overflow-hidden transition-all duration-500 hover:scale-[1.02] active:scale-[0.98]"
+            >
+              <div className="absolute inset-0 bg-white" />
+              <span className="relative z-10 text-black font-black uppercase tracking-[0.2em] text-sm group-hover:tracking-[0.25em] transition-all">
+                Confirm Booking
+              </span>
+            </button>
+
+            <p className="mt-6 text-[10px] font-bold text-white/30 uppercase tracking-[0.15em]">
+              Verified by Flight Guardian Scan
+            </p>
           </motion.div>
         ) : (
           <motion.div
             key="success"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
             className="text-center relative z-10"
           >
-            <div className="h-28 w-28 bg-emerald-500 rounded-full flex items-center justify-center mx-auto mb-8 shadow-[0_0_50px_rgba(16,185,129,0.4)]">
-              <Check className="h-14 w-14 text-white" strokeWidth={5} />
-            </div>
-            <h3 className="text-5xl font-black text-white tracking-tighter mb-3">
-              RESERVED
+            <div className="text-7xl mb-6">✈️</div>
+            <h3 className="text-4xl font-black text-white tracking-tighter mb-4">
+              PACK YOUR BAGS
             </h3>
-            <p className="text-emerald-100/60 font-bold text-lg tracking-wide uppercase text-xs">
-              Tickets sent to your inbox
+            <p className="text-white/40 font-bold uppercase tracking-[0.2em] text-[10px]">
+              Confirmation sent to your secure inbox
             </p>
           </motion.div>
         )}
@@ -868,53 +866,88 @@ function BentoPriceWatching() {
   }, []);
 
   return (
-    <div className="glass-card-dark glass-gloss md:col-span-4 md:row-span-2 group relative rounded-3xl p-8 md:p-10 text-white shadow-xl shadow-slate-200 hover:shadow-2xl transition-all duration-500 overflow-hidden">
+    <div className="glass-card-dark glass-gloss md:col-span-3 md:row-span-2 group relative rounded-3xl p-8 md:p-10 text-white shadow-xl shadow-slate-200 hover:shadow-2xl transition-all duration-500 overflow-hidden bg-slate-950 border border-white/5">
       <Plane className="absolute -top-2 -right-2 h-32 w-32 text-white/5 -rotate-12 group-hover:rotate-0 group-hover:scale-110 transition-transform duration-700" />
-      <div key={index} className="relative z-10 animate-fade-in">
-        <div className="inline-flex items-center gap-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 px-3 py-1.5 text-xs font-medium">
+
+      <div className="relative z-10 h-full flex flex-col">
+        <div className="inline-flex items-center gap-2 rounded-full bg-white/5 border border-white/10 px-3 py-1.5 text-[10px] font-black uppercase tracking-widest">
           <span className="relative flex h-2 w-2">
             <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75 animate-ping" />
             <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
           </span>
-          Live · tracking {deal.from} → {deal.to}
+          Active Scanning
         </div>
-        <h3 className="mt-5 text-2xl md:text-3xl font-bold leading-tight">
-          We check the price every hour.
-          <br />
-          <span className="text-sky-300">
-            You get a ping the moment it drops.
-          </span>
-        </h3>
-        <div className="mt-8 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 p-5">
-          <div className="flex items-center justify-between mb-3">
-            <span className="text-xs uppercase tracking-wider text-slate-400">
-              {deal.from} → {deal.to}
-            </span>
-            <span className="inline-flex items-center gap-1 text-emerald-400 font-semibold text-sm">
-              <TrendingDown className="h-4 w-4" /> -{deal.drop}%
-            </span>
+
+        <div className="mt-6 flex-1">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 10 }}
+              className="space-y-1"
+            >
+              <p className="text-sky-400 text-xs font-black uppercase tracking-widest">
+                {deal.from} → {deal.to}
+              </p>
+              <h3 className="text-3xl font-black tracking-tighter leading-none">
+                CATCHING DROPS.
+              </h3>
+            </motion.div>
+          </AnimatePresence>
+
+          <div className="mt-8 rounded-2xl bg-white/5 border border-white/5 p-6 backdrop-blur-md">
+            <div className="flex items-center justify-between mb-4">
+              <span className="text-[10px] font-black uppercase tracking-widest opacity-40">
+                Snapshot
+              </span>
+              <span className="inline-flex items-center gap-1 text-emerald-400 font-black text-xs tracking-tighter">
+                <TrendingDown className="h-3 w-3" /> -{deal.drop}% DROP DETECTED
+              </span>
+            </div>
+
+            <div className="flex items-end gap-1.5 h-20">
+              {deal.history.map((h, i) => (
+                <motion.div
+                  key={`${index}-${i}`}
+                  initial={{ height: 0 }}
+                  animate={{ height: `${h}%` }}
+                  className={`flex-1 rounded-sm relative ${
+                    i === 6 ? "bg-emerald-400" : "bg-white/10"
+                  }`}
+                />
+              ))}
+            </div>
+
+            <div className="mt-4 flex items-center justify-between">
+              <span className="text-[10px] font-black text-white/40 uppercase tracking-widest">
+                Current
+              </span>
+              <span className="text-xl font-black">£{deal.price}</span>
+            </div>
           </div>
-          <div className="flex items-end gap-1.5 h-24">
-            {deal.history.map((h, i) => (
-              <motion.div
-                key={i}
-                className={`flex-1 rounded-t-md relative group/bar ${
-                  i === 6
-                    ? "bg-gradient-to-t from-emerald-400 to-emerald-300 shadow-lg shadow-emerald-500/30"
-                    : "bg-white/20 hover:bg-sky-400 transition-all duration-300"
-                }`}
-                style={{ height: `${h}%` }}
-              >
-                <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-white text-slate-900 text-[10px] font-bold px-2 py-1 rounded shadow-xl opacity-0 group-hover/bar:opacity-100 transition-opacity whitespace-nowrap z-30">
-                  £{Math.floor(deal.original * (h / 100))}
-                </div>
-              </motion.div>
-            ))}
+        </div>
+
+        {/* Filler content to reduce empty space */}
+        <div className="mt-8 pt-6 border-t border-white/5 space-y-3">
+          <div className="flex items-center justify-between text-[9px] font-black uppercase tracking-[0.2em] opacity-30">
+            <span>Network Node</span>
+            <span>Latency</span>
           </div>
-          <div className="mt-4 pt-4 border-t border-white/10 flex items-baseline justify-between">
-            <span className="text-sm text-slate-300">Today's price</span>
-            <span className="text-2xl font-bold text-white">£{deal.price}</span>
-          </div>
+          {[
+            { n: "LHR-EDGE-01", l: "12ms" },
+            { n: "JFK-SCAN-04", l: "18ms" },
+          ].map((node, i) => (
+            <div
+              key={i}
+              className="flex items-center justify-between text-[10px] font-bold"
+            >
+              <span className="text-white/60 flex items-center gap-2">
+                <div className="h-1 w-1 rounded-full bg-emerald-500" /> {node.n}
+              </span>
+              <span className="font-mono text-emerald-400/80">{node.l}</span>
+            </div>
+          ))}
         </div>
       </div>
     </div>
@@ -936,7 +969,7 @@ function LiveDealStream() {
   ];
 
   return (
-    <div className="glass-card-dark glass-gloss md:col-span-3 group relative rounded-3xl p-8 hover:-translate-y-1 transition-all duration-500 bg-slate-900 text-white overflow-hidden flex flex-col h-full min-h-[400px]">
+    <div className="glass-card-dark glass-gloss md:col-span-3 group relative rounded-3xl p-8 hover:-translate-y-1 transition-all duration-500 bg-slate-950 border border-white/5 text-white overflow-hidden flex flex-col h-full min-h-[400px]">
       <div className="flex items-center justify-between mb-8 relative z-10">
         <div className="flex items-center gap-3">
           <div className="h-12 w-12 rounded-2xl bg-sky-500/20 flex items-center justify-center text-sky-400 border border-sky-500/30 shadow-lg">
@@ -1070,7 +1103,7 @@ function ProductDemo() {
             <div className="w-20" />
           </div>
 
-          <div className="h-[550px] md:h-[650px] lg:h-[750px] bg-gradient-to-b from-white/60 to-sky-50/40 dark:from-slate-900/60 dark:to-slate-900/40 relative flex flex-col justify-center overflow-hidden">
+          <div className="h-[550px] md:h-[650px] lg:h-[750px] bg-gradient-to-b from-white/60 to-sky-50/40 dark:from-slate-950/60 dark:to-slate-950/40 relative flex flex-col justify-center overflow-hidden">
             <AnimatePresence mode="wait">
               <motion.div
                 key={`${routeIndex}-${stage}`}
@@ -1160,7 +1193,7 @@ function StepCard({
     >
       <div className="absolute -top-10 left-1/2 -translate-x-1/2 md:left-0 md:translate-x-0 z-20">
         <span
-          className={`inline-flex items-center justify-center w-10 h-10 rounded-full border-4 border-white dark:border-slate-900 font-bold text-white shadow-lg ${
+          className={`inline-flex items-center justify-center w-10 h-10 rounded-full border-4 border-white dark:border-slate-950 font-bold text-white shadow-lg ${
             color === "sky"
               ? "bg-sky-500"
               : color === "emerald"
@@ -1518,7 +1551,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-6 gap-6">
             <BentoPriceWatching />
-            <div className="glass-card glass-gloss md:col-span-2 group relative rounded-[2.5rem] p-10 flex flex-col justify-between overflow-hidden bg-white dark:bg-slate-950 shadow-2xl">
+            <div className="glass-card glass-gloss md:col-span-2 group relative rounded-[2.5rem] p-10 flex flex-col justify-between overflow-hidden bg-white dark:bg-slate-950 shadow-2xl text-slate-900 dark:text-white">
               <div>
                 <PiggyBank className="h-12 w-12 text-emerald-500 mb-8" />
                 <div className="flex items-baseline gap-2 mb-4">
@@ -1541,7 +1574,7 @@ export default function Home() {
                 </span>
               </div>
             </div>
-            <div className="glass-card glass-gloss md:col-span-2 group relative rounded-[2.5rem] p-10 flex flex-col justify-between overflow-hidden bg-white dark:bg-slate-950 shadow-2xl">
+            <div className="glass-card glass-gloss md:col-span-2 group relative rounded-[2.5rem] p-10 flex flex-col justify-between overflow-hidden bg-white dark:bg-slate-950 shadow-2xl text-slate-900 dark:text-white">
               <div>
                 <Clock className="h-12 w-12 text-amber-500 mb-8" />
                 <div className="flex items-baseline gap-2 mb-4">
@@ -1570,7 +1603,7 @@ export default function Home() {
                 ))}
               </div>
             </div>
-            <div className="glass-card glass-gloss md:col-span-3 group relative rounded-[2.5rem] p-10 bg-gradient-to-br from-white to-rose-50/50 dark:from-slate-900 dark:to-slate-950 shadow-2xl border-none">
+            <div className="glass-card glass-gloss md:col-span-3 group relative rounded-[2.5rem] p-10 bg-gradient-to-br from-white to-rose-50/50 dark:from-slate-950 dark:to-slate-950 shadow-2xl border-none text-slate-900 dark:text-white">
               <Heart className="h-12 w-12 text-rose-500 mb-8" />
               <h3 className="text-3xl font-black mb-6">
                 Zero spam. <br />
@@ -1608,7 +1641,7 @@ export default function Home() {
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
-        className="py-24 px-6 bg-white dark:bg-slate-950"
+        className="py-24 px-6 bg-white dark:bg-slate-950 text-slate-900 dark:text-white"
       >
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12">
