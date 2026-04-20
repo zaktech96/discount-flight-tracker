@@ -22,6 +22,20 @@ verified before merge - no exceptions.
 
 ## Log
 
+### SL-048 - Bento Grid Rebalance (Zero Dead Space)
+
+**Scope:** `app/routes/home.tsx`
+
+**Summary:**
+- **Root Cause:** `BentoPriceWatching` carried `md:row-span-2`, forcing it to occupy two bento rows regardless of its content height. Its natural content is compact (badge + title + sparkline + network strip), so the forced stretch produced a tall empty stripe below the sparkline and left column 6 unused on rows 1–2 of the grid.
+- **Grid Rework:** Dropped `md:row-span-2` from `BentoPriceWatching`. Re-sized sibling cards so the 6-column grid fills cleanly in 3 rows of 6 cols (18/18):
+    - Row 1: `BentoPriceWatching` (col-3) + £220 card (col-2 → col-3)
+    - Row 2: 30s card (col-2 → col-3) + Zero Spam card (col-3)
+    - Row 3: `LiveDealStream` flight board (col-3 → col-6, now a wide departure-board banner)
+- **Visual Effect:** Dark "Catching Drops" card collapses to its natural height; the flight board becomes the full-width flagship at the bottom of the section. No wasted vertical space, stronger terminal-minimalist hierarchy.
+
+**Verification:** `npx tsc --noEmit` passes clean on `home.tsx`. Grid math: 3+3+3+3+6 = 18 = 3×6.
+
 ### SL-047 - Destination Imagery Overhaul (Verified Unsplash IDs)
 
 **Scope:** `app/routes/home.tsx`

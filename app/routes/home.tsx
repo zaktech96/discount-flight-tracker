@@ -866,7 +866,7 @@ function BentoPriceWatching() {
   }, []);
 
   return (
-    <div className="glass-card-dark glass-gloss md:col-span-3 md:row-span-2 group relative rounded-3xl p-6 md:p-7 text-white shadow-xl shadow-slate-200 hover:shadow-2xl transition-all duration-500 overflow-hidden bg-slate-950 border border-white/5">
+    <div className="glass-card-dark glass-gloss md:col-span-3 group relative rounded-3xl p-6 md:p-7 text-white shadow-xl shadow-slate-200 hover:shadow-2xl transition-all duration-500 overflow-hidden bg-slate-950 border border-white/5">
       <Plane className="absolute -top-2 -right-2 h-28 w-28 text-white/5 -rotate-12 group-hover:rotate-0 group-hover:scale-110 transition-transform duration-700" />
 
       <div className="relative z-10 h-full flex flex-col">
@@ -1018,7 +1018,7 @@ function LiveDealStream() {
   const activeIndex = tick % rows.length;
 
   return (
-    <div className="glass-card-dark glass-gloss md:col-span-3 group relative rounded-3xl p-6 sm:p-7 hover:-translate-y-1 transition-all duration-500 bg-slate-950 border border-white/5 text-white overflow-hidden flex flex-col">
+    <div className="glass-card-dark glass-gloss md:col-span-6 group relative rounded-3xl p-6 sm:p-7 hover:-translate-y-1 transition-all duration-500 bg-slate-950 border border-white/5 text-white overflow-hidden flex flex-col">
       <div className="flex items-center justify-between mb-5 relative z-10">
         <div className="flex items-center gap-3">
           <div className="h-10 w-10 rounded-xl bg-sky-500/20 flex items-center justify-center text-sky-400 border border-sky-500/30 shadow-lg">
@@ -1617,7 +1617,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-6 gap-6">
             <BentoPriceWatching />
-            <div className="glass-card glass-gloss md:col-span-2 group relative rounded-[2.5rem] p-10 flex flex-col justify-between overflow-hidden bg-white dark:bg-slate-950 shadow-2xl text-slate-900 dark:text-white">
+            <div className="glass-card glass-gloss md:col-span-3 group relative rounded-[2.5rem] p-10 flex flex-col justify-between overflow-hidden bg-white dark:bg-slate-950 shadow-2xl text-slate-900 dark:text-white">
               <div>
                 <PiggyBank className="h-12 w-12 text-emerald-500 mb-8" />
                 <div className="flex items-baseline gap-2 mb-4">
@@ -1640,7 +1640,7 @@ export default function Home() {
                 </span>
               </div>
             </div>
-            <div className="glass-card glass-gloss md:col-span-2 group relative rounded-[2.5rem] p-10 flex flex-col justify-between overflow-hidden bg-white dark:bg-slate-950 shadow-2xl text-slate-900 dark:text-white">
+            <div className="glass-card glass-gloss md:col-span-3 group relative rounded-[2.5rem] p-10 flex flex-col justify-between overflow-hidden bg-white dark:bg-slate-950 shadow-2xl text-slate-900 dark:text-white">
               <div>
                 <Clock className="h-12 w-12 text-amber-500 mb-8" />
                 <div className="flex items-baseline gap-2 mb-4">
