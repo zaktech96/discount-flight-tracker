@@ -22,6 +22,17 @@ verified before merge - no exceptions.
 
 ## Log
 
+### SL-044 - Image Hotfix: Bangkok & Montevideo
+
+**Scope:** `app/routes/home.tsx`
+
+**Summary:** 
+- **Imagery Correction:** Resolved a critical visual bug where location cards for **Bangkok (Thailand)** and **Montevideo (Uruguay)** were missing valid images or displaying inappropriate placeholders.
+- **High-Fidelity Assets:** Replaced both entries with verified, high-resolution Unsplash photography that accurately reflects the cultural and city context of both destinations.
+- **Global Consistency:** Audited the `DESTINATIONS` array to ensure image distinctness and visual continuity across the global destination catalog.
+
+**Verification:** Build passes successfully; destination card visuals verified manually on all viewport sizes.
+
 ### SL-043 - Bento Optimization & Ultra-Minimal Demo Redesign
 
 **Scope:** `app/routes/home.tsx`

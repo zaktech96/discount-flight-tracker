@@ -319,7 +319,7 @@ const DESTINATIONS: Destination[] = [
     wasFrom: 480,
     trackers: 312,
     image:
-      "https://images.unsplash.com/photo-1504609770332-e224483f76f5?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1508009603885-50cf7c579367?auto=format&fit=crop&w=800&q=80",
   },
   {
     city: "Mexico City",
@@ -403,7 +403,7 @@ const DESTINATIONS: Destination[] = [
     wasFrom: 580,
     trackers: 84,
     image:
-      "https://images.unsplash.com/photo-1590059530432-8f4aadce1849?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1582294657152-32943e11762c?auto=format&fit=crop&w=800&q=80",
   },
   {
     city: "Bogota",
