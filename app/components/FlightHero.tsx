@@ -40,7 +40,7 @@ const FlightRow = memo(function FlightRow({ route }: { route: DemoRoute }) {
         <span
           className={cn(
             "font-mono text-sm font-semibold",
-            isDrop ? "text-[#10B981]" : "text-orange-400"
+            isDrop ? "text-[#10B981]" : "text-orange-400",
           )}
         >
           ${route.price}
@@ -97,29 +97,27 @@ export function FlightHero({ isSignedIn }: { isSignedIn?: boolean }) {
             Live Scan Active
           </span>
         </div>
-
         {/* Headline - tight kerning sans-serif */}
-        <h1 className="text-5xl md:text-7xl font-black tracking-[-0.03em] text-white uppercase leading-none mb-4">
-          Flight{" "}
-          <span className="text-[#3B82F6]">Guardian</span>
+        <h1 className="text-5xl md:text-7xl font-black tracking-[-0.03em] text-white uppercase leading-none mb-4 animate-fade-up">
+          Flight <span className="text-[#3B82F6]">Guardian</span>
         </h1>
 
-        <p className="text-white/45 text-lg md:text-xl max-w-lg mb-14 font-light leading-relaxed tracking-tight">
+        <p className="text-white/45 text-lg md:text-xl max-w-lg mb-14 font-light leading-relaxed tracking-tight animate-fade-up delay-75">
           Precision Tracking, Real-time Intelligence.
         </p>
 
         {/* CTA buttons - black bg, teal border, white hover with glow */}
-        <div className="flex flex-col sm:flex-row gap-4">
+        <div className="flex flex-col sm:flex-row gap-4 animate-fade-up delay-150">
           <Link
             to={isSignedIn ? "/dashboard" : "/sign-up"}
             prefetch="viewport"
-            className="font-mono text-sm font-bold px-8 py-3 rounded-lg bg-black text-white border border-[#3B82F6]/60 hover:bg-white hover:text-black hover:shadow-[0_0_15px_rgba(15,122,115,0.3)] transition-all duration-300 tracking-wider uppercase text-center"
+            className="font-mono text-sm font-bold px-8 py-3 rounded-lg bg-black text-white border border-[#3B82F6]/60 hover:bg-white hover:text-black hover:shadow-[0_0_15px_rgba(15,122,115,0.3)] transition-all duration-300 tracking-wider uppercase text-center glass-button"
           >
             Activate Guardian
           </Link>
           <Link
             to="#search"
-            className="font-mono text-sm font-bold px-8 py-3 rounded-lg bg-transparent text-white/60 border border-white/10 hover:bg-white hover:text-black hover:border-white hover:shadow-[0_0_15px_rgba(15,122,115,0.3)] transition-all duration-300 tracking-wider uppercase text-center"
+            className="font-mono text-sm font-bold px-8 py-3 rounded-lg bg-transparent text-white/60 border border-white/10 hover:bg-white hover:text-black hover:border-white hover:shadow-[0_0_15px_rgba(15,122,115,0.3)] transition-all duration-300 tracking-wider uppercase text-center glass-card-soft"
           >
             Search Routes
           </Link>
@@ -127,8 +125,8 @@ export function FlightHero({ isSignedIn }: { isSignedIn?: boolean }) {
       </div>
 
       {/* Live price-anomaly feed */}
-      <div className="relative z-10 w-full max-w-2xl mx-auto px-6 pb-20">
-        <div className="rounded-xl border border-white/10 bg-white/[0.02] overflow-hidden">
+      <div className="relative z-10 w-full max-w-2xl mx-auto px-6 pb-20 animate-fade-up delay-300">
+        <div className="rounded-xl border border-white/10 bg-white/[0.02] overflow-hidden glass-card-dark">
           <div className="flex items-center justify-between px-5 py-3 border-b border-white/10">
             <span className="font-mono text-xs text-white/35 tracking-[0.15em] uppercase">
               Live Feed - Price Anomalies
@@ -144,10 +142,7 @@ export function FlightHero({ isSignedIn }: { isSignedIn?: boolean }) {
 
           {DEMO_ROUTES.length > 0 ? (
             DEMO_ROUTES.map((route) => (
-              <FlightRow
-                key={`${route.origin}-${route.dest}`}
-                route={route}
-              />
+              <FlightRow key={`${route.origin}-${route.dest}`} route={route} />
             ))
           ) : (
             <div className="px-5 py-10 text-center animate-radar-sweep border border-transparent rounded-b-xl">

@@ -36,7 +36,7 @@ export function FlightSearch({ isSignedIn }: { isSignedIn?: boolean }) {
     <section id="search" className="bg-[#0F172A] py-20 px-6">
       <div className="max-w-2xl mx-auto">
         {/* Section header */}
-        <div className="mb-10 text-center">
+        <div className="mb-10 text-center animate-fade-up">
           <h2 className="text-3xl md:text-4xl font-black tracking-[-0.03em] text-white uppercase mb-3 font-mono">
             Route <span className="text-[#3B82F6]">Scanner</span>
           </h2>
@@ -46,7 +46,7 @@ export function FlightSearch({ isSignedIn }: { isSignedIn?: boolean }) {
         </div>
 
         {/* Terminal search panel */}
-        <div className="rounded-xl border border-white/10 bg-white/[0.02] backdrop-blur-md overflow-hidden">
+        <div className="rounded-xl border border-white/10 bg-white/[0.02] backdrop-blur-md overflow-hidden glass-card-dark animate-fade-up delay-75">
           {/* Terminal title bar */}
           <div className="flex items-center gap-2 px-5 py-3 border-b border-white/10 bg-white/[0.02]">
             <span className="w-2.5 h-2.5 rounded-full bg-red-500/70" />
@@ -113,14 +113,14 @@ export function FlightSearch({ isSignedIn }: { isSignedIn?: boolean }) {
               <button
                 type="button"
                 onClick={handleSearch}
-                className="font-mono text-sm font-bold px-6 py-2 rounded-lg bg-black text-white border border-[#3B82F6]/60 hover:bg-white hover:text-black hover:shadow-[0_0_15px_rgba(15,122,115,0.3)] transition-all duration-300 tracking-wider uppercase"
+                className="font-mono text-sm font-bold px-6 py-2 rounded-lg bg-black text-white border border-[#3B82F6]/60 hover:bg-white hover:text-black hover:shadow-[0_0_15px_rgba(15,122,115,0.3)] transition-all duration-300 tracking-wider uppercase glass-button"
               >
                 Scan
               </button>
               <Link
                 to={isSignedIn ? "/dashboard" : "/sign-up"}
                 prefetch="viewport"
-                className="font-mono text-sm font-bold px-6 py-2 rounded-lg bg-[#3B82F6] text-black border border-[#3B82F6] hover:bg-white hover:text-black hover:shadow-[0_0_15px_rgba(15,122,115,0.3)] transition-all duration-300 tracking-wider uppercase"
+                className="font-mono text-sm font-bold px-6 py-2 rounded-lg bg-[#3B82F6] text-black border border-[#3B82F6] hover:bg-white hover:text-black hover:shadow-[0_0_15px_rgba(15,122,115,0.3)] transition-all duration-300 tracking-wider uppercase glass-button-light"
               >
                 Set Alert
               </Link>
@@ -129,7 +129,7 @@ export function FlightSearch({ isSignedIn }: { isSignedIn?: boolean }) {
         </div>
 
         {/* Recent routes */}
-        <div className="mt-10">
+        <div className="mt-10 animate-fade-up delay-150">
           <h3 className="font-mono text-xs text-white/30 tracking-[0.2em] uppercase mb-4">
             Recently Tracked Routes
           </h3>
@@ -137,7 +137,7 @@ export function FlightSearch({ isSignedIn }: { isSignedIn?: boolean }) {
             {RECENT_ROUTES.map((route) => (
               <div
                 key={`${route.origin}-${route.dest}`}
-                className="flex items-center justify-between py-3 px-5 rounded-lg border border-white/5 bg-white/[0.02] hover:bg-white/[0.04] transition-colors duration-200"
+                className="flex items-center justify-between py-3 px-5 rounded-lg border border-white/5 bg-white/[0.02] hover:bg-white/[0.04] transition-colors duration-200 glass-card-soft"
               >
                 <div className="flex items-center gap-3">
                   <span className="font-mono text-sm text-white/80 tracking-[0.2em]">

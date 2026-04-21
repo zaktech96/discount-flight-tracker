@@ -112,7 +112,7 @@ export default function FlightSearch() {
                 type="date"
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
-                className="rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-950/60 px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent text-slate-700 dark:text-white"
+                className="glass-input rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-950/60 px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent text-slate-700 dark:text-white"
               />
             </label>
           </div>
@@ -174,7 +174,7 @@ export default function FlightSearch() {
               </p>
               <button
                 onClick={handleClear}
-                className="inline-flex items-center gap-2 rounded-full bg-sky-600 text-white px-5 py-2.5 text-sm font-semibold hover:bg-sky-700 transition"
+                className="inline-flex items-center gap-2 rounded-full glass-button bg-sky-600 text-white px-5 py-2.5 text-sm font-semibold hover:bg-sky-700 transition shadow-lg"
               >
                 Show all deals
               </button>
